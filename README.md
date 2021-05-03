@@ -3,6 +3,7 @@
 # Machine Learning Exchange (MLX)
 
 **Data and AI Assets Catalog and Execution Engine**
+
 ![mlx-landing-page](docs/images/mlx.png)
 
 ## 1. Prerequisites
@@ -18,11 +19,7 @@
 
 For Deployment, we are going to use an Operator based on [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. You can install the operator manually or via OperatorHub. Both should achieve the same result. Choose any one of them.
 
-### [Option 1: Using Manual Installation of Operator](./docs/mlx-install-operator.md)
-
-... or:
-
-### [Option 2: Using OperatorHub on Openshift](./docs/mlx-install-operatorhub.md)
+### [Manual Installation using Operator](./docs/mlx-install-operator.md)
 
 ## 3. Access the MLX UI
 
