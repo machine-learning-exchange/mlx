@@ -1,0 +1,87 @@
+# Copyright 2021 IBM Corporation
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License. 
+# Application settings for Machine Learning Exchange
+
+sections:
+  - name: "Connections"
+    description: "Service endpoints"
+    settings:
+      - name: "API Endpoint"
+        description: "Machine Learning Exchange API endpoint"
+        default: ""
+        value: ""
+      - name: "KFP API"
+        description: "Kubeflow Pipelines API endpoint"
+        default: ""
+        value: ""
+  - name: "Kfserving"
+    description: "Kfserving specific settings"
+    settings:
+      - name: "Namespace"
+        description: "Namespace to fetch the inference services from"
+        default: ""
+        value: ""
+  - name: "Capabilities"
+    description: "General application capabilities"
+    settings:
+      - name: "Upload enabled"
+        description: "Allow the upload of artifacts"
+        default: yes
+        value: on
+      - name: "Execution enabled"
+        description: "Allow the execution of sample pipelines"
+        default: yes
+        value: on
+      - name: "Experimental features enabled"
+        description: "Enable experimental features."
+        default: no
+        value: off
+  - name: "Appearance"
+    description: "Settings to modify the appearance of the web user interface."
+    settings:
+      - name: "Cards per page"
+        description: "Number of cards displayed on one page"
+        default: 10
+        value: 10
+  - name: "Artifact Types"
+    description: "Settings to modify the available artifact types in web user interface."
+    settings:
+    - name: "Pipelines"
+      description: "Enable or Disable the Pipelines section"
+      default: yes
+      value: on
+    - name: "Datasets"
+      description: "Enable or Disable the Datasets section"
+      default: yes
+      value: on
+    - name: "Components"
+      description: "Enable or Disable the Components section"
+      default: yes
+      value: on
+    - name: "Models"
+      description: "Enable or Disable the Models section"
+      default: yes
+      value: on
+    - name: "Notebooks"
+      description: "Enable or Disable the Notebooks section"
+      default: yes
+      value: on
+    - name: "Workspace"
+      description: "Enable or Disable the Workspace section"
+      default: yes
+      value: on
+    - name: "Inference Services"
+      description: "Enable or Disable the Services section"
+      default: yes
+      value: on

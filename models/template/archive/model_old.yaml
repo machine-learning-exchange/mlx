@@ -1,0 +1,216 @@
+# Copyright 2021 IBM Corporation
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License. 
+# name: (Required) name of this model file
+# description: (Optional) description of this model file
+# author: (Required for trainable)
+#   name: (Required for trainable) name of this training job's author
+#   email: (Required for trainable) email of this training job's author
+# framework: (Required)
+#   name: (Required) ML/DL framework format that the model is stored as.
+#   version: (Optional) Framework version used for this model
+#   runtimes: (Required for trainable)
+#     name: (Required for trainable) programming language for the model runtime
+#     version: (Required for trainable) programming language version for the model runtime
+
+name: Facial Age estimator Model
+model_identifier: facial-age-estimator
+description: Sample Model trained to classify the age of the human face.
+author:
+  name: DL Developer
+  email: "me@ibm.com"
+framework:
+  name: "tensorflow"
+  version: "1.13.1"
+  runtimes:
+      name: python
+      version: "3.5"
+
+# labels: (Optional) labels and tags for this model
+#   domain: (Optional) Domain of the ML/DL model.
+#   url: (Optional) Link to the ML/DL model page.
+#   pipeline_uuids: (Optional) Linkage with a list of execuable pipelines.
+# license: (Optional) License for this model.
+# domain: (Optional) Domain metadata for this model.
+# website:  (Optional) Links that explain this model in more details
+
+license: "Apache 2.0"
+domain: "Facial Recognition"
+website: "https://developer.ibm.com/exchanges/models/all/max-facial-age-estimator"
+labels:
+  - url: 
+  - pipeline_uuids: ["abcd1234"]
+
+# train: (optional)
+#   trainable: (optional) Indicate the model is trainable. Default: False
+#   tested_platforms(optional): platform on which this model can trained (current options: wml, ffdl, kubeflow)
+#   model_source: (Required for trainable)
+#     data_store: (Required) datastore for the model code source
+#     initial_model:
+#       bucket: (Required) Bucket that has the model code source
+#       path: (Required) Bucket path that has the model code source
+#       url: (Optional) Link to the model
+#     training_results:
+#       bucket: (Required) Bucket to store the model source
+#       path: (Required) Bucket path to store the model source
+#   data_source:
+#     data_store: (Required) datastore for the model data source
+#     training_data:
+#       bucket: (Required) Bucket that has the model data source
+#   mount_type: (Required) object storage mount type
+#   evaluation_metrics: (optional) Define the metrics for the training job.
+#     type: (Required) evaluation_metrics type
+#     in: (Required) Path to store the evaluation_metrics
+#   training_container_image: (Optional)
+#     container_image_url: (Optional) Custom training container image url
+#     command: (Required) Entrypoint command to execute the training job.
+#     container_store: (Optional) container_store for the custom training image
+#   training_params: (Optional) list of hyperparameters for the training model
+#   	- (optional) list of key(param name):value(param value)
+#   tested_platforms(optional): platform on which this model can trained (current options: wml, ffdl, kubeflow)
+train:
+  trainable: true
+  tested_platforms: wml, ffdl
+  model_source: 
+    data_store: age_datastore
+    initial_model:
+      bucket: facial-age-estimator
+      path: 1.0/assets/
+      url: ""
+    training_results:
+      bucket: facial-age-estimator
+      path: 2.0/assets/
+  data_source:
+    data_store: age_datastore
+    training_data:
+      bucket: facial-age-estimator
+  mount_type: mount_cos
+  evaluation_metrics:
+    type: tensorboard
+    in: "$JOB_STATE_DIR/logs/tb/test"
+  training_container_image:
+    container_image_url: tensorflow/tensorflow:latest-gpu-py3
+    command: pip3 install keras; pip3 install scikit-learn; python3 experiment.py
+    container_store: container_store
+  training_params:
+  	- learning_rate:
+  	- loss: 
+  	- batch_size: 
+  	- epoch:
+  	- optimizer:
+          - xxx
+          - yyy
+  	- train_op:
+  tested_platforms: wml, ffdl
+
+# serve: (Optional)
+#   servable: (Optional) Indicate the model is servable without training. Default: False
+#   tested_platforms(optional): platform on which this model can served (current options: kubernetes, knative, seldon, wml, kfserving)
+#   model_source: (Optional) - (Required if servable is true)
+#     data_store: (Required for s3 type) datastore for the model source
+#     servable_model: (Required for s3 or url type)
+#       bucket: (Required for s3 type) Bucket that has the model source
+#       path: (Required for s3 type) Source path to the model
+#       url: (Required for url type) Source URL for the model
+#   container_source: (Required for container type) 
+#     container_image: (Required for container type) Container image to serve the model.
+#     container_store: (Optional) container_store name
+
+serve:
+  servable: true
+  tested_platforms: kubernetes, knative
+  model_source: 
+    data_store: age_datastore
+    servable_model:
+      bucket: facial-age-estimator
+      path: 2.0/assets/
+      url: ""
+  container_source:
+    container_image: "codait/max-facial-age-estimator:latest"
+    container_store: container_store
+    
+# data (Optional)
+#   source_id: (Optional) Extension file id regarding the data source.
+#   domain: (Optional) Metadata about the data domain.
+#   website: (Optional) Links to the data description
+#   license: (Optional) Data license
+
+data:
+  source_id: IMDB-WIKI
+  domain: "Image"
+  website: "https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/"
+  license: "Apache 2.0"
+
+# data_stores: (Optional) - (Required for trainable)
+#   - name: (Required) name of the data_stores
+#     connection:
+#       endpoing: (Required) Object Storage endpoint URL or public Object Storage key link.
+#       access_key_id: (Required) Object Storage access_key_id
+#       secret_access_key: (Required) Object secret_access_key
+
+data_stores:
+  - name: age_datastore
+    type: s3
+    connection:
+      endpoint: https://s3-api.us-geo.objectstorage.softlayer.net
+      access_key_id: xxxxxxxxxx
+      secret_access_key: xxxxxxxxxxxxx
+
+# container_stores: (Optional)
+#  - name: (Required) name of the container_store
+#    connection:
+#      container_registry: (Required) container registry for this container_store
+#      container_registry_token: (Required if container registry is private) container registry token
+ 
+container_stores:
+ - name: container_store
+   connection:
+     container_registry: docker.io
+     container_registry_token: ""
+
+# convert: (Optional)
+#   onnx_convertable: (Optional) Enable convertion to ONNX format. 
+#                            The model needs to be either trainable or servable. Default: False
+#   model_source: (Required for onnx_convertable) Model binary path that needs the format conversion.
+#     data_store: (Required) datastore for the model source
+#     initial_model: 
+#       bucket: (Required) Bucket that has the model source
+#       path: (Required) Bucket path that has the model source
+#       url: (Optional) Link to the model
+#     onnx_model:
+#       bucket:(Required) Bucket to store the onnx model
+#       path: (Required) Bucket path to store the onnx model
+#       url: (Optional) Link to the converted model
+#   tf_inputs: (Required for TensorFlow model) Input placeholder and shapes of the model.
+#   tf_outputs: (Required for TensorFlow model) Output placeholders of the model.
+#   tf_rtol: (Optional) Relative tolerance for TensorFlow 
+#   tf_atol: (Optional) Absolute tolerance for TensorFlow 
+
+convert:
+  onnx_convertable: true
+  model_source: 
+    data_store: age_datastore
+    initial_model:
+      bucket: facial-age-estimator
+      path: 2.0/assests/model.pt
+      url: ""
+    onnx_model:
+      bucket: facial-age-estimator
+      path: 3.0/assets/model.onnx
+      url: ""
+  tf_inputs:
+    "X:0": [1]
+  tf_outputs:
+    - pred:0
+  tf_rtol: 0 
+  tf_atol: 0
