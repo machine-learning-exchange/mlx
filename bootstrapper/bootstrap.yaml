@@ -26,7 +26,6 @@ spec:
         imagePullPolicy: Always
         env:
           - name: internal_github_raw_url
-#            value: https://raw.github.ibm.com/OpenAIHub/mlx/master/
             value: https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/
           - name: enterprise_github_token
             value: ''
