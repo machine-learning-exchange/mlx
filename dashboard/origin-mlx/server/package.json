@@ -1,0 +1,13 @@
+{
+  "description": "Frontend webserver package for MLX",
+  "main": "server.js",
+  "dependencies": {
+    "@types/node": "11.11.1",
+    "express": "^4.16.3",
+    "http-proxy-middleware": "^0.18.0",
+    "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "build": "tsc --lib es2015 --outDir ./dist --typeRoots ./node_modules/@types *.ts"
+  }
+}

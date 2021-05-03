@@ -1,0 +1,178 @@
+{
+  "api_access_tokens": [
+    {
+      "api_token": "IBM_GITHUB_ENTERPRISE_API_TOKEN",
+      "url_host": "github.ibm.com"
+    }
+  ],
+  "components": [
+    {
+      "name": "Train Spark Model - IBM Cloud",
+      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/spark/train_spark/component.yaml"
+    },
+    {
+      "name": "Serve PyTorch Model - Seldon Core",
+      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/ffdl/serve/component.yaml"
+    },
+    {
+      "name": "Deploy Model - Watson Machine Learning",
+      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/watson/deploy/component.yaml"
+    },
+    {
+      "name": "Echo",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/echo/echo.yaml"
+    },
+    {
+      "name": "Model Robustness Check - PyTorch",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/metrics/robustness_checker/component.yaml"
+    },
+    {
+      "name": "Model Fairness Check - PyTorch",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/metrics/bias_detector/component.yaml"
+    },
+    {
+      "name": "Deploy Model - Kubernetes",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/kubernetes/kube_deployment/component.yaml"
+    },
+    {
+      "name": "Deploy Model - KFServing",
+      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/kubeflow/kfserving/component.yaml"
+    },
+    {
+      "name": "Subscribe - Watson OpenScale",
+      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/watson/manage/subscribe/component.yaml"
+    },
+    {
+      "name": "Store model - Watson Machine Learning",
+      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/watson/store/component.yaml"
+    },
+    {
+      "name": "Jupyter",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/jupyter/component.yaml"
+    },
+    {
+      "name": "Generate Dataset Metadata",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/dax-to-dlf/component.yaml"
+    },
+    {
+      "name": "Create Dataset Volume",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/dlf/component.yaml"
+    }
+  ],
+  "datasets": [
+    {
+      "name": "Thematic Clustering",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/thematic_clustering.yaml"
+    },
+    {
+      "name": "Finance Proposition Bank",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/finance_proposition_bank.yaml"
+    },
+    {
+      "name": "Groningen Meaning Bank",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/gmb.yaml"
+    },
+    {
+      "name": "NOAA Weather Data",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/jfk.yaml"
+    },
+    {
+      "name": "PubLayNet",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/publaynet.yaml"
+    },
+    {
+      "name": "PubTabNet",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/pubtabnet.yaml"
+    },
+    {
+      "name": "TensorFlow Speech Commands",
+      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/tsc.yaml"
+    }
+  ],
+  "models": [
+    {
+      "name": "MAX Human Pose Estimator",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-human-pose-estimator.yaml"
+    },
+    {
+      "name": "MAX Image Resolution Enhancer",
+      "url": "https://github.com/machine-learning-exchange/mlx/blob/main/models/samples/max-image-resolution-enhancer.yaml"
+    },
+    {
+      "name": "MAX Optical Character Recognition",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-ocr.yaml"
+    },
+    {
+      "name": "MAX Image Caption Generator",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-image-caption-generator.yaml"
+    },
+    {
+      "name": "MAX Toxic Comment Classifier",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-toxic-comment-classifier.yaml"
+    },
+    {
+      "name": "MAX Question Answering",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-question-answering.yaml"
+    },
+    {
+      "name": "MAX Recommender System",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-recommender.yaml"
+    },
+    {
+      "name": "MAX Object Detector",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-object-detector.yaml"
+    },
+    {
+      "name": "MAX Text Sentiment Classifier",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-text-sentiment-classifier.yaml"
+    },
+    {
+      "name": "MAX Weather Forecaster",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-weather-forecaster.yaml"
+    }
+  ],
+  "notebooks": [
+    {
+      "name": "AIF360 Gender Classification",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/aif360-gender.yaml"
+    },
+    {
+      "name": "ART detector model",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/art-detector.yaml"
+    },
+    {
+      "name": "ART poisoning attack",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/art-poison.yaml"
+    },
+    {
+      "name": "AIF360 Bias detection example",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/aif-bias.yaml"
+    },
+    {
+      "name": "JFK Airport Analysis",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/JFK-airport.yaml"
+    },
+    {
+      "name": "Train and deploy with Watson Machine Learning",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/watson-ml.yaml"
+    }
+  ],
+  "pipelines": [
+    {
+      "name": "Parallel Join",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/parallel_join.yaml"
+    },
+    {
+      "name": "Sequential Pipeline",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/sequential.yaml"
+    },
+    {
+      "name": "Launch a Katib experiment",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/katib.yaml"
+    },
+    {
+      "name": "ResourceOp Basic",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/resourceop_basic.yaml"
+    }
+  ]
+}

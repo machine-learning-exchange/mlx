@@ -1,0 +1,45 @@
+# Copyright 2021 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bootstrap
+  namespace: kubeflow
+spec:
+  backoffLimit: 5
+  template:
+    spec:
+      containers:
+      - name: mlx-bootstrap
+        image: aipipeline/bootstrap:latest
+        imagePullPolicy: Always
+        env:
+          - name: internal_github_raw_url
+#            value: https://raw.github.ibm.com/OpenAIHub/mlx/master/
+            value: https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/
+          - name: enterprise_github_token
+            value: ''
+          - name: mlx_api
+            value: mlx-api
+          - name: cleanup
+            value: 'false'
+        volumeMounts:
+          - name: mlx-config
+            mountPath: /etc/config.json
+            subPath: config.json
+      restartPolicy: Never
+      volumes:
+        - name: mlx-config
+          configMap:
+            name: mlx-config

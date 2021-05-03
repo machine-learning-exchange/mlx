@@ -1,0 +1,16 @@
+jupyter
+minio
+papermill
+
+# scientific computing libraries
+numpy
+matplotlib
+
+# machine learning libraries
+tensorflow
+keras
+scikit-image
+pyspark
+aif360[all]
+art
+kfp-tekton

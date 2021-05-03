@@ -1,0 +1,233 @@
+# Copyright 2021 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# name: (Required) name of this model file
+# description: (Optional) description of this model file
+# author: (Required for trainable)
+#   name: (Required for trainable) name of this training job's author
+#   email: (Required for trainable) email of this training job's author
+# framework: (Required)
+#   name: (Required) ML/DL framework format that the model is stored as.
+#   version: (Optional) Framework version used for this model
+#   runtimes: (Required for trainable)
+#     name: (Required for trainable) programming language for the model runtime
+#     version: (Required for trainable) programming language version for the model runtime
+
+name: Facial Age estimator Model
+model_identifier: facial-age-estimator
+description: Sample Model trained to classify the age of the human face.
+author:
+  name: DL Developer
+  email: "me@ibm.com"
+framework:
+  name: "tensorflow"
+  version: "1.13.1"
+  runtimes:
+    name: python
+    version: "3.5"
+
+# labels: (Optional list) labels and tags for this model
+#   - url: (Optional) Link to the ML/DL model page.
+#   - pipeline_uuids: (Optional) Linkage with a list of execuable pipelines.
+# license: (Optional) License for this model.
+# domain: (Optional) Domain metadata for this model.
+# website:  (Optional) Links that explain this model in more details
+
+license: "Apache 2.0"
+domain: "Facial Recognition"
+website: "https://developer.ibm.com/exchanges/models/all/max-facial-age-estimator"
+labels:
+  - url:
+  - pipeline_uuids: ["abcd1234"]
+
+# train: (optional)
+#   trainable: (optional) Indicate the model is trainable. Default: False
+#   credentials_required: (optional) Indicate the credentials is needed for training. Default: False
+#   tested_platforms(optional list): platform on which this model can trained (current options: watsonml, ffdl, kubeflow)
+#   model_source: (Required for trainable)
+#     initial_model: (Required for trainable)
+#       data_store: (Required) datastore for the model code source
+#       bucket: (Required) Bucket that has the model code source
+#       path: (Required) Bucket path that has the model code source
+#       url: (Optional) Link to the model
+#     initial_model_local: (Optional)
+#       path: (Optional) Initial model code in the user local machine
+#   model_training_results: (Required for trainable)
+#     trained_model: (Required for trainable)
+#       data_store: (Required) datastore for the training result source
+#       bucket: (Required) Bucket that has the training result source
+#       path: (Required) Bucket path that has the training result source
+#       url: (Optional) Link to the model
+#     trained_model_local: (Optional)
+#       path: (Optional) Path to pull trained model in the user local machine
+#   data_source: (Optional)
+#     training_data: (Required for trainable)
+#       data_store: (Required) datastore for the model data source
+#       bucket: (Required) Bucket that has the model data source
+#       path: (Required) Bucket path that has the model data source
+#       url: (Optional) Link to the model
+#     training_data_local: (Optional)
+#       path: (Optional) Initial data files in the user local machine
+#   mount_type: (Required) object storage mount type
+#   evaluation_metrics: (optional) Define the metrics for the training job.
+#     type: (Required) evaluation_metrics type
+#     in: (Required) Path to store the evaluation_metrics
+#   training_container_image: (Optional)
+#     container_image_url: (Optional) Custom training container image url
+#     container_store: (Optional) container_store for the custom training image
+#   execution: (Required for trainable)
+#     command: (Required) Entrypoint commands to execute model code
+#       name: (Required) T-shirt size for training on Watson Machine Learning
+#       nodes: (Required) Number of nodes needed for this training job. Default: 1
+#   training_params: (Optional) list of hyperparameters for the training model
+#   	- (optional) list of key(param name):value(param value)
+train:
+  trainable: true
+  credentials_required: true
+  tested_platforms:
+    - watsonml
+    - ffdl
+  model_source:
+    initial_model:
+      data_store: age_datastore
+      bucket: facial-age-estimator
+      path: 1.0/assets/
+      url: ""
+    initial_model_local:
+      path: /local/1.0/assets/
+  model_training_results:
+    trained_model:
+      data_store: age_datastore
+      bucket: facial-age-estimator
+      path: 1.0/assets/
+      url: ""
+    trained_model_local:
+      path: /local/1.0/assets/
+  data_source:
+    training_data:
+      data_store: age_datastore
+      bucket: facial-age-estimator
+      path: 1.0/assets/
+      training_data_url:
+    training_data_local:
+      path: /local/1.0/assets/
+  mount_type: mount_cos
+  evaluation_metrics:
+    type: tensorboard
+    in: "$JOB_STATE_DIR/logs/tb/test"
+  training_container_image:
+    container_image_url: tensorflow/tensorflow:latest-gpu-py3
+    container_store: container_store
+  execution:
+    command: python3 convolutional_network.py --trainImagesFile ${DATA_DIR}/train-images-idx3-ubyte.gz
+      --trainLabelsFile ${DATA_DIR}/train-labels-idx1-ubyte.gz --testImagesFile ${DATA_DIR}/t10k-images-idx3-ubyte.gz
+      --testLabelsFile ${DATA_DIR}/t10k-labels-idx1-ubyte.gz --learningRate 0.001 --trainingIters 20000
+    compute_configuration:
+      name: k80
+      nodes: 1
+  training_params:
+    - learning_rate:
+    - loss:
+    - batch_size:
+    - epoch:
+    - optimizer:
+      - xxx
+      - yyy
+    - train_op:
+
+# serve: (Optional)
+#   servable: (Optional) Indicate the model is servable without training. Default: False
+#   credentials_required: (optional) Indicate the credentials is needed for serving. Default: False
+#   tested_platforms (optional list): platform on which this model can served (current options: kubernetes, knative, seldon, watsonml, kfserving)
+#   model_source: (Optional) - (Required if servable is true)
+#     servable_model: (Required for s3 or url type)
+#       data_store: (Required for s3 type) datastore for the model source
+#       bucket: (Required for s3 type) Bucket that has the model source
+#       path: (Required for s3 type) Source path to the model
+#       url: (Required for url type) Source URL for the model
+#     servable_model_local: (Optional)
+#       path: (Optional) Servable model path in the user local machine
+#   serving_container_image: (Required for container type)
+#     container_image_url: (Required for container type) Container image to serve the model.
+#     container_store: (Optional) container_store name
+
+serve:
+  servable: true
+  credentials_required: true
+  tested_platforms:
+    - kubernetes
+    - knative
+  model_source:
+    servable_model:
+      data_store: age_datastore
+      bucket: facial-age-estimator
+      path: 2.0/assets/
+      url: ""
+    servable_model_local:
+      path: /local/1.0/assets/
+  serving_container_image:
+    container_image_url: "codait/max-facial-age-estimator:latest"
+    container_store: container_store
+
+# data (Optional) metadata for model training data
+#   source_id: (Optional) Extension file id regarding the data source.
+#   domain: (Optional) Metadata about the data domain.
+#   website: (Optional) Links to the data description
+#   license: (Optional) Data license
+
+data:
+  source_id: IMDB-WIKI
+  domain: "Image"
+  website: "https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/"
+  license: "Apache 2.0"
+
+# process: (Optional) - (Required for MAX training models)
+#     - name: (Required) Script Process name. Can mix any kind of process here
+#       params: (Optional) Free flowing list of key:value paisrs
+#        staging_dir: (Optional) Staging directory within the local machine
+#        trained_model_path: (Optional) trained model path within the object storage bucket
+
+process:
+    - name: training_post_process
+      params:
+       key: value
+       staging_dir: training_output/
+       trained_model_path:
+
+# data_stores: (Optional) - (Required for trainable models)
+#   - name: (Required) name of the data_stores
+#     connection:
+#       endpoing: (Required) Object Storage endpoint URL or public Object Storage key link.
+#       access_key_id: (Required) Object Storage access_key_id
+#       secret_access_key: (Required) Object secret_access_key
+
+data_stores:
+  - name: age_datastore
+    type: s3
+    connection:
+      endpoint: https://s3-api.us-geo.objectstorage.softlayer.net
+      access_key_id: xxxxxxxxxx
+      secret_access_key: xxxxxxxxxxxxx
+
+# container_stores: (Optional) - (Required for MAX training models)
+#  - name: (Required) name of the container_store
+#    connection:
+#      container_registry: (Required) container registry for this container_store
+#      container_registry_token: (Required if container registry is private) container registry token
+
+container_stores:
+ - name: container_store
+   connection:
+     container_registry: docker.io
+     container_registry_token: ""

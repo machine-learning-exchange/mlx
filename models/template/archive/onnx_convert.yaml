@@ -1,0 +1,32 @@
+# Copyright 2021 IBM Corporation
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License. 
+# model_customization: (Optional)
+#   onnx_convert: (Optional) Enable convertion to ONNX format. 
+#                            The model needs to be either trainable or servable. Default: False
+#   model_binary: (Optional) Model binary name that needs the format conversion.
+#   tf_inputs: (Required for TensorFlow model) Input placeholder and shapes of the model.
+#   tf_outputs: (Required for TensorFlow model) Output placeholders of the model.
+#   tf_rtol: (Optional) Relative tolerance for TensorFlow 
+#   tf_atol: (Optional) Absolute tolerance for TensorFlow 
+#   pt_device: (Required for PyTorch model) Type of device the PyTorch model was trained on. Default: cpu
+#   pt_input_size: (Required for PyTorch model) Tensor size for the PyTorch model input. E.G. [1,3,128,128]
+model_customization:
+  onnx_convert: True
+  model_binary: model.pb
+  tf_inputs:
+    "X:0": [1]
+  tf_outputs:
+    - pred:0
+  tf_rtol: 0 
+  tf_atol: 0

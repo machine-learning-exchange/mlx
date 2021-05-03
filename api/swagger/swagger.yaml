@@ -1,0 +1,2919 @@
+# Copyright 2021 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+swagger: "2.0"
+
+info:
+  version: "0.1.25-related-assets"
+  title: "MLX API"
+  description: "MLX API Extension for Kubeflow Pipelines"
+
+schemes:
+- "http"
+#- "https"
+#
+#security:
+#- Bearer: []
+#
+#securityDefinitions:
+#  Bearer:
+#    type: "apiKey"
+#    name: "authorization"
+#    in: "header"
+
+basePath: "/apis/v1alpha1"
+
+paths:
+  /health_check:
+    get:
+      tags:
+      - "HealthCheck"
+      operationId: "health_check"
+      summary: "Checks if the server is running"
+      security: []  # No security
+      parameters:
+      - name: "check_database"
+        description: "Test connection to MySQL database"
+        in: "query"
+        required: false
+        type: "boolean"
+        allowEmptyValue: true
+      - name: "check_object_store"
+        description: "Test connection to Minio object store"
+        in: "query"
+        required: false
+        type: "boolean"
+        allowEmptyValue: true
+      responses:
+        200:
+          description: "Server is healthy"
+        default:
+          description: "Something is wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /settings:
+    get:
+      tags:
+      - "ApplicationSettings"
+      operationId: "get_application_settings"
+      description: "Returns the application settings."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiSettings"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "ApplicationSettings"
+      operationId: "set_application_settings"
+      description: "Set and store the application settings."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "settings"
+        required: true
+        schema:
+          $ref: "#/definitions/apiSettings"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiSettings"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+    put:
+      tags:
+      - "ApplicationSettings"
+      operationId: "modify_application_settings"
+      description: "Modify one or more of the application settings."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "dictionary"
+        description: "A dictionary where the name of the keys corresponds to the name of the settings."
+        required: true
+        schema:
+          $ref: "#/definitions/dictionary"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiSettings"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /catalog:
+    get:
+      tags:
+      - "CatalogService"
+      operationId: "list_all_assets"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary with key-value pairs that correspond to the ApiComponent's attribute names and their respective values to be filtered for."
+        required: false
+        type: "string"
+        x-nullable: true
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListCatalogItemsResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "CatalogService"
+      operationId: "upload_multiple_assets"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiCatalogUpload"
+      responses:
+        201:
+          description: "All objects were created successfully."
+          schema:
+            $ref: "#/definitions/apiCatalogUploadResponse"
+        207:
+          description: "Some objects were created successfully, some errors occurred."
+          schema:
+            $ref: "#/definitions/apiCatalogUploadResponse"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components:
+    get:
+      tags:
+      - "ComponentService"
+      operationId: "list_components"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary with key-value pairs that correspond to the ApiComponent's attribute names and their respective values to be filtered for."
+        required: false
+        type: "string"
+        x-nullable: true
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListComponentsResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "create_component"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiComponent"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiComponent"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/{id}:
+    get:
+      tags:
+      - "ComponentService"
+      operationId: "get_component"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiComponent"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    delete:
+      tags:
+      - "ComponentService"
+      operationId: "delete_component"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deletion successful."
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/{id}/download:
+    get:
+      summary: "Returns the component artifacts compressed into a .tgz (.tar.gz) file."
+      tags:
+      - "ComponentService"
+      operationId: "download_component_files"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "include_generated_code"
+        description: "Include generated run script in download"
+        in: "query"
+        type: "boolean"
+        required: false
+        default: false
+        allowEmptyValue: true
+      produces:
+      - "application/gzip"
+      responses:
+        200:
+          description: "A TGZ file containing the component artifacts."
+          schema:
+            type: "file"
+
+  /components/{id}/generate_code:
+    get:
+      tags:
+      - "ComponentService"
+      operationId: "generate_component_code"
+      description: "Generate sample code to use component in a pipeline"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGenerateCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/{id}/run:
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "run_component"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "parameters"
+        in: "body"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/apiParameter"
+        required: true
+      - name: "run_name"
+        description: "name to identify the run on the Kubeflow Pipelines UI, defaults to component name"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiRunCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/{id}/templates:
+    get:
+      tags:
+      - "ComponentService"
+      operationId: "get_component_template"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGetTemplateResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/upload:
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "upload_component"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The component YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB."
+        required: true
+        type: "file"
+      - name: "name"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "Component was created successfully"
+          schema:
+            $ref: "#/definitions/apiComponent"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/upload_from_url:
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "upload_component_from_url"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "url"
+        description: "URL pointing to the component YAML file."
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "name"
+        description: "Optional, the name of the component to be created overriding the name in the YAML file."
+        in: "query"
+        required: false
+        type: "string"
+      - name: "access_token"
+        description: "Optional, the Bearer token to access the 'url'."
+        in: "formData"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "Component was created successfully."
+          schema:
+            $ref: "#/definitions/apiComponent"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/{id}/upload:
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "upload_component_file"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the component."
+        required: true
+        type: "string"
+      - name: "uploadfile"
+        in: "formData"
+        description: "The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)"
+        required: true
+        type: "file"
+      responses:
+        204:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiComponent"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/featured:
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "set_featured_components"
+      parameters:
+      - name: "component_ids"
+        description: "Array of component IDs to be featured."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /components/publish_approved:
+    post:
+      tags:
+      - "ComponentService"
+      operationId: "approve_components_for_publishing"
+      parameters:
+      - name: "component_ids"
+        description: "Array of component IDs to be approved for publishing."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /credentials:
+    get:
+      tags:
+        - "CredentialService"
+      operationId: "list_credentials"
+      parameters:
+        - name: "page_token"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "page_size"
+          in: "query"
+          required: false
+          type: "integer"
+          format: "int32"
+        - name: "sort_by"
+          in: "query"
+          description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+          required: false
+          type: "string"
+          x-nullable: true
+        - name: "filter"
+          in: "query"
+          description: "A string-serialized JSON dictionary with key-value pairs that correspond to the Credential's attribute names and their respective values to be filtered for."
+          required: false
+          type: "string"
+          x-nullable: true
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListCredentialsResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+    post:
+      tags:
+      - "CredentialService"
+      operationId: "create_credential"
+      consumes:
+        - "application/json"
+      description: "Creates a credential associated with a pipeline."
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiCredential"
+      responses:
+        201:
+          description: "The credential was created."
+          schema:
+            $ref: "#/definitions/apiCredential"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /credentials/{id}:
+    get:
+      tags:
+        - "CredentialService"
+      operationId: "get_credential"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiCredential"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+    delete:
+      tags:
+      - "CredentialService"
+      operationId: "delete_credential"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deletion successful."
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets:
+    get:
+      tags:
+      - "DatasetService"
+      operationId: "list_datasets"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of 'field_name', 'field_name asc' or 'field_name desc'. Ascending by default."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary containing key-value pairs with name of the object property to apply filter on and the value of the respective property."
+        required: false
+        type: "string"
+        x-nullable: true
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListDatasetsResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "create_dataset"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiDataset"
+      responses:
+        201:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiDataset"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/{id}:
+    get:
+      tags:
+      - "DatasetService"
+      operationId: "get_dataset"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiDataset"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    delete:
+      tags:
+      - "DatasetService"
+      operationId: "delete_dataset"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deletion successful."
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/{id}/download:
+    get:
+      summary: "Returns the dataset artifacts compressed into a .tgz (.tar.gz) file."
+      tags:
+      - "DatasetService"
+      operationId: "download_dataset_files"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "include_generated_code"
+        description: "Include generated run script in download"
+        in: "query"
+        type: "boolean"
+        required: false
+        default: false
+        allowEmptyValue: true
+      produces:
+      - "application/gzip"
+      responses:
+        200:
+          description: "A TGZ file containing the dataset artifacts."
+          schema:
+            type: "file"
+
+  /datasets/{id}/generate_code:
+    get:
+      tags:
+      - "DatasetService"
+      operationId: "generate_dataset_code"
+      description: "Generate sample code to use dataset in a pipeline"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGenerateCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/{id}/run:
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "run_dataset"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "parameters"
+        in: "body"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/apiParameter"
+        required: false
+      - name: "run_name"
+        description: "name to identify the run on the Kubeflow Pipelines UI, defaults to component name"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiRunCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/{id}/templates:
+    get:
+      tags:
+      - "DatasetService"
+      operationId: "get_dataset_template"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGetTemplateResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/upload:
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "upload_dataset"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The dataset YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB."
+        required: true
+        type: "file"
+      - name: "name"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiDataset"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/upload_from_url:
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "upload_dataset_from_url"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "url"
+        description: "URL pointing to the dataset YAML file."
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "name"
+        description: "Optional, the name of the dataset to be created overriding the name in the YAML file."
+        in: "query"
+        required: false
+        type: "string"
+      - name: "access_token"
+        description: "Optional, the Bearer token to access the 'url'."
+        in: "formData"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "Dataset was created successfully."
+          schema:
+            $ref: "#/definitions/apiDataset"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/{id}/upload:
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "upload_dataset_file"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the dataset."
+        required: true
+        type: "string"
+      - name: "uploadfile"
+        in: "formData"
+        description: "The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)"
+        required: true
+        type: "file"
+      responses:
+        204:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiDataset"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/featured:
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "set_featured_datasets"
+      parameters:
+      - name: "dataset_ids"
+        description: "Array of dataset IDs to be featured."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /datasets/publish_approved:
+    post:
+      tags:
+      - "DatasetService"
+      operationId: "approve_datasets_for_publishing"
+      parameters:
+      - name: "dataset_ids"
+        description: "Array of dataset IDs to be approved for publishing."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /inferenceservices:
+    get:
+      tags:
+      - "InferenceService"
+      operationId: "list_inferenceservices"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary with key-value pairs that correspond to the InferenceService's attribute names and their respective values to be filtered for."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "namespace"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListInferenceservicesResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "InferenceService"
+      operationId: "create_service"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiInferenceservice"
+      - name: "namespace"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiInferenceservice"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /inferenceservices/{id}:
+    get:
+      tags:
+      - "InferenceService"
+      operationId: "get_inferenceservices"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "namespace"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiInferenceservice"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /inferenceservices/upload:
+    post:
+      tags:
+      - "InferenceService"
+      operationId: "upload_service"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The inference service metadata to upload. Maximum size of 32MB is supported."
+        required: true
+        type: "file"
+      - name: "name"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "namespace"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiInferenceservice"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models:
+    get:
+      tags:
+      - "ModelService"
+      operationId: "list_models"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary with key-value pairs that correspond to the Model's attribute names and their respective values to be filtered for."
+        required: false
+        type: "string"
+        x-nullable: true
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListModelsResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "ModelService"
+      operationId: "create_model"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiModel"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiModel"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/{id}:
+    get:
+      tags:
+      - "ModelService"
+      operationId: "get_model"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiModel"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    delete:
+      tags:
+      - "ModelService"
+      operationId: "delete_model"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deletion successful."
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/{id}/download:
+    get:
+      summary: "Returns the model artifacts compressed into a .tgz (.tar.gz) file."
+      tags:
+      - "ModelService"
+      operationId: "download_model_files"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "include_generated_code"
+        description: "Include generated run scripts in download"
+        in: "query"
+        type: "boolean"
+        required: false
+        default: false
+        allowEmptyValue: true
+      produces:
+      - "application/gzip"
+      responses:
+        200:
+          description: "A TGZ file containing the model artifacts."
+          schema:
+            type: "file"
+
+  /models/{id}/generate_code:
+    get:
+      tags:
+      - "ModelService"
+      operationId: "generate_model_code"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGenerateModelCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/{id}/run:
+    post:
+      tags:
+      - "ModelService"
+      operationId: "run_model"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "pipeline_stage"
+        description: "pipeline stage, either 'train' or 'serve'"
+        in: "query"
+        required: true
+        type: "string"
+        enum: ["train", "serve"]
+      - name: "execution_platform"
+        description: "execution platform, i.e. 'kubernetes', 'knative'"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "run_name"
+        description: "name to identify the run on the Kubeflow Pipelines UI, defaults to model identifier"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "parameters"
+        description: "optional run parameters, must include 'github_url' and 'github_token' if credentials are required"
+        in: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/dictionary"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiRunCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/{id}/templates:
+    get:
+      tags:
+      - "ModelService"
+      operationId: "get_model_template"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGetTemplateResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/upload:
+    post:
+      tags:
+      - "ModelService"
+      operationId: "upload_model"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The model YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB."
+        required: true
+        type: "file"
+      - name: "name"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiModel"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/upload_from_url:
+    post:
+      tags:
+      - "ModelService"
+      operationId: "upload_model_from_url"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "url"
+        description: "URL pointing to the model YAML file."
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "name"
+        description: "Optional, the name of the model to be created overriding the name in the YAML file."
+        in: "query"
+        required: false
+        type: "string"
+      - name: "access_token"
+        description: "Optional, the Bearer token to access the 'url'."
+        in: "formData"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "Model was created successfully."
+          schema:
+            $ref: "#/definitions/apiModel"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/{id}/upload:
+    post:
+      tags:
+      - "ModelService"
+      operationId: "upload_model_file"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The model identifier."
+        required: true
+        type: "string"
+      - name: "uploadfile"
+        in: "formData"
+        description: "The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)"
+        required: true
+        type: "file"
+      responses:
+        204:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiModel"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/featured:
+    post:
+      tags:
+      - "ModelService"
+      operationId: "set_featured_models"
+      parameters:
+      - name: "model_ids"
+        description: "Array of model IDs to be featured."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /models/publish_approved:
+    post:
+      tags:
+      - "ModelService"
+      operationId: "approve_models_for_publishing"
+      parameters:
+      - name: "model_ids"
+        description: "Array of model IDs to be approved for publishing."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks:
+    get:
+      tags:
+      - "NotebookService"
+      operationId: "list_notebooks"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+        required: false
+        type: "string"
+        x-nullable: true
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary with key-value pairs that correspond to the Notebook's attribute names and their respective values to be filtered for."
+        required: false
+        type: "string"
+        x-nullable: true
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListNotebooksResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "create_notebook"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiNotebook"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiNotebook"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/{id}:
+    get:
+      tags:
+      - "NotebookService"
+      operationId: "get_notebook"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiNotebook"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    delete:
+      tags:
+      - "NotebookService"
+      operationId: "delete_notebook"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deletion successful."
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/{id}/download:
+    get:
+      summary: "Returns the notebook artifacts compressed into a .tgz (.tar.gz) file."
+      tags:
+      - "NotebookService"
+      operationId: "download_notebook_files"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "include_generated_code"
+        description: "Include generated run script in download"
+        in: "query"
+        type: "boolean"
+        required: false
+        default: false
+        allowEmptyValue: true
+      produces:
+      - "application/gzip"
+      responses:
+        200:
+          description: "A TGZ file containing the notebook artifacts."
+          schema:
+            type: "file"
+
+  /notebooks/{id}/generate_code:
+    get:
+      tags:
+      - "NotebookService"
+      operationId: "generate_notebook_code"
+      description: "Generate sample code to use notebook in a pipeline"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGenerateCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/{id}/run:
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "run_notebook"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "run_name"
+        description: "name to identify the run on the Kubeflow Pipelines UI, defaults to notebook name"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "parameters"
+        description: "optional run parameters, may be required based on pipeline definition"
+        in: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/dictionary"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiRunCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/{id}/templates:
+    get:
+      tags:
+      - "NotebookService"
+      operationId: "get_notebook_template"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGetTemplateResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/upload:
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "upload_notebook"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The notebook metadata YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB."
+        required: true
+        type: "file"
+      - name: "name"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "enterprise_github_token"
+        in: "formData"
+        description: "Optional GitHub API token providing read-access to notebooks stored on Enterprise GitHub accounts."
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiNotebook"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/upload_from_url:
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "upload_notebook_from_url"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "url"
+        description: "URL pointing to the notebook YAML file."
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "name"
+        description: "Optional, the name of the notebook to be created overriding the name in the YAML file."
+        in: "query"
+        required: false
+        type: "string"
+      - name: "access_token"
+        description: "Optional, the Bearer token to access the 'url'."
+        in: "formData"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "Notebook was created successfully."
+          schema:
+            $ref: "#/definitions/apiNotebook"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/{id}/upload:
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "upload_notebook_file"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the notebook."
+        required: true
+        type: "string"
+      - name: "uploadfile"
+        in: "formData"
+        description: "The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)"
+        required: true
+        type: "file"
+      responses:
+        204:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiNotebook"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/featured:
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "set_featured_notebooks"
+      parameters:
+      - name: "notebook_ids"
+        description: "Array of notebook IDs to be featured."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /notebooks/publish_approved:
+    post:
+      tags:
+      - "NotebookService"
+      operationId: "approve_notebooks_for_publishing"
+      parameters:
+      - name: "notebook_ids"
+        description: "Array of notebook IDs to be approved for publishing."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines:
+    get:
+      tags:
+      - "PipelineService"
+      operationId: "list_pipelines"
+      parameters:
+      - name: "page_token"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page_size"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "sort_by"
+        in: "query"
+        description: "Can be format of \"field_name\", \"field_name asc\" or \"field_name\
+          \ desc\"\nAscending by default."
+        required: false
+        type: "string"
+      - name: "filter"
+        in: "query"
+        description: "A string-serialized JSON dictionary with key-value pairs that correspond to the Pipeline's attribute names and their respective values to be filtered for."
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiListPipelinesResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "create_pipeline"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiPipeline"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiPipeline"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/{id}:
+    get:
+      tags:
+      - "PipelineService"
+      operationId: "get_pipeline"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiPipelineExtended"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+    delete:
+      tags:
+      - "PipelineService"
+      operationId: "delete_pipeline"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deletion successful."
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/{id}/download:
+    get:
+      summary: "Returns the pipeline YAML compressed into a .tgz (.tar.gz) file."
+      tags:
+        - "PipelineService"
+      operationId: "download_pipeline_files"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      produces:
+        - "application/gzip"
+      responses:
+        200:
+          description: "A TGZ file containing the component artifacts."
+          schema:
+            type: "file"
+
+  /pipelines/{id}/run:
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "run_pipeline"
+      consumes:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "run_name"
+        description: "name to identify the run on the Kubeflow Pipelines UI, defaults to pipeline name"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "parameters"
+        description: "optional run parameters, may be required based on pipeline definition"
+        in: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/dictionary"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiRunCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/{id}/templates:
+    get:
+      tags:
+      - "PipelineService"
+      operationId: "get_template"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiGetTemplateResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/upload:
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "upload_pipeline"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The pipeline YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB."
+        required: true
+        type: "file"
+      - name: "name"
+        in: "query"
+        description: "A name for this pipeline, optional"
+        required: false
+        type: "string"
+      - name: "description"
+        in: "query"
+        description: "A description for this pipeline, optional"
+        required: false
+        type: "string"
+#      - name: "labels"
+#        in: "formData"
+#        description: "A string representation of a JSON dictionary of labels describing this pipeline, optional."
+#        required: false
+#        type: "string"
+#        # should be type:"object" for a dictionary, but not allowed in Swagger 2.0
+#        # see https://stackoverflow.com/questions/32725052/in-swagger-how-to-define-an-api-that-consumes-a-file-along-with-a-schema-paramer
+      - name: "annotations"
+        in: "formData"
+        description: "A string representation of a JSON dictionary of annotations describing this pipeline, optional. \
+          Example: \
+          {\"platform\": \"Kubeflow\", \"license\": \"Opensource\"}"
+        required: false
+        type: "string"
+        # should be type:"object" for a dictionary, but not allowed in Swagger 2.0
+        # see https://stackoverflow.com/questions/32725052/in-swagger-how-to-define-an-api-that-consumes-a-file-along-with-a-schema-paramer
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiPipelineExtended"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/upload_from_url:
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "upload_pipeline_from_url"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "url"
+        description: "URL pointing to the pipeline YAML file."
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "name"
+        description: "Optional, the name of the pipeline to be created overriding the name in the YAML file."
+        in: "query"
+        required: false
+        type: "string"
+      - name: "access_token"
+        description: "Optional, the Bearer token to access the 'url'."
+        in: "formData"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "Pipeline was created successfully."
+          schema:
+            $ref: "#/definitions/apiPipeline"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/featured:
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "set_featured_pipelines"
+      parameters:
+      - name: "pipeline_ids"
+        description: "Array of pipeline IDs to be featured."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/publish_approved:
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "approve_pipelines_for_publishing"
+      parameters:
+      - name: "pipeline_ids"
+        description: "Array of pipeline IDs to be approved for publishing."
+        in: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Success"
+        default:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /pipelines/run_custom_pipeline:
+    post:
+      tags:
+      - "PipelineService"
+      operationId: "run_custom_pipeline"
+      consumes:
+        - "application/json"
+      description: "Run a complex pipeline defined by a directed acyclic graph (DAG)"
+      parameters:
+      - name: "run_custom_pipeline_payload"
+        description: "A custom pipeline defined by a directed acyclic graph (DAG) and input parameters"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/apiPipelineCustomRunPayload"
+      - name: "run_name"
+        description: "Name to identify the run on the Kubeflow Pipelines UI"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "A successful response."
+          schema:
+            $ref: "#/definitions/apiRunCodeResponse"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+###############################################################################
+#                         definitions
+###############################################################################
+
+definitions:
+
+  apiAccessToken:
+    type: "object"
+    properties:
+      api_token:
+        type: "string"
+        description: "A read-only API access token."
+      url_host:
+        type: "string"
+        description: "The API server host that this API token applies to."
+    required:
+      - api_token
+      - url_host
+    example:
+      api_token: "T0K3N123"
+      url_host: "github.ibm.com"
+
+  apiAsset:
+    type: "object"
+    description: "Abstract asset with properties shared across all MLX asset types."
+    properties:
+      id:
+        type: "string"
+      created_at:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      featured:
+        type: "boolean"
+      publish_approved:
+        type: "boolean"
+      related_assets:
+        type: "array"
+        items:
+          type: "string"
+    required:
+      - name
+      - description
+    example:
+      id: "05au-84nr-1tey-0qwr"
+      created_at: "2019-01-23T04:56:07.000+00:00"
+      name: "Train a Deep Learning Model"
+      description: "A deep learning model"
+
+  apiCatalogUpload:
+    type: "object"
+    properties:
+      api_access_tokens:
+        description: "A mapping of read-only API access tokens to a partial URL."
+        type: "array"
+        items:
+          $ref: "#/definitions/apiAccessToken"
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCatalogUploadItem"
+      datasets:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCatalogUploadItem"
+      models:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCatalogUploadItem"
+      notebooks:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCatalogUploadItem"
+      pipelines:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCatalogUploadItem"
+
+  apiCatalogUploadItem:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      url:
+        type: "string"
+        description: "The URL to the YAML metadata file, i.e. on GitHub.com"
+    required:
+      - url
+    example:
+      name: "My awesome new asset"
+      url: "https://github.com/org/repo/blob/main/assets/my/awesome/new/asset.yaml"
+
+  apiCatalogUploadResponse:
+    description: "A list of assets and/or errors created in response to a catalog upload."
+    allOf:
+      - $ref: "#/definitions/apiListCatalogItemsResponse"
+      - $ref: "#/definitions/apiListCatalogUploadErrors"
+      - properties:
+          total_created:
+            type: "integer"
+            format: "int32"
+
+  apiListCatalogUploadErrors:
+    type: "object"
+    properties:
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCatalogUploadError"
+      total_errors:
+        type: "integer"
+        format: "int32"
+
+  apiCatalogUploadError:
+    description: "A catalog upload error"
+    allOf:
+      - $ref: "#/definitions/apiCatalogUploadItem"
+      - properties:
+          error_message:
+            type: "string"
+          status_code:
+            type: "integer"
+            format: "int32"
+
+  apiComponent:
+    description: "A Kubeflow Pipeline component."
+    allOf:
+      - $ref: "#/definitions/apiAsset"
+      - properties:
+          metadata:
+            $ref: "#/definitions/apiMetadata"
+          parameters:
+            type: "array"
+            items:
+              $ref: "#/definitions/apiParameter"
+    example:
+      id: "id"
+      created_at: "2019-01-23T04:56:07.000+00:00"
+      name: "Deep Learning - Train Model"
+      description: "description"
+      metadata:
+        labels:
+          platform: "IBM Watson"
+      parameters:
+        - name: "model_filename"
+          value: "model.py"
+        - name: "data_filename"
+          value: "data.csv"
+
+  # POST /credentials {
+  #   project_id: "xxx",
+  #   pipeline_id: "yyy",
+  #   api_key: "zzz",
+  #   data_assets: ["guid1", "guid2"]
+  # }
+  apiCredential:
+    description: "A credentials object associated with a pipeline"
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      created_at:
+        type: "string"
+        format: "date-time"
+      pipeline_id:
+        type: "string"
+      project_id:
+        type: "string"
+      api_key:
+        description: "TODO: what is the api_key"
+        type: "string"
+      data_assets:
+        description: "List of data asset IDs"
+        type: "array"
+        items:
+          type: "string"
+#      additional_data:
+#        $ref: "#/definitions/dictionary"
+    required:
+      - pipeline_id
+      - project_id
+    example:
+      pipeline_id: "eac1j24-0f2ndl-0a3pi3df"
+      project_id: "my-awesome-project-1214"
+      api_key: "api_key"
+      data_assets:
+      - "data_assets"
+      - "data_assets"
+      created_at: "2000-01-23T04:56:07.000+00:00"
+      id: "generated-guid-used-as-k8s-secret-name"
+
+  apiDataset:
+    allOf:
+      - $ref: "#/definitions/apiAsset"
+      - properties:
+          domain:
+            type: "string"  # should be typed, enumeration
+          format:
+            type: "string"  # should be typed, enumeration
+          size:
+            type: "string"
+          number_of_records:
+            type: "integer"
+            format: "int32"
+          license:
+            type: "string"  # should be typed, enumeration
+          metadata:
+            $ref: "#/definitions/apiMetadata"
+    example:
+      id: "id"
+      created_at: "2020-09-15T04:56:07.000+00:00"
+      name: "Fashion-MNIST"
+      description: "Standardized images of fashion items from 10 classes"
+      format: "CSV"
+      size: "37MB"
+      number_of_records: 60000
+      license: "MIT"
+      domain: "Image Classification"
+
+  apiGenerateCodeResponse:
+    type: "object"
+    properties:
+      script:
+        type: "string"
+        description: "The script source code to run the component in a pipeline"
+    example:
+      script: "TODO: Python source file content example"
+
+  apiGenerateModelCodeResponse:
+    type: "object"
+    properties:
+      scripts:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiModelScript"
+        description: "The source code samples to use the model in a pipeline"
+
+  apiGetTemplateResponse:
+    type: "object"
+    properties:
+      template:
+        type: "string"
+        description: "The YAML template file content"
+      url:
+        type: "string"
+        description: "The URL to download the template text from S3 storage (Minio)"
+    example:
+      template: "TODO: YAML file content"
+      url: "http://min.io:9000/mlpipeline/components/1lBnSAce8lAXP97Yb11eqSk/train_wml.yaml"
+
+  apiListCatalogItemsResponse:
+    type: "object"
+    properties:
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiComponent"
+      datasets:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiDataset"
+      models:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiModel"
+      notebooks:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiNotebook"
+      pipelines:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiPipeline"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+
+  apiListComponentsResponse:
+    type: "object"
+    properties:
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiComponent"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+    example:
+      components:
+      - name: "name"
+        created_at: "2000-01-23T04:56:07.000+00:00"
+        description: "description"
+        id: "id"
+        parameters:
+        - name: "name"
+          value: "value"
+        - name: "name"
+          value: "value"
+      - name: "name"
+        created_at: "2000-01-23T04:56:07.000+00:00"
+        description: "description"
+        id: "id"
+        parameters:
+        - name: "name"
+          value: "value"
+        - name: "name"
+          value: "value"
+      next_page_token: "next_page_token"
+      total_size: 10
+
+  apiListCredentialsResponse:
+    type: "object"
+    properties:
+      credentials:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiCredential"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+
+  apiListDatasetsResponse:
+    type: "object"
+    properties:
+      datasets:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiDataset"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+    example:
+      datasets:
+      - name: "name"
+        created_at: "2000-01-23T04:56:07.000+00:00"
+        description: "description"
+        id: "id"
+      - name: "name"
+        created_at: "2000-01-23T04:56:07.000+00:00"
+        description: "description"
+        id: "id"
+      next_page_token: "next_page_token"
+      total_size: 2
+
+  apiListModelsResponse:
+    type: "object"
+    properties:
+      models:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiModel"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+
+  apiListInferenceservicesResponse:
+    type: "object"
+    properties:
+      Inferenceservices:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiInferenceservice"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+
+  apiListNotebooksResponse:
+    type: "object"
+    properties:
+      notebooks:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiNotebook"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+
+  apiListPipelinesResponse:
+    type: "object"
+    properties:
+      pipelines:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiPipelineExtended"
+      total_size:
+        type: "integer"
+        format: "int32"
+      next_page_token:
+        type: "string"
+    example:
+      pipelines:
+      - name: "name"
+        created_at: "2018-12-29T04:56:07.000+00:00"
+        description: "description"
+        id: "e3U42y3-au240nc-13nc"
+        status: "READY"
+        parameters:
+        - name: "name"
+          value: "value"
+        - name: "name"
+          value: "value"
+      - name: "another pipeline"
+        created_at: "2019-06-23T14:18:01.000+00:00"
+        description: "another pipeline"
+        id: "v92-834nat-2ndida"
+        annotations:
+          platform: "KFP"
+      next_page_token: "next_page_token"
+      total_size: 10
+
+  apiMetadata:
+    type: "object"
+    properties:
+      annotations:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      labels:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      annotations: "{platform: 'IBM Watson'}"
+      tags: "['keras', 'tensorflow']"
+
+  apiInferenceservice:
+    type: "object"
+    properties:
+      apiVersion:
+        type: "string"
+      kind:
+        type: "string"
+      metadata:
+        $ref: "#/definitions/anyValue"
+      spec:
+        $ref: "#/definitions/anyValue"
+    required:
+      - apiVersion
+      - kind
+    example:
+      apiVersion: "serving.kubeflow.org/v1alpha2"
+      kind: "InferenceService"
+      metadata:
+        name: "sklearn-iris"
+      spec:
+        default:
+          predictor:
+            sklearn:
+              storageUri: "gs://kfserving-samples/models/sklearn/iris"
+
+  apiModel:
+    description: "A model that can be trained and/or served."
+    allOf:
+      - $ref: "#/definitions/apiAsset"
+      - type: object
+        properties:
+          domain:
+            type: "string"
+          labels:
+            type: "object"
+            additionalProperties:
+              type: "string"
+          framework:
+            $ref: "#/definitions/apiModelFramework"
+          trainable:
+            type: "boolean"
+          trainable_tested_platforms:
+            type: "array"
+            items:
+              type: "string"
+          trainable_credentials_required:
+            type: "boolean"
+          trainable_parameters:
+            type: "array"
+            items:
+              $ref: "#/definitions/apiParameter"
+          servable:
+            type: "boolean"
+          servable_tested_platforms:
+            type: "array"
+            items:
+              type: "string"
+          servable_credentials_required:
+            type: "boolean"
+          servable_parameters:
+            type: "array"
+            items:
+              $ref: "#/definitions/apiParameter"
+        required:
+          - framework
+    example:
+      id: "max-audio-classifier"
+      created_at: "2019-04-23T04:56:07.000+00:00"
+      name: "Max Audio Classifier"
+      description: "Identify sounds in short audio clips"
+      labels:
+        domain: "speech recognition"
+      framework:
+        name: "tensorflow"
+        version: "1.8"
+        runtimes:
+          name: "python"
+          version: "3.5"
+      trainable: false
+      servable: true
+
+  apiModelFramework:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      version:
+        type: "string"
+      runtimes:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          version:
+            type: "string"
+    required:
+      - name
+    example:
+      name: "tensorflow"
+      version: "1.5"
+      runtimes:
+        name: "python"
+        version: "3.5"
+
+  apiModelScript:
+    type: "object"
+    properties:
+      pipeline_stage:
+        type: "string"
+        description: "pipeline stage that this code sample applies to, either 'train' or 'serve'"
+      execution_platform:
+        type: "string"
+        description: "execution platform that this code sample applies to, i.e. 'kubernetes', 'knative'"
+      script_code:
+        type: "string"
+        description: "the source code to run the model in a pipeline stage"
+    required:
+      - pipeline_stage
+      - execution_platform
+      - script_code
+    example:
+      pipeline_stage: "serve"
+      execution_platform: "kubernetes"
+      script_code: "TODO: python script example"
+
+  apiNotebook:
+    description: "A notebook component."
+    allOf:
+      - $ref: "#/definitions/apiAsset"
+      - properties:
+          url:
+            type: "string"
+            description: "The URL to the notebook source file (.ipynb) on GitHub.com"
+          metadata:
+            $ref: "#/definitions/apiMetadata"
+          parameters:
+            type: "array"
+            items:
+              $ref: "#/definitions/apiParameter"
+        required:
+          - url
+    example:
+      id: "92jh4-2nf09-soaqm5"
+      created_at: "2019-07-15T14:56:07.000+00:00"
+      name: "My Notebook"
+      description: "Some text describing the notebook"
+      metadata:
+        annotations:
+          platform: "OpenSource"
+
+  apiParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      default:
+        $ref: "#/definitions/anyValue"
+      value:
+        $ref: "#/definitions/anyValue"
+    required:
+      - name
+    example:
+      name: "name"
+      value: "value"
+
+  apiPipeline:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      created_at:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiParameter"
+#      url:
+#        $ref: "#/definitions/apiUrl"
+      status:
+        type: "string"
+        description: "In case any error happens retrieving a pipeline field, only\
+          \ pipeline ID\nand the error message is returned. Client has the flexibility\
+          \ of choosing\nhow to handle error. This is especially useful during listing\
+          \ call."
+      default_version_id:
+        type: "string"
+        description: "The default version of the pipeline. As of now, the latest\
+          \ version is used as default. (In the future, if desired by customers, we\
+          \ can allow them to set default version.)"
+        readOnly: true
+    example:
+      name: "name"
+      created_at: "2000-01-23T04:56:07.000+00:00"
+      description: "description"
+      id: "id"
+      status: "READY"
+      parameters:
+      - name: "name"
+        value: "value"
+      - name: "name"
+        value: "value"
+#      url:
+#        pipeline_url: "pipeline_url"
+
+  apiPipelineExtension:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      annotations:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      featured:
+        type: "boolean"
+      publish_approved:
+        type: "boolean"
+    example:
+      id: "id"
+      annotations:
+        platform: "KFP"
+
+  apiPipelineExtended:
+    description: "A representation of a pipeline with extended properties."
+    allOf:
+    - $ref: "#/definitions/apiPipeline"
+    - $ref: "#/definitions/apiPipelineExtension"
+
+  apiPipelineCustomRunPayload:
+    description: "Wrapper object to post a custom pipeline run defined by a directed acyclic graph (DAG) and input parameters."
+    type: "object"
+    properties:
+      custom_pipeline:
+        $ref: "#/definitions/apiPipelineCustom"
+      run_parameters:
+        $ref: "#/definitions/dictionary"
+
+  apiPipelineCustom:
+    description: "A custom pipeline defined by a directed acyclic graph (DAG) and input parameters."
+    type: "object"
+    properties:
+      dag:
+        $ref: "#/definitions/apiPipelineDAG"
+      inputs:
+        $ref: "#/definitions/apiPipelineInputs"
+      name:
+        description: "Name of the custom pipeline"
+        type: "string"
+      description:
+        description: "Optional description of the custom pipeline"
+        type: "string"
+    required:
+      - dag
+      - name
+
+  apiPipelineInputs:
+    description: "Input parameters to custom pipeline"
+    type: "object"
+    properties:
+      parameters:
+        description: "List of pipeline parameters"
+        type: "array"
+        items:
+          $ref: "#/definitions/apiParameter"
+
+  apiPipelineDAG:
+    description: "A directed acyclic graph (DAG) describing a complex pipeline"
+    type: "object"
+    properties:
+      tasks:
+        description: "List of pipeline tasks."
+        type: "array"
+        items:
+          $ref: "#/definitions/apiPipelineTask"
+
+  apiPipelineTask:
+    description: "A custom pipeline task as part of a directed acyclic graph (DAG)."
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      artifact_type:
+        description: "The type of artifact for this task, can be either one of: 'component', 'model', 'notebook', 'pipeline'"
+        type: "string"
+      artifact_id:
+        description: "The UUID of the artifact for this task"
+        type: "string"
+      arguments:
+        $ref: "#/definitions/apiPipelineTaskArguments"
+      dependencies:
+        description: "Task dependencies, referring to upstream tasks that have to be completed prior to running this task by their respective task names"
+        type: "array"
+        items:
+          type: "string"
+    required:
+      - artifact_type
+      - artifact_id
+
+  apiPipelineTaskArguments:
+    description: "Arguments to a custom pipeline task as part of a directed acyclic graph (DAG)."
+    type: "object"
+    properties:
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/apiParameter"
+
+  apiRunCodeResponse:
+    type: "object"
+    properties:
+      run_url:
+        type: "string"
+        description: "The URL path to view the run details in the Kubeflow Pipeline Web UI"
+      run_output_location:
+        type: "string"
+        description: "The location of the output artifacts produced by the run, if any."
+    required:
+      - run_url
+    example:
+      run_url: "/runs/details/0e2680ec-5d5a-11e9-9911-5ed556129669"
+
+  apiSettings:
+    type: "object"
+    description: "List of application settings grouped into categories (sections)."
+    properties:
+      sections:
+        description: "List of configuration categories."
+        type: "array"
+        items:
+          $ref: "#/definitions/apiSettingsSection"
+    required:
+      - sections
+
+  apiSettingsSection:
+    type: "object"
+    description: "List of application settings grouped into one category (section)."
+    properties:
+      name:
+        type: "string"
+        description: "Display name of the configuration category."
+      description:
+        type: "string"
+        description: "Display text of the configuration category."
+      settings:
+        description: "List of settings."
+        type: "array"
+        items:
+          $ref: "#/definitions/apiParameter"
+    required:
+      - name
+
+  apiStatus:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+      code:
+        type: "integer"
+        format: "int32"
+      details:
+        type: "array"
+        items:
+          $ref: "#/definitions/protobufAny"
+
+  apiUrl:
+    type: "object"
+    properties:
+      pipeline_url:
+        type: "string"
+
+  anyValue:
+    description: "A non-null value of any type like string, number, boolean, array, object,\
+      \ see https://stackoverflow.com/a/43328994/5601796 (swagger-2-0-what-schema-to-accept-any-complex-json-value)"
+
+  dictionary:
+    description: "A dictionary of key-value pairs with values of any type."
+    type: "object"
+    additionalProperties:
+      $ref: "#/definitions/anyValue"
+    example:
+      some_key: "some value"
+      another_key: true
+      some_number: 42
+
+  protobufAny:
+    type: "object"
+    properties:
+      type_url:
+        type: "string"
+        description: "TODO"
+      value:
+        type: "string"
+        format: "byte"
+        description: "Must be a valid serialized protocol buffer of the above specified type."
+        pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        x-regex: "^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"
+        x-modifiers: []
+    description: "TODO"

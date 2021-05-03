@@ -1,0 +1,59 @@
+# Copyright 2021 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nbviewer-enterprise
+  namespace: kubeflow
+  labels:
+    service: nbviewer-enterprise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: nbviewer-enterprise
+  template:
+    metadata:
+      name: nbviewer-enterprise
+      labels:
+        service: nbviewer-enterprise
+    spec:
+      containers:
+      - name: nbviewer-enterprise
+        image: jupyter/nbviewer
+        imagePullPolicy: Always
+        env:
+        - name: GITHUB_API_TOKEN
+          # Fill in the Enterpise github token below
+          value: ''
+        - name: GITHUB_API_URL
+          value: https://github.ibm.com/api/v3/
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nbviewer-enterprise
+  namespace: kubeflow
+  labels:
+    service: nbviewer-enterprise
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  type: LoadBalancer
+  selector:
+    service: nbviewer-enterprise
