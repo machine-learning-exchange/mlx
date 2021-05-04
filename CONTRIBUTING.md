@@ -83,3 +83,15 @@ before submitting.
 ## Coding style guidelines
 **FIXME** Optional, but recommended: please share any specific style guidelines you might
 have for your project.
+
+## Contributors
+
+Below is an (incomplete) list of people (in alphabetical order) who contributed to this project
+via code, tests, or documentation:
+
+* Christian Kadner
+* Andrew Butler
+* Animesh Singh
+* Tommy Li
+* Mofizur Rahman
+* Weiqiang Zhuang
