@@ -1348,10 +1348,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/dagre@^0.7.42":
-  version "0.7.42"
-  resolved "https://registry.yarnpkg.com/@types/dagre/-/dagre-0.7.42.tgz#2b0cd7678d5fc273df7816a88b8b34016e3a5d85"
-  integrity sha512-knVdi1Ul8xYgJ0wdhQ+/2YGJFKJFa/5srcPII9zvOs4KhsHfpnFrSTQXATYmjslglxRMif3Lg+wEZ0beag+94A==
+"@types/dagre@https://registry.npmjs.org/@types/dagre/-/dagre-0.7.40.tgz":
+  version "0.7.40"
+  uid "7112c8bb912d131482825dc9cc2a522073efbe05"
+  resolved "https://registry.npmjs.org/@types/dagre/-/dagre-0.7.40.tgz#7112c8bb912d131482825dc9cc2a522073efbe05"
 
 "@types/history@*":
   version "4.7.2"
@@ -3308,10 +3308,10 @@ cyclist@~0.2.2:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
 
-dagre@^0.8.4:
+"dagre@https://registry.npmjs.org/dagre/-/dagre-0.8.4.tgz":
   version "0.8.4"
-  resolved "https://registry.yarnpkg.com/dagre/-/dagre-0.8.4.tgz#26b9fb8f7bdc60c6110a0458c375261836786061"
-  integrity sha512-Dj0csFDrWYKdavwROb9FccHfTC4fJbyF/oJdL9LNZJ8WUvl968P6PAKEriGqfbdArVJEmmfA+UyumgWEwcHU6A==
+  uid "26b9fb8f7bdc60c6110a0458c375261836786061"
+  resolved "https://registry.npmjs.org/dagre/-/dagre-0.8.4.tgz#26b9fb8f7bdc60c6110a0458c375261836786061"
   dependencies:
     graphlib "^2.1.7"
     lodash "^4.17.4"
@@ -4268,9 +4268,9 @@ fbjs@^0.8.1:
     ua-parser-js "^0.7.18"
 
 figgy-pudding@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
-  integrity sha512-vNKxJHTEKNThjfrdJwHc7brvM6eVevuO5nTj6ez8ZQ1qbXTvGthucRF7S4vf2cr71QVnT70V34v0S1DyQsti0w==
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.2.tgz#b4eee8148abb01dcf1d1ac34367d59e12fa61d6e"
+  integrity sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==
 
 figures@^2.0.0:
   version "2.0.0"
@@ -9588,9 +9588,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
