@@ -1,4 +1,4 @@
-[![Build Status](https://travis.com/machine-learning-exchange/mlx.svg?branch=main)](https://github.com/machine-learning-exchange/mlx)
+[![Build Status](https://travis-ci.com/machine-learning-exchange/mlx.svg?branch=main)](https://travis-ci.com/machine-learning-exchange/mlx)
 
 # Machine Learning Exchange (MLX)
 
