@@ -112,8 +112,10 @@ td>span.checked {
 
 .slide-img {
   display: block;
-  height: 100%;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: 550px;
+  width: auto;
 }
 
 .parameter-form {
@@ -270,11 +272,6 @@ td>span.checked {
 
 #intro-graphic {
   height: 100%;
-}
-
-.slide-img {
-  height: 70%;
-  width: 60%;
 }
 
 .info-heading {

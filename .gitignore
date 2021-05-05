@@ -109,7 +109,9 @@ venv.bak/
 node_modules/
 .pnp/
 .pnp.js#
-package-lock.json
+
+# Yarn
+yarn.lock
 
 # testing
 coverage/
