@@ -39,7 +39,7 @@ export default function LandingPage() {
       <div className="landing-page-wrapper">
         <h2 className="landing-page-text"> &nbsp;&nbsp;&nbsp;MLX - Data and AI Assets Catalog and Execution Engine</h2>
         <img alt="MLX View" className="slide-img" src={introPic} />
-        </div>
       </div>
-    );
+    </div>
+  );
 }
