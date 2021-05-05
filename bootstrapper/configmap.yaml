@@ -142,31 +142,31 @@ data:
       "datasets": [
         {
           "name": "Thematic Clustering",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/Thematic_clustering.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering.yaml"
         },
         {
           "name": "Finance Proposition Bank",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/fpb.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/fpb.yaml"
         },
         {
           "name": "Groningen Meaning Bank",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/gmb.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/gmb.yaml"
         },
         {
           "name": "NOAA Weather Data",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/jfk.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk.yaml"
         },
         {
           "name": "PubLayNet",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/publaynet.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/publaynet.yaml"
         },
         {
           "name": "PubTabNet",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/pubtabnet.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/pubtabnet.yaml"
         },
         {
           "name": "TensorFlow Speech Commands",
-          "source": "https://raw.github.ibm.com/CODAIT/DAX-OpenAIHub/master/tsc.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc.yaml"
         }
       ]
     }
