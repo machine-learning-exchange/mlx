@@ -21,12 +21,12 @@ Now you can apply MLX [_KfDef_](https://www.kubeflow.org/docs/other-guides/kusto
 
 For IKS / Minikube use the following KFDEF
 ```shell
-export KFDEF=https://raw.githubusercontent.com/moficodes/manifests/master/kfdef/kfctl_ibm_tekton.yaml
+export KFDEF=https://raw.githubusercontent.com/machine-learning-exchange/manifests/mlx/kfdef/kfctl_ibm_tekton.yaml
 ```
 
 For Openshift we need to set the proper scc. Use the following KFDEF
 ```shell
-export KFDEF_URL=https://raw.githubusercontent.com/moficodes/manifests/master/kfdef/kfctl_mlx_openshift_tekton.yaml
+export KFDEF_URL=https://raw.githubusercontent.com/machine-learning-exchange/manifests/mlx/kfdef/kfctl_mlx_openshift_tekton.yaml
 export KFDEF=$(echo "${KFDEF_URL}" | rev | cut -d/ -f1 | rev)
 curl -L ${KFDEF_URL} > ${KFDEF}
 ```
