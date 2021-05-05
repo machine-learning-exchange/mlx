@@ -62,31 +62,31 @@
   "datasets": [
     {
       "name": "Thematic Clustering",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/thematic_clustering.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering.yaml"
     },
     {
       "name": "Finance Proposition Bank",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/finance_proposition_bank.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/fpb.yaml"
     },
     {
       "name": "Groningen Meaning Bank",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/gmb.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/gmb.yaml"
     },
     {
       "name": "NOAA Weather Data",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/jfk.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk.yaml"
     },
     {
       "name": "PubLayNet",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/publaynet.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/publaynet.yaml"
     },
     {
       "name": "PubTabNet",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/pubtabnet.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/pubtabnet.yaml"
     },
     {
       "name": "TensorFlow Speech Commands",
-      "url": "https://raw.githubusercontent.com/CODAIT/exchange-metadata-converter/main/dax-data-set-descriptors/tsc.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc.yaml"
     }
   ],
   "models": [

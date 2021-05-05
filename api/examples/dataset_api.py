@@ -40,10 +40,7 @@ port = '8080'
 
 api_base_path = 'apis/v1alpha1'
 
-# yaml_files = sorted(glob("./../../datasets/dataset-samples/**/dataset.yaml", recursive=True))
-# yaml_files = sorted(glob("./../../../DAX-dataset-previews/**/content.yaml", recursive=True))
-# yaml_files = sorted(glob("./../../../DAX-MLX/*.yaml", recursive=True))
-yaml_files = sorted(filter(lambda f: "lorem_ipsum" not in f, glob("./../../../DAX-DLF-converter_ckadner/dax-data-set-descriptors/*.yaml")))
+yaml_files = sorted(filter(lambda f: "lorem_ipsum" not in f, glob("./../../../katalog/dataset-samples/*.yaml")))
 
 
 def get_swagger_client():

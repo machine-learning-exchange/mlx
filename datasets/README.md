@@ -1,24 +1,35 @@
 # Datasets
 
-MLX datasets are reusable datasets that leverage [Dataset LifeCycle](https://github.com/IBM/dataset-lifecycle-framework) (DLF) for providing data volume to all the other MLX assets.
+MLX datasets are reusable datasets that leverage [Datashim](https://github.com/datashim-io/datashim)
+for providing data volume to all the other MLX assets.
 
-The dataset definition is based on the [DAX metadata](https://github.com/CODAIT/exchange-metadata-converter) and it is still evolving with the latest DLF requirements. You can visit [exchange-metadata-converter](https://github.com/CODAIT/exchange-metadata-converter) to understand how the DAX metadata is defined and being converted to DLF.
+The dataset definition is based on the [DAX metadata](https://github.com/CODAIT/exchange-metadata-converter)
+and it is still evolving with the latest Datashim requirements.
+You can visit [exchange-metadata-converter](https://github.com/CODAIT/exchange-metadata-converter)
+to understand how the DAX metadata is defined and being converted to the Datashim metadata format.
 
 ## Create Dataset Metadata
-Below is the minimal templates to create a dataset metadata. You can visit [samples](https://github.com/CODAIT/exchange-metadata-converter/tree/main/dax-data-set-descriptors) to view some examples or [template](https://github.com/CODAIT/exchange-metadata-converter/blob/main/dax-data-set-descriptors/lorem_ipsum.yaml) to understand the dataset metadata spec.
+
+See the [template](#dataset-metadata-template) below to create the metadata for a dataset. Take a look at these
+[samples](https://github.com/CODAIT/exchange-metadata-converter/tree/main/dax-data-set-descriptors)
+or the original [template](https://github.com/CODAIT/exchange-metadata-converter/blob/main/dax-data-set-descriptors/lorem_ipsum.yaml)
+to better understand the dataset metadata spec.
 
 ## Register Datasets
-1. Click on the "Dataset" link in left hand navigation panel
-2. Click on "UPLOAD A Dataset"
-3. Select a file to upload (Must be tar.gz or tgz format)
-    * This will be the compressed .yaml specification
-4. Enter a name for the dataset; Otherwise a default will be given
+
+1. Click on the "Dataset" link in left-hand navigation panel
+2. Click on "Upload a Dataset"
+3. Select a file to upload (Must be `.tar.gz` or `.tgz` format)
+    * This will be the compressed `.yaml` specification
+4. Enter a name for the dataset; Otherwise the `name` from the `.yaml` spec will be used
 
 ## Use Dataset with MLX Assets
 
-Asset integration is work in progress
+Asset integration is work in progress. You can take a look at the
+[JFK Airport Temperature Prediction Model notebook](/notebooks/dlf-notebooks/JFK_Data.ipynb)
 
 ## Dataset Metadata Template
+
 ```yaml
 id: lorem-ipsum-data-set            # Unique data set id (required)
 name: Lorem ipsum data set          # User friendly data set name (required)
