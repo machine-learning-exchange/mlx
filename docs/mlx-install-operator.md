@@ -17,7 +17,7 @@ kustomize build | sed 's/kubeflow-operator/mlx-operator/' | kubectl apply -f -
 
 2. Deploy MLX
 
-Now you can apply MLX [_KfDef_](https://www.kubeflow.org/docs/other-guides/kustomize/#specifying-a-configuration-file-when-initializing-your-deployment) custom resource on Kubernetes to deploy MLX.
+Now you can apply MLX [_KfDef_](https://www.kubeflow.org/docs/distributions/operator/introduction/#kubeflow-operator) custom resource on Kubernetes to deploy MLX.
 
 For IKS / Minikube use the following KFDEF
 ```shell
