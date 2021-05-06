@@ -20,19 +20,19 @@
     },
     {
       "name": "Echo",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/echo/echo.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/echo/echo.yaml"
     },
     {
       "name": "Model Robustness Check - PyTorch",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/metrics/robustness_checker/component.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/metrics/robustness_checker/component.yaml"
     },
     {
       "name": "Model Fairness Check - PyTorch",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/metrics/bias_detector/component.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/metrics/bias_detector/component.yaml"
     },
     {
       "name": "Deploy Model - Kubernetes",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/kubernetes/kube_deployment/component.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/kubernetes/kube_deployment/component.yaml"
     },
     {
       "name": "Deploy Model - KFServing",
@@ -48,15 +48,15 @@
     },
     {
       "name": "Jupyter",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/jupyter/component.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/jupyter/component.yaml"
     },
     {
       "name": "Generate Dataset Metadata",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/dax-to-dlf/component.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/dax-to-dlf/component.yaml"
     },
     {
       "name": "Create Dataset Volume",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/components/component-samples/dlf/component.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/dlf/component.yaml"
     }
   ],
   "datasets": [
@@ -92,69 +92,69 @@
   "models": [
     {
       "name": "MAX Human Pose Estimator",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-human-pose-estimator.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-human-pose-estimator.yaml"
     },
     {
       "name": "MAX Image Resolution Enhancer",
-      "url": "https://github.com/machine-learning-exchange/mlx/blob/main/models/samples/max-image-resolution-enhancer.yaml"
+      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/model-samples/max-image-resolution-enhancer.yaml"
     },
     {
       "name": "MAX Optical Character Recognition",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-ocr.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-ocr.yaml"
     },
     {
       "name": "MAX Image Caption Generator",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-image-caption-generator.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-caption-generator.yaml"
     },
     {
       "name": "MAX Toxic Comment Classifier",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-toxic-comment-classifier.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-toxic-comment-classifier.yaml"
     },
     {
       "name": "MAX Question Answering",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-question-answering.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-question-answering.yaml"
     },
     {
       "name": "MAX Recommender System",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-recommender.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-recommender.yaml"
     },
     {
       "name": "MAX Object Detector",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-object-detector.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-object-detector.yaml"
     },
     {
       "name": "MAX Text Sentiment Classifier",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-text-sentiment-classifier.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-text-sentiment-classifier.yaml"
     },
     {
       "name": "MAX Weather Forecaster",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/models/samples/max-weather-forecaster.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-weather-forecaster.yaml"
     }
   ],
   "notebooks": [
     {
       "name": "AIF360 Gender Classification",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/aif360-gender.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif360-gender.yaml"
     },
     {
       "name": "ART detector model",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/art-detector.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-detector.yaml"
     },
     {
       "name": "ART poisoning attack",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/art-poison.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-poison.yaml"
     },
     {
       "name": "AIF360 Bias detection example",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/aif-bias.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif-bias.yaml"
     },
     {
       "name": "JFK Airport Analysis",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/JFK-airport.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/JFK-airport.yaml"
     },
     {
       "name": "Train and deploy with Watson Machine Learning",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/notebooks/samples/watson-ml.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/watson-ml.yaml"
     }
   ],
   "pipelines": [
