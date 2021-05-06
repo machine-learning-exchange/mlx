@@ -95,3 +95,5 @@ via code, tests, or documentation:
 * Tommy Li
 * Mofizur Rahman
 * Weiqiang Zhuang
+* Saishruthi Swaminathan
+* Patrick Titzler
