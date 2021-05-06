@@ -3,9 +3,22 @@
 MLX supports the use of pre-trained models.
 
 ## Create Model Metadata
-Below are the 2 minimal templates to create a trainable or servable model metadata. You can visit [samples](samples) to view some examples or [template](template/model.yaml) to view the model metadata spec details.
-#### trainable model metadata template
-```
+
+Below are the 2 templates to create the metadata for a _trainable_ model and a _servable_ model.
+
+The [template](template.yaml) describes the metadata spec:
+
+- **(Required)**: Fields that are Always required in all condition.
+- **(Required for xxx)**: Fields that are required when trainable/servable or certain storage type is specified.
+- **(optional)**: Fields that can be omit, but do not put empty strings since it will overwrite the default values.
+
+Or take a look at the 
+[samples](https://github.com/machine-learning-exchange/katalog/tree/main/model-samples) 
+used in the Machine Learning Exchange catalog.
+
+### Metadata template for a trainable model
+
+```YAML
 name: <model_name>
 model_identifier: <model_id>
 description: <model_description>
@@ -61,8 +74,9 @@ data_stores:
 ```
 
 
-#### servable model metadata template
-```shell
+### Metadata template for a servable model
+
+```YAML
 name: <model_name>
 model_identifier: <model_id>
 description: <model_description>
@@ -84,14 +98,14 @@ serve:
 ```
 
 ## Register Model
-1. Click on the "Models" link in left hand navigation panel
-2. Click on "UPLOAD A COMPONENT"
-3. Select a file to upload (Must be tar.gz or tgz format)
-    * This will be the compressed .yaml specification
+1. Click on the "Models" link in left-hand navigation panel
+2. Click on "Upload a Model"
+3. Select a file to upload (Must be `.tar.gz` or `.tgz` format)
+    * This will be the compressed `.yaml` specification
 4. Enter a name for the model; Otherwise a default will be given
 
 ## Use Models in Pipelines
-Models can easily be executed based on the metadata specified in the yaml file for a particular function
+Models can easily be executed based on the metadata specified in the YAML file for a particular function
 
 1. Under the models tab, select a model
 2. Switch to the "CREATE RUN" section
