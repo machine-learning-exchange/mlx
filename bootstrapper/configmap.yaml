@@ -40,19 +40,19 @@ data:
           },
           {
             "name": "Model Robustness Check - PyTorch",
-            "source": "components/component-samples/metrics/robustness_checker/component.yaml"
+            "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/metrics/robustness_checker/component.yaml"
           },
           {
             "name": "Model Fairness Check - PyTorch",
-            "source": "components/component-samples/metrics/bias_detector/component.yaml"
+            "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/metrics/bias_detector/component.yaml"
           },
           {
             "name": "Deploy Model - Kubernetes",
-            "source": "components/component-samples/kubernetes/kube_deployment/component.yaml"
+            "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/kubernetes/kube_deployment/component.yaml"
           },
           {
             "name": "Deploy Model - Knative",
-            "source": "components/component-samples/knative/knative_container_deployment/component.yaml"
+            "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/knative/knative_container_deployment/component.yaml"
           },
           {
             "name": "Subscribe - Watson OpenScale",
@@ -64,79 +64,79 @@ data:
           },
           {
             "name": "Jupyter",
-            "source": "components/component-samples/jupyter/component.yaml"
+            "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/jupyter/component.yaml"
           }
       ],
       "models": [
         {
           "name": "MAX Audio Classifier",
-          "source": "models/samples/max-audio-classifier.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-audio-classifier.yaml"
         },
         {
           "name": "MAX Breast Cancer Mitosis Detector",
-          "source": "models/samples/max-breast-cancer-mitosis-detector.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-breast-cancer-mitosis-detector.yaml"
         },
         {
           "name": "MAX Facial Age Estimator",
-          "source": "models/samples/max-facial-age-estimator.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-facial-age-estimator.yaml"
         },
         {
           "name": "MAX Image Caption Generator",
-          "source": "models/samples/max-image-caption-generator.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-caption-generator.yaml"
         },
         {
           "name": "Image Completer",
-          "source": "models/samples/image-completer.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/image-completer.yaml"
         },
         {
           "name": "MAX Image Segmenter",
-          "source": "models/samples/max-image-segmenter.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-segmenter.yaml"
         },
         {
           "name": "MAX News Text Generator",
-          "source": "models/samples/max-news-text-generator.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-news-text-generator.yaml"
         },
         {
           "name": "MAX Object Detector",
-          "source": "models/samples/max-object-detector.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-object-detector.yaml"
         },
         {
           "name": "MAX Sports Video Classifier",
-          "source": "models/samples/max-sports-video-classifier.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-sports-video-classifier.yaml"
         },
         {
           "name": "MAX Weather Forecaster",
-          "source": "models/samples/max-weather-forecaster.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-weather-forecaster.yaml"
         }
       ],
       "notebooks": [
         {
           "name": "AIF360 Gender Classification",
-          "source": "notebooks/samples/aif360-gender.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif360-gender.yaml"
         },
         {
           "name": "ART detector model",
-          "source": "notebooks/samples/art-detector.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-detector.yaml"
         },
         {
           "name": "ART poisoning attack",
-          "source": "notebooks/samples/art-poison.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-poison.yaml"
         },
         {
           "name": "AIF360 Bias detection example",
-          "source": "notebooks/samples/aif-bias.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif-bias.yaml"
         },
         {
           "name": "Watson OpenScale",
-          "source": "notebooks/samples/watson-openscale.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/watson-openscale.yaml"
         },
         {
           "name": "Watson OpenScale Walkthrough",
-          "source": "notebooks/samples/OpenScale.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/OpenScale.yaml"
         },
         {
           "name": "Train and deploy with Watson Machine Learning",
-          "source": "notebooks/samples/watson-ml.yaml"
+          "source": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/watson-ml.yaml"
         }
       ],
       "datasets": [
