@@ -9,13 +9,18 @@ To register the notebook, we need to create a specification file in YAML format.
 
 ## Register Notebooks
 1. Click on the "Notebooks" link in left hand navigation panel
-2. Click on "UPLOAD A NOTEBOOK"
+2. Click on "Upload a Notebook"
 3. Select a file to upload (Must be tar.gz or tgz format)
     - This will be the compressed .yaml notebook specification
 4. Enter a name for the notebook; Otherwise a default will be given
 
-## Use Notebooks to Drive Pipelines
+## How to use Notebooks to Drive Pipelines
 // TODO
 
-## Use Notebooks Within a Pipeline Step
+## How to use Notebooks Within a Pipeline Step
 // TODO
+
+## Sample Notebooks
+
+You can find the sample notebooks in the Machine Learning Exchange catalog
+[here](https://github.com/machine-learning-exchange/katalog/tree/main/notebook-samples)

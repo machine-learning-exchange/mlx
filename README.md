@@ -58,7 +58,7 @@ oc get route -n istio-system
     - [Create Model Metadata](./models/README.md#Create-Model-Metadata)
     - [Register Model](./models/README.md#Register-Model)
     - [Use Models in Pipelines](./models/README.md#Use-Models-in-Pipelines)
-    - [Model Metadata Template](./models/template/model.yaml)
+    - [Model Metadata Template](./models/template.yaml)
 
 4. [Notebooks](./notebooks/README.md)
     - [Create Notebooks](./notebooks/README.md#Create-Notebooks)

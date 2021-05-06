@@ -32,3 +32,8 @@ For an in-depth guide to creating pipelines with Kubeflow, take a look at their
 3. Clicking "Start" will kick off the run
     * A history of finished / currently running pipelines will show up under the Experiments view in the "All runs" tab.
     * Clicking on the run row will show progress and output of each run.
+
+## Sample Pipelines
+
+You can find the sample pipelines in the Machine Learning Exchange catalog
+[here](https://github.com/machine-learning-exchange/katalog/tree/main/pipeline-samples)
