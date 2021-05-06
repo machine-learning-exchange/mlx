@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**file**](file.md)
+**file**
 
 ### Authorization
 

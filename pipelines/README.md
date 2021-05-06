@@ -10,13 +10,14 @@ ML Pipelines are a:
 ## Create an AI Pipeline
 The simplest way to create a pipeline is to use [Kubeflow](https://www.kubeflow.org/). Kubeflow provides an SDK to create and execute pipelines.  
 
-1. Package your custom [components](../components/README.md) into docker images, or use registered components components registered here by just pulling the yaml specification
+1. Package your custom [components](../components/README.md) into docker images, or use registered components here by just pulling the yaml specification
 2. Create a python class for each component to describe interactions with their respective docker containers
 3. Define the pipeline as a python function
 4. Compile to pipeline.
     * This produces a yaml file compressed as a .tar.gz.
 
-For an in-depth guide to creating pipelines with Kubeflow, take a look at their [documentation](https://www.kubeflow.org/docs/pipelines/sdk/build-component/).
+For an in-depth guide to creating pipelines with Kubeflow, take a look at their
+[documentation](https://www.kubeflow.org/docs/components/pipelines/sdk/component-development/).
 
 ## Upload an AI Pipeline
 1. Click on the "Pipelines" link in left hand navigation panel
