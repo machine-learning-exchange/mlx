@@ -685,6 +685,12 @@ def load_data(swagger_class: type, filter_dict: dict = None, sort_by: str = None
         cursor.execute(query)
 
         swagger_attr_names = [_convert_col_name_to_attr_name(c) for c in cursor.column_names]
+
+        assert set(swagger_attr_names) <= set(sig.parameters.keys()), \
+            f"Mismatch between database schema and API spec for {table_name}. " \
+            f"Expected columns: {[_convert_attr_name_to_col_name(k) for k in sig.parameters.keys() if k != 'self']}. " \
+            f"Database columns: {cursor.column_names}"
+
         swagger_attr_types = [sig.parameters.get(a).annotation for a in swagger_attr_names]
 
         for row_values in cursor:

@@ -1,0 +1,110 @@
+version: '3.7'
+
+# starts 4 Docker containers: Minio, MySQL, MLX-API, MLX-UI
+# access the MLX API Spec at http://localhost:8080/apis/v1alpha1/ui/#!/
+# access the MLX UI dashboard at http://localhost/
+
+services:
+
+  minio:
+    image: minio/minio
+    volumes:
+      - data-minio:/data
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    command: server /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  miniosetup:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: ["/bin/sh","-c"]
+    command:
+    - |
+      /usr/bin/mc config host add miniohost http://minio:9000 minio minio123
+      /usr/bin/mc mb -p miniohost/mlpipeline
+      /usr/bin/mc policy set download miniohost/mlpipeline
+
+  mysql:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_DATABASE: "mlpipeline"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+      - data-mysql:/var/lib/mysql
+
+  mlx-api:
+    image: mlexchange/mlx-api:0.1.25
+    volumes:
+      - data-mlx-api:/data
+    ports:
+      - "8080:8080"
+    environment:
+      MINIO_SERVICE_SERVICE_HOST: "minio"
+      MINIO_SERVICE_SERVICE_PORT: "9000"
+      MYSQL_SERVICE_HOST: "mysql"
+      MYSQL_SERVICE_PORT: "3306"
+      ML_PIPELINE_UI_SERVICE_HOST: "UNAVAILABLE"
+      ML_PIPELINE_UI_SERVICE_PORT: "UNAVAILABLE"
+
+  mlx-ui:
+#    image: aipipeline/mlx-ui:nightly-origin-main
+    image: mlexchange/mlx-ui:2021.05.06
+    volumes:
+      - data-mlx-ui:/data
+    ports:
+      - "80:3000"
+    environment:
+      REACT_APP_BRAND: "Machine Learning Exchange"
+      REACT_APP_RUN: "true"
+      REACT_APP_UPLOAD: "true"
+      REACT_APP_BASE_PATH: ""
+      REACT_APP_API: "localhost:8080"
+      REACT_APP_KFP: ""
+
+  catalog:
+    image: curlimages/curl
+    depends_on:
+      - minio
+      - mysql
+      - mlx-api
+    volumes:
+      - ./catalog_upload.json:/catalog_upload.json
+      - ./init_catalog.sh:/init_catalog.sh
+    entrypoint: ["/bin/sh", "-c", "/init_catalog.sh"]
+    environment:
+      MLX_API_SERVER: "mlx-api:8080"
+
+  dashboard:
+    image: curlimages/curl
+    depends_on:
+      - mlx-ui
+      - mlx-init
+    entrypoint: ["/bin/sh","-c"]
+    command:
+    - |
+      until curl -I -s "http://mlx-ui:3000" | grep -q "200 OK"; do sleep 5; done
+      echo
+      echo "================================================"
+      echo " Open the MLX Dashboard at http://localhost:80/ "
+      echo "================================================"
+      echo
+
+volumes:
+  data-minio:
+  data-mysql:
+  data-mlx-api:
+  data-mlx-ui:
