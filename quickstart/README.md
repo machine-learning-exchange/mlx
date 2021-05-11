@@ -16,6 +16,16 @@ Docker Compose setup.
 
 Install [Docker Compose](https://docs.docker.com/compose/install/).
 
+Clone this repository:
+
+    git clone https://github.com/machine-learning-exchange/mlx.git
+    cd mlx
+
+Navigate to the `quickstart` folder:
+
+    cd quickstart
+
+
 ## Pull the Docker Images
 
     docker compose pull
