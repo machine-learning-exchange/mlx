@@ -46,6 +46,38 @@ services:
       - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
       - data-mysql:/var/lib/mysql
 
+  kfp-api:
+    image: aipipeline/api-server:0.7.0
+    environment:
+      DBCONFIG_HOST: "mysql"
+      DBCONFIG_PORT: "3306"
+#      DBCONFIG_USER: "root"
+#      DBCONFIG_PASSWORD: ""
+#      DBCONFIG_DBNAME: "mlpipeline"
+      MINIO_SERVICE_SERVICE_HOST: "minio"
+      MINIO_SERVICE_SERVICE_PORT: "9000"
+#      MINIO_PIPELINE_BUCKET_NAME: "mlpipeline"
+#      MINIO_PIPELINE_PATH: ""
+      KUBERNETES_SERVICE_HOST: "localhost"
+      KUBERNETES_SERVICE_PORT: "443"
+      OBJECTSTORECONFIG_ACCESSKEY: "minio"
+      OBJECTSTORECONFIG_BUCKETNAME: "mlpipeline"
+      OBJECTSTORECONFIG_SECRETACCESSKEY: "minio123"
+      OBJECTSTORECONFIG_SECURE: "false"
+      ARTIFACT_BUCKET: "mlpipeline"
+      ARTIFACT_ENDPOINT: "minio:9000"
+      ARTIFACT_ENDPOINT_SCHEME: "http://"
+      ARTIFACT_IMAGE: "minio/mc"
+      HOSTNAME: "kfp-api"
+    ports:
+      - "8888:8888"  # http
+      - "8887:8887"  # grpc
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-S", "-O", "-", "http://localhost:8888/apis/v1beta1/healthz" ]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
   mlx-api:
     image: mlexchange/mlx-api:0.1.25
     ports:
@@ -55,8 +87,8 @@ services:
       MINIO_SERVICE_SERVICE_PORT: "9000"
       MYSQL_SERVICE_HOST: "mysql"
       MYSQL_SERVICE_PORT: "3306"
-      ML_PIPELINE_UI_SERVICE_HOST: "UNAVAILABLE"
-      ML_PIPELINE_UI_SERVICE_PORT: "UNAVAILABLE"
+      ML_PIPELINE_UI_SERVICE_HOST: "kfp-api"
+      ML_PIPELINE_UI_SERVICE_PORT: "8888"
 
   mlx-ui:
 #    image: aipipeline/mlx-ui:nightly-origin-main
@@ -69,13 +101,14 @@ services:
       REACT_APP_UPLOAD: "true"
       REACT_APP_BASE_PATH: ""
       REACT_APP_API: "localhost:8080"
-      REACT_APP_KFP: ""
+      REACT_APP_KFP: "localhost:8888"
 
   catalog:
     image: curlimages/curl
     depends_on:
       - minio
       - mysql
+      - kfp-api
       - mlx-api
     volumes:
       - ./catalog_upload.json:/catalog_upload.json

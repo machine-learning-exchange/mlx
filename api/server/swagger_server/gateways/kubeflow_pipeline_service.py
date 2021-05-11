@@ -72,6 +72,8 @@ def upload_pipeline_to_kfp(uploadfile: str, name: str = None) -> ApiPipeline:
     api_instance = PipelineUploadServiceApi(api_client=api_client)
 
     try:
+        print(f"Calling PipelineServiceApi ({_pipeline_service_url}) -> upload_pipeline(name='{name}')")
+
         kfp_pipeline: KfpPipeline = api_instance.upload_pipeline(uploadfile=uploadfile, name=name)
         api_pipeline: ApiPipeline = ApiPipeline.from_dict(kfp_pipeline.to_dict())
         api_pipeline.status = kfp_pipeline.error

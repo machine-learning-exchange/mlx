@@ -151,5 +151,22 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/watson-ml.yaml"
     }
   ],
-  "pipelines": []
+  "pipelines": [
+    {
+      "name": "Parallel Join",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/parallel_join.yaml"
+    },
+    {
+      "name": "Sequential Pipeline",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/sequential.yaml"
+    },
+    {
+      "name": "Launch a Katib experiment",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/katib.yaml"
+    },
+    {
+      "name": "ResourceOp Basic",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/resourceop_basic.yaml"
+    }
+  ]
 }
