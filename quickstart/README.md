@@ -48,6 +48,13 @@ dashboard.
 
 The MLX API spec can be explored at `localhost:8080/apis/v1alpha1/ui/`
 
+**Note:** If the Docker compose stack is running on a remote host, and the
+MLX Web UI is running on `localhost`, export the environment
+variable `DOCKER_HOST_IP`, so that the MLX UI web app on `localhost` can connect
+to the MLX API on the Docker host.
+
+    export DOCKER_HOST_IP=127.0.0.1
+    docker compose up
 
 ## Shut Down the Docker Containers
 

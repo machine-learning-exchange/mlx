@@ -59,7 +59,6 @@ services:
       ML_PIPELINE_UI_SERVICE_PORT: "UNAVAILABLE"
 
   mlx-ui:
-#    image: aipipeline/mlx-ui:nightly-origin-main
     image: mlexchange/mlx-ui:2021.05.06
     ports:
       - "80:3000"
@@ -68,7 +67,7 @@ services:
       REACT_APP_RUN: "true"
       REACT_APP_UPLOAD: "true"
       REACT_APP_BASE_PATH: ""
-      REACT_APP_API: "localhost:8080"
+      REACT_APP_API: "${DOCKER_HOST_IP:-localhost}:8080"
       REACT_APP_KFP: ""
 
   catalog:
@@ -95,7 +94,7 @@ services:
       until curl -I -s "http://mlx-ui:3000" | grep -q "200 OK"; do sleep 5; done
       echo
       echo "================================================"
-      echo " Open the MLX Dashboard at http://localhost:80/ "
+      echo " Open the MLX Dashboard at http://${DOCKER_HOST_IP:-localhost}:80/ "
       echo "================================================"
       echo
 
