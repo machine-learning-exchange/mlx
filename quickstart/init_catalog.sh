@@ -23,3 +23,6 @@ done
 
 # disable the Pipelines page, since we don't have a KFP cluster
 curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"Pipelines": false}' -s "${MLX_API_URL}/settings"
+
+# disable the Inference Services page, since we don't have a KFP cluster
+curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"Inference Services": false}' -s "${MLX_API_URL}/settings"
