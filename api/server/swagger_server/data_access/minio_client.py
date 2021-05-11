@@ -225,7 +225,7 @@ def _update_bucket_policy(bucket_name: str, prefix: str):
     except NoSuchBucketPolicy:
         bucket_policy = dict(_bucket_policy_template)
 
-    getobject_stmts = [s for s in bucket_policy["Statement"] if s["Sid"] == _bucket_policy_sid] or \
+    getobject_stmts = [s for s in bucket_policy["Statement"] if s.get("Sid") == _bucket_policy_sid] or \
                       [s for s in bucket_policy["Statement"] if "s3:GetObject" in s["Action"]]
 
     if not getobject_stmts:
