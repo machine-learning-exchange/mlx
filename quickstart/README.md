@@ -14,7 +14,8 @@ Docker Compose setup.
 
 ## Prerequisites
 
-Install [Docker Compose](https://docs.docker.com/compose/install/).
+Install [Docker Compose](https://docs.docker.com/compose/install/). It might be
+necessary to increase the Docker resources from the default of 2 GB memory to 4 GB.
 
 Clone this repository:
 
