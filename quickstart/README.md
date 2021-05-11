@@ -14,18 +14,15 @@ Docker Compose setup.
 
 ## Prerequisites
 
-Install [Docker Compose](https://docs.docker.com/compose/install/). It might be
-necessary to increase the Docker resources from the default of 2 GB memory to 4 GB.
+Install [Docker Compose](https://docs.docker.com/compose/install/). It may be
+necessary to increase the
+[Docker resources](https://docs.docker.com/docker-for-mac/#resources) from the
+default of 2 GB memory to 4 GB.
 
-Clone this repository:
+Clone this repository and navigate to the `quickstart` folder:
 
     git clone https://github.com/machine-learning-exchange/mlx.git
-    cd mlx
-
-Navigate to the `quickstart` folder:
-
-    cd quickstart
-
+    cd mlx/quickstart
 
 ## Pull the Docker Images
 
