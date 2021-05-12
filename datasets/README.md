@@ -26,7 +26,7 @@ to better understand the dataset metadata spec.
 ## Use Dataset with MLX Assets
 
 Asset integration is work in progress. You can take a look at the
-[JFK Airport Temperature Prediction Model notebook](https://github.com/machine-learning-exchange/katalog/blob/main/notebook-samples/dlf-notebooks/JFK_Data.ipynb)
+[JFK Airport Temperature Prediction Model notebook](https://github.com/machine-learning-exchange/katalog/blob/main/notebook-samples/src/dlf-notebooks/JFK_Data.ipynb)
 
 ## Dataset Metadata Template
 
