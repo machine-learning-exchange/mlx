@@ -70,7 +70,7 @@ git commit -s
 ```
 
 ## Communication
-**FIXME** Please feel free to connect with us on our [Slack channel](link).
+**FIXME** Please feel free to connect with us on our [Slack channel](https://ibm-cloudplatform.slack.com/archives/C0216TCKGCU).
 
 ## Setup
 **FIXME** Please add any special setup instructions for your project to help the developer
