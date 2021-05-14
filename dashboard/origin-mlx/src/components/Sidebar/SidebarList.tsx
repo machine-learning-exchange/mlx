@@ -67,7 +67,7 @@ function SidebarList() {
                   key={type}
                   icon={(iconMap as any)[type]}
                   name={type === 'inferenceservices' ? 'KFServices' : capitalize(type)}
-                  active={type === active}
+                  active={active}
                 />
               )
             }
@@ -76,7 +76,7 @@ function SidebarList() {
               <SidebarListItem 
                 icon="code"
                 name="Workspace"
-                active={'Workspace' === active}
+                active={active}
               />
             }
           </ul>
