@@ -24,12 +24,14 @@ from os import environ as env
 from os.path import abspath, dirname, exists, relpath
 from random import randint
 from time import sleep
-
+from urllib3.util.url import parse_url
+from urllib3.exceptions import LocationParseError
 
 GITHUB_REPO = env.get("GITHUB_REPO", "https://github.com/machine-learning-exchange/mlx/")
 
 md_file_path_expressions = [
     "/**/*.md",
+    "/bootstrapper/catalog_upload.json",
 ]
 
 script_folder = abspath(dirname(__file__))
@@ -73,12 +75,24 @@ def get_links_from_md_file(md_file_path: str) -> [(int, str, str)]: # -> [(line,
         r"[\1]({}/\2)".format(github_repo_master_path),
         md_file_content)
 
-    # return completed links
+    # find all the links
     line_text_url = []
     for line_number, line_text in enumerate(md_file_content.splitlines()):
+
+        # find markdown-styled links [text](url)
         for (link_text, url) in re.findall(r"\[([^]]+)\]\((%s[^)]+)\)" % "http", line_text):
             line_text_url.append((line_number + 1, link_text, url))
 
+        # find plain http(s)-style links
+        for url in re.findall(r"[\n\r\s\"'](https?://[^\s]+)[\n\r\s\"']", line_text):
+            if not any(s in url for s in ["localhost", "...", "lorem", "ipsum", "/path/to/", "address", "port"]):
+                try:
+                    parse_url(url)
+                    line_text_url.append((line_number + 1, "", url))
+                except LocationParseError:
+                    pass
+
+    # return completed links
     return line_text_url
 
 
@@ -168,8 +182,8 @@ def verify_doc_links() -> [(str, int, str, str)]:
     if file_line_text_url_404:
 
         for (file, line, text, url, status) in file_line_text_url_404:
-            print("{}:{}: `[{}]({})` {}".format(
-                relpath(file, project_root_dir), line, text,
+            print("{}:{}: {} -> {}".format(
+                relpath(file, project_root_dir), line,
                 url.replace(github_repo_master_path, ""), status))
 
         # print a summary line for clear error discovery at the bottom of Travis job log

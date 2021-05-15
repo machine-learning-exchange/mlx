@@ -75,7 +75,8 @@ There are a few environment variables that can be defined that dictate how MLX i
 * REACT_APP_KIALI - The endpoint for Kiali monitoring
 * REACT_APP_GRAFANA - The endpoint for the Grafana service
 * HTTPS - true/false, defines whether HTTPS or HTTP should be used
-* REACT_APP_BASE_PATH - A basepath can be configured that appends to the end of the address (ex. http://<ip address>:<port>/<basepath>)
+* REACT_APP_BASE_PATH - A basepath can be configured that appends to the end of the address (ex. 
+  http://<ip_address>:<port>/<basepath>)
 * REACT_APP_BRAND - The brand name to use on the website
 
 # Project Overview:
