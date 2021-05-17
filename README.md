@@ -14,7 +14,7 @@ It allows upload, registration, execution, and deployment of:
 
 <img src="docs/images/mlx.png" height="90%" width="90%">
 
-Additionally it provides: 
+Additionally it provides:
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
  - Pipelines engine powered by Kubeflow Pipelines on Tekton, core of Watson Pipelines
@@ -35,9 +35,11 @@ Additionally it provides:
 ## 2. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
 
-For Deployment, we are going to use an Operator based on [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. You can install the operator manually or via OperatorHub. Both should achieve the same result. Choose any one of them.
+For Deployment, we are going to use an Operator based on [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. You can install the operator manually or install on an existing Kubeflow Cluster. Both should achieve the same result. Choose any one of them.
 
 ### [Manual Installation using Operator](./docs/mlx-install-operator.md)
+
+### [Deploy MLX on an Existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
 
 ## 3. Access the MLX UI
 

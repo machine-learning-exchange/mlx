@@ -1,0 +1,71 @@
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRole
+metadata:
+  name: mlx-api
+  namespace: kubeflow
+spec:
+  rules:
+  - services:
+    - mlx-api.kubeflow.svc.cluster.local
+---
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRoleBinding
+metadata:
+  name: bind-gateway-mlx-api
+  namespace: kubeflow
+spec:
+  roleRef:
+    kind: ServiceRole
+    name: mlx-api
+  subjects:
+  - properties:
+      source.namespace: istio-system
+  - properties:
+      source.principal: cluster.local/ns/kubeflow/sa/mlx-ui
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mlx-api
+  namespace: kubeflow
+spec:
+  gateways:
+  - kubeflow-gateway
+  hosts:
+  - '*'
+  http:
+  - match:
+    - uri:
+        prefix: /apis/v1alpha1
+    rewrite:
+      uri: /apis/v1alpha1
+    route:
+    - destination:
+        host: mlx-api.kubeflow.svc.cluster.local
+        port:
+          number: 80
+    timeout: 300s
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mlx-api
+  namespace: kubeflow
+spec:
+  host: mlx-api.kubeflow.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRoleBinding
+metadata:
+  name: bind-mlx-api-internal
+  namespace: kubeflow
+spec:
+  roleRef:
+    kind: ServiceRole
+    name: ml-pipeline-services
+  subjects:
+  - properties:
+      source.principal: cluster.local/ns/kubeflow/sa/mlx-api

@@ -1,0 +1,33 @@
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRole
+metadata:
+  name: mlx-ui
+  namespace: kubeflow
+spec:
+  rules:
+  - services:
+    - mlx-ui.kubeflow.svc.cluster.local
+---
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRoleBinding
+metadata:
+  name: bind-gateway-mlx-ui
+  namespace: kubeflow
+spec:
+  roleRef:
+    kind: ServiceRole
+    name: mlx-ui
+  subjects:
+  - properties:
+      source.namespace: istio-system
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mlx-ui
+  namespace: kubeflow
+spec:
+  host: mlx-ui.kubeflow.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
