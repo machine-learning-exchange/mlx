@@ -5,6 +5,23 @@
 
 **Data and AI Assets Catalog and Execution Engine**
 
+It allows upload, registration, execution, and deployment of:
+
+ - AI pipelines and pipeline components
+ - Models
+ - Datasets
+ - Notebooks
+
+Additionally it provides: 
+
+ - Automated sample pipeline code generation to execute registered models, datasets and notebooks
+ - Pipelines engine powered by Kubeflow Pipelines on Tekton, core of Watson Pipelines
+ - Components registry for Kubeflow Pipelines
+ - Datasets management by Datashim
+ - Preregistered Datasets from Data Asset Exchange (DAX) and Models from Model Asset Exchange (MAX)
+ - Serving engine by KFServing
+ - Model Metadata schemas
+
 ![mlx-landing-page](docs/images/mlx.png)
 
 ## 1. Prerequisites
