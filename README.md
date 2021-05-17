@@ -12,6 +12,8 @@ It allows upload, registration, execution, and deployment of:
  - Datasets
  - Notebooks
 
+<img src="docs/images/mlx.png" height="80%" width="80%">
+
 Additionally it provides: 
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
@@ -21,8 +23,6 @@ Additionally it provides:
  - Preregistered Datasets from Data Asset Exchange (DAX) and Models from Model Asset Exchange (MAX)
  - Serving engine by KFServing
  - Model Metadata schemas
-
-![mlx-landing-page](docs/images/mlx.png)
 
 ## 1. Prerequisites
 
