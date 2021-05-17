@@ -12,7 +12,7 @@ It allows upload, registration, execution, and deployment of:
  - Datasets
  - Notebooks
 
-<img src="docs/images/mlx.png" height="80%" width="80%">
+<img src="docs/images/mlx.png" height="90%" width="90%">
 
 Additionally it provides: 
 
