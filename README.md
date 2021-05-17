@@ -16,10 +16,11 @@ Additionally it provides:
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
  - Pipelines engine powered by Kubeflow Pipelines on Tekton, core of Watson Pipelines
- - Serving engine by KFServing
+ - Components registry for Kubeflow Pipelines
  - Datasets management by Datashim
  - Preregistered Datasets from Data Asset Exchange (DAX) and Models from Model Asset Exchange (MAX)
- - Model Metadata schema aligned with MLSpec
+ - Serving engine by KFServing
+ - Model Metadata schemas
 
 ![mlx-landing-page](docs/images/mlx.png)
 
