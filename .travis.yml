@@ -28,6 +28,7 @@ jobs:
       name: "UI Build"
       env:
         - DIFF_DETECTED_ERR_CODE=169
+        - DOCKERFILE_DIR=dashboard/origin-mlx
       before_script: &0
         # No diff detected:                   terminate job with success i.e. travis_terminate 0
         # Script throws unexpected error:     fail job with error code
@@ -51,6 +52,7 @@ jobs:
     - name: "API Build"
       env:
         - DIFF_DETECTED_ERR_CODE=169
+        - DOCKERFILE_DIR=api/server
       before_script: *0
       script:
         - cd api/server && docker build -t aipipeline/mlx-api:nightly-$TRAVIS_BRANCH . && cd ../..

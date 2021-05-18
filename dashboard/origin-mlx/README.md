@@ -33,7 +33,7 @@ REACT_APP_API=<MLX API Endpoint>
 REACT_APP_KFP=<KFP API Endpoint
 npm start
 ```
-* Configure the API endpoints in the settings page of the UI at 
+* Configure the API endpoints in the settings page of the UI at
 ```
 http://localhost:3000/settings
 ```
@@ -66,7 +66,7 @@ Change the Docker image tag in the deployment spec server/mlx-ui.yml from image:
 kubectl delete -f ./dashboard/origin-mlx/mlx-ui.yml
 kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
 ```
-  
+
 # Special Configurations
 There are a few environment variables that can be defined that dictate how MLX is deployed
 * REACT_APP_API - The endpoint for the MLX API
@@ -75,7 +75,7 @@ There are a few environment variables that can be defined that dictate how MLX i
 * REACT_APP_KIALI - The endpoint for Kiali monitoring
 * REACT_APP_GRAFANA - The endpoint for the Grafana service
 * HTTPS - true/false, defines whether HTTPS or HTTP should be used
-* REACT_APP_BASE_PATH - A basepath can be configured that appends to the end of the address (ex. 
+* REACT_APP_BASE_PATH - A basepath can be configured that appends to the end of the address (ex.
   http://<ip_address>:<port>/<basepath>)
 * REACT_APP_BRAND - The brand name to use on the website
 
