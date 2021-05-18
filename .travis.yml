@@ -26,11 +26,32 @@ jobs:
   include:
     - stage: test
       name: "UI Build"
+      env:
+        - DIFF_DETECTED_ERR_CODE=169
+      before_script: &0
+        # No diff detected:                   terminate job with success i.e. travis_terminate 0
+        # Script throws unexpected error:     fail job with error code
+        # Diff detected:                      continue/run this job
+        - git remote add upstream https://github.com/machine-learning-exchange/mlx.git
+        - git fetch upstream
+        - ./tools/bash/check_diff.sh ; EXIT_CODE=$?
+        - |
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "No changes detected - skipping job."
+            travis_terminate 0
+          elif [ $EXIT_CODE -ne $DIFF_DETECTED_ERR_CODE ]; then
+            echo "Unexpected error in check_diff.sh - failing job."
+            travis_terminate $EXIT_CODE
+          fi
+        - echo "Changes detected - continue running job"
       script:
         - cd dashboard/origin-mlx && docker build -t aipipeline/mlx-ui:nightly-origin-$TRAVIS_BRANCH . && cd ..
         - docker images
         - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then docker login -u $username -p $password && docker push aipipeline/mlx-ui:nightly-origin-$TRAVIS_BRANCH; fi
     - name: "API Build"
+      env:
+        - DIFF_DETECTED_ERR_CODE=169
+      before_script: *0
       script:
         - cd api/server && docker build -t aipipeline/mlx-api:nightly-$TRAVIS_BRANCH . && cd ../..
         - docker images
