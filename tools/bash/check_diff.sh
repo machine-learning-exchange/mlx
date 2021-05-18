@@ -29,7 +29,7 @@
 set -ev
 
 DIFF_DETECTED_ERR_CODE=${DIFF_DETECTED_ERR_CODE:-169}
-DOCKERFILE_DIR=${DOCKERFILE_DIR:-.}
+DIFF_DIR=${DIFF_DIR:-.}
 
 org="machine-learning-exchange"
 repository="mlx"
@@ -39,7 +39,7 @@ latest_commit=$(git ls-remote ${git_url} | grep HEAD | cut -f 1)
 
 echo "Latest upstream commit: ${latest_commit}"
 
-files_to_check=(${DOCKERFILE_DIR})
+files_to_check=(${DIFF_DIR})
 
 for file in ${files_to_check[@]}
 do
