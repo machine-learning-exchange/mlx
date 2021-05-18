@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2020 kubeflow.org
+# Copyright 2021 IBM
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 # origin/master branch. This is done by running a diff on each file between the
 # most recent commit on origin/master and HEAD.
 #
-# Execute from top-level directory i.e. kfp-tekton/
+# Execute from top-level directory i.e. dashboard/
 #
 # If no changes were detected, return exit code 0.
 # If any changes were detected in any of the files, return exit code
@@ -31,9 +31,7 @@ set -ev
 DIFF_DETECTED_ERR_CODE=${DIFF_DETECTED_ERR_CODE:-169}
 DIFF_DIR=${DIFF_DIR:-.}
 
-org="machine-learning-exchange"
-repository="mlx"
-git_url="git://github.com/${org}/${repository}.git"
+git_url="git://github.com/machine-learning-exchange/mlx.git"
 
 latest_commit=$(git ls-remote ${git_url} | grep HEAD | cut -f 1)
 
