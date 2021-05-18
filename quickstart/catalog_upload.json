@@ -1,56 +1,36 @@
 {
   "components": [
     {
-      "name": "Train Spark Model - IBM Cloud",
-      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/spark/train_spark/component.yaml"
-    },
-    {
-      "name": "Serve PyTorch Model - Seldon Core",
-      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/ffdl/serve/component.yaml"
-    },
-    {
-      "name": "Deploy Model - Watson Machine Learning",
-      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/watson/deploy/component.yaml"
-    },
-    {
-      "name": "Echo",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/echo/echo.yaml"
-    },
-    {
-      "name": "Model Robustness Check - PyTorch",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/metrics/robustness_checker/component.yaml"
-    },
-    {
-      "name": "Model Fairness Check - PyTorch",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/metrics/bias_detector/component.yaml"
-    },
-    {
-      "name": "Deploy Model - Kubernetes",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/kubernetes/kube_deployment/component.yaml"
-    },
-    {
-      "name": "Deploy Model - KFServing",
-      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/kubeflow/kfserving/component.yaml"
-    },
-    {
-      "name": "Subscribe - Watson OpenScale",
-      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/watson/manage/subscribe/component.yaml"
-    },
-    {
-      "name": "Store model - Watson Machine Learning",
-      "url": "https://raw.githubusercontent.com/kubeflow/pipelines/master/components/ibm-components/watson/store/component.yaml"
-    },
-    {
-      "name": "Jupyter",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/jupyter/component.yaml"
-    },
-    {
       "name": "Generate Dataset Metadata",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/dax-to-dlf/component.yaml"
     },
     {
       "name": "Create Dataset Volume",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/dlf/component.yaml"
+    },
+    {
+      "name": "Create Secret - Kubernetes Cluster",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/create-secret/component.yaml"
+    },
+    {
+      "name": "Echo Sample",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/echo/component.yaml"
+    },
+    {
+      "name": "Kubernetes Model Deploy",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/kube-model-deployment/component.yaml"
+    },
+    {
+      "name": "Create Model Config",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/model-config/component.yaml"
+    },
+    {
+      "name": "Model Fairness Check",
+      "url": "https://raw.githubusercontent.com/Trusted-AI/AIF360/master/mlops/kubeflow/bias_detector_pytorch/component.yaml"
+    },
+    {
+      "name": "Adversarial Robustness Evaluation",
+      "url": "https://raw.githubusercontent.com/Trusted-AI/adversarial-robustness-toolbox/main/utils/mlops/kubeflow/robustness_evaluation_fgsm_pytorch/component.yaml"
     }
   ],
   "datasets": [
@@ -127,10 +107,6 @@
   ],
   "notebooks": [
     {
-      "name": "AIF360 Gender Classification",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif360-gender.yaml"
-    },
-    {
       "name": "ART detector model",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-detector.yaml"
     },
@@ -145,11 +121,20 @@
     {
       "name": "JFK Airport Analysis",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/JFK-airport.yaml"
-    },
-    {
-      "name": "Train and deploy with Watson Machine Learning",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/watson-ml.yaml"
     }
   ],
-  "pipelines": []
+  "pipelines": [
+    {
+      "name": "Parallel Join",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/parallel_join.yaml"
+    },
+    {
+      "name": "Sequential Pipeline",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/sequential.yaml"
+    },
+    {
+      "name": "ResourceOp Basic",
+      "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/resourceop_basic.yaml"
+    }
+  ]
 }

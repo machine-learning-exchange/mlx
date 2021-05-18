@@ -1,16 +1,21 @@
 # Running MLX with Docker Compose
 
-This _"quickstart"_ setup uses Docker Compose to bring up the MLX-API server and
-the MLX Dashboard, along with the MySQL database and Minio S3 storage backend.
-In this configuration, the preloaded asset catalog of Components, Datasets, Models
-and Notebooks can be browsed, asset metadata and sample code can be downloaded
-and new assets can be registered. Sample pipeline code can be generated for each
-asset type, their execution on a Kubeflow Pipelines cluster is not enabled however.
+This _"quickstart"_ setup uses  [Docker Compose](https://docs.docker.com/compose/)
+to bring up the MLX API server and the MLX Dashboard, together with the MySQL
+database and Minio S3 storage backend.
+In this configuration, the preloaded asset catalog of Components, Datasets, Models,
+Notebooks and Pipelines can be browsed, asset metadata and sample code can be
+downloaded and new assets can be registered. Sample pipeline code can be generated
+for each asset type, however their execution on a Kubeflow Pipelines (KFP) cluster
+is not enabled.
+In a Kubernetes cluster deployment of MLX, _Pipelines_ are registered using
+the KFP API and metadata storage is managed by KFP. In this Docker Compose setup
+the _Pipelines_ are stored in Minio and MySQL by the MLX API server.
 
 ## Limitations
 
-The _Pipelines_ and _Inference Service_ capabilities are not available with this
-Docker Compose setup. 
+The _Kubeflow Pipelines_ dashboard and _Inference Service_ capabilities are not
+available with this Docker Compose setup.
 
 ## Prerequisites
 

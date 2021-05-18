@@ -15,23 +15,31 @@
 import connexion
 import json
 import os
+import tarfile
 import typing
+import yaml
 
+from datetime import datetime
 from collections import Counter
+from os import environ as env
 from typing import AnyStr
 
 from swagger_server.controllers_impl import download_file_content_from_url
 from swagger_server.controllers_impl import get_yaml_file_content_from_uploadfile
-from swagger_server.data_access.minio_client import retrieve_file_content_and_url,\
+from swagger_server.data_access.minio_client import store_file, delete_object, \
+    delete_objects, retrieve_file_content, retrieve_file_content_and_url, \
     enable_anonymous_read_access, create_tarfile
-from swagger_server.data_access.mysql_client import store_data, load_data,\
+from swagger_server.data_access.mysql_client import store_data, generate_id, load_data, \
     delete_data, num_rows, update_multiple
 from swagger_server.gateways.kubeflow_pipeline_service import upload_pipeline_to_kfp,\
-    delete_kfp_pipeline, run_pipeline_in_experiment, run_custom_pipeline_in_experiment
+    delete_kfp_pipeline, run_pipeline_in_experiment, run_custom_pipeline_in_experiment, \
+    _host as KFP_HOST
 from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
 from swagger_server.models.api_list_pipelines_response import ApiListPipelinesResponse  # noqa: E501
 from swagger_server.models.api_pipeline import ApiPipeline  # noqa: E501
 from swagger_server.models import ApiPipelineCustomRunPayload, ApiPipelineTask, ApiPipelineDAG
+from swagger_server.models.api_metadata import ApiMetadata
+from swagger_server.models.api_parameter import ApiParameter
 from swagger_server.models.api_pipeline_extension import ApiPipelineExtension  # noqa: E501
 from swagger_server.models.api_pipeline_extended import ApiPipelineExtended  # noqa: E501
 from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: E501
@@ -83,9 +91,18 @@ def delete_pipeline(id):  # noqa: E501
 
     :rtype: None
     """
-    # wildcard '*' deletes (and recreates) entire table, not desired for pipelines table, KFP API does not accept "*"
-    if id != "*":
-        delete_kfp_pipeline(id)
+
+    if KFP_HOST == "UNAVAILABLE":
+        # TODO delete pipeline_versions first
+        delete_data(ApiPipeline, id)
+        if id == "*":
+            delete_objects(bucket_name="mlpipeline", prefix=f"pipelines/")
+        else:
+            delete_object(bucket_name="mlpipeline", prefix="pipelines", file_name=f"{id}")
+    else:
+        # wildcard '*' deletes (and recreates) entire table, not desired for pipelines table, KFP API does not accept "*"
+        if id != "*":
+            delete_kfp_pipeline(id)
 
     delete_data(ApiPipelineExtension, id)
 
@@ -251,6 +268,9 @@ def run_pipeline(id, run_name=None, parameters=None):  # noqa: E501
 
     :rtype: ApiRunCodeResponse
     """
+    if KFP_HOST == "UNAVAILABLE":
+        return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 501
+
     if not parameters and connexion.request.is_json:
         parameter_dict = dict(connexion.request.get_json())  # noqa: E501
     else:
@@ -347,7 +367,11 @@ def _upload_pipeline_yaml(yaml_file_content: AnyStr, name=None, description=None
         with os.fdopen(fd, "wb") as f:
             f.write(yaml_file_content)
 
-        api_pipeline: ApiPipeline = upload_pipeline_to_kfp(uploadfile=filename, name=name)
+        if KFP_HOST == "UNAVAILABLE":
+            # inside docker-compose we don't have KFP
+            api_pipeline: ApiPipeline = _store_pipeline(yaml_file_content, name, description)
+        else:
+            api_pipeline: ApiPipeline = upload_pipeline_to_kfp(uploadfile=filename, name=name)
 
         if description:
             update_multiple(ApiPipeline, [api_pipeline.id], "description", description)
@@ -355,10 +379,8 @@ def _upload_pipeline_yaml(yaml_file_content: AnyStr, name=None, description=None
         store_data(ApiPipelineExtension(id=api_pipeline.id))
 
         if annotations:
-
             if type(annotations) == str:
                 annotations = json.loads(annotations)
-
             update_multiple(ApiPipelineExtension, [api_pipeline.id], "annotations", annotations)
 
         api_pipeline_extended, _ = get_pipeline(api_pipeline.id)
@@ -367,6 +389,41 @@ def _upload_pipeline_yaml(yaml_file_content: AnyStr, name=None, description=None
         os.remove(filename)
 
     return api_pipeline_extended, 201
+
+
+def _store_pipeline(yaml_file_content: AnyStr, name=None, description=None):
+
+    yaml_dict = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
+
+    template_metadata = yaml_dict.get("metadata") or dict()
+    annotations = template_metadata.get("annotations", {})
+    pipeline_spec = json.loads(annotations.get("pipelines.kubeflow.org/pipeline_spec", "{}"))
+
+    name = name or template_metadata["name"]
+    description = pipeline_spec.get("description", "").strip()
+    pipeline_id = "-".join([generate_id(length=l) for l in [8, 4, 4, 4, 12]])
+    created_at = datetime.now()
+
+    parameters = [ApiParameter(name=p.get("name"), description=p.get("description"),
+                               default=p.get("default"), value=p.get("value"))
+                  for p in yaml_dict["spec"].get("params", {})]
+
+    api_pipeline = ApiPipeline(id=pipeline_id,
+                               created_at=created_at,
+                               name=name,
+                               description=description,
+                               parameters=parameters)
+
+    uuid = store_data(api_pipeline)
+
+    api_pipeline.id = uuid
+
+    store_file(bucket_name="mlpipeline", prefix=f"pipelines/",
+               file_name=f"{pipeline_id}", file_content=yaml_file_content)
+
+    enable_anonymous_read_access(bucket_name="mlpipeline", prefix="pipelines/*")
+
+    return api_pipeline
 
 
 def _validate_parameters(api_pipeline: ApiPipeline, parameters: dict) -> (str, int):
