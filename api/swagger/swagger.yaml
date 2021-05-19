@@ -15,7 +15,7 @@
 swagger: "2.0"
 
 info:
-  version: "0.1.25-related-assets"
+  version: "0.1.26-bypass-kfp-in-docker-compose"
   title: "MLX API"
   description: "MLX API Extension for Kubeflow Pipelines"
 

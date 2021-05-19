@@ -23,7 +23,7 @@ from mysql.connector import connect, errorcode, Error
 from mysql.connector.errors import IntegrityError
 from os import environ as env
 from random import choice
-from string import ascii_letters, digits
+from string import ascii_letters, digits, hexdigits
 from swagger_server.models.base_model_ import Model
 from swagger_server.models import *  # required for dynamic Api ...Extension class loading during View-table creation
 from swagger_server.util import _deserialize, ApiError
@@ -158,7 +158,8 @@ def generate_id(name: str = None, length: int = 36) -> str:
         # return name.lower().replace(" ", "-").replace("---", "-").replace("-–-", "–")
         return sanitize_k8s_name(name)
     else:
-        return ''.join([choice(ascii_letters + digits + '-') for n in range(length)])
+        # return ''.join([choice(ascii_letters + digits + '-') for n in range(length)])
+        return ''.join([choice(hexdigits) for n in range(length)]).lower()
 
 
 ##############################################################################
@@ -628,10 +629,12 @@ def delete_data(swagger_class: type, id: str) -> bool:
         # until we have a proper schema migration, use this opportunity to force recreating of the table later
         if table_name.endswith("extended"):
             sql = f"DROP VIEW IF EXISTS `{table_name}`"
+        elif table_name in ["pipelines", "pipeline_versions"]:
+            sql = f"DELETE FROM `{table_name}`"
         else:
             sql = f"DROP TABLE IF EXISTS `{table_name}`"
 
-        if table_name in existing_tables:
+        if sql.startswith("DROP ") and table_name in existing_tables:
             existing_tables.pop(table_name)
 
     else:

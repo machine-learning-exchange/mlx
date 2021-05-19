@@ -58,12 +58,12 @@ spec:
       labels:
         service: mlx-api
         environment: dev
-        version: v0.1.25-related-assets
+        version: v0.1.26
     spec:
       serviceAccountName: mlx-api
       containers:
       - name: mlx-api-server
-        image: docker.io/aipipeline/mlx-api:nightly-master
+        image: docker.io/aipipeline/mlx-api:nightly-main
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
