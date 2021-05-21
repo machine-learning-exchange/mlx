@@ -17,7 +17,7 @@ import * as fileStore from 'session-file-store';
 import * as passport from "passport";
 import * as cookieParser from "cookie-parser";
 import { BasicStrategy } from "passport-http";
-import { loadUsers, Users } from "./users";
+import { loadUsers } from "./users";
 import { Application, static as StaticHandler } from 'express';
 import * as fs from 'fs';
 import { randomBytes } from 'crypto';
@@ -52,7 +52,7 @@ type User = {
 initLogin(app);
 
 if (REACT_APP_BASE_PATH.length !== 0) {
-  app.all('/' + apiPrefix + '/*', proxy({
+  app.all('/' + apiPrefix + '/*', checkPermissionMiddleware, proxy({
     changeOrigin: true,
     onProxyReq: proxyReq => {
       console.log('Proxied request: ', (proxyReq as any).path);
@@ -61,7 +61,9 @@ if (REACT_APP_BASE_PATH.length !== 0) {
   }));
 }
 
-app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*', proxy({
+app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*',
+    checkPermissionMiddleware, proxy({
+
   changeOrigin: true,
   onProxyReq: proxyReq => {
     console.log('Proxied request: ', (proxyReq as any).path);
@@ -161,7 +163,7 @@ function initLogin(app: express.Application) {
   app.get([REACT_APP_BASE_PATH + '/login'],
     passport.authenticate('basic'),
     (req, res) => {
-      res.cookie('userinfo', JSON.stringify(req.user));
+      res.cookie('userinfo', JSON.stringify(req.user), {maxAge: 86400000});
       res.redirect(REACT_APP_BASE_PATH);
     }
   );
@@ -180,3 +182,19 @@ function sessionValidator (req: express.Request, res: express.Response) {
   res.status(200);
   res.send();
 };
+
+/**
+ * Reject all non-GET requests if there is no valid login
+ * session.
+ */
+function checkPermissionMiddleware(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction) {
+
+  if (req.method !== 'GET' && req.user === undefined ) {
+    res.sendStatus(403);
+    return;
+  }
+  next();
+}
