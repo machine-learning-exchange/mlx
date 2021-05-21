@@ -73,7 +73,7 @@ export default class ComponentDetail extends React.Component<ComponentDetailProp
   public render() {
     const { store } = this.context
     const { execute } = store.settings.capabilities
-    const canRun = execute.value || execute.default
+    const canRun = execute.value !== null ? execute.value : execute.default
     const setRunLink = this.props.setRunLink
 
     const component = this.state.component
@@ -149,7 +149,8 @@ export default class ComponentDetail extends React.Component<ComponentDetailProp
             />
           }
           { this.state.leftTab === 'runCreation' &&
-            <RunView type={'components'} asset={component} setRunLink={setRunLink}/> }
+            <RunView type={'components'} asset={component} setRunLink={setRunLink}/> 
+          }
         </Grid>
         <Grid 
           className="right-wrapper"

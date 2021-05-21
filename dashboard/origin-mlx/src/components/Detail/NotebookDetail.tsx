@@ -54,7 +54,8 @@ export default class NotebookDetail extends React.Component<INotebookDetailProps
 
   public render() {
     const { store } = this.context
-    const { execute: canRun } = store.settings.capabilities
+    const { execute } = store.settings.capabilities
+    const canRun = execute.value !== null ? execute.value : execute.default
     const setRunLink = this.props.setRunLink
 
     const notebook = this.state.notebook;

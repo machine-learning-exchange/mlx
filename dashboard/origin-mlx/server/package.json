@@ -4,6 +4,7 @@
   "dependencies": {
     "@types/node": "11.11.1",
     "express": "^4.16.3",
+    "express-rate-limit": "^5.2.6",
     "http-proxy-middleware": "^0.18.0",
     "typescript": "^3.5.2"
   },

@@ -12,6 +12,7 @@
 
 import * as express from 'express';
 import {Application, static as StaticHandler} from 'express';
+import * as ratelimit from 'express-rate-limit'
 import * as fs from 'fs';
 import * as proxy from 'http-proxy-middleware';
 import * as path from 'path';
@@ -77,6 +78,12 @@ app.use('/settings', staticHandler);
 app.use('/delete/', staticHandler);
 app.use('/kiali/', staticHandler);
 app.use('/experiments/', staticHandler);
+
+var limiter = new ratelimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+app.use(limiter);
 
 app.get('*', (req, res) => {
   // TODO: look into caching this file to speed up multiple requests.

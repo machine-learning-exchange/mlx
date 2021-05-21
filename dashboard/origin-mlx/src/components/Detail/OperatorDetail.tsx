@@ -55,7 +55,7 @@ export default class OperatorDetail extends React.Component<IOperatorDetailProps
   public render() {
     const { store } = this.context
     const { execute } = store.settings.capabilities
-    const canRun = execute.value || execute.default
+    const canRun = execute.value !== null ? execute.value : execute.default
 
     const operator = this.state.operator
     const setRunLink = this.props.setRunLink

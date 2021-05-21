@@ -92,7 +92,7 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
     const API = api.value || api.default
     const KFP = kfp.value || kfp.default
     const { execute } = store.settings.capabilities
-    const canRun = execute.value || execute.default
+    const canRun = execute.value !== null ? execute.value : execute.default
     const setRunLink = this.props.setRunLink
 
     const model = this.state.model
