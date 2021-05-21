@@ -1,5 +1,5 @@
 # base image
-FROM node:10
+FROM node:14
 
 # create app directory
 RUN mkdir -p /workspace
@@ -15,7 +15,7 @@ COPY . /workspace
 RUN npm install --silent --only=prod
 
 # install and build UI backend
-RUN cd server && npm install --only=prod && npm run build
+RUN cd server && npm install && npm run build
 
 # start app
 ENV NODE_ENV=production
