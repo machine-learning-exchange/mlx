@@ -18,6 +18,7 @@ import StoreContext from '../../lib/stores/context'
 import { fetchArtifact } from '../../lib/api/artifacts';
 import { Artifact, FETCH_ARTIFACT_ASSETS } from '../../lib/stores/artifacts'
 import { SET_ACTIVE_PAGE } from '../../lib/stores/pages';
+import { getUserInfo, hasRole, canShow } from '../../lib/util'
 
 import Button from '../../components/Button'
 import Hero from '../../components/Hero';
@@ -34,10 +35,14 @@ export interface MetaFeaturedPageProps extends ComponentProps<any> {
   leftBtn?: string;
   leftLink?: string;
   leftIcon?: string;
+  leftAdmin?: boolean;
   rightBtn?: string;
   rightLink?: string;
   rightIcon?: string;
+  rightAdmin?: boolean;
 }
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function MetaFeaturedPage(props: MetaFeaturedPageProps) {
   const {
@@ -45,6 +50,7 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
     children, numFeatured,
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
+    leftAdmin = false, rightAdmin = false,
   } = props
 
   const { store, dispatch } = useContext(StoreContext)
@@ -76,7 +82,7 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
         subtitle={description}
         alternate={alternate}
       >
-        { assetType === "pipelines" &&
+        { assetType === "pipelines" && isAdmin &&
           <Link to='/experiments'>
             <Button
               className="hero-buttons"
@@ -87,7 +93,7 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
             </Button>
           </Link>
         }
-        {leftBtn && leftLink &&
+        {leftBtn && leftLink && canShow(leftAdmin, isAdmin) &&
           <Link to={leftLink}>
             <Button
               className="hero-buttons-outline"
@@ -99,7 +105,7 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
             </Button>
           </Link>
         }
-        {rightBtn && rightLink && canUpload &&
+        {rightBtn && rightLink && canUpload && canShow(rightAdmin, isAdmin) &&
           <Link to={rightLink}>
             <Button
               className="hero-buttons"

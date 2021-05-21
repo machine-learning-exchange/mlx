@@ -15,6 +15,7 @@
 */ 
 import * as React from 'react';
 import StoreContext from '../../lib/stores/context'
+import { getUserInfo, hasRole } from '../../lib/util'
 
 import Grid from '@material-ui/core/Grid';
 import ReactMarkdown from 'react-markdown';
@@ -22,6 +23,8 @@ import RunView from '../RunView'
 import SourceCodeDisplay from '../SourceCodeDisplay';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 export interface IOperatorDetailProps {
   setRunLink?: Function
@@ -80,7 +83,7 @@ export default class OperatorDetail extends React.Component<IOperatorDetailProps
                 value="detail" 
                 label="Details" 
               />
-              {canRun &&
+              {canRun && isAdmin &&
                 <Tab 
                   className="comp-tab"
                   value="runCreation" 

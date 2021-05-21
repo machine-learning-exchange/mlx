@@ -19,7 +19,7 @@ import { fetchArtifact } from '../lib/api/artifacts';
 import { Artifact, FETCH_ARTIFACT_ASSETS } from '../lib/stores/artifacts'
 import { SET_ACTIVE_PAGE } from '../lib/stores/pages';
 import { ADD_COMPONENTS_TO_CART, REMOVE_COMPONENTS_OF_TYPE_FROM_CART } from '../lib/stores/pipeline';
-import { capitalize } from '../lib/util';
+import { capitalize, getUserInfo, hasRole, canShow } from '../lib/util';
 import Hero from '../components/Hero'
 import Button from '../components/Button'
 import Icon from '@material-ui/core/Icon'
@@ -50,9 +50,11 @@ interface MetaAllPageProps extends WithStyles<typeof styles> {
   leftBtn: string
   leftLink: string
   leftIcon?: string
+  leftAdmin?: boolean
   rightBtn: string
   rightLink: string
   rightIcon?: string
+  rightAdmin?: boolean
   canEdit?: boolean
 }
 enum SortOrder {
@@ -64,11 +66,15 @@ const styles = {
     color: '#1ccdc7'
   }
 }
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
+
 function MetaAllPage(props: MetaAllPageProps) {
   var {
     type,
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
+    rightAdmin = false, leftAdmin = false,
   } = props
   const [ order ] = useState(SortOrder.DESC)
   const [ orderBy, setOrderBy ] = useState('name')
@@ -199,6 +205,7 @@ function MetaAllPage(props: MetaAllPageProps) {
         title={`${type}`} 
         subtitle={`Deploy an ${type.slice(0, -1)}.`}
       >
+        { canShow(leftAdmin, isAdmin) &&
         <Link to={leftLink}>
           <Button
             className="hero-buttons-outline"
@@ -209,6 +216,8 @@ function MetaAllPage(props: MetaAllPageProps) {
             {leftBtn}
           </Button>
         </Link>
+        }
+        { canShow(rightAdmin, isAdmin) &&
         <Link to={rightLink}>
           <Button
             className="hero-buttons"
@@ -219,6 +228,7 @@ function MetaAllPage(props: MetaAllPageProps) {
             {rightBtn}
           </Button>
         </Link>
+        }
       </Hero>
       <div style={{ margin: '1rem 0.8rem' }}>
         <Paper>

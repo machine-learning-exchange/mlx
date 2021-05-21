@@ -15,7 +15,7 @@
 */ 
 import * as React from 'react';
 import StoreContext from '../../lib/stores/context'
-import { capitalize } from '../../lib/util'
+import { capitalize, getUserInfo, hasRole } from '../../lib/util'
 
 import Grid from '@material-ui/core/Grid';
 import SourceCodeDisplay from '../SourceCodeDisplay';
@@ -36,6 +36,8 @@ import { upload } from '../../lib/api/upload'
 import MetadataView from '../MetadataView';
 
 import Popup from "reactjs-popup";
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 export interface KFServingDetailProps {
   API?: string
@@ -267,7 +269,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
                     </Typography>
                   </div>
                   <div className="filePicker-wrapper detail-button">
-                    { !this.state.file ?
+                    { isAdmin && (!this.state.file ?
                       <>
                         <Button
                           className="hero-buttons upload-button" 
@@ -298,7 +300,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
                       </Button>
                       <p>{this.state.file.name}</p>
                     </>
-                    }
+                    )}
                   </div>
                   { predictorTimestamp &&
                     <MetadataView 

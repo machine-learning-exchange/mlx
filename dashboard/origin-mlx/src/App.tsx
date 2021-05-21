@@ -1,24 +1,25 @@
-/* 
-*  Copyright 2021 IBM Corporation 
-* 
-*  Licensed under the Apache License, Version 2.0 (the "License"); 
-*  you may not use this file except in compliance with the License. 
-*  You may obtain a copy of the License at 
-* 
-*      http://www.apache.org/licenses/LICENSE-2.0 
-* 
-*  Unless required by applicable law or agreed to in writing, software 
-*  distributed under the License is distributed on an "AS IS" BASIS, 
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-*  See the License for the specific language governing permissions and 
-*  limitations under the License. 
-*/ 
+/*
+*  Copyright 2021 IBM Corporation
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*/
 import React, { Dispatch } from 'react';
 import reducer, { initial } from './lib/stores/reducer'
 import StoreContext, { Store } from './lib/stores/context'
 import { Action, State } from './lib/stores/types'
 import { GET_SETTINGS } from './lib/stores/settings';
 import { getSettings } from './lib/api/settings';
+import { getUserInfo, hasRole } from './lib/util'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -44,6 +45,7 @@ import UploadPage from './pages/UploadPage'
 import MetaDetailPage from './pages/MetaDetailPage';
 import IframePage from './pages/IframePage'
 
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function App() {
 
@@ -81,22 +83,25 @@ function App() {
               <Router basename={process.env.REACT_APP_BASE_PATH}>
                 <Sidebar>
                   <Route exact path="/" component={LandingPage} />
-                  <Route exact path="/pipelines" 
+                  <Route exact path="/pipelines"
                     render={routeProps =>
-                      <MetaFeaturedPage 
+                      <MetaFeaturedPage
                         assetType="pipelines"
                         description="Pipelines for your machine learning workloads."
                         hasAssets
                         alternateBG
                         leftBtn="View all Pipelines"
                         leftLink="/pipelines/all"
+                        leftAdmin={true}
                         rightBtn="Register a Pipeline"
                         rightLink="/upload/pipelines"
+                        rightAdmin={true}
                       />
-                    } 
+                    }
                   />
                   <Switch>
-                    <Route path="/pipelines/all" 
+                    { isAdmin &&
+                    <Route path="/pipelines/all"
                       render={ routeProps =>
                         <MetaAllPage
                           type="pipelines"
@@ -111,13 +116,14 @@ function App() {
                           rightLink="/upload/pipelines"
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/pipelines/:id" 
+                    }
+                    <Route path="/pipelines/:id"
                       render={({ match, location })=> (
                         <MetaDetailPage
                           type="pipelines"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <PipelineDetail />
@@ -125,22 +131,25 @@ function App() {
                       )}
                     />
                   </Switch>
-                  <Route exact path="/datasets" 
+                  <Route exact path="/datasets"
                     render={routeProps =>
-                      <MetaFeaturedPage 
+                      <MetaFeaturedPage
                         assetType="datasets"
                         description="Datasets for your machine learning workloads."
                         hasAssets
                         alternateBG
                         leftBtn="View all Datasets"
                         leftLink="/datasets/all"
+                        leftAdmin={true}
                         rightBtn="Register a Dataset"
                         rightLink="/upload/datasets"
+                        rightAdmin={true}
                       />
-                    } 
+                    }
                   />
                   <Switch>
-                    <Route path="/datasets/all" 
+                    { isAdmin &&
+                    <Route path="/datasets/all"
                       render={ routeProps =>
                         <MetaAllPage
                           type="datasets"
@@ -155,13 +164,14 @@ function App() {
                           rightLink="/upload/datasets"
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/datasets/:id" 
+                    }
+                    <Route path="/datasets/:id"
                       render={({ match, location })=> (
                         <MetaDetailPage
                           type="datasets"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <DatasetDetail />
@@ -169,23 +179,26 @@ function App() {
                       )}
                     />
                   </Switch>
-                  <Route exact path="/components" 
-                    render={ routeProps => 
-                      <MetaFeaturedPage 
+                  <Route exact path="/components"
+                    render={ routeProps =>
+                      <MetaFeaturedPage
                         { ...routeProps }
                         assetType="components"
                         description="Components that can be used to build your pipelines."
                         hasAssets
                         leftBtn="View all Components"
                         leftLink="/components/all"
+                        leftAdmin={true}
                         rightBtn="Register a Component"
                         rightLink="/upload/components"
+                        rightAdmin={true}
                       />
                     }
                   />
                   <Switch>
-                    <Route path="/components/all" 
-                      render={ routeProps => 
+                  { isAdmin &&
+                    <Route path="/components/all"
+                      render={ routeProps =>
                         <MetaAllPage
                           type="components"
                           description="Components that can be used to build your pipelines."
@@ -201,13 +214,14 @@ function App() {
                           rightLink="/upload/components"
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/components/:id" 
+                    }
+                    <Route path="/components/:id"
                       render={({ match, location })=> (
                         <MetaDetailPage
                           type="components"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <ComponentDetail />
@@ -215,10 +229,10 @@ function App() {
                       )}
                     />
                   </Switch>
-                  <Route exact path="/models" 
-                    render={ routeProps => 
-                      <MetaFeaturedPage 
-                        { ...routeProps } 
+                  <Route exact path="/models"
+                    render={ routeProps =>
+                      <MetaFeaturedPage
+                        { ...routeProps }
                         assetType="models"
                         description="Machine learning models that can be used in your pipelines."
                         runningStatus=""
@@ -227,14 +241,17 @@ function App() {
                         hasAssets
                         leftBtn="View all Models"
                         leftLink="/models/all"
+                        leftAdmin={true}
                         rightBtn="Register a Model"
                         rightLink="/upload/models"
+                        rightAdmin={true}
                       />
-                    } 
+                    }
                   />
                   <Switch>
-                    <Route path="/models/all" 
-                      render={ routeProps => 
+                  { isAdmin &&
+                    <Route path="/models/all"
+                      render={ routeProps =>
                         <MetaAllPage
                           type="models"
                           description="Machine learning models that can be used in your pipelines."
@@ -248,13 +265,14 @@ function App() {
                           rightLink="/upload/models"
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/models/:id" 
+                    }
+                    <Route path="/models/:id"
                       render={({ match, location })=> (
                         <MetaDetailPage
                           type="models"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <ModelDetail />
@@ -262,24 +280,26 @@ function App() {
                       )}
                     />
                   </Switch>
-                  <Route exact path="/inferenceservices" 
-                    render={ routeProps => 
-                      <KFServingFeaturedPage 
-                        { ...routeProps } 
+                  <Route exact path="/inferenceservices"
+                    render={ routeProps =>
+                      <KFServingFeaturedPage
+                        { ...routeProps }
                         assetType="inferenceservices"
                         description="KFServing inference services."
                         alternateBG
                         hasAssets
                         leftBtn="View all Services"
                         leftLink="/inferenceservices/all"
+                        leftAdmin={true}
                         rightBtn="Deploy a Service"
                         rightLink="/upload/inferenceservices"
+                        rightAdmin={true}
                       />
-                    } 
+                    }
                   />
                   <Switch>
-                    <Route path="/inferenceservices/all" 
-                      render={ routeProps => 
+                    <Route path="/inferenceservices/all"
+                      render={ routeProps =>
                         <KFServingAllPage
                           type="inferenceservices"
                           description="KFServing inference services."
@@ -293,15 +313,16 @@ function App() {
                           leftIcon="arrow_back"
                           rightBtn="Deploy a Service"
                           rightLink="/upload/inferenceservices"
+                          rightAdmin={true}
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/inferenceservices/:id" 
+                    <Route path="/inferenceservices/:id"
                       render={({ match, location })=> (
                         <KFServingDetailPage
                           type="inferenceservices"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <KFServingDetail />
@@ -316,22 +337,25 @@ function App() {
                       return null
                     }}
                   />
-                  <Route exact path="/notebooks" 
-                    render={routeProps => 
-                      <MetaFeaturedPage 
-                        { ...routeProps } 
+                  <Route exact path="/notebooks"
+                    render={routeProps =>
+                      <MetaFeaturedPage
+                        { ...routeProps }
                         assetType="notebooks"
                         description="Notebooks for your data science tasks."
                         leftBtn="View all Notebooks"
                         leftLink="/notebooks/all"
+                        leftAdmin={true}
                         rightBtn="Register a Notebook"
                         rightLink="upload/notebooks"
+                        rightAdmin={true}
                       />
-                    } 
+                    }
                   />
                   <Switch>
-                    <Route path="/notebooks/all" 
-                      render={ routeProps => 
+                  { isAdmin &&
+                    <Route path="/notebooks/all"
+                      render={ routeProps =>
                         <MetaAllPage
                           type="notebooks"
                           description="Notebooks for your data science tasks."
@@ -345,13 +369,14 @@ function App() {
                           rightLink="/upload/notebooks"
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/notebooks/:id" 
+                    }
+                    <Route path="/notebooks/:id"
                       render={({ match, location })=> (
                         <MetaDetailPage
                           type="notebooks"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <NotebookDetail />
@@ -359,23 +384,26 @@ function App() {
                       )}
                     />
                   </Switch>
-                  <Route exact path="/operators" 
-                    render={ routeProps => 
-                      <MetaFeaturedPage 
-                        { ...routeProps } 
+                  <Route exact path="/operators"
+                    render={ routeProps =>
+                      <MetaFeaturedPage
+                        { ...routeProps }
                         hasAssets
                         assetType="operators"
                         description="Operators for your machine learning stack."
                         leftBtn="View all Operators"
                         leftLink="/operators/all"
+                        leftAdmin={true}
                         rightBtn="Register an Operator"
                         rightLink="/upload/operators"
+                        rightAdmin={true}
                       />
-                    } 
+                    }
                   />
                   <Switch>
-                    <Route path="/operators/all" 
-                      render={ routeProps => 
+                    { isAdmin &&
+                    <Route path="/operators/all"
+                      render={ routeProps =>
                         <MetaAllPage
                           type="operators"
                           description="Operators for your machine learning stack."
@@ -389,13 +417,14 @@ function App() {
                           rightLink="/upload/operators"
                           canEdit={true}
                         />
-                      } 
+                      }
                     />
-                    <Route path="/operators/:id" 
+                    }
+                    <Route path="/operators/:id"
                       render={({ match, location })=> (
                         <MetaDetailPage
                           type="operators"
-                          id={match.params.id} 
+                          id={match.params.id}
                           asset={location}
                         >
                           <OperatorDetail />
@@ -403,6 +432,7 @@ function App() {
                       )}
                     />
                   </Switch>
+                  { isAdmin &&
                   <Route
                     path="/experiments"
                     render={({match, location}) =>
@@ -413,6 +443,8 @@ function App() {
                       />
                     }
                   />
+                  }
+                  { isAdmin &&
                   <Switch>
                     <Route
                       exact path="/upload/inferenceservices"
@@ -422,18 +454,23 @@ function App() {
                       path="/upload/:type"
                       render={routeProps => <UploadPage {...routeProps} /> }
                     />
-                  </Switch>       
+                  </Switch>
+                  }
+                  { isAdmin &&
                   <Route path="/delete/:type"
-                    render={routeProps =>
-                      <MetaDeletePage
-                        { ...routeProps }
-                        API={ API }
-                        canRun={ canRun }
-                        alternateBG>
-                      </MetaDeletePage> 
-                    } 
-                  />        
+                  render={routeProps =>
+                    <MetaDeletePage
+                    { ...routeProps }
+                    API={ API }
+                    canRun={ canRun }
+                    alternateBG>
+                      </MetaDeletePage>
+                    }
+                    />
+                  }
+                  { isAdmin &&
                   <Route path="/settings" render={routeProps => <SettingsPage alternateBG />} />
+                  }
                 </Sidebar>
               </Router>
             )

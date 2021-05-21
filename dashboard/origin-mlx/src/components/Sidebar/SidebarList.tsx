@@ -20,7 +20,7 @@ import SidebarListItem from './SidebarListItem';
 import '../../styles/Sidebar.css'
 import Icon from '@material-ui/core/Icon';
 import SecretMenu from '../SecretMenu';
-import { capitalize } from '../../lib/util';
+import { capitalize, getUserInfo, hasRole } from '../../lib/util';
 
 const sideNavColors = {
   bg: '#303030',
@@ -31,6 +31,7 @@ const sideNavColors = {
   separator: '#666',
 };
 
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function SidebarList() {
   const { store } = useContext(StoreContext)
@@ -82,7 +83,7 @@ function SidebarList() {
           </ul>
         }
       </div>
-      {secretVisible ?
+      { isAdmin && (secretVisible ?
         <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
           <SecretMenu />
         </div>
@@ -90,7 +91,7 @@ function SidebarList() {
         <div onClick={() => setSecretVisible(true)} className={`secret-tab`}>
           <Icon>more_horiz</Icon>
         </div>
-      }
+      )}
     </div>
   )
 }

@@ -25,6 +25,9 @@ import Tab from '@material-ui/core/Tab';
 import yaml from 'js-yaml';
 import MetadataView from '../MetadataView';
 import RelatedAssetView from '../RelatedAssetView';
+import { getUserInfo, hasRole } from '../../lib/util';
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 export interface IPipelineDetailProps {
   setRunLink?: Function
@@ -81,7 +84,7 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
                 value="detail" 
                 label="Details" 
               />
-              {canRun &&
+              {canRun && isAdmin &&
                 <Tab
                   className="comp-tab"
                   value="runCreation"
