@@ -15,6 +15,7 @@
 */
 import * as React from 'react';
 import StoreContext from '../../lib/stores/context'
+import { getUserInfo, hasRole } from '../../lib/util'
 
 import DataList from '../DataList';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +23,8 @@ import SourceCodeDisplay from '../SourceCodeDisplay';
 import RunView from '../RunView'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 export interface INotebookDetailProps {
   setRunLink?: Function
@@ -85,7 +88,7 @@ export default class NotebookDetail extends React.Component<INotebookDetailProps
                 value="detail"
                 label="Details"
               />
-              {canRun &&
+              {canRun && isAdmin &&
                 <Tab
                   className="comp-tab"
                   value="runCreation"

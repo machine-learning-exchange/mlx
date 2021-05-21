@@ -13,6 +13,39 @@
 *  See the License for the specific language governing permissions and 
 *  limitations under the License. 
 */ 
+import Cookies from 'js-cookie';
+
+type UserInfo = {
+  username: string;
+  roles: string[];
+}
+
+const DEFAULT_USERINFO = {
+  username: 'user',
+  roles: ['user']
+};
+
+let gUserInfo: UserInfo;
+
+export function getUserInfo(): UserInfo {
+  return gUserInfo || (() => {
+    const userinfo = Cookies.get('userinfo');
+    if (userinfo === undefined) {
+      gUserInfo = DEFAULT_USERINFO;
+    } else {
+      gUserInfo = JSON.parse(userinfo)
+    }
+    return gUserInfo;
+  })();
+}
+
+export function hasRole(user: UserInfo, role: string): boolean {
+  return user.roles.indexOf(role) !== -1;
+}
+
+export function canShow(adminOnly: boolean, isAdmin: boolean) {
+  return !(adminOnly === true && isAdmin === false);
+}
 
 export const capitalize = (lower: string) =>
   lower.charAt(0).toUpperCase().concat(lower.slice(1));

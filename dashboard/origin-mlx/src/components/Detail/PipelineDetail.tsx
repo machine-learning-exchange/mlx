@@ -15,6 +15,7 @@
 */ 
 import * as React from 'react';
 import StoreContext from '../../lib/stores/context'
+import { getUserInfo, hasRole } from '../../lib/util'
 
 import Grid from '@material-ui/core/Grid';
 import LoadingMessage from '../LoadingMessage';
@@ -27,6 +28,8 @@ import MetadataView from '../MetadataView';
 
 import Graph from '../Graph';
 import * as StaticGraphParser from '../StaticGraphParser';
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 export interface IPipelineDetailProps {
   setRunLink?: Function
@@ -114,7 +117,7 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
                 value="detail" 
                 label="Details" 
               />
-              {canRun &&
+              {canRun && isAdmin &&
                 <Tab
                   className="comp-tab"
                   value="runCreation"

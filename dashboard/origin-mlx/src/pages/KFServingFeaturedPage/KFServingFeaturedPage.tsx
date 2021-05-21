@@ -18,6 +18,7 @@ import StoreContext from '../../lib/stores/context'
 import { fetchArtifact } from '../../lib/api/artifacts';
 import { Artifact, FETCH_ARTIFACT_ASSETS } from '../../lib/stores/artifacts'
 import { SET_ACTIVE_PAGE } from '../../lib/stores/pages';
+import { getUserInfo, hasRole, canShow  } from '../../lib/util';
 
 import Button from '../../components/Button'
 import Hero from '../../components/Hero';
@@ -34,10 +35,14 @@ export interface KFServingFeaturedPageProps extends ComponentProps<any> {
   leftBtn?: string;
   leftLink?: string;
   leftIcon?: string;
+  leftAdmin?: boolean;
   rightBtn?: string;
   rightLink?: string;
   rightIcon?: string;
+  rightAdmin?: boolean;
 }
+
+const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
   var {
@@ -45,6 +50,7 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
     children, numFeatured,
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
+    rightAdmin = false, leftAdmin = false,
   } = props
 
   const { store, dispatch } = useContext(StoreContext)
@@ -90,7 +96,7 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
             </Button>
           </Link>
         }
-        {leftBtn && leftLink &&
+        {leftBtn && leftLink && canShow(leftAdmin, isAdmin) &&
           <Link to={leftLink}>
             <Button
               className="hero-buttons-outline"
@@ -102,7 +108,7 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
             </Button>
           </Link>
         }
-        {rightBtn && rightLink && canUpload &&
+        {rightBtn && rightLink && canUpload && canShow(rightAdmin, isAdmin) &&
           <Link to={rightLink}>
             <Button
               className="hero-buttons"
