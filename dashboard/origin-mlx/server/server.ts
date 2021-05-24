@@ -103,9 +103,8 @@ var limiter = new ratelimit({
   windowMs: 1*60*1000, // 1 minute
   max: 5
 });
-app.use(limiter);
 
-app.get('*', (req, res) => {
+app.get('*', limiter, (req, res) => {
   // TODO: look into caching this file to speed up multiple requests.
   res.sendFile(path.resolve(staticDir, 'index.html'));
 });
