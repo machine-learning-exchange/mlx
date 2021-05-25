@@ -11,6 +11,7 @@
 // limitations under the License.
 
 import * as express from 'express';
+import * as ratelimit from 'express-rate-limit'
 import * as session from 'express-session';
 import * as fileStore from 'session-file-store';
 import * as passport from "passport";
@@ -98,7 +99,12 @@ if (REACT_APP_BASE_PATH.length !== 0) {
   app.use('/experiments/', staticHandler);
 }
 
-app.get('*', (req, res) => {
+var limiter = new ratelimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+
+app.get('*', limiter, (req, res) => {
   // TODO: look into caching this file to speed up multiple requests.
   res.sendFile(path.resolve(staticDir, 'index.html'));
 });

@@ -83,7 +83,8 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
   
   public render() {
     const { store } = this.context
-    const { execute: canRun } = store.settings.capabilities
+    const { execute } = store.settings.capabilities
+    const canRun = execute.value !== null ? execute.value : execute.default
 
     const pipeline = this.state.pipeline
     const setRunLink = this.props.setRunLink

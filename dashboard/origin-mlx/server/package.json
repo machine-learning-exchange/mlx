@@ -4,6 +4,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "express": "^4.16.3",
+    "express-rate-limit": "^5.2.6",
     "express-session": "^1.17.1",
     "http-proxy-middleware": "^0.18.0",
     "passport": "^0.4.1",
