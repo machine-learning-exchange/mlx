@@ -55,6 +55,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         'parameters': 'list[ApiParameter]',
         'status': 'str',
         'default_version_id': 'str',
+        'namespace': 'str',
         'annotations': 'dict(str, str)',
         'featured': 'bool',
         'publish_approved': 'bool'
@@ -68,12 +69,13 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         'parameters': 'parameters',
         'status': 'status',
         'default_version_id': 'default_version_id',
+        'namespace': 'namespace',
         'annotations': 'annotations',
         'featured': 'featured',
         'publish_approved': 'publish_approved'
     }
 
-    def __init__(self, id=None, created_at=None, name=None, description=None, parameters=None, status=None, default_version_id=None, annotations=None, featured=None, publish_approved=None):  # noqa: E501
+    def __init__(self, id=None, created_at=None, name=None, description=None, parameters=None, status=None, default_version_id=None, namespace=None, annotations=None, featured=None, publish_approved=None):  # noqa: E501
         """ApiPipelineExtended - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
@@ -83,6 +85,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         self._parameters = None
         self._status = None
         self._default_version_id = None
+        self._namespace = None
         self._annotations = None
         self._featured = None
         self._publish_approved = None
@@ -102,6 +105,8 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
             self.status = status
         if default_version_id is not None:
             self.default_version_id = default_version_id
+        if namespace is not None:
+            self.namespace = namespace
         if annotations is not None:
             self.annotations = annotations
         if featured is not None:
@@ -259,6 +264,27 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     #     """
     #
     #     self._default_version_id = default_version_id
+    #
+    # @property
+    # def namespace(self):
+    #     """Gets the namespace of this ApiPipelineExtended.  # noqa: E501
+    #
+    #
+    #     :return: The namespace of this ApiPipelineExtended.  # noqa: E501
+    #     :rtype: str
+    #     """
+    #     return self._namespace
+    #
+    # @namespace.setter
+    # def namespace(self, namespace):
+    #     """Sets the namespace of this ApiPipelineExtended.
+    #
+    #
+    #     :param namespace: The namespace of this ApiPipelineExtended.  # noqa: E501
+    #     :type: str
+    #     """
+    #
+    #     self._namespace = namespace
     #
     # @property
     # def annotations(self):

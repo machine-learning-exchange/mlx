@@ -15,7 +15,7 @@
 swagger: "2.0"
 
 info:
-  version: "0.1.26-bypass-kfp-in-docker-compose"
+  version: "0.1.27-pipeline-namespace"
   title: "MLX API"
   description: "MLX API Extension for Kubeflow Pipelines"
 
@@ -2709,6 +2709,8 @@ definitions:
           \ version is used as default. (In the future, if desired by customers, we\
           \ can allow them to set default version.)"
         readOnly: true
+      namespace:
+        type: "string"
     example:
       name: "name"
       created_at: "2000-01-23T04:56:07.000+00:00"

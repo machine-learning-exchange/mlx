@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION = "0.1.26"  # bypass-kfp-in-docker-compose
+VERSION = "0.1.27"  # 0.1.27-pipeline-namespace

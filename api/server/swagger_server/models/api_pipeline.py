@@ -29,7 +29,7 @@ class ApiPipeline(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None):  # noqa: E501
+    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, namespace: str=None):  # noqa: E501
         """ApiPipeline - a model defined in Swagger
 
         :param id: The id of this ApiPipeline.  # noqa: E501
@@ -46,6 +46,8 @@ class ApiPipeline(Model):
         :type status: str
         :param default_version_id: The default_version_id of this ApiPipeline.  # noqa: E501
         :type default_version_id: str
+        :param namespace: The namespace of this ApiPipeline.  # noqa: E501
+        :type namespace: str
         """
         self.swagger_types = {
             'id': str,
@@ -54,7 +56,8 @@ class ApiPipeline(Model):
             'description': str,
             'parameters': List[ApiParameter],
             'status': str,
-            'default_version_id': str
+            'default_version_id': str,
+            'namespace': str
         }
 
         self.attribute_map = {
@@ -64,7 +67,8 @@ class ApiPipeline(Model):
             'description': 'description',
             'parameters': 'parameters',
             'status': 'status',
-            'default_version_id': 'default_version_id'
+            'default_version_id': 'default_version_id',
+            'namespace': 'namespace'
         }
 
         self._id = id
@@ -74,6 +78,7 @@ class ApiPipeline(Model):
         self._parameters = parameters
         self._status = status
         self._default_version_id = default_version_id
+        self._namespace = namespace
 
     @classmethod
     def from_dict(cls, dikt) -> 'ApiPipeline':
@@ -236,3 +241,24 @@ class ApiPipeline(Model):
         """
 
         self._default_version_id = default_version_id
+
+    @property
+    def namespace(self) -> str:
+        """Gets the namespace of this ApiPipeline.
+
+
+        :return: The namespace of this ApiPipeline.
+        :rtype: str
+        """
+        return self._namespace
+
+    @namespace.setter
+    def namespace(self, namespace: str):
+        """Sets the namespace of this ApiPipeline.
+
+
+        :param namespace: The namespace of this ApiPipeline.
+        :type namespace: str
+        """
+
+        self._namespace = namespace

@@ -166,7 +166,7 @@ from urllib3.response import HTTPResponse
 
 # create an instance of the API class
 api_instance = swagger_client.ComponentServiceApi()
-component_id = '3diutD-2nDPQ' # str | 
+component_id = '3diutD-2nDPQ' # str
 include_generated_code = True # bool | Include generated run script in download (optional) (default to false)
 tarfile_path = f'download/component_{component_id}.tgz'
 
@@ -186,7 +186,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| UUID of component | 
+ **id** | **str**| UUID of component |
  **include_generated_code** | **bool**| Include generated run script in download | [optional] [default to false]
 
 ### Return type

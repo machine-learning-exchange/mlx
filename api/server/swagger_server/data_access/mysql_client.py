@@ -38,6 +38,7 @@ _user = 'root'
 
 existing_tables = dict()
 
+# map Python data types of the Swagger model object's attributes to MySQL column types
 type_map = {
     str: 'varchar(255)',
     int: 'int(11)',
@@ -47,12 +48,16 @@ type_map = {
     Model: 'longtext',
     datetime: 'bigint(20)'
 }
+# some attributes do not comply to the defaults in the type_map
+swagger_attr_to_mysql_type = {
+    'namespace': 'varchar(63)'
+}
 
+# some Swagger attributes names have special MySQL column names (KFP idiosyncrasy)
 field_name_swagger_to_mysql = {
     'id': 'UUID',
     'created_at': 'CreatedAtInSec'
 }
-
 field_name_mysql_to_swagger = {v: k for (k, v) in field_name_swagger_to_mysql.items()}  # Note: overrides duplicates
 
 
@@ -385,7 +390,8 @@ def _validate_schema(table_name: str, swagger_class):
         if p.name == "self":
             continue
         col_name = _convert_attr_name_to_col_name(p.name)
-        col_type = _get_mysql_type_declaration(p.annotation)
+        col_type = swagger_attr_to_mysql_type.get(p.name) or \
+                   _get_mysql_type_declaration(p.annotation)
 
         # hack, TODO: find a more generic solution to custom map columns to types by table
         if issubclass(swagger_class, ApiPipeline) and col_name == "Description":

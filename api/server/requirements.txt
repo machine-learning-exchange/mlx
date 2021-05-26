@@ -6,14 +6,17 @@ pip==20.2.4
 
 setuptools>=41.2.0
 
-kfp==1.4.0
-kfp-tekton==0.7.0
-kfp-notebook==0.14.0
-kfserving==0.4.1
+# TODO: remove after upgrading kfp-tekton 0.8.1, which depends on kfp==1.6.2
+kfp-tekton@git+https://github.com/kubeflow/kfp-tekton.git@v0.8.0#egg=kfp-tekton&subdirectory=sdk/python
+# kfp==1.6.2
+# kfp-tekton==0.8.0
+
+kfp-notebook==0.23.0
+kfserving==0.5.1
 
 # force kubernetes version to "decide" version conflict between kfp and kfserving
 # TODO: remove after upgrading to kfp==1.5.x, kf_serving==0.5.x
-kubernetes==11.0.0
+kubernetes<13,>=8.0.0
 
 requests>=2.25.0
 Werkzeug>=1.0.1

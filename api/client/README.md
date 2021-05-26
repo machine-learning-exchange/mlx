@@ -53,7 +53,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.ComponentServiceApi()
-body = swagger_client.ApiComponent() # ApiComponent | 
+body = swagger_client.ApiComponent() # ApiComponent
 
 try:
     api_response = api_instance.create_component(body)

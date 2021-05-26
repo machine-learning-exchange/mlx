@@ -167,7 +167,7 @@ from urllib3.response import HTTPResponse
 
 # create an instance of the API class
 api_instance = swagger_client.NotebookServiceApi()
-notebook_id = 'ye-23fg0-2ic8' # str | 
+notebook_id = 'ye-23fg0-2ic8' # str
 include_generated_code = True # bool | Include generated run script in download (optional) (default to false)
 tarfile_path = f'download/notebook_{notebook_id}.tgz'
 

@@ -15,8 +15,9 @@ CREATE TABLE IF NOT EXISTS `pipelines` (
   `Parameters` longtext NOT NULL,
   `Status` varchar(255) NOT NULL,
   `DefaultVersionId` varchar(255) DEFAULT NULL,
+  `Namespace` varchar(63) DEFAULT '',
   PRIMARY KEY (`UUID`),
-  UNIQUE KEY `name_index` (`Name`)
+  UNIQUE KEY `name_namespace_index` (`Name`,`Namespace`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `pipeline_versions` (
@@ -38,5 +39,5 @@ CREATE TABLE IF NOT EXISTS `pipeline_versions` (
 -- don't populate tables since we won't have the accompanying "template" YAML stored on Minio
 --
 
--- INSERT INTO `pipelines` VALUES ('c616527f-1f3c-4f0c-aada-35fa2cc4feb3',1619547888,'[Demo] flip-coin','[source code](https://github.com/kubeflow/kfp-tekton/tree/master/samples/flip-coin) A conditional pipeline to flip coins based on a random number generator.','[]','READY','c616527f-1f3c-4f0c-aada-35fa2cc4feb3');
+-- INSERT INTO `pipelines` VALUES ('c616527f-1f3c-4f0c-aada-35fa2cc4feb3',1619547888,'[Demo] flip-coin','[source code](https://github.com/kubeflow/kfp-tekton/tree/master/samples/flip-coin) A conditional pipeline to flip coins based on a random number generator.','[]','READY','c616527f-1f3c-4f0c-aada-35fa2cc4feb3','');
 -- INSERT INTO `pipeline_versions` VALUES ('c616527f-1f3c-4f0c-aada-35fa2cc4feb3',1619547888,'[Demo] flip-coin','[]','c616527f-1f3c-4f0c-aada-35fa2cc4feb3','READY','');

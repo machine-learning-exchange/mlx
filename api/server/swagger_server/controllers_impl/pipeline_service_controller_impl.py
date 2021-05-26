@@ -401,6 +401,7 @@ def _store_pipeline(yaml_file_content: AnyStr, name=None, description=None):
 
     name = name or template_metadata["name"]
     description = pipeline_spec.get("description", "").strip()
+    namespace = pipeline_spec.get("namespace", "").strip()
     pipeline_id = "-".join([generate_id(length=l) for l in [8, 4, 4, 4, 12]])
     created_at = datetime.now()
 
@@ -412,7 +413,8 @@ def _store_pipeline(yaml_file_content: AnyStr, name=None, description=None):
                                created_at=created_at,
                                name=name,
                                description=description,
-                               parameters=parameters)
+                               parameters=parameters,
+                               namespace=namespace)
 
     uuid = store_data(api_pipeline)
 

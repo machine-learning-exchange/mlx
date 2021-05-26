@@ -58,7 +58,7 @@ spec:
       labels:
         service: mlx-api
         environment: dev
-        version: v0.1.26
+        version: v0.1.27
     spec:
       serviceAccountName: mlx-api
       containers:
