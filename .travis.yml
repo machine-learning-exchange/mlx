@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 language: python
 python: 3.6
 install: pip install flake8
@@ -46,18 +47,18 @@ jobs:
           fi
         - echo "Changes detected - continue running job"
       script:
-        - cd dashboard/origin-mlx && docker build -t aipipeline/mlx-ui:nightly-origin-$TRAVIS_BRANCH . && cd ..
+        - cd dashboard/origin-mlx && docker build -t mlexchange/mlx-ui:nightly-origin-$TRAVIS_BRANCH . && cd ..
         - docker images
-        - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then docker login -u $username -p $password && docker push aipipeline/mlx-ui:nightly-origin-$TRAVIS_BRANCH; fi
+        - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then docker login -u $username -p $password && docker push mlexchange/mlx-ui:nightly-origin-$TRAVIS_BRANCH; fi
     - name: "API Build"
       env:
         - DIFF_DETECTED_ERR_CODE=169
         - DIFF_DIR=api/server
       before_script: *0
       script:
-        - cd api/server && docker build -t aipipeline/mlx-api:nightly-$TRAVIS_BRANCH . && cd ../..
+        - cd api/server && docker build -t mlexchange/mlx-api:nightly-$TRAVIS_BRANCH . && cd ../..
         - docker images
-        - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then docker login -u $username -p $password && docker push aipipeline/mlx-api:nightly-$TRAVIS_BRANCH; fi
+        - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then docker login -u $username -p $password && docker push mlexchange/mlx-api:nightly-$TRAVIS_BRANCH; fi
     - name: "Python flake8 check"
       script:
         - flake8 . --count --exclude=./api/server/swagger_server/code_templates --select=E9,F63,F7,F82 --show-source --statistics
