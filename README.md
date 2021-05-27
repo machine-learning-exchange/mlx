@@ -26,6 +26,12 @@ Additionally it provides:
 
 ## 1. Prerequisites
 
+### Quickstart (Asset Catalog Demo)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+* 4 GB of memory
+* 10 GB of free storage
+
+### Cluster Deployment 
 * An existing Kubernetes cluster. Version 1.17+
 * The minimum capacity requirement for MLX is 8 vCPUs and 16GB RAM
 * If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using [IBM Cloud Public](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
@@ -35,7 +41,11 @@ Additionally it provides:
 ## 2. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
 
-For Deployment, we are going to use an Operator based on [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. You can install the operator manually or install on an existing Kubeflow Cluster. Both should achieve the same result. Choose any one of them.
+For a simple up-and-running demo of the asset catalog, we created a [Quickstart Guide](./quickstart) using [Docker Compose](https://docs.docker.com/compose/install/).
+
+For a full deployment, we use an Operator based on the [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. You can install the operator manually or install on an existing Kubeflow Cluster. Both should achieve the same result. Choose any one of them.
+
+### [Catalog demo using Docker Compose](./quickstart)
 
 ### [Manual Installation using Operator](./docs/mlx-install-operator.md)
 
