@@ -11,35 +11,33 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.apiVersion: rbac.istio.io/v1alpha1
-kind: ServiceRole
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
 metadata:
-  name: mlx-ui
+  name: mlx-api
   namespace: kubeflow
 spec:
+  selector:
+    matchLabels:
+      service: mlx-api
   rules:
-  - services:
-    - mlx-ui.kubeflow.svc.cluster.local
----
-apiVersion: rbac.istio.io/v1alpha1
-kind: ServiceRoleBinding
-metadata:
-  name: bind-gateway-mlx-ui
-  namespace: kubeflow
-spec:
-  roleRef:
-    kind: ServiceRole
-    name: mlx-ui
-  subjects:
-  - properties:
-      source.namespace: istio-system
+  # We need this rule to access the Swagger UI and post API requests directly to mlx-api
+  - from:
+    - source:
+        namespaces:
+        - istio-system
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/kubeflow/sa/mlx-ui
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: mlx-ui
+  name: mlx-api
   namespace: kubeflow
 spec:
-  host: mlx-ui.kubeflow.svc.cluster.local
+  host: mlx-api.kubeflow.svc.cluster.local
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
