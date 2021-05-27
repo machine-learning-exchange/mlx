@@ -38,12 +38,14 @@ jobs:
         - git fetch upstream
         - ./tools/bash/check_diff.sh ; EXIT_CODE=$?
         - |
-          if [ $EXIT_CODE -eq 0 ]; then
-            echo "No changes detected - skipping job."
-            travis_terminate 0
-          elif [ $EXIT_CODE -ne $DIFF_DETECTED_ERR_CODE ]; then
-            echo "Unexpected error in check_diff.sh - failing job."
-            travis_terminate $EXIT_CODE
+          if [ "$TRAVIS_EVENT_TYPE" != "cron" ]; then
+            if [ $EXIT_CODE -eq 0 ]; then
+              echo "No changes detected - skipping job."
+              travis_terminate 0
+            elif [ $EXIT_CODE -ne $DIFF_DETECTED_ERR_CODE ]; then
+              echo "Unexpected error in check_diff.sh - failing job."
+              travis_terminate $EXIT_CODE
+            fi
           fi
         - echo "Changes detected - continue running job"
       script:
