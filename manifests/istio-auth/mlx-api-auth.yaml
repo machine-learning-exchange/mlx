@@ -21,6 +21,7 @@ spec:
     matchLabels:
       service: mlx-api
   rules:
+  # We need this rule to access the Swagger UI and post API requests directly to mlx-api
   - from:
     - source:
         namespaces:
