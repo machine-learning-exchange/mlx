@@ -1,12 +1,11 @@
 [![Build Status](https://travis-ci.com/machine-learning-exchange/mlx.svg?branch=main)](https://travis-ci.com/machine-learning-exchange/mlx)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4862/badge)](https://bestpractices.coreinfrastructure.org/projects/4862)
 
-# Machine Learning Exchange (MLX)
+# Machine Learning eXchange (MLX)
 
-**Data and AI Assets Catalog and Execution Engine**
+**Data and AI Assets Catalog and Execution Engine** 
 
-It allows upload, registration, execution, and deployment of:
-
+Allows upload, registration, execution, and deployment of:
  - AI pipelines and pipeline components
  - Models
  - Datasets
@@ -26,12 +25,12 @@ Additionally it provides:
 
 ## 1. Prerequisites
 
-### Quickstart (Asset Catalog Demo)
+#### Quickstart (MLX Asset Catalog Only)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * 4 GB of memory
 * 10 GB of free storage
 
-### Cluster Deployment 
+#### Cluster Deployment (MLX Asset Catalog and Execution Engine)
 * An existing Kubernetes cluster. Version 1.17+
 * The minimum capacity requirement for MLX is 8 vCPUs and 16GB RAM
 * If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using [IBM Cloud Public](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
@@ -41,15 +40,16 @@ Additionally it provides:
 ## 2. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
 
-For a simple up-and-running demo of the asset catalog, we created a [Quickstart Guide](./quickstart) using [Docker Compose](https://docs.docker.com/compose/install/).
+For a simple up-and-running MLX with asset catalog only, we created a [Quickstart Guide](./quickstart) using [Docker Compose](https://docs.docker.com/compose/install/).
 
-For a full deployment, we use an Operator based on the [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. You can install the operator manually or install on an existing Kubeflow Cluster. Both should achieve the same result. Choose any one of them.
+For a full deployment, use an Operator based on the [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. 
 
-### [Catalog demo using Docker Compose](./quickstart)
+* #### [MLX (Asset Catalog Only) using Docker Compose](./quickstart)
 
-### [Manual Installation using Operator](./docs/mlx-install-operator.md)
+* #### [MLX deployment using Operator](./docs/mlx-install-operator.md)
 
-### [Deploy MLX on an Existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
+* #### [MLX on an existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
+
 
 ## 3. Access the MLX UI
 
