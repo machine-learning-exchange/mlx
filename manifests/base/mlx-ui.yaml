@@ -42,7 +42,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: REACT_APP_BRAND
-          value: MLX
+          value: "Machine Learning eXchange"
         - name: REACT_APP_RUN
           value: "true"
         - name: REACT_APP_UPLOAD

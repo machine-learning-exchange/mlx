@@ -30,6 +30,10 @@ ul {
   min-height: 100%;
 }
 
+.sidebar-img {
+  width: 50%;
+}
+
 .sidebar-header-wrap {
   text-align: center;
   padding-top: 5%;
