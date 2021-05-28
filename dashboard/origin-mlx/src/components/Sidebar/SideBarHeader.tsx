@@ -15,22 +15,13 @@
 */ 
 import React, { useContext } from 'react'
 import StoreContext from '../../lib/stores/context'
-import CodaitLogo from '../../icons/codaitLogo';
+import MLXLogo from "../../images/mlx-logo-white.png";
 import { Link } from 'react-router-dom';
 
 interface SideBarHeaderProps {
   name: string;
   active: boolean;
 }
-
-const sideNavColors = {
-  bg: '#424242',
-  fgActive: '#fff',
-  fgActiveInvisible: 'rgb(227, 233, 237, 0)',
-  fgDefault: '#666',
-  hover: '#3f3f3f',
-  separator: '#666',
-};
 
 const SideBarHeader: React.FunctionComponent<SideBarHeaderProps> = (props) => {
   const { active: isActive } = props
@@ -57,12 +48,7 @@ const SideBarHeader: React.FunctionComponent<SideBarHeaderProps> = (props) => {
   return (
     <div className="sidebar-header-wrap">
       <Link to="/">
-        <CodaitLogo 
-          color={sideNavColors.fgActive} 
-          style={{
-            verticalAlign: "middle",
-            flexShrink: 0}} 
-        />
+        <img alt="MLX Logo" className="sidebar-img" src={MLXLogo} />
         <h2 
           className={`sidebar-list-item header ${isActive ? 'active' : 'not-active'}`}>
           {shortenBrand(value || defaultValue)}
