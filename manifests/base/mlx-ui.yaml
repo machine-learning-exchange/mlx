@@ -17,6 +17,19 @@ metadata:
   name: mlx-ui
   namespace: kubeflow
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mlx-dashboard-admin
+  namespace: kubeflow
+type: Opaque
+stringData:
+  admin.json: |
+    {
+      "admin": { "password": "passw0rd", "roles": ["admin"] }
+    }
+  session: "machine learning exchange"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -49,8 +62,25 @@ spec:
           value: "true"
         - name: REACT_APP_BASE_PATH
           value: /os
+        - name: SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mlx-dashboard-admin
+              key: session
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - mountPath: /workspace/models
+          name: dashboard-admin
+          readOnly: true
+          # When deploying MLX on OpenShift, readOnly SCC may be required for mlx-ui.
+      volumes:
+      - name: dashboard-admin
+        secret:
+          items:
+          - key: admin.json
+            path: admin.json
+          secretName: mlx-dashboard-admin
       serviceAccountName: mlx-ui
 ---
 apiVersion: v1
