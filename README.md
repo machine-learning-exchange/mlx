@@ -46,7 +46,7 @@ For a full deployment, use an Operator based on the [Kubeflow Operator](https://
 
 * #### [MLX (Asset Catalog Only) using Docker Compose](./quickstart)
 
-* #### [MLX deployment using Operator](./docs/mlx-install-operator.md)
+* #### [MLX deployment with Kubeflow](./docs/mlx-install-with-kubeflow.md)
 
 * #### [MLX on an existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
 
