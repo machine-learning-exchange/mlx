@@ -26,7 +26,7 @@ type: Opaque
 stringData:
   admin.json: |
     {
-      "admin": { "password": "passw0rd", "roles": ["admin"] }
+      "admin": { "password": "passw0rd", "email": "mlx@ibm.com", "roles": ["admin"] }
     }
   session: "machine learning exchange"
 ---
@@ -62,6 +62,8 @@ spec:
           value: "true"
         - name: REACT_APP_BASE_PATH
           value: /os
+        - name: KUBEFLOW_USERID_HEADER
+          value: kubeflow-userid
         - name: SESSION_SECRET
           valueFrom:
             secretKeyRef:

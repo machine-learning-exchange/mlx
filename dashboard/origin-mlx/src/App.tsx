@@ -438,7 +438,7 @@ function App() {
                     render={({match, location}) =>
                       <IframePage
                         title="KFP Experiments"
-                        path={KFP + "/pipeline/#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
+                        path={KFP + "/_/pipeline/?ns=mlx#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
                         storageKey="experiments-iframe"
                       />
                     }
