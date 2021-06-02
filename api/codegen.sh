@@ -20,7 +20,7 @@ UTIL_FILE="${SCRIPT_DIR}/server/swagger_server/util.py"
 
 cd "$SCRIPT_DIR"
 
-swagger-cli validate swagger/swagger.yaml || exit 1
+swagger-codegen validate -i swagger/swagger.yaml || exit 1
 
 echo "Generating Python client:"
 swagger-codegen generate -i swagger/swagger.yaml -l python       -o client 2>&1 | grep -v -E "writing file|/test/" | sed "s|${SCRIPT_DIR}|.|g"
