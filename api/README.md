@@ -2,7 +2,6 @@
 
 An extension to the Kubeflow Pipeline API for Components and Models
 
-
 # Quickstart    
 
 ## Deploy to Kubernetes
@@ -22,9 +21,25 @@ An extension to the Kubeflow Pipeline API for Components and Models
 
 # Development Setup
 
-## Swagger CLI
+## Swagger Codegen 2.4.
 
-    npm install -g swagger-cli
+We are using `swagger-codegen` version `2.4.x` to generate our API as `swagger-codegen`
+version `3.0.x` no longer supports `python` (server) any longer.
+
+Below are the instructions for installing 
+[`swagger-codegen@2`](https://formulae.brew.sh/formula-linux/swagger-codegen@2) using
+[Homebrew](https://docs.brew.sh/Installation) on Mac OS. 
+
+For installation on other platforms, go to 
+[`swagger-api/swagger-codegen`](https://github.com/swagger-api/swagger-codegen#swagger-codegen-2x-master-branch)
+on GitHub.
+
+**Note:** `swagger-codegen` `3.x` does not support the Python (server) anymore, 
+so we need to downgrade to version `2.x` (`@2`):
+
+    brew search swagger-codegen@
+    brew install swagger-codegen@2
+    brew link --force swagger-codegen@2
 
 ## Python Virtual Environment for Development
 
@@ -62,16 +77,3 @@ or:
 
     kubectl delete -f ./server/mlx-api.yml
     kubectl apply -f ./server/mlx-api.yml
-
-## Latest Swagger Codegen
-
-  We are using Swagger `2.4.8` for our API due to some inconsistency with the latest Swagger on Mac.
-  Below are the instructions for pulling the latest Swagger using brew, but we will not be using it
-  for our general development.
-
-  **Note:** `swagger-codegen` `3.0.x` does not support Python (server) anymore, 
-  so we need to downgrade to version 2.x:
-
-    brew search swagger-codegen@
-    brew install swagger-codegen@2
-    brew link --force swagger-codegen@2
