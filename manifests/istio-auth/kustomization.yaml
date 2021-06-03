@@ -19,3 +19,5 @@ resources:
   - mlx-ui-auth.yaml
   - mysql-auth.yaml
   - ml-pipeline-api-auth.yaml
+  - mlx-ext-authz.yaml
+  - istio-configmap.yaml

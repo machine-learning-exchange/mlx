@@ -51,7 +51,7 @@ spec:
       containers:
       - name: mlx-ui
         # You can use your own webapp image below
-        image: aipipeline/mlx-ui:latest
+        image: mlexchange/mlx-ui:nightly-origin-main
         imagePullPolicy: Always
         env:
         - name: REACT_APP_BRAND
@@ -61,7 +61,7 @@ spec:
         - name: REACT_APP_UPLOAD
           value: "true"
         - name: REACT_APP_BASE_PATH
-          value: /os
+          value: /mlx
         - name: KUBEFLOW_USERID_HEADER
           value: kubeflow-userid
         - name: SESSION_SECRET
@@ -114,9 +114,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /os
+        prefix: /mlx
     rewrite:
-      uri: /os
+      uri: /mlx
     route:
     - destination:
         host: mlx-ui.kubeflow.svc.cluster.local

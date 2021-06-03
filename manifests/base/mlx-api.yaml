@@ -52,7 +52,7 @@ spec:
       serviceAccountName: mlx-api
       containers:
       - name: mlx-api-server
-        image: docker.io/aipipeline/mlx-api:latest
+        image: mlexchange/mlx-api:nightly-main
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
