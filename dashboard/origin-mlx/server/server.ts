@@ -26,9 +26,10 @@ import * as path from 'path';
 import * as process from 'process';
 
 const {
-  MLX_API_ENDPOINT = 'mlx-api',
-  REACT_APP_BASE_PATH = '',
-  SESSION_SECRET = randomBytes(64).toString('hex'),
+  MLX_API_ENDPOINT        = 'mlx-api',
+  REACT_APP_BASE_PATH     = '',
+  SESSION_SECRET          = randomBytes(64).toString('hex'),
+  KUBEFLOW_USERID_HEADER  = 'kubeflow-userid',
 } = process.env;
 
 const app = express() as Application;
@@ -41,6 +42,15 @@ const port = process.argv[3] || 3000;
 
 const apiServerAddress = `http://${MLX_API_ENDPOINT}`;
 
+type User = {
+  username: string;
+  email: string;
+  roles: string[];
+};
+
+// enable session
+initLogin(app);
+
 if (REACT_APP_BASE_PATH.length !== 0) {
   app.all('/' + apiPrefix + '/*', proxy({
     changeOrigin: true,
@@ -51,14 +61,6 @@ if (REACT_APP_BASE_PATH.length !== 0) {
   }));
 }
 
-type User = {
-  username: string;
-  roles: string[];
-};
-
-// enable session
-initLogin(app);
-
 app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*', proxy({
   changeOrigin: true,
   onProxyReq: proxyReq => {
@@ -68,6 +70,8 @@ app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*', proxy({
     path.startsWith(REACT_APP_BASE_PATH) ? path.substr(REACT_APP_BASE_PATH.length, path.length) : path,
   target: apiServerAddress,
 }));
+
+app.all('/session-validation*', sessionValidator);
 
 const staticHandler = StaticHandler(staticDir, {redirect: false})
 
@@ -120,7 +124,11 @@ function initLogin(app: express.Application) {
     done(undefined, user.username);
   });
   passport.deserializeUser<User, string>((username: string, done) => {
-    done(undefined, { username: username, roles: users[username].roles });
+    done(undefined, {
+      username: username,
+      email: users[username].email,
+      roles: users[username].roles
+    });
   });
 
   passport.use(new BasicStrategy(
@@ -128,7 +136,11 @@ function initLogin(app: express.Application) {
       if (users[userid] === undefined || users[userid].password !== password) {
         return done(null, false);
       }
-      return done(null, { username: userid, roles: users[userid].roles });
+      return done(null, {
+          username: userid,
+          email: users[userid].email,
+          roles: users[userid].roles
+      });
     }
   ));
 
@@ -154,3 +166,17 @@ function initLogin(app: express.Application) {
     }
   );
 }
+
+/**
+ * Validate the request to see if the request contains a valid user information.
+ * This is used as a ext authz for the custom action of istio authorizationpolicy
+ */
+function sessionValidator (req: express.Request, res: express.Response) {
+  if (req.user === undefined ) {
+    res.sendStatus(403);
+    return;
+  }
+  res.setHeader(KUBEFLOW_USERID_HEADER, req.user.email);
+  res.status(200);
+  res.send();
+};

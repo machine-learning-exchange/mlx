@@ -25,6 +25,7 @@ export type Users = {
  */
 type UserInfo = {
     password: string; // password
+    email: string;    // email
     roles: string[]; // roles for the user
 };
 
@@ -35,6 +36,6 @@ export function loadUsers(): Users {
         return require(DEFAULT_USER_CONFIG);
     }
     // return default settings if config file doesn't exist
-    return {"admin": {"password": "passw0rd", "roles": ["admin"]}};
+    return {"admin": {"password": "passw0rd", "email": "mlx@ibm.com", "roles": ["admin"]}};
 }
 

@@ -1,4 +1,3 @@
-
 # Copyright 2021 IBM Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - mlx-api.yaml
-  - mlx-ui.yaml
-  - mlx-profile.yaml
+apiVersion: kubeflow.org/v1
+kind: Profile
+metadata:
+  name: mlx
+  namespace: kubeflow
+spec:
+  owner:
+    kind: User
+    name: mlx@ibm.com
