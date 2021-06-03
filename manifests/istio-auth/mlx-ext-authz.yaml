@@ -30,4 +30,4 @@ spec:
   rules:
   - to:
     - operation:
-        notPaths: ["/os*"]
+        notPaths: ["/mlx*"]
