@@ -15,7 +15,7 @@
 swagger: "2.0"
 info:
   description: "MLX API Extension for Kubeflow Pipelines"
-  version: "0.1.27"  # 0.1.27-pipeline-namespace
+  version: "0.1.27-pipeline-namespace"
   title: "MLX API"
 basePath: "/apis/v1alpha1"
 schemes:
