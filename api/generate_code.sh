@@ -19,8 +19,8 @@ REPO_URL="git@github.com:machine-learning-exchange/mlx.git"
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)"
 PROJECT_DIR="${TRAVIS_BUILD_DIR:-$(cd "${SCRIPT_DIR%/api}"; pwd)}"
 TEMP_DIR="${PROJECT_DIR}/temp"
-CLONE_DIR="${TEMP_DIR}/mlx_master_latest"
-VERSION="master"
+CLONE_DIR="${TEMP_DIR}/mlx_main_latest"
+VERSION="main"
 
 
 #mkdir -p "${CLONE_DIR}"
@@ -41,10 +41,10 @@ clone_repo_to_tempdir() {
     cd "${CLONE_DIR}"
     git config core.sparseCheckout true
     echo "api/*"> .git/info/sparse-checkout
-    git checkout master #-- api
+    git checkout main #-- api
     cd - &> /dev/null
   else
-    echo "Get latest commit from master ..."
+    echo "Get latest commit from main ..."
     cd "${CLONE_DIR}"
     git fetch origin # -q
     git -c advice.detachedHead=false checkout "${VERSION}" -f -- api #-q
@@ -83,7 +83,11 @@ revert_undesired_codegen_results() {
   echo "========================================================================"
   cd "${PROJECT_DIR}"
   #git apply --whitespace=nowarn --reverse "${TEMP_DIR}/undesired_codegen_results_$(date +"%Y-%m-%d").patch"
-  git apply --whitespace=nowarn "${TEMP_DIR}/revert_undesired_codegen_results_$(date +"%Y-%m-%d").patch"
+  git apply --reject --whitespace=fix "${TEMP_DIR}/revert_undesired_codegen_results_$(date +"%Y-%m-%d").patch"
+  echo "========================================================================"
+  echo "Files with undesired changes that could not be reverted:"
+  echo "========================================================================"
+  find .  -name "*.rej" -type f
 }
 
 generate_code

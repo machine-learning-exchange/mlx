@@ -31,7 +31,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, annotations: Dict[str, str]=None, featured: bool=None, publish_approved: bool=None):  # noqa: E501
+    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, namespace: str=None, annotations: Dict[str, str]=None, featured: bool=None, publish_approved: bool=None):  # noqa: E501
         """ApiPipelineExtended - a model defined in Swagger
 
         :param id: The id of this ApiPipelineExtended.  # noqa: E501
@@ -48,6 +48,8 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         :type status: str
         :param default_version_id: The default_version_id of this ApiPipelineExtended.  # noqa: E501
         :type default_version_id: str
+        :param namespace: The namespace of this ApiPipelineExtended.  # noqa: E501
+        :type namespace: str
         :param annotations: The annotations of this ApiPipelineExtended.  # noqa: E501
         :type annotations: Dict[str, str]
         :param featured: The featured of this ApiPipelineExtended.  # noqa: E501
@@ -63,6 +65,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
             'parameters': List[ApiParameter],
             'status': str,
             'default_version_id': str,
+            'namespace': str,
             'annotations': Dict[str, str],
             'featured': bool,
             'publish_approved': bool
@@ -76,6 +79,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
             'parameters': 'parameters',
             'status': 'status',
             'default_version_id': 'default_version_id',
+            'namespace': 'namespace',
             'annotations': 'annotations',
             'featured': 'featured',
             'publish_approved': 'publish_approved'
@@ -88,6 +92,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         self._parameters = parameters
         self._status = status
         self._default_version_id = default_version_id
+        self._namespace = namespace
         self._annotations = annotations
         self._featured = featured
         self._publish_approved = publish_approved
@@ -253,6 +258,27 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     #     """
     #
     #     self._default_version_id = default_version_id
+    #
+    # @property
+    # def namespace(self) -> str:
+    #     """Gets the namespace of this ApiPipelineExtended.
+    #
+    #
+    #     :return: The namespace of this ApiPipelineExtended.
+    #     :rtype: str
+    #     """
+    #     return self._namespace
+    #
+    # @namespace.setter
+    # def namespace(self, namespace: str):
+    #     """Sets the namespace of this ApiPipelineExtended.
+    #
+    #
+    #     :param namespace: The namespace of this ApiPipelineExtended.
+    #     :type namespace: str
+    #     """
+    #
+    #     self._namespace = namespace
     #
     # @property
     # def annotations(self) -> Dict[str, str]:

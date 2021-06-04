@@ -47,7 +47,7 @@ services:
       - data-mysql:/var/lib/mysql
 
   mlx-api:
-    image: mlexchange/mlx-api:0.1.26
+    image: mlexchange/mlx-api:0.1.27
     ports:
       - "8080:8080"
     environment:

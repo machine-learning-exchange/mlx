@@ -52,7 +52,8 @@ class ApiPipeline(object):
         'description': 'str',
         'parameters': 'list[ApiParameter]',
         'status': 'str',
-        'default_version_id': 'str'
+        'default_version_id': 'str',
+        'namespace': 'str'
     }
 
     attribute_map = {
@@ -62,10 +63,11 @@ class ApiPipeline(object):
         'description': 'description',
         'parameters': 'parameters',
         'status': 'status',
-        'default_version_id': 'default_version_id'
+        'default_version_id': 'default_version_id',
+        'namespace': 'namespace'
     }
 
-    def __init__(self, id=None, created_at=None, name=None, description=None, parameters=None, status=None, default_version_id=None):  # noqa: E501
+    def __init__(self, id=None, created_at=None, name=None, description=None, parameters=None, status=None, default_version_id=None, namespace=None):  # noqa: E501
         """ApiPipeline - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
@@ -75,6 +77,7 @@ class ApiPipeline(object):
         self._parameters = None
         self._status = None
         self._default_version_id = None
+        self._namespace = None
         self.discriminator = None
 
         if id is not None:
@@ -91,6 +94,8 @@ class ApiPipeline(object):
             self.status = status
         if default_version_id is not None:
             self.default_version_id = default_version_id
+        if namespace is not None:
+            self.namespace = namespace
 
     @property
     def id(self):
@@ -242,6 +247,27 @@ class ApiPipeline(object):
         """
 
         self._default_version_id = default_version_id
+
+    @property
+    def namespace(self):
+        """Gets the namespace of this ApiPipeline.  # noqa: E501
+
+
+        :return: The namespace of this ApiPipeline.  # noqa: E501
+        :rtype: str
+        """
+        return self._namespace
+
+    @namespace.setter
+    def namespace(self, namespace):
+        """Sets the namespace of this ApiPipeline.
+
+
+        :param namespace: The namespace of this ApiPipeline.  # noqa: E501
+        :type: str
+        """
+
+        self._namespace = namespace
 
     def to_dict(self):
         """Returns the model properties as a dict"""

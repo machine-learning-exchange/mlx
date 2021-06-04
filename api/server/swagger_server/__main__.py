@@ -17,10 +17,9 @@
 
 import connexion
 
-from . import VERSION
-
 from flask_cors import CORS
 from swagger_server import encoder
+from swagger_server import VERSION
 
 
 def main():
