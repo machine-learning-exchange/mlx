@@ -36,6 +36,7 @@ export interface Artifact {
 
 export interface ArtifactState extends State {
   pipelines: Artifact[]
+  datasets: Artifact[]
   components: Artifact[]
   models: Artifact[]
   notebooks: Artifact[]
@@ -44,6 +45,7 @@ export interface ArtifactState extends State {
 
 const initial: ArtifactState = {
   pipelines: [],
+  datasets: [],
   components: [],
   models: [],
   notebooks: [],
