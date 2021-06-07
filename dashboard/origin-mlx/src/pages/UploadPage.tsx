@@ -127,7 +127,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
       <div className="upload-wrapper">
         <Paper className="upload-form-wrapper">
           <Typography variant="title" className="upload-heading">
-            Enter a name and upload a <code>.tgz</code> or <code>.tar.gz</code> file to create a new {type}.
+            Enter a name and upload a <code>.tgz</code> or <code>.tar.gz</code> file to create a new {type.substring(0, type.length - 1)}.
           </Typography>
           <form
             method="post" 
