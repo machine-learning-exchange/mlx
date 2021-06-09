@@ -16,7 +16,6 @@
 import React, { useContext, useState, ChangeEvent, FormEvent } from 'react'
 import StoreContext from '../lib/stores/context'
 import { Link } from 'react-router-dom'
-import { RouteComponentProps } from 'react-router';
 import { upload } from '../lib/api/upload'
 import Button from '../components/Button'
 import Icon from '@material-ui/core/Icon'
@@ -26,11 +25,8 @@ import Typography from '@material-ui/core/Typography'
 import indicatorGif from '../images/indicator-gif.gif'
 import yaml from 'js-yaml';
 
-interface MatchProps {
-  type: string
-}
   
-function UploadPage(props: RouteComponentProps<MatchProps>) {
+function UploadPage() {
   const type = 'inferenceservices'
   const [ uploadStatus, setUploadStatus] = useState({fullStatus: '', link: ''})
   const [ file, setFile ] = useState(null)
