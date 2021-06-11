@@ -15,6 +15,8 @@
 */ 
 import Cookies from 'js-cookie';
 
+const disableLogin = process.env.REACT_APP_DISABLE_LOGIN === 'true';
+
 type UserInfo = {
   username: string;
   roles: string[];
@@ -22,11 +24,10 @@ type UserInfo = {
 
 const DEFAULT_USERINFO = {
   username: 'user',
-  roles: ['user']
+  roles: [disableLogin ? 'admin' : 'user']
 };
 
 let gUserInfo: UserInfo;
-
 export function getUserInfo(): UserInfo {
   return gUserInfo || (() => {
     const userinfo = Cookies.get('userinfo');

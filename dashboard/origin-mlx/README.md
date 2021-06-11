@@ -78,6 +78,7 @@ There are a few environment variables that can be defined that dictate how MLX i
 * REACT_APP_BASE_PATH - A basepath can be configured that appends to the end of the address (ex.
   http://<ip_address>:<port>/<basepath>)
 * REACT_APP_BRAND - The brand name to use on the website
+* REACT_APP_DISABLE_LOGIN - A switch to turn off login mechanism
 
 # Project Overview:
 
