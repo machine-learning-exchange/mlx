@@ -1,3 +1,12 @@
+# MLX Asset Catalog and Execution Engine Deployment
+
+## Prerequisites
+* An existing Kubernetes cluster. Version 1.17+
+* The minimum capacity requirement for MLX is 8 vCPUs and 16GB RAM
+* If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using [IBM Cloud Public](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
+* If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-openshift_tutorial)
+* [`kustomize v3.0+`](https://kubernetes-sigs.github.io/kustomize/installation/) is installed
+
 ## Install Kfctl
 
 **Note**: kfctl is currently available for Linux and macOS users only. If you use Windows, you can install kfctl on Windows Subsystem for Linux (WSL). Refer to the official [instructions](https://docs.microsoft.com/en-us/windows/wsl/install-win10) for setting up WSL.
