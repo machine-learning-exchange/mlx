@@ -17,7 +17,7 @@ import * as fileStore from 'session-file-store';
 import * as passport from "passport";
 import * as cookieParser from "cookie-parser";
 import { BasicStrategy } from "passport-http";
-import { loadUsers } from "./users";
+import { loadUsers, DEFAULT_ADMIN_EMAIL } from "./users";
 import { Application, static as StaticHandler } from 'express';
 import * as fs from 'fs';
 import { randomBytes } from 'crypto';
@@ -30,6 +30,7 @@ const {
   REACT_APP_BASE_PATH     = '',
   SESSION_SECRET          = randomBytes(64).toString('hex'),
   KUBEFLOW_USERID_HEADER  = 'kubeflow-userid',
+  REACT_APP_DISABLE_LOGIN = 'false',
 } = process.env;
 
 const app = express() as Application;
@@ -42,27 +43,33 @@ const port = process.argv[3] || 3000;
 
 const apiServerAddress = `http://${MLX_API_ENDPOINT}`;
 
+const disableLogin = REACT_APP_DISABLE_LOGIN === 'true';
+
 type User = {
   username: string;
   email: string;
   roles: string[];
 };
 
-// enable session
-initLogin(app);
+const proxyCheckingMiddleware = [];
+// enable login and permission check
+if (!disableLogin) {
+  initLogin(app);
+  proxyCheckingMiddleware.push(checkPermissionMiddleware);
+}
 
 if (REACT_APP_BASE_PATH.length !== 0) {
-  app.all('/' + apiPrefix + '/*', checkPermissionMiddleware, proxy({
+  app.all('/' + apiPrefix + '/*', [...proxyCheckingMiddleware, proxy({
     changeOrigin: true,
     onProxyReq: proxyReq => {
       console.log('Proxied request: ', (proxyReq as any).path);
     },
     target: apiServerAddress,
-  }));
+  })]);
 }
 
 app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*',
-    checkPermissionMiddleware, proxy({
+    [...proxyCheckingMiddleware, proxy({
 
   changeOrigin: true,
   onProxyReq: proxyReq => {
@@ -71,9 +78,9 @@ app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*',
   pathRewrite: (path) =>
     path.startsWith(REACT_APP_BASE_PATH) ? path.substr(REACT_APP_BASE_PATH.length, path.length) : path,
   target: apiServerAddress,
-}));
+})]);
 
-app.all('/session-validation*', sessionValidator);
+app.all('/session-validation*', getSessionValidator(!disableLogin));
 
 const staticHandler = StaticHandler(staticDir, {redirect: false})
 
@@ -167,6 +174,26 @@ function initLogin(app: express.Application) {
       res.redirect(REACT_APP_BASE_PATH);
     }
   );
+}
+
+/**
+ * get session validator based on `login` flag
+ */
+function getSessionValidator(login: boolean) :
+    (req: express.Request, res: express.Response) => void {
+
+  if (login) {
+    return sessionValidator;
+  } else {
+    /*
+     when login is disabled, all requests are treated as admin
+     */
+    return (req: express.Request, res: express.Response) => {
+      res.setHeader(KUBEFLOW_USERID_HEADER, DEFAULT_ADMIN_EMAIL);
+      res.status(200);
+      res.send();
+    }
+  }
 }
 
 /**
