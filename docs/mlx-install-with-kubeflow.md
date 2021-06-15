@@ -1,4 +1,4 @@
-# MLX Deployment on Kubernetes or OpenShift (Full Asset Catalog and Execution Engine)
+# MLX Deployment on Kubernetes or OpenShift (Asset Catalog and Execution Engine)
 
 ## Prerequisites
 * An existing Kubernetes cluster. Version 1.17+
