@@ -29,7 +29,7 @@ import tfLogo from '../../images/tf-logo.png'
 import kerasLogo from '../../images/keras-logo.png'
 import pytorchLogo from '../../images/pytorch-logo.png'
 import sklearnLogo from '../../images/scikit-learn-logo.png'
-import { firstSentence } from '../../lib/util';
+import { firstSentence, formatTitle } from '../../lib/util';
 
 
 interface MetaCardProps extends WithStyles<typeof styles>{
@@ -95,7 +95,7 @@ function MetaCard(props: MetaCardProps) {
           className={classes.container}
         >
           <Grid item>
-            <CardHeader title={name}
+            <CardHeader title={formatTitle(name)}
               titleTypographyProps={{
                 variant: 'h6',
                 component: 'h2',

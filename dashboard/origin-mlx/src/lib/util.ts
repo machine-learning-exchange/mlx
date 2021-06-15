@@ -51,6 +51,11 @@ export function canShow(adminOnly: boolean, isAdmin: boolean) {
 export const capitalize = (lower: string) =>
   lower.charAt(0).toUpperCase().concat(lower.slice(1));
 
+export const formatTitle = (title: string) => {
+  const capitalize = title.charAt(0).toUpperCase() + title.slice(1);
+  return capitalize.replace(/-/g," ");
+}
+
 const addPeriod = (text: string) => text + (!text.endsWith('.') ? '.' : '')
 
 export const firstSentence = (text: string) =>
