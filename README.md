@@ -23,35 +23,21 @@ Additionally it provides:
  - Serving engine by KFServing
  - Model Metadata schemas
 
-## 1. Prerequisites
-
-#### Quickstart (MLX Asset Catalog Only)
-* [Docker Compose](https://docs.docker.com/compose/install/)
-* 4 GB of memory
-* 10 GB of free storage
-
-#### Cluster Deployment (MLX Asset Catalog and Execution Engine)
-* An existing Kubernetes cluster. Version 1.17+
-* The minimum capacity requirement for MLX is 8 vCPUs and 16GB RAM
-* If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using [IBM Cloud Public](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
-* If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-openshift_tutorial)
-* [`kustomize v3.0+`](https://kubernetes-sigs.github.io/kustomize/installation/) is installed
-
-## 2. Deployment
+## 1. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
 
 For a simple up-and-running MLX with asset catalog only, we created a [Quickstart Guide](./quickstart) using [Docker Compose](https://docs.docker.com/compose/install/).
 
-For a full deployment, use an Operator based on the [Kubeflow Operator](https://www.kubeflow.org/docs/operator/introduction/) architecture. 
+For a full deployment, we use [Kubeflow Kfctl](https://github.com/kubeflow/kfctl) tooling. 
 
-* #### [MLX (Asset Catalog Only) using Docker Compose](./quickstart)
+* #### [MLX using Docker Compose (Asset Catalog Only)](./quickstart)
 
-* #### [MLX deployment with Kubeflow](./docs/mlx-install-with-kubeflow.md)
+* #### [MLX Deployment on Kubernetes or OpenShift](./docs/mlx-install-with-kubeflow.md)
 
 * #### [MLX on an existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
 
 
-## 3. Access the MLX UI
+## 2. Access the MLX UI
 
 1. By default the MLX UI is available at <public-ip-of-node>:30380/os
 
@@ -68,11 +54,11 @@ Look for the ExternalIP column.
 oc get route -n istio-system
 ```
 
-## 4. Import Data and AI Assets in MLX Catalog
+## 3. Import Data and AI Assets in MLX Catalog
 
 [Import data and AI assets using MLX's catalog importer](/docs/import-assets.md)
 
-## 5. Usage Steps
+## 4. Usage Steps
 
 1. [Pipelines](./pipelines/README.md)
     - [Create an AI Pipeline](./pipelines/README.md#Create-an-AI-Pipeline)
@@ -104,7 +90,7 @@ oc get route -n istio-system
     - [Datasets Metadata Template](./datasets/README.md#dataset-metadata-template)
 
 
-## 6. Delete MLX
+## 5. Delete MLX
 
 * Delete MLX deployment, the _KfDef_ instance
 
@@ -124,7 +110,7 @@ kubectl delete -f deploy/crds/kfdef.apps.kubeflow.org_kfdefs_crd.yaml
 kubectl delete ns ${OPERATOR_NAMESPACE}
 ```
 
-## 7. Troubleshooting
+## 6. Troubleshooting
 
 * When deleting the Kubeflow deployment, some _mutatingwebhookconfigurations_ resources are cluster-wide resources and may not be removed as their owner is not the _KfDef_ instance. To remove them, run following:
 
