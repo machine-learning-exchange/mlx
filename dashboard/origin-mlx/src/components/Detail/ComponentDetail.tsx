@@ -44,7 +44,7 @@ export interface ComponentDetailState {
   rightTab: string
 }
 
-function purifyData(data: any, defaultString?: string): string {
+function purifyData(data: any, defaultString: string): string {
   if (typeof data === "string")
     return data
   return defaultString
@@ -153,7 +153,7 @@ export default class ComponentDetail extends React.Component<ComponentDetailProp
                     <div style={{ height: '2rem' }} />
                   </span>,
                   { name: 'command', description: purifyData(component.template.implementation.container.command, 'python ') },
-                  { name: 'image', description: purifyData(component.template.implementation.container.image) }
+                  { name: 'image', description: purifyData(component.template.implementation.container.image, "") }
                 ]
               }}
             />
