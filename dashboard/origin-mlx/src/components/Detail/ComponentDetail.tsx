@@ -44,6 +44,12 @@ export interface ComponentDetailState {
   rightTab: string
 }
 
+function purifyData(data: any, defaultString?: string): string {
+  if (typeof data === "string")
+    return data
+  return defaultString
+}
+
 export default class ComponentDetail extends React.Component<ComponentDetailProps, ComponentDetailState> {
   static contextType = StoreContext
 
@@ -122,9 +128,11 @@ export default class ComponentDetail extends React.Component<ComponentDetailProp
                       className="arg-heavy"
                       variant="h6" 
                       inline>
-                      { (component.template.implementation.container.command || 'python') + ` ` }
+                      { 
+                        purifyData(component.template.implementation.container.command, 'python ') 
+                      }
                     </Typography>
-                    {component.template.implementation.container.args.map((arg: any, i: number) => 
+                    {(component.template.implementation.container.args || []).map((arg: any, i: number) => 
                       (typeof arg === 'string')
                         ? <Typography 
                             key={arg + i}
@@ -144,8 +152,8 @@ export default class ComponentDetail extends React.Component<ComponentDetailProp
                     )}
                     <div style={{ height: '2rem' }} />
                   </span>,
-                  { name: 'command', description: component.template.implementation.container.command },
-                  { name: 'image', description: component.template.implementation.container.image }
+                  { name: 'command', description: purifyData(component.template.implementation.container.command, 'python ') },
+                  { name: 'image', description: purifyData(component.template.implementation.container.image) }
                 ]
               }}
             />
