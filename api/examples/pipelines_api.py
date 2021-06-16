@@ -423,7 +423,7 @@ def list_pipelines(filter_dict: dict = {}, sort_by: str = None) -> [ApiPipeline]
 def main():
 
     # delete existing pipelines, actually, only pipeline_extensions table and pipelines_extended view table
-    delete_pipeline(pipeline_id="*")
+    # delete_pipeline(pipeline_id="*")
 
     # delete "test_" pipelines
     test_pipelines = list_pipelines(filter_dict={"name": "test_%"})
