@@ -1,16 +1,16 @@
 # Copyright 2021 IBM Corporation
-# 
-# Licensed under the Apache License, Version 2.0 (the "License"); 
-# you may not use this file except in compliance with the License. 
-# You may obtain a copy of the License at 
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0 
-# 
-# Unless required by applicable law or agreed to in writing, software 
-# distributed under the License is distributed on an "AS IS" BASIS, 
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-# See the License for the specific language governing permissions and 
-# limitations under the License. 
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 import autopep8
 import json
 import os
@@ -22,17 +22,8 @@ from datetime import datetime
 from kfp import Client as KfpClient
 
 from kfp_server_api import ApiRun
-
-from kfp_server_api import ApiClient as PipelineApiClient
 from kfp_server_api import ApiPipeline as KfpPipeline
-from kfp_server_api import Configuration as PipelineClientConfig
-from kfp_server_api import PipelineServiceApi
 from kfp_server_api.rest import ApiException as PipelineApiException
-
-from kfp_server_api import ApiClient as UploadApiClient
-from kfp_server_api import Configuration as UploadClientConfig
-from kfp_server_api import PipelineUploadServiceApi
-from kfp_server_api.rest import ApiException as PipelineUploadApiException
 
 from os import environ as env
 from os.path import abspath, join, dirname
@@ -58,27 +49,26 @@ from time import sleep
 CODE_TEMPLATE_DIR = abspath(join(dirname(__file__), "..", "code_templates"))
 
 _namespace = env.get("POD_NAMESPACE", "kubeflow")
-_host = env.get("ML_PIPELINE_UI_SERVICE_HOST", "ml-pipeline-ui.%s.svc.cluster.local" % _namespace)
-_port = env.get("ML_PIPELINE_UI_SERVICE_PORT", "80")
-_api_base_path = "pipeline"
-_pipeline_service_url = f"{_host}:{_port}/{_api_base_path}"
+_host = env.get("ML_PIPELINE_SERVICE_HOST", "ml-pipeline.%s.svc.cluster.local" % _namespace)
+_port = env.get("ML_PIPELINE_SERVICE_PORT", "8888")
+_api_base_path = env.get("ML_PIPELINE_SERVICE_API_BASE_PATH", "")
+_pipeline_service_url = env.get("ML_PIPELINE_SERVICE_URL", f"{_host}:{_port}/{_api_base_path}".rstrip("/"))
 
 
-def upload_pipeline_to_kfp(uploadfile: str, name: str = None) -> ApiPipeline:
+def upload_pipeline_to_kfp(uploadfile: str, name: str = None, description: str = None) -> ApiPipeline:
 
-    config = UploadClientConfig()
-    config.host = _pipeline_service_url
-    api_client = UploadApiClient(configuration=config)
-    api_instance = PipelineUploadServiceApi(api_client=api_client)
+    kfp_client = KfpClient()
 
     try:
-        kfp_pipeline: KfpPipeline = api_instance.upload_pipeline(uploadfile=uploadfile, name=name)
+        kfp_pipeline: KfpPipeline = kfp_client.upload_pipeline(pipeline_package_path=uploadfile,
+                                                               pipeline_name=name,
+                                                               description=description)
         api_pipeline: ApiPipeline = ApiPipeline.from_dict(kfp_pipeline.to_dict())
         api_pipeline.status = kfp_pipeline.error
         return api_pipeline
 
-    except PipelineUploadApiException as e:
-        kfp_host = api_instance.api_client.configuration.host
+    except PipelineApiException as e:
+        kfp_host = _pipeline_service_url
 
         print(f"Error calling PipelineServiceApi ({kfp_host}) -> upload_pipeline(name='{name}'): {e}")
 
@@ -93,10 +83,7 @@ def upload_pipeline_to_kfp(uploadfile: str, name: str = None) -> ApiPipeline:
 
 def delete_kfp_pipeline(pipeline_id: str):
 
-    config = PipelineClientConfig()
-    config.host = _pipeline_service_url
-    api_client = PipelineApiClient(configuration=config)
-    api_instance = PipelineServiceApi(api_client=api_client)
+    api_instance = KfpClient()
 
     try:
         api_instance.delete_pipeline(pipeline_id)
@@ -605,10 +592,11 @@ def run_notebook_in_experiment(notebook: ApiNotebook, parameters: dict, run_name
 
 
 def run_pipeline_in_experiment(api_pipeline: ApiPipeline, parameters: dict = None, run_name: str = None,
-                               wait_for_status: bool = False):
+                               namespace: str = None, wait_for_status: bool = False):
     try:
-        client = KfpClient(_pipeline_service_url)
-        experiment = client.create_experiment('PIPELINE_RUNS')
+        client = KfpClient()
+        # if not namespace: ... client._context_setting['namespace'] and client.get_kfp_healthz().multi_user is True:
+        experiment = client.create_experiment('PIPELINE_RUNS', namespace=namespace)
         run_result = client.run_pipeline(experiment_id=experiment.id,
                                          job_name=run_name or api_pipeline.name,
                                          params=parameters,
