@@ -19,10 +19,10 @@ available with this Docker Compose setup.
 
 ## Prerequisites
 
-Install [Docker Compose](https://docs.docker.com/compose/install/). It may be
-necessary to increase the
-[Docker resources](https://docs.docker.com/docker-for-mac/#resources) from the
+* Install [Docker Compose](https://docs.docker.com/compose/install/). 
+* It may be necessary to increase the [Docker resources](https://docs.docker.com/docker-for-mac/#resources) from the
 default of 2 GB memory to 4 GB.
+* Approximately 10 GB of free storage
 
 Clone this repository and navigate to the `quickstart` folder:
 
