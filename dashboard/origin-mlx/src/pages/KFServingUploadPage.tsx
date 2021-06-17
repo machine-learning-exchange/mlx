@@ -118,7 +118,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
                   type="file" 
                   name="component-file"
                   onChange={handleFile}
-                  accept=".tgz, .gz, .yaml"
+                  accept=".tgz, .gz, .yaml, .yml"
                 />
               </div>
               :
