@@ -24,6 +24,7 @@ import { randomBytes } from 'crypto';
 import * as proxy from 'http-proxy-middleware';
 import * as path from 'path';
 import * as process from 'process';
+import { ClientRequest } from 'http';
 
 const {
   MLX_API_ENDPOINT        = 'mlx-api',
@@ -59,26 +60,12 @@ if (!disableLogin) {
 }
 
 if (REACT_APP_BASE_PATH.length !== 0) {
-  app.all('/' + apiPrefix + '/*', [...proxyCheckingMiddleware, proxy({
-    changeOrigin: true,
-    onProxyReq: proxyReq => {
-      console.log('Proxied request: ', (proxyReq as any).path);
-    },
-    target: apiServerAddress,
-  })]);
+  app.all('/' + apiPrefix + '/*',
+      [...proxyCheckingMiddleware, getForwardProxyMiddleware(!disableLogin)]);
 }
 
 app.all(REACT_APP_BASE_PATH  + '/' + apiPrefix + '/*',
-    [...proxyCheckingMiddleware, proxy({
-
-  changeOrigin: true,
-  onProxyReq: proxyReq => {
-    console.log('Proxied request: ', (proxyReq as any).path);
-  },
-  pathRewrite: (path) =>
-    path.startsWith(REACT_APP_BASE_PATH) ? path.substr(REACT_APP_BASE_PATH.length, path.length) : path,
-  target: apiServerAddress,
-})]);
+    [...proxyCheckingMiddleware, getForwardProxyMiddleware(!disableLogin, REACT_APP_BASE_PATH)]);
 
 app.all('/session-validation*', getSessionValidator(!disableLogin));
 
@@ -194,6 +181,35 @@ function getSessionValidator(login: boolean) :
       res.send();
     }
   }
+}
+
+function getForwardProxyMiddleware(login: boolean, rewritePath?: string) :
+    (req: express.Request, res: express.Response) => void {
+
+  const proxyOpts: proxy.Options = {
+    changeOrigin: true,
+    target: apiServerAddress,
+  };
+  if (login) {
+    proxyOpts.onProxyReq = (proxyReq: ClientRequest, req: express.Request) => {
+      if (req.user) {
+        proxyReq.setHeader(KUBEFLOW_USERID_HEADER, req.user.email);
+      }
+      console.log('Proxied request: ', proxyReq.path);
+    };
+  } else {
+    proxyOpts.onProxyReq = (proxyReq: ClientRequest, req: express.Request) => {
+      proxyReq.setHeader(KUBEFLOW_USERID_HEADER, DEFAULT_ADMIN_EMAIL);
+      console.log('Proxied request: ', proxyReq.path);
+    };
+  }
+  if (rewritePath) {
+    const pattern = RegExp(`^${rewritePath}`);
+    proxyOpts.pathRewrite = (path: string) : string => {
+      return path.replace(pattern, '');
+    }
+  }
+  return proxy(proxyOpts);
 }
 
 /**
