@@ -52,8 +52,14 @@ export const capitalize = (lower: string) =>
   lower.charAt(0).toUpperCase().concat(lower.slice(1));
 
 export const formatTitle = (title: string) => {
-  const capitalize = title.charAt(0).toUpperCase() + title.slice(1);
-  return capitalize.replace(/-/g," ");
+  let newTitle = title;
+  // If there is no whitespace then replace -, _, and . with spaces
+  if (!/\s/g.test(newTitle))
+    newTitle = newTitle.replace(/[-_.]/g, " ")
+  // If the title is all lower case then upper case the first letter
+  if (newTitle === newTitle.toLowerCase())
+    newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
+  return newTitle
 }
 
 const addPeriod = (text: string) => text + (!text.endsWith('.') ? '.' : '')
