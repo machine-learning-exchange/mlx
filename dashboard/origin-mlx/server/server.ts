@@ -167,11 +167,12 @@ function initLogin(app: express.Application) {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  const redirectPath = REACT_APP_BASE_PATH.length === 0 ? '/' : REACT_APP_BASE_PATH;
   app.get([REACT_APP_BASE_PATH + '/login'],
     passport.authenticate('basic'),
     (req, res) => {
       res.cookie('userinfo', JSON.stringify(req.user), {maxAge: 86400000});
-      res.redirect(REACT_APP_BASE_PATH);
+      res.redirect(redirectPath);
     }
   );
 }
