@@ -18,7 +18,6 @@ const supportedTypes = [
   'components',
   'models',
   'notebooks',
-  'operators',
   'inferenceservices'
 ]
 
