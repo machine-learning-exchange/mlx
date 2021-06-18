@@ -372,7 +372,7 @@ def _upload_component_yaml(yaml_file_content: AnyStr, name=None, existing_id=Non
 
     parameters = [ApiParameter(name=p.get("name"), description=p.get("description"),
                                default=p.get("default"), value=p.get("value"))
-                  for p in yaml_dict.get("inputs")]
+                  for p in yaml_dict.get("inputs", [])]
 
     api_component = ApiComponent(id=component_id,
                                  created_at=created_at,
