@@ -63,6 +63,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files[0])
+    setError('')
     setUploadStatus({fullStatus: e.currentTarget.files[0].name, link: ''})
   }
 
