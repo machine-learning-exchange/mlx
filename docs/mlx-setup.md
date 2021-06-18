@@ -1,6 +1,6 @@
 ## Deploy MLX on an Existing Kubernetes Cluster
 
-To deploy the minimum MLX on an existing Kubernetes Cluster, we can clone the MLX manifests and deploy it with Kustomize.
+To deploy the minimum MLX on an existing Kubernetes Cluster, we can clone the MLX manifests and deploy it with Kustomize. The minimum MLX is only for running basic pipelines on MLX which doesn't support dataset deployment and model serving with KFServing. To experience the other MLX features, please follow one of the instructions on the [main README](/README.md/#2-deployment).
 
 This minimum MLX contains:
 - Istio
