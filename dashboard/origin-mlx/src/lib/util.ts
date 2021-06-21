@@ -53,12 +53,10 @@ export const capitalize = (lower: string) =>
 
 export const formatTitle = (title: string) => {
   let newTitle = title;
-  // If there is no whitespace then replace -, _, and . with spaces
-  if (!/\s/g.test(newTitle))
-    newTitle = newTitle.replace(/[-_.]/g, " ")
-  // If the title is all lower case then upper case the first letter
-  if (newTitle === newTitle.toLowerCase())
-    newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
+  // If there are any dashes (-), underscores(_), or periods (.) replace them with spaces
+  newTitle = newTitle.replace(/[-_.]/g, " ")
+  // Upper case the first letter of the title
+  newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
   return newTitle
 }
 
