@@ -161,6 +161,6 @@
     {
       "name": "Nested Pipeline",
       "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/nested-pipeline.yaml"
-    },
+    }
   ]
 }
