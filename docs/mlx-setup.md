@@ -13,6 +13,6 @@ We will be using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user
 cd manifests
 # run the below command two times if the CRDs take too long to provision.
-kustomize build example | kubectl apply -f -
+while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 ```
 Then access the MLX page using http://<cluster_node_ip>:30380/mlx/
