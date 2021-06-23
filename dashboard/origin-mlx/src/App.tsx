@@ -21,7 +21,7 @@ import { GET_SETTINGS } from './lib/stores/settings';
 import { getSettings } from './lib/api/settings';
 import { getUserInfo, hasRole } from './lib/util';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import PipelineDetail from './components/Detail/PipelineDetail';
 import DatasetDetail from './components/Detail/DatasetDetail';
@@ -214,147 +214,144 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           />
         }
       />
-      { isAdmin &&
-        <>
-          <Route path="/pipelines/all"
-            render={ routeProps =>
-              <MetaAllPage
-                type="pipelines"
-                description="Pipelines for your machine learning workloads."
-                tagName="Category"
-                getTag={(asset: any) => 'OpenSource'}
-                alternateBG
-                leftBtn="Featured"
-                leftLink="/pipelines"
-                leftIcon="arrow_back"
-                rightBtn="Register a Pipeline"
-                rightLink="/upload/pipelines"
-                canEdit={true}
-              />
-            }
+      <ProtectedRoute exact path="/pipelines/all"
+        render={ () =>
+          <MetaAllPage
+            type="pipelines"
+            description="Pipelines for your machine learning workloads."
+            tagName="Category"
+            getTag={(asset: any) => 'OpenSource'}
+            alternateBG
+            leftBtn="Featured"
+            leftLink="/pipelines"
+            leftIcon="arrow_back"
+            rightBtn="Register a Pipeline"
+            rightLink="/upload/pipelines"
+            canEdit={true}
           />
-          <Route path="/datasets/all"
-            render={ routeProps =>
-              <MetaAllPage
-                type="datasets"
-                description="Datasets for your machine learning workloads."
-                tagName="Category"
-                getTag={(asset: any) => 'OpenSource'}
-                alternateBG
-                leftBtn="Featured"
-                leftLink="/datasets"
-                leftIcon="arrow_back"
-                rightBtn="Register a Dataset"
-                rightLink="/upload/datasets"
-                canEdit={true}
-              />
-            }
+        }
+      />
+      <ProtectedRoute exact path="/datasets/all"
+        render={ () =>
+          <MetaAllPage
+            type="datasets"
+            description="Datasets for your machine learning workloads."
+            tagName="Category"
+            getTag={(asset: any) => 'OpenSource'}
+            alternateBG
+            leftBtn="Featured"
+            leftLink="/datasets"
+            leftIcon="arrow_back"
+            rightBtn="Register a Dataset"
+            rightLink="/upload/datasets"
+            canEdit={true}
           />
-          <Route path="/components/all"
-            render={ routeProps =>
-              <MetaAllPage
-                type="components"
-                description="Components that can be used to build your pipelines."
-                tagName="Platform"
-                getTag={(asset: any) =>
-                  asset.metadata?.annotations?.platform
-                  || 'OpenSource'}
-                alternateBG
-                leftBtn="Featured"
-                leftLink="/components"
-                leftIcon="arrow_back"
-                rightBtn="Register a Component"
-                rightLink="/upload/components"
-                canEdit={true}
-              />
-            }
+        }
+      />
+      <ProtectedRoute exact path="/components/all"
+        render={ () =>
+          <MetaAllPage
+            type="components"
+            description="Components that can be used to build your pipelines."
+            tagName="Platform"
+            getTag={(asset: any) =>
+              asset.metadata?.annotations?.platform
+              || 'OpenSource'}
+            alternateBG
+            leftBtn="Featured"
+            leftLink="/components"
+            leftIcon="arrow_back"
+            rightBtn="Register a Component"
+            rightLink="/upload/components"
+            canEdit={true}
           />
-          <Route path="/models/all"
-            render={ routeProps =>
-              <MetaAllPage
-                type="models"
-                description="Machine learning models that can be used in your pipelines."
-                tagName="Domain"
-                getTag={(asset: any) => asset.domain}
-                alternateBG
-                leftBtn="Featured"
-                leftLink="/models"
-                leftIcon="arrow_back"
-                rightBtn="Register a Model"
-                rightLink="/upload/models"
-                canEdit={true}
-              />
-            }
+        }
+      />
+      <ProtectedRoute exact path="/models/all"
+        render={ () =>
+          <MetaAllPage
+            type="models"
+            description="Machine learning models that can be used in your pipelines."
+            tagName="Domain"
+            getTag={(asset: any) => asset.domain}
+            alternateBG
+            leftBtn="Featured"
+            leftLink="/models"
+            leftIcon="arrow_back"
+            rightBtn="Register a Model"
+            rightLink="/upload/models"
+            canEdit={true}
           />
-          <Route path="/inferenceservices/all"
-            render={ routeProps =>
-              <KFServingAllPage
-                type="inferenceservices"
-                description="KFServing inference services."
-                runningStatus=""
-                statusIcon=""
-                tagName="Domain"
-                getTag={(asset: any) => asset.domain}
-                alternateBG
-                leftBtn="Featured"
-                leftLink="/inferenceservices"
-                leftIcon="arrow_back"
-                rightBtn="Deploy a Service"
-                rightLink="/upload/inferenceservices"
-                rightAdmin={true}
-                canEdit={true}
-              />
-            }
+        }
+      />
+      <ProtectedRoute exact path="/inferenceservices/all"
+        render={ () =>
+          <KFServingAllPage
+            type="inferenceservices"
+            description="KFServing inference services."
+            runningStatus=""
+            statusIcon=""
+            tagName="Domain"
+            getTag={(asset: any) => asset.domain}
+            alternateBG
+            leftBtn="Featured"
+            leftLink="/inferenceservices"
+            leftIcon="arrow_back"
+            rightBtn="Deploy a Service"
+            rightLink="/upload/inferenceservices"
+            rightAdmin={true}
+            canEdit={true}
           />
-          <Route path="/notebooks/all"
-            render={ routeProps =>
-              <MetaAllPage
-                type="notebooks"
-                description="Notebooks for your data science tasks."
-                tagName="Platform"
-                getTag={(asset: any) => asset.metadata?.annotations?.platform || 'OpenSource'}
-                alternateBG
-                leftBtn="Featured"
-                leftLink="/notebooks"
-                leftIcon="arrow_back"
-                rightBtn="Register a Notebook"
-                rightLink="/upload/notebooks"
-                canEdit={true}
-              />
-            }
-            />
-          <Route
-            path="/experiments"
-            render={({match, location}) =>
-              <IframePage
-                title="KFP Experiments"
-                path={KFP + "/_/pipeline/?ns=mlx#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
-                storageKey="experiments-iframe"
-              />
-            }
+        }
+      />
+      <ProtectedRoute exact path="/notebooks/all"
+        render={ () =>
+          <MetaAllPage
+            type="notebooks"
+            description="Notebooks for your data science tasks."
+            tagName="Platform"
+            getTag={(asset: any) => asset.metadata?.annotations?.platform || 'OpenSource'}
+            alternateBG
+            leftBtn="Featured"
+            leftLink="/notebooks"
+            leftIcon="arrow_back"
+            rightBtn="Register a Notebook"
+            rightLink="/upload/notebooks"
+            canEdit={true}
           />
-          <Route
-            exact path="/upload/inferenceservices"
-            render={routeProps => <KFServingUploadPage/> }
+        }
+        />
+      <ProtectedRoute
+        exact
+        path="/experiments"
+        render={() =>
+          <IframePage
+            title="KFP Experiments"
+            path={KFP + "/_/pipeline/?ns=mlx#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
+            storageKey="experiments-iframe"
           />
-          <Route
-            path="/upload/:type"
-            render={routeProps => <UploadPage {...routeProps} /> }
-          />
-          <Route path="/delete/:type"
-            render={routeProps =>
-              <MetaDeletePage
-                { ...routeProps }
-                API={ API }
-                canRun={ canRun }
-                alternateBG
-              >
-              </MetaDeletePage>
-            }
-          />
-          <Route path="/settings" render={routeProps => <SettingsPage alternateBG />} />
-        </>
-      }
+        }
+      />
+      <ProtectedRoute
+        exact path="/upload/inferenceservices"
+        render={() => <KFServingUploadPage/> }
+      />
+      <ProtectedRoute
+        path="/upload/:type"
+        render={(routeProps: any) => <UploadPage {...routeProps} /> }
+      />
+      <ProtectedRoute path="/delete/:type"
+        render={(routeProps: any) =>
+          <MetaDeletePage
+            { ...routeProps }
+            API={ API }
+            canRun={ canRun }
+            alternateBG
+          >
+          </MetaDeletePage>
+        }
+      />
+      <ProtectedRoute path="/settings" render={(routeProps: any) => <SettingsPage alternateBG />} />
       <Route path="/pipelines/:id"
         render={({ match, location })=> (
           <MetaDetailPage
@@ -422,6 +419,24 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
         )}
       />
     </Switch>
+  )
+}
+
+interface ProtectedRouteProps {
+  exact?: boolean,
+  path: string,
+  render: any
+}
+function ProtectedRoute(props: ProtectedRouteProps) {
+
+  return (
+    <Route 
+      { ...props }
+      render={isAdmin 
+        ? props.render 
+        : () => <Redirect to='/login'></Redirect>
+      }
+    />
   )
 }
 
