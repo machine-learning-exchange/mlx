@@ -37,7 +37,7 @@ def model_pipeline(model_id='${model_identifier}'):
 
     model_config = dsl.ContainerOp(
         name='model_config',
-        image='tomcli/model-config',
+        image='aipipeline/model-config',
         command=['python'],
         arguments=[
             '-u', 'model-config.py',
