@@ -141,7 +141,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
               margin="dense"
               variant="outlined"
               autoCorrect="false"
-              label={`${capitalize(type)} Name`}
+              label={`${capitalize(type.substring(0, type.length - 1))} Name`}
               helperText="If no value is entered, a default will be chosen from the source YAML file."
               InputLabelProps={{ shrink: true }}
             />
