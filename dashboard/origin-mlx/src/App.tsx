@@ -54,6 +54,18 @@ function App() {
   if (!window.location.pathname.substring(0, prefix.length+12).includes(prefix + "/experiments"))
     localStorage.removeItem("experiments-iframe")
 
+  // receive iframe message when iframe is loaded and send correct namespace back.
+  window.addEventListener('message', (event: MessageEvent) => {
+    const { data, origin } = event;
+    switch (data.type) {
+    case 'iframe-connected':
+      const element = document.getElementById("iframe") as HTMLIFrameElement;
+      // TODO: get namespace from user info, use fixed value: mlx for now
+      element.contentWindow.postMessage({type: 'namespace-selected', value: 'mlx'}, origin);
+      break;
+    }
+  });
+
   return (
     <div className="app-wrapper">
       <Store
@@ -327,7 +339,7 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
         render={() =>
           <IframePage
             title="KFP Experiments"
-            path={KFP + "/_/pipeline/?ns=mlx#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
+            path={KFP + "/pipeline/#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
             storageKey="experiments-iframe"
           />
         }
