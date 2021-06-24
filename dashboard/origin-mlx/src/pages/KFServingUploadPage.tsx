@@ -39,6 +39,7 @@ function UploadPage() {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files[0])
+    setError('')
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       if (typeof fileReader.result === 'string') {

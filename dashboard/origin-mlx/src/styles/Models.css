@@ -517,7 +517,6 @@ div:hover>.upload-button {
   display: flex;
   flex-direction: column;
   min-width: 40%;
-  height: 44%;
   margin-top: 10%;
   background-color: #666 !important;
   color: white;
