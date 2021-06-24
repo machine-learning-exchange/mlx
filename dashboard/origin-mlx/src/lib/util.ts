@@ -14,6 +14,7 @@
 *  limitations under the License. 
 */ 
 import Cookies from 'js-cookie';
+import { titleCase } from "title-case";
 
 const disableLogin = process.env.REACT_APP_DISABLE_LOGIN === 'true';
 
@@ -50,6 +51,15 @@ export function canShow(adminOnly: boolean, isAdmin: boolean) {
 
 export const capitalize = (lower: string) =>
   lower.charAt(0).toUpperCase().concat(lower.slice(1));
+
+export const formatTitle = (title: string) => {
+  let newTitle = title;
+  // If there are any dashes (-), underscores(_), or periods (.) replace them with spaces
+  newTitle = newTitle.replace(/[-_.]/g, " ")
+  // Upper case the first letter of the title
+  newTitle = titleCase(newTitle)
+  return newTitle
+}
 
 const addPeriod = (text: string) => text + (!text.endsWith('.') ? '.' : '')
 

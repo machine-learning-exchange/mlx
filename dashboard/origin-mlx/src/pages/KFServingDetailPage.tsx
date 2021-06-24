@@ -14,7 +14,7 @@
 *  limitations under the License. 
 */ 
 import React, { useContext, useEffect, useState, Children, ReactNode, ReactElement } from 'react'
-import { capitalize } from '../lib/util';
+import { capitalize, formatTitle } from '../lib/util';
 import StoreContext from '../lib/stores/context'
 import yaml from 'js-yaml'
 
@@ -99,7 +99,7 @@ function MetaDetailPage(props: MetaDetailPageProps) {
   return (
     <div className="page-wrapper">
       <Hero
-        title={asset?.name || id}
+        title={formatTitle(asset?.name || id)}
           subtitle={' '}
         // subtitle={asset
         //   ? asset.description.split[0] + '.'

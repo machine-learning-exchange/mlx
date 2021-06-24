@@ -17,7 +17,7 @@ import React, { useContext, useState, ChangeEvent, FormEvent } from 'react'
 import StoreContext from '../lib/stores/context'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router';
-import { capitalize } from '../lib/util'
+import { capitalize, formatTitle } from '../lib/util'
 import { upload } from '../lib/api/upload'
 
 import Button from '../components/Button'
@@ -49,6 +49,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
   const { store, dispatch } = useContext(StoreContext)
   const { artifacts, settings } = store
   const API = settings.endpoints.api.value || settings.endpoints.api.default
+  const singularType = capitalize(type.substring(0, type.length - 1))
 
   const assets: {[key: string]: Artifact} = Object.fromEntries(artifacts[type]
     .map((asset: Artifact) => [asset.name, asset]))
@@ -141,8 +142,8 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
               margin="dense"
               variant="outlined"
               autoCorrect="false"
-              label={`${capitalize(type)} Name`}
-              helperText="If no value is entered, a default will be chosen from the source YAML file."
+              label={`${singularType} Name`}
+              helperText={`The ${singularType} name should be in title case without periods (.), dashes (-), or underscores (_).`}
               InputLabelProps={{ shrink: true }}
             />
             <div style={{ margin: '0.5rem 0' }} />

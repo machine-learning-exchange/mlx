@@ -19,7 +19,7 @@ import { fetchArtifact, setFeaturedArtifacts, setPublishApprovedArtifacts } from
 import { Artifact, FETCH_ARTIFACT_ASSETS, UPDATE_ARTIFACT_ASSET } from '../lib/stores/artifacts'
 import { SET_ACTIVE_PAGE } from '../lib/stores/pages';
 import { ADD_COMPONENTS_TO_CART, REMOVE_COMPONENTS_OF_TYPE_FROM_CART, ADD_COMPONENT_TO_CART, REMOVE_COMPONENT_FROM_CART } from '../lib/stores/pipeline';
-import { capitalize } from '../lib/util';
+import { capitalize, formatTitle } from '../lib/util';
 
 import Hero from '../components/Hero'
 import Button from '../components/Button'
@@ -216,7 +216,7 @@ function MetaAllPage(props: MetaAllPageProps) {
                     />
                   </TableCell>
                   <TableCell component="th" id={asset.id} scope="row" padding="dense" >
-                    {asset.name}
+                    {formatTitle(asset.name)}
                   </TableCell>
                   <TableCell padding="dense">{asset.description}</TableCell>
                   <TableCell padding="dense">
