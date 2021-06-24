@@ -544,22 +544,6 @@ div:hover>.upload-button {
   border-color: #1ccdc7 !important;
 }
 
-.upload-name-field, .upload-name-field-error {
-  width: 100%;
-}
-
-.upload-name-field fieldset {
-  border-color: #1ccdc7 !important;
-}
-
-.upload-name-field-error fieldset {
-  border-color: #ff2222 !important;
-}
-
-.upload-form-wrapper .upload-name-field-error div p {
-  color: #ff2222 !important;
-}
-
 /*************************
  * Pipeline Creator Page *
  *************************/

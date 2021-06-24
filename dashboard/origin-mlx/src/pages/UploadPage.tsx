@@ -44,7 +44,6 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
   const [ uploadStatus, setUploadStatus] = useState({fullStatus: '', link: ''})
   const [ file, setFile ] = useState(null)
   const [ loading, setLoading ] = useState(false)
-  const [ textFieldError, setTextfieldError ] = useState('')
   const [ error, setError ] = useState('')
 
   const { store, dispatch } = useContext(StoreContext)
@@ -70,10 +69,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (formatTitle(name) !== name) {
-      setTextfieldError(`The ${singularType} name must have the first letter capitalized and have no periods (.), dashes (-), or underscores (_).`)
-    }
-    else if (file) {
+    if (file) {
       setLoading(true)
       const response = await upload(API, type, file, {
         name, url, token: enterpriseToken
@@ -139,22 +135,17 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
             encType="multipart/form-data"
             onSubmit={handleSubmit}
           >
-            <div className={textFieldError === '' ? "upload-name-field" : "upload-name-field-error" }>
-              <TextField
-                value={name}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  setTextfieldError('')
-                  setName(e.currentTarget.value)
-                }}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                autoCorrect="false"
-                label={`${singularType} Name`}
-                helperText={textFieldError || "If no value is entered, a default will be chosen from the source YAML file."}
-                InputLabelProps={{ shrink: true }}
-              />
-            </div>
+            <TextField
+              value={name}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
+              fullWidth
+              margin="dense"
+              variant="outlined"
+              autoCorrect="false"
+              label={`${singularType} Name`}
+              helperText={`The ${singularType} name should be in title case without periods (.), dashes (-), or underscores (_).`}
+              InputLabelProps={{ shrink: true }}
+            />
             <div style={{ margin: '0.5rem 0' }} />
             {type === 'operators' &&
               <TextField
