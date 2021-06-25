@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app.kubernetes.io/component: oidc-authservice
+    app.kubernetes.io/name: oidc-authservice
+  name: authservice
+  namespace: istio-system
+spec:
+  gateways:
+  - kubeflow/kubeflow-gateway
+  hosts:
+  - '*'
+  http:
+  - match:
+    - uri:
+        # Dummy path to avoid mlx-ui login redirect path
+        prefix: /oidc/login
+    route:
+    - destination:
+        host: authservice.istio-system.svc.cluster.local
+        port:
+          number: 8080
