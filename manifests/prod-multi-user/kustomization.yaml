@@ -18,6 +18,7 @@ bases:
 resources:
   - kubeflow-dashboard-patch.yaml
   - oidc-patch.yaml
+  - envoy-filter-patch.yaml
 patchesStrategicMerge:
   - mlx-ui-patch.yaml
   - mlx-ext-authz-patch.yaml

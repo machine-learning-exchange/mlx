@@ -1,0 +1,9 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: authn-filter
+  namespace: istio-system
+spec:
+  workloadSelector:
+    labels:
+      istio: dummygateway
