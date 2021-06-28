@@ -21,6 +21,7 @@ import '../../styles/Sidebar.css'
 import Icon from '@material-ui/core/Icon';
 import SecretMenu from '../SecretMenu';
 import { capitalize, getUserInfo, hasRole } from '../../lib/util';
+import LFAILogo from "../../images/lfaidata.png";
 
 const sideNavColors = {
   bg: '#303030',
@@ -83,15 +84,20 @@ function SidebarList() {
           </ul>
         }
       </div>
-      { isAdmin && (secretVisible ?
-        <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
-          <SecretMenu />
-        </div>
-      :
-        <div onClick={() => setSecretVisible(true)} className={`secret-tab`}>
-          <Icon>more_horiz</Icon>
-        </div>
-      )}
+      
+
+      <div className="bottom-sidebar">
+        <img alt="LFAI Logo" className="sidebar-img above-secret" src={LFAILogo} />
+        { isAdmin && (secretVisible ?
+            <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
+              <SecretMenu/>
+            </div>
+          :
+          <div className="secret-tab" onClick={() => setSecretVisible(true)}>
+            <Icon>more_horiz</Icon>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
