@@ -73,10 +73,6 @@ ul {
 }
 
 .sidebar-list-item.not-active {
-  color: #888 !important;
-}
-
-.sidebar-list-item.not-active {
   color: #aaa !important;
 }
 
@@ -153,4 +149,16 @@ body>* {
 
 .secret-menu.visible li {
   margin: 0 0 8% 0;
+}
+
+.footer-list-wrap {
+  width: 96%;
+  margin-left: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.footer-list-item {
+  width: 100%;
+  margin: 0%;
 }

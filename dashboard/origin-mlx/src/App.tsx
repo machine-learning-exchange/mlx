@@ -33,6 +33,7 @@ import './App.css';
 
 import { SettingsPage } from './pages/SettingsPage';
 import LandingPage from './pages/LandingPage'
+import ExternalLinksPage from './pages/ExternalLinksPage'
 import MetaDeletePage from './pages/MetaDeletePage';
 import MetaFeaturedPage from './pages/MetaFeaturedPage';
 import KFServingFeaturedPage from './pages/KFServingFeaturedPage';
@@ -120,6 +121,7 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
   return (
     <Switch>
       <Route exact path="/" component={LandingPage} />
+      <Route exact path="/external-links" component={ExternalLinksPage} />
       <Route exact path="/pipelines"
         render={routeProps =>
           <MetaFeaturedPage

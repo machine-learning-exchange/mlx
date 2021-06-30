@@ -22,6 +22,7 @@ import Icon from '@material-ui/core/Icon';
 import SecretMenu from '../SecretMenu';
 import { capitalize, getUserInfo, hasRole } from '../../lib/util';
 import LFAILogo from "../../images/lfaidata.png";
+import { Link } from 'react-router-dom';
 
 const sideNavColors = {
   bg: '#303030',
@@ -84,10 +85,16 @@ function SidebarList() {
           </ul>
         }
       </div>
-      
-
       <div className="bottom-sidebar">
         <img alt="LFAI Logo" className="sidebar-img above-secret" src={LFAILogo} />
+        <div className="sidebar-list-wrap footer-list-wrap">
+          <Link to="/external-links">
+            <h3 className={`sidebar-list-item footer-list-item ${false ? 'active' : 'not-active'}`}>
+              <Icon className="sidebar-icon">chat</Icon>
+              Join the Conversation
+            </h3>
+          </Link>
+        </div>
         { isAdmin && (secretVisible ?
             <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
               <SecretMenu/>

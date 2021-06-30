@@ -15,7 +15,7 @@
 */ 
 import React, { useContext } from 'react'
 import StoreContext from '../../lib/stores/context'
-import MLXLogo from "../../images/mlx-logo-white.png";
+import MLXLogo from "../../images/mlx-logo-name-white.png";
 import { Link } from 'react-router-dom';
 
 interface SideBarHeaderProps {

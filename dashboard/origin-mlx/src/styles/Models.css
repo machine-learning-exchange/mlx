@@ -82,7 +82,7 @@ td>span.checked {
 }
 
 .landing-page {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #595959;
   overflow: hidden;
   display: flex;
@@ -90,15 +90,34 @@ td>span.checked {
 }
 
 .landing-page-wrapper {
-  margin-top: 2%;
+  margin: 1% 4%;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 .landing-page-text {
+  margin-top: 0%;
   text-align: center;
-  color: #dddddd;
+  color: #fff;
+}
+
+.links-page {
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.links-page-wrapper {
+  margin: 1% 4%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.links-page-text {
+  margin-top: 0%;
+  color: #fff;
 }
 
 .form-list {
@@ -136,6 +155,14 @@ td>span.checked {
   height: 100%;
   overflow: auto;
   display: flex;
+}
+
+.footer-text {
+  color: #ddd;
+  margin-top: 0.5%;
+  margin-bottom: 0%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
 }
 
 /******************
