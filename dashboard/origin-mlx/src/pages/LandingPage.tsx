@@ -51,8 +51,8 @@ export default function LandingPage() {
           We look forward to your contributions!
         </h3>
         <img alt="MLX View" className="slide-img" src={introPic} />
-        <PageFooter/>
       </div>
+      <PageFooter/>
     </div>
   );
 }

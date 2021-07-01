@@ -81,15 +81,21 @@ td>span.checked {
   flex-direction: column;
 }
 
+.landing-page div {
+  width: 100%;
+}
+
 .landing-page {
   min-height: 100vh;
   background-color: #595959;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .landing-page-wrapper {
+  max-width: 900px;
   margin: 1% 4%;
   display: flex;
   flex-direction: column;
