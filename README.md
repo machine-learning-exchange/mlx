@@ -18,11 +18,11 @@ Allows upload, registration, execution, and deployment of:
 Additionally it provides:
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
- - Pipelines engine powered by Kubeflow Pipelines on Tekton, core of Watson Pipelines
+ - Pipelines engine powered by [Kubeflow Pipelines on Tekton](https://github.com/kubeflow/kfp-tekton), core of Watson AI Pipelines
  - Components registry for Kubeflow Pipelines
- - Datasets management by Datashim
- - Preregistered Datasets from Data Asset Exchange (DAX) and Models from Model Asset Exchange (MAX)
- - Serving engine by KFServing
+ - Datasets management by [Datashim](https://github.com/datashim-io/datashim)
+ - Preregistered Datasets from [Data Asset Exchange (DAX)](https://developer.ibm.com/exchanges/data/) and Models from [Model Asset Exchange (MAX)](https://developer.ibm.com/exchanges/models/)
+ - Serving engine by [KFServing](https://github.com/kubeflow/kfserving)
  - Model Metadata schemas
 
 ## 1. Deployment
