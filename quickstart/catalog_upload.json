@@ -61,10 +61,6 @@
     {
       "name": "TensorFlow Speech Commands",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc.yaml"
-    },
-    {
-      "name": "CodeNet Dataset",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet.yaml"
     }
   ],
   "models": [
