@@ -15,7 +15,8 @@
 */ 
 import React from 'react'
 import MLXLogo from "../../images/mlx-logo-name-white.png";
-import { Link } from 'react-router-dom';
+import Link from '../Link'
+import LFAILogo from "../../images/lfaidata.png";
 
 interface SideBarHeaderProps {
   name: string;
@@ -29,6 +30,9 @@ const SideBarHeader: React.FunctionComponent<SideBarHeaderProps> = (props) => {
         <img alt="MLX Logo" className="sidebar-img" src={MLXLogo} />
       </Link>
       <hr className="sidebar-divider"/>
+      <Link to="https://lfaidata.foundation/"> 
+        <img alt="LFAI Logo" className="lfai-logo above-secret" src={LFAILogo} /> 
+      </Link> 
     </div>
   );
 };

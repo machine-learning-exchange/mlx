@@ -21,7 +21,6 @@ import '../../styles/Sidebar.css'
 import Icon from '@material-ui/core/Icon';
 import SecretMenu from '../SecretMenu';
 import { capitalize, getUserInfo, hasRole } from '../../lib/util';
-import LFAILogo from "../../images/lfaidata.png";
 import { Link } from 'react-router-dom';
 
 const sideNavColors = {
@@ -86,7 +85,6 @@ function SidebarList() {
         }
       </div>
       <div className="bottom-sidebar">
-        <img alt="LFAI Logo" className="sidebar-img above-secret" src={LFAILogo} />
         <div className="sidebar-list-wrap footer-list-wrap">
           <Link to="/external-links">
             <h3 className={`sidebar-list-item footer-list-item ${false ? 'active' : 'not-active'}`}>

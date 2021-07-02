@@ -31,7 +31,12 @@ ul {
 }
 
 .sidebar-img {
-  width: 50%;
+  width: 80%;
+}
+
+.lfai-logo {
+  margin-top: 1%;
+  width: 60%;
 }
 
 .sidebar-header-wrap {

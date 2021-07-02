@@ -165,7 +165,7 @@ td>span.checked {
 
 .footer-text {
   color: #ddd;
-  margin-top: 0.5%;
+  margin-top: 2%;
   margin-bottom: 0%;
   margin-left: 0.5%;
   margin-right: 0.5%;
@@ -198,6 +198,10 @@ td>span.checked {
   border: 0;
   height: 100%;
   width: 100%;
+}
+
+.external-link {
+  color: #1ccdc7;
 }
 
 /******************
