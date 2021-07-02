@@ -49,15 +49,13 @@ export default function LandingPage() {
       </Link>
       </Hero>
       <div className="landing-page-wrapper">
-        <h3 className="landing-page-text">
-          Machine Learning eXchange (MLX) is an open source project hosted in the 
-          <Link to="https://lfaidata.foundation/"> LF AI & Data Foundation </Link> 
-          whose mission is to provide an open source Data and AI assets catalog and execution engine. 
+        <h4 className="landing-page-text">
+          Machine Learning eXchange (MLX) is an open source Data and AI assets catalog and execution engine, hosted in the 
+          <Link to="https://lfaidata.foundation/"> LF AI & Data Foundation </Link>. 
           It allows the upload, registration, execution, and deployment of AI pipelines, pipeline components, models, datasets, and notebooks. 
-          Please join us on 
-          <Link to="https://github.com/machine-learning-exchange"> Github </Link> 
-          and our community! 
-        </h3>
+          Please join our community on 
+          <Link to="https://github.com/machine-learning-exchange"> Github </Link>!
+        </h4>
         <img alt="MLX View" className="slide-img" src={introPic} />
       </div>
       <PageFooter/>
