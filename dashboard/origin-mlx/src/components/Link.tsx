@@ -22,7 +22,7 @@ function Link(props: LinkProps) {
   const isExternal = /^https?:\/\//.test(destination)
 
   return isExternal
-    ? <a href={destination} {...props}>{props.children}</a>
+    ? <a className="external-link" href={destination} {...props}>{props.children}</a>
     : <RouterLink {...props}>{props.children}</RouterLink>
 }
 

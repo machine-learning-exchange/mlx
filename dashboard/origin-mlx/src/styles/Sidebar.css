@@ -31,7 +31,12 @@ ul {
 }
 
 .sidebar-img {
-  width: 50%;
+  width: 80%;
+}
+
+.lfai-logo {
+  margin-top: 1%;
+  width: 60%;
 }
 
 .sidebar-header-wrap {
@@ -73,10 +78,6 @@ ul {
 }
 
 .sidebar-list-item.not-active {
-  color: #888 !important;
-}
-
-.sidebar-list-item.not-active {
   color: #aaa !important;
 }
 
@@ -104,9 +105,9 @@ body>* {
   flex-direction: column;
 }
 
-.secret-tab {
+.bottom-sidebar {
   width: 100%;
-  height: 100px;
+  height: 200px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -114,13 +115,17 @@ body>* {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  box-sizing: border-box;
-  color: #888;
-  padding-bottom: 10px;
+}
+
+.above-secret {
+  margin-bottom: 5px;
 }
 
 .secret-tab:hover {
   color: darkcyan;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .secret-tab:hover::before {
@@ -129,11 +134,6 @@ body>* {
 }
 
 .secret-menu.visible {
-  width: 100%;
-  height: 25%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -154,4 +154,16 @@ body>* {
 
 .secret-menu.visible li {
   margin: 0 0 8% 0;
+}
+
+.footer-list-wrap {
+  width: 96%;
+  margin-left: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.footer-list-item {
+  width: 100%;
+  margin: 0%;
 }

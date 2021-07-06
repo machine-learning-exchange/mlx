@@ -17,8 +17,9 @@ import React, { useContext, useState, ChangeEvent, FormEvent } from 'react'
 import StoreContext from '../lib/stores/context'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router';
-import { capitalize, formatTitle } from '../lib/util'
+import { capitalize } from '../lib/util'
 import { upload } from '../lib/api/upload'
+import PageFooter from '../components/PageFooter';
 
 import Button from '../components/Button'
 import Icon from '@material-ui/core/Icon'
@@ -224,6 +225,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
           }
         </Paper>
       </div>
+      <PageFooter/>
     </div>
   )
 }

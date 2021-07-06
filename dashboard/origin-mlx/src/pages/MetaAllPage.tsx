@@ -25,6 +25,7 @@ import Hero from '../components/Hero'
 import Button from '../components/Button'
 import Icon from '@material-ui/core/Icon'
 import Link from '../components/Link'
+import PageFooter from '../components/PageFooter';
 import {
   Checkbox, Paper, TableHead, TableRow, TableCell, TableSortLabel,
   Table, TableBody, Toolbar, Typography, withStyles, WithStyles
@@ -242,6 +243,7 @@ function MetaAllPage(props: MetaAllPageProps) {
           </Table>
         </Paper>
       </div>
+      <PageFooter/>
     </>
   )
 }

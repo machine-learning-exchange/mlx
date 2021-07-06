@@ -21,6 +21,7 @@ import '../../styles/Sidebar.css'
 import Icon from '@material-ui/core/Icon';
 import SecretMenu from '../SecretMenu';
 import { capitalize, getUserInfo, hasRole } from '../../lib/util';
+import { Link } from 'react-router-dom';
 
 const sideNavColors = {
   bg: '#303030',
@@ -83,15 +84,25 @@ function SidebarList() {
           </ul>
         }
       </div>
-      { isAdmin && (secretVisible ?
-        <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
-          <SecretMenu />
+      <div className="bottom-sidebar">
+        <div className="sidebar-list-wrap footer-list-wrap">
+          <Link to="/external-links">
+            <h3 className={`sidebar-list-item footer-list-item ${false ? 'active' : 'not-active'}`}>
+              <Icon className="sidebar-icon">chat</Icon>
+              Join the Conversation
+            </h3>
+          </Link>
         </div>
-      :
-        <div onClick={() => setSecretVisible(true)} className={`secret-tab`}>
-          <Icon>more_horiz</Icon>
-        </div>
-      )}
+        { isAdmin && (secretVisible ?
+            <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
+              <SecretMenu/>
+            </div>
+          :
+          <div className="secret-tab" onClick={() => setSecretVisible(true)}>
+            <Icon>more_horiz</Icon>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
