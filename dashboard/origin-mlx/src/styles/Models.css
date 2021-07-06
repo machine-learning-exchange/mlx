@@ -474,18 +474,13 @@ td>span.checked {
 }
 
 .filePicker-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+  width:100%;
+  margin-bottom: 10px;
 }
 
-.filePicker-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
+.upload-button-wrapper {
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .hero-buttons.upload-button {
@@ -517,7 +512,7 @@ div:hover>.upload-button {
   display: flex;
   flex-direction: column;
   min-width: 40%;
-  margin-top: 10%;
+  margin-top: 2%;
   background-color: #666 !important;
   color: white;
   padding: 2%;
