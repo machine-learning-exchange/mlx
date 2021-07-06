@@ -102,26 +102,3 @@ spec:
   type: NodePort
   selector:
     service: mlx-ui
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: mlx-ui
-  namespace: kubeflow
-spec:
-  gateways:
-  - kubeflow-gateway
-  hosts:
-  - '*'
-  http:
-  - match:
-    - uri:
-        prefix: /mlx
-    rewrite:
-      uri: /mlx
-    route:
-    - destination:
-        host: mlx-ui.kubeflow.svc.cluster.local
-        port:
-          number: 80
-    timeout: 300s

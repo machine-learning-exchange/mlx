@@ -14,9 +14,6 @@
 # limitations under the License.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
-  - mlx-deployments
 resources:
-  - mlx-api-vs.yaml
-  - mlx-ui-vs.yaml
-  - mlx-profile.yaml
+  - mlx-api.yaml
+  - mlx-ui.yaml
