@@ -6,6 +6,10 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+  - hosts:
+    - ml-exchange.org
+    secretName: mlx-perf-certs
   rules:
   - http:
       paths:
@@ -16,5 +20,5 @@ spec:
             name: mlx-ui
             port:
               number: 80
-    host: ingress-link
+    host: $(ingress-domain)
 

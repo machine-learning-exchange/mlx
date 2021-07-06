@@ -8,11 +8,25 @@ This minimum MLX contains:
 - Tekton Pipeline
 - MLX
 
-We will be using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) to align with Kubeflow's requirements because we will be using kubeflow pipelines as the MLX pipeline engine. 
-```
+We will be using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) to align with Kubeflow's requirements because we will be using kubeflow pipelines as the MLX pipeline engine.
+
+```shell
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user
 cd manifests
 # run the below command two times if the CRDs take too long to provision.
 while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 ```
 Then access the MLX page using http://<cluster_node_ip>:30380/mlx/
+
+
+## Deploy the MLX ReadOnly mode on an Existing Kubernetes Cluster
+
+To deploy the MLX ReadOnly mode on an existing Kubernetes Cluster, run the following commands
+
+This MLX ReadOnly mode only contains MLX ReadOnly deployment.
+
+```shell
+git clone https://github.com/machine-learning-exchange/mlx
+cd mlx
+kubectl apply -k manifests/read-only-k8s
+```

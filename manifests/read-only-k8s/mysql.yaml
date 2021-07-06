@@ -78,6 +78,7 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
+# For free tier Kubernetes Cluster
 # ---
 # apiVersion: v1
 # kind: PersistentVolume
