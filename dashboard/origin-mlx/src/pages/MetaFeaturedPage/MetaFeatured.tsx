@@ -18,6 +18,7 @@ import { withStyles, WithStyles } from '@material-ui/core'
 
 import Grid from '@material-ui/core/Grid'
 import MetaCard from './MetaCard'
+import PageFooter from '../../components/PageFooter';
 
 
 interface MetaFeaturedProps extends WithStyles<typeof styles> {
@@ -105,6 +106,7 @@ function MetaFeatured(props: MetaFeaturedProps) {
             </Grid>
           )
         })}
+        <PageFooter/>
       </Grid>
     </div>
   )

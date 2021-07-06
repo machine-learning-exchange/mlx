@@ -20,6 +20,29 @@ UTIL_FILE="${SCRIPT_DIR}/server/swagger_server/util.py"
 
 cd "$SCRIPT_DIR"
 
+# download the swagger-codegen CLI if it was not installed already
+if ! command -v swagger-codegen &> /dev/null; then
+
+    # swagger-codegen requires Java
+    if ! command -v java &> /dev/null; then
+        echo "Must install Java to run swagger-codegen: https://www.java.com/en/download/help/download_options.html"
+        exit 1
+    fi
+
+    SWAGGER_VERSION="2.4.8"
+    SWAGGER_CODEGEN_CLI_JAR="swagger-codegen-cli-${SWAGGER_VERSION}.jar"
+
+    if [ ! -f "${SWAGGER_CODEGEN_CLI_JAR}" ]; then
+        echo "Downloading swagger-codegen ${SWAGGER_VERSION} ..."
+        curl -L -O -s "https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/${SWAGGER_VERSION}/${SWAGGER_CODEGEN_CLI_JAR}"
+    fi
+
+    function swagger-codegen() {
+        java -jar "${SWAGGER_CODEGEN_CLI_JAR}" "$@";
+    }
+    export -f swagger-codegen
+fi
+
 swagger-codegen validate -i swagger/swagger.yaml || exit 1
 
 echo "Generating Python client:"

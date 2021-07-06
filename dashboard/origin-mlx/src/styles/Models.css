@@ -81,24 +81,49 @@ td>span.checked {
   flex-direction: column;
 }
 
+.landing-page div {
+  width: 100%;
+}
+
 .landing-page {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #595959;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .landing-page-wrapper {
-  margin-top: 2%;
+  max-width: 900px;
+  margin: 1% 4%;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 .landing-page-text {
+  margin-top: 0%;
   text-align: center;
-  color: #dddddd;
+  color: #fff;
+}
+
+.links-page {
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.links-page-wrapper {
+  margin: 1% 4%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.links-page-text {
+  margin-top: 0%;
+  color: #fff;
 }
 
 .form-list {
@@ -138,6 +163,14 @@ td>span.checked {
   display: flex;
 }
 
+.footer-text {
+  color: #ddd;
+  margin-top: 2%;
+  margin-bottom: 0%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+}
+
 /******************
  * General Styles *
  ******************/
@@ -165,6 +198,10 @@ td>span.checked {
   border: 0;
   height: 100%;
   width: 100%;
+}
+
+.external-link {
+  color: #1ccdc7;
 }
 
 /******************

@@ -24,6 +24,7 @@ import Icon from '@material-ui/core/Icon'
 import Hero from '../components/Hero';
 import Link from '../components/Link';
 import LoadingMessage from '../components/LoadingMessage';
+import PageFooter from '../components/PageFooter';
 
 interface MetaDetailPageProps {
   children: ReactNode,
@@ -171,6 +172,7 @@ function MetaDetailPage(props: MetaDetailPageProps) {
             height="100%"
           />
       }
+      <PageFooter/>
     </div>
   )
 }

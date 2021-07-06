@@ -21,27 +21,32 @@ An extension to the Kubeflow Pipeline API for Components and Models
 
 # Development Setup
 
-## Swagger Codegen 2.4.
+## Swagger Codegen 2.4
 
-We are using `swagger-codegen` version `2.4.x` to generate our API as `swagger-codegen`
-version `3.0.x` no longer supports `python` (server) any longer.
+To generate our API we are using [`swagger-codegen`](https://github.com/swagger-api/swagger-codegen/tree/v2.4.8#prerequisites)
+version [`2.4`](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.8/swagger-codegen-cli-2.4.8.jar)
+as `swagger-codegen` version `3.0` no longer supports `python` server.
 
-Below are the instructions for installing 
-[`swagger-codegen@2`](https://formulae.brew.sh/formula-linux/swagger-codegen@2) using
-[Homebrew](https://docs.brew.sh/Installation) on Mac OS. 
+**Note**, Java 8 is **required** to run `swagger-codegen`. If not already installed, go to
+[https://java.com/download](https://www.java.com/en/download/help/download_options.html).
 
-For installation on other platforms, go to 
-[`swagger-api/swagger-codegen`](https://github.com/swagger-api/swagger-codegen#swagger-codegen-2x-master-branch)
-on GitHub.
+It is **not required** to install `swagger-codegen` since the `generate_code.sh` script will
+download it the first time it runs:
 
-**Note:** `swagger-codegen` `3.x` does not support the Python (server) anymore, 
-so we need to downgrade to version `2.x` (`@2`):
+    # curl -L -O -s "https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.8/swagger-codegen-cli-2.4.8.jar"
+    # function swagger-codegen() { java -jar "swagger-codegen-cli-2.4.8.jar" "$@"; }
+    # export -f swagger-codegen
 
-    brew search swagger-codegen@
-    brew install swagger-codegen@2
-    brew link --force swagger-codegen@2
+It is **not recommended** to install [`swagger-codegen@2`](https://formulae.brew.sh/formula-linux/swagger-codegen@2)
+via [Homebrew](https://docs.brew.sh/Installation) on macOS, since `brew install swagger-codegen@2`
+does not allow selecting the _"old"_ version `2.4.8`. Instead, the `generate_code.sh` script
+will automatically download the _"correct"_ version of the `swagger-codegen-cli.jar` file.
 
-## Python Virtual Environment for Development
+    # brew search swagger-codegen@
+    # brew install swagger-codegen@2
+    # brew link --force swagger-codegen@2
+
+## Create a Python Virtual Environment for Development
 
     python3 -m venv .venv
     source .venv/bin/activate

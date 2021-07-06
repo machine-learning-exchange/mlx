@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router';
 import { capitalize } from '../lib/util'
 import { upload, uploadFromUrl } from '../lib/api/upload'
+import PageFooter from '../components/PageFooter';
 
 import Button from '../components/Button'
 import Icon from '@material-ui/core/Icon'
@@ -226,6 +227,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
           }
         </Paper>
       </div>
+      <PageFooter/>
     </div>
   )
 }

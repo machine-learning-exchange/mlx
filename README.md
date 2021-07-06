@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.com/machine-learning-exchange/mlx.svg?branch=main)](https://travis-ci.com/machine-learning-exchange/mlx)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4862/badge)](https://bestpractices.coreinfrastructure.org/projects/4862)
+[![Slack](https://img.shields.io/badge/Slack-%40lfaifoundation%2Fml--exchange-blue.svg?logo=slack&logoColor=red)](https://lfaifoundation.slack.com/archives/C0264LKNH63)
+
 
 # Machine Learning eXchange (MLX)
 
@@ -16,11 +18,11 @@ Allows upload, registration, execution, and deployment of:
 Additionally it provides:
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
- - Pipelines engine powered by Kubeflow Pipelines on Tekton, core of Watson Pipelines
+ - Pipelines engine powered by [Kubeflow Pipelines on Tekton](https://github.com/kubeflow/kfp-tekton), core of Watson AI Pipelines
  - Components registry for Kubeflow Pipelines
- - Datasets management by Datashim
- - Preregistered Datasets from Data Asset Exchange (DAX) and Models from Model Asset Exchange (MAX)
- - Serving engine by KFServing
+ - Datasets management by [Datashim](https://github.com/datashim-io/datashim)
+ - Preregistered Datasets from [Data Asset Exchange (DAX)](https://developer.ibm.com/exchanges/data/) and Models from [Model Asset Exchange (MAX)](https://developer.ibm.com/exchanges/models/)
+ - Serving engine by [KFServing](https://github.com/kubeflow/kfserving)
  - Model Metadata schemas
 
 ## 1. Deployment
@@ -141,3 +143,11 @@ kubectl delete ns ${OPERATOR_NAMESPACE}
 	```
 
 * Additional troubleshooting on IBM Cloud is available at [the wiki page](https://github.com/machine-learning-exchange/mlx/wiki/Troubleshooting).
+
+## Join the Conversation
+	
+* Slack: [@lfaifoundation/ml-exchange](https://lfaifoundation.slack.com/archives/C0264LKNH63)
+* Mailing lists:
+  - [MLX-Announce](https://lists.lfaidata.foundation/g/mlx-announce) for top-level milestone messages and announcements
+  - [MLX-TSC](https://lists.lfaidata.foundation/g/mlx-tsc) for top-level governance discussions and decissions
+  - [MLX-Technical-Discuss](https://lists.lfaidata.foundation/g/mlx-technical-discuss) for technical discussions and questions

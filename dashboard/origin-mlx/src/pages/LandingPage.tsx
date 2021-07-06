@@ -18,6 +18,9 @@ import StoreContext from '../lib/stores/context'
 import Hero from '../components/Hero'
 import introPic from "../images/landing-page.png";
 import { SET_ACTIVE_PAGE } from '../lib/stores/pages';
+import Link from '../components/Link'
+import PageFooter from '../components/PageFooter';
+import Button from '../components/Button'
 
 export default function LandingPage() {
   const { store, dispatch } = useContext(StoreContext)
@@ -35,11 +38,27 @@ export default function LandingPage() {
         title={name} 
         subtitle=" "
       >
+      <Link to="https://github.com/machine-learning-exchange/mlx">
+        <Button
+          className="hero-buttons-outline"
+          variant="outlined"
+          color="primary"
+        >
+          Github
+        </Button>
+      </Link>
       </Hero>
       <div className="landing-page-wrapper">
-        <h2 className="landing-page-text"> &nbsp;&nbsp;&nbsp;MLX - Data and AI Assets Catalog and Execution Engine</h2>
+        <h4 className="landing-page-text">
+          Machine Learning eXchange (MLX) is an open source Data and AI assets catalog and execution engine, hosted in the 
+          <Link to="https://lfaidata.foundation/"> LF AI & Data Foundation </Link>. 
+          It allows the upload, registration, execution, and deployment of AI pipelines, pipeline components, models, datasets, and notebooks. 
+          Please join our community on 
+          <Link to="https://github.com/machine-learning-exchange"> Github </Link>!
+        </h4>
         <img alt="MLX View" className="slide-img" src={introPic} />
       </div>
+      <PageFooter/>
     </div>
   );
 }

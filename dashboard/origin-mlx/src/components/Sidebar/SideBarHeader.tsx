@@ -13,48 +13,26 @@
 *  See the License for the specific language governing permissions and 
 *  limitations under the License. 
 */ 
-import React, { useContext } from 'react'
-import StoreContext from '../../lib/stores/context'
-import MLXLogo from "../../images/mlx-logo-white.png";
-import { Link } from 'react-router-dom';
+import React from 'react'
+import MLXLogo from "../../images/mlx-logo-name-white.png";
+import Link from '../Link'
+import LFAILogo from "../../images/lfaidata.png";
 
 interface SideBarHeaderProps {
   name: string;
   active: boolean;
 }
 
-const SideBarHeader: React.FunctionComponent<SideBarHeaderProps> = (props) => {
-  const { active: isActive } = props
-
-  const { store } = useContext(StoreContext)
-  const { value, default: defaultValue } = store.settings.branding.name
-
-  const shortenBrand = (brand: string) => {
-    if (brand.length <= 10)
-      return brand;
-
-    const split = brand.split(' ')
-    let brandAbrev = ""
-    split.forEach((word: string) => {
-      if (word.toLowerCase() === "exchange")
-        brandAbrev += "X"
-      else
-       brandAbrev += word[0].toUpperCase()
-    })
-    return brandAbrev
-  }
-
-  
+const SideBarHeader: React.FunctionComponent<SideBarHeaderProps> = (props) => {  
   return (
     <div className="sidebar-header-wrap">
       <Link to="/">
         <img alt="MLX Logo" className="sidebar-img" src={MLXLogo} />
-        <h2 
-          className={`sidebar-list-item header ${isActive ? 'active' : 'not-active'}`}>
-          {shortenBrand(value || defaultValue)}
-        </h2>
       </Link>
       <hr className="sidebar-divider"/>
+      <Link to="https://lfaidata.foundation/"> 
+        <img alt="LFAI Logo" className="lfai-logo above-secret" src={LFAILogo} /> 
+      </Link> 
     </div>
   );
 };
