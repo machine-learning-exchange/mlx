@@ -19,7 +19,6 @@ resources:
   - mysql.yaml
   - namespace.yaml
   - k8s-ingress.yaml
-  - secret.yaml
   - init-jobs.yaml
 patchesStrategicMerge:
   - mlx-api-patch.yaml
@@ -28,9 +27,7 @@ configMapGenerator:
 - name: mlx-parameters
   literals:
   # Update the credentials for the below fields before apply.
-  - tls-crt=
-  - tls-key=
-  - ingress-domain=
+  - ingress-domain=ml-exchange.org
 generatorOptions:
   disableNameSuffixHash: true
 vars:

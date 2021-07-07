@@ -79,10 +79,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        resources:
-          limits:
-            cpu: 250m
-            memory: 256Mi
         volumeMounts:
         - name: context
           mountPath: "/root/.config/kfp"
