@@ -48,10 +48,14 @@ type_map = {
     Model: 'longtext',
     datetime: 'bigint(20)'
 }
-# some attributes do not comply to the defaults in the type_map
-swagger_attr_to_mysql_type = {
-    'namespace': 'varchar(63)'
+# some attributes do not comply to the defaults in the type_map (KFP idiosyncrasy)
+custom_col_types = {
+    "ApiPipeline": {
+        "description": "longtext",
+        "namespace": "varchar(63)",
+    }
 }
+custom_col_types["ApiPipelineExtended"] = custom_col_types["ApiPipeline"]
 
 # some Swagger attributes names have special MySQL column names (KFP idiosyncrasy)
 field_name_swagger_to_mysql = {
@@ -214,11 +218,12 @@ def _get_create_table_statement(swagger_class) -> str:
     for _, p in sig.parameters.items():
         if p.name == "self":
             continue
-        field_name = _convert_attr_name_to_col_name(p.name)
-        field_type = _get_mysql_type_declaration(p.annotation)
-        field_default = _get_mysql_default_value_declaration(p.default)
+        col_name = _convert_attr_name_to_col_name(p.name)
+        col_type = custom_col_types.get(swagger_class.__name__, {}).get(p.name) or \
+                   _get_mysql_type_declaration(p.annotation)
+        col_default = _get_mysql_default_value_declaration(p.default)
 
-        create_table_stmt.append(f"  `{field_name}` {field_type} {field_default},")
+        create_table_stmt.append(f"  `{col_name}` {col_type} {col_default},")
 
     if "id" in sig.parameters.keys():
         id_field_name = _convert_attr_name_to_col_name("id")
@@ -359,14 +364,21 @@ def _verify_or_create_table(table_name: str, swagger_class_or_object, validate_s
             _validate_schema(table_name, swagger_class)
 
         if swagger_class.__name__.endswith("Extended"):
-            # first, create the table with the additional columns
+            # first, create the table that is being "extended" (only required if KFP did not create it)
+            base_swagger_class = eval(swagger_class.__name__.replace("Extended", ""))
+            base_table_name = _get_table_name(base_swagger_class)
+            create_table_stmt = _get_create_table_statement(base_swagger_class)
+            base_table_created = _run_create_table_statement(base_table_name, create_table_stmt)
+            existing_tables[base_table_name] = base_table_created
+
+            # second, create the table with the additional columns
             extension_swagger_class = eval(swagger_class.__name__.replace("Extended", "Extension"))
             extension_table_name = _get_table_name(extension_swagger_class)
             create_table_stmt = _get_create_table_statement(extension_swagger_class)
-            table_created = _run_create_table_statement(extension_table_name, create_table_stmt)
-            existing_tables[extension_table_name] = table_created
+            ext_table_created = _run_create_table_statement(extension_table_name, create_table_stmt)
+            existing_tables[extension_table_name] = ext_table_created
 
-            # second, create the table-view that extends the base table with the additional columns from the ext table
+            # third, create the table-view that extends the base table with the additional columns from the ext table
             create_view_stmt = _get_create_view_statement(swagger_class)
             view_created = _run_create_table_statement(table_name, create_view_stmt)
             existing_tables[table_name] = view_created
@@ -390,12 +402,8 @@ def _validate_schema(table_name: str, swagger_class):
         if p.name == "self":
             continue
         col_name = _convert_attr_name_to_col_name(p.name)
-        col_type = swagger_attr_to_mysql_type.get(p.name) or \
+        col_type = custom_col_types.get(swagger_class.__name__, {}).get(p.name) or \
                    _get_mysql_type_declaration(p.annotation)
-
-        # hack, TODO: find a more generic solution to custom map columns to types by table
-        if issubclass(swagger_class, ApiPipeline) and col_name == "Description":
-            col_type = "longtext"
 
         swagger_columns_w_type.append((col_name, col_type))
 
