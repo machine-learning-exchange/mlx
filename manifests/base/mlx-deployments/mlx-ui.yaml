@@ -99,6 +99,5 @@ spec:
   - port: 80
     protocol: TCP
     targetPort: 3000
-  type: NodePort
   selector:
     service: mlx-ui

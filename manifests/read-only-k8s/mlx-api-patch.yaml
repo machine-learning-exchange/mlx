@@ -13,3 +13,10 @@ spec:
           value: UNAVAILABLE
         - name: ML_PIPELINE_SERVICE_PORT
           value: UNAVAILABLE
+        volumeMounts:
+          - name: mysql-initdb
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config

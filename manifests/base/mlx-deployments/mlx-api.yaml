@@ -20,7 +20,6 @@ metadata:
     service: mlx-api
     environment: dev
 spec:
-  type: NodePort
   ports:
   - name: mlx-api
     port: 80

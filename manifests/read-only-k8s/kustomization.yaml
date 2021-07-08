@@ -20,6 +20,7 @@ resources:
   - namespace.yaml
   - k8s-ingress.yaml
   - init-jobs.yaml
+  - config.yaml
 patchesStrategicMerge:
   - mlx-api-patch.yaml
   - mlx-ui-patch.yaml
@@ -31,20 +32,6 @@ configMapGenerator:
 generatorOptions:
   disableNameSuffixHash: true
 vars:
-- name: tls-crt
-  objref:
-    kind: ConfigMap
-    name: mlx-parameters
-    apiVersion: v1
-  fieldref:
-    fieldpath: data.tls-crt
-- name: tls-key
-  objref:
-    kind: ConfigMap
-    name: mlx-parameters
-    apiVersion: v1
-  fieldref:
-    fieldpath: data.tls-key
 - name: ingress-domain
   objref:
     kind: ConfigMap
