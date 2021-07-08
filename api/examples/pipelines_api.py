@@ -49,6 +49,7 @@ api_base_path = 'apis/v1alpha1'
 # yaml_files = glob.glob("./../../pipelines/pipeline-samples/*/*.yaml")
 # yaml_files = glob.glob("./../../../kfp-tekton/samples/*/*.yaml")
 yaml_files = glob.glob("./../../../kfp-tekton/sdk/python/tests/compiler/testdata/*.yaml")[:10]
+# yaml_files = sorted(glob.glob("./../../../katalog/pipeline-samples/*.yaml", recursive=True))
 
 
 def get_swagger_client():

@@ -14,7 +14,6 @@
 
 from __future__ import print_function
 
-import glob
 import json
 import os
 import random
@@ -25,6 +24,7 @@ import tarfile
 import tempfile
 import yaml
 
+from glob import glob
 from io import BytesIO
 from os import environ as env
 from pprint import pprint
@@ -43,7 +43,7 @@ port = '8080'
 
 api_base_path = 'apis/v1alpha1'
 
-yaml_files = sorted(glob.glob("./../../notebooks/samples/*.yaml", recursive=True))
+yaml_files = sorted(filter(lambda f: "template" not in f, glob("./../../../katalog/notebook-samples/*.yaml", recursive=True)))
 
 IBM_GHE_API_TOKEN = env.get("IBM_GHE_API_TOKEN")
 

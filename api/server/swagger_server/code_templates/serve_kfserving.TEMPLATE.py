@@ -58,7 +58,7 @@ def model_pipeline(model_id='${model_identifier}'):
 
     kfserving = kfserving_op(action='apply',
                              model_name=model_id,
-                             namespace='mlx',  # TODO: use a variable '${namespace}' for multi-user deployment
+                             namespace='mlx',  # TODO: use a variable 'namespace' for multi-user deployment
                              framework='custom',
                              default_custom_model_spec=model_config.outputs['default-custom-model-spec']).set_image_pull_policy('Always')
 

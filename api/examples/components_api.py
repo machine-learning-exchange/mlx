@@ -41,7 +41,7 @@ port = '8080'
 
 api_base_path = 'apis/v1alpha1'
 
-yaml_files = glob.glob("./../../components/component-samples/**/component.yaml", recursive=True)
+yaml_files = glob.glob("./../../../katalog/component-samples/**/component.yaml", recursive=True)
 
 
 def get_swagger_client():
