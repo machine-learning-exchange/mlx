@@ -9,7 +9,7 @@ spec:
   tls:
   - hosts:
     - ml-exchange.org
-    secretName: mlx-perf-certs
+    secretName: mlx-certs
   rules:
   - http:
       paths:
