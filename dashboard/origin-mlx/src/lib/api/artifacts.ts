@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License. 
 import { Artifact } from '../stores/artifacts'
+import yaml from 'js-yaml'
 
 const supported = [
   'pipelines',
@@ -27,16 +28,34 @@ const mocked: any[] = [
   // 'notebooks'
 ]
 
+async function sendRequestApi(request: string) {
+  return (await fetch(request)).json()
+}
+
+async function sendRequest(request: string) {
+  const cacheKey = `cache-${request}`
+  const cachedRequest = localStorage.getItem(cacheKey)
+  if (cachedRequest) {
+    return Promise.resolve(JSON.parse(cachedRequest))
+  }
+  else {
+    const template = await sendRequestApi(request)
+    localStorage.setItem(cacheKey, JSON.stringify(template))
+    return Promise.resolve(template)
+  }
+}
+
 export async function fetchArtifact(API: string, type: string, namespace?: string) {
   if (!supported.includes(type) && !mocked.includes(type))
     throw Error(`Can't fetch assets for type <${type}>. Unsupported.`)
 
   console.log(`fetching assets for ${type}`)
 
-  const response = type === "inferenceservices"
-    ? await fetch(`${API}/apis/v1alpha1/${type}${namespace ? `?namespace=${namespace}` : ''}`)
-    : await fetch(`${API}/apis/v1alpha1/${type}`)
-  let assets = (await response.text().then(JSON.parse))
+  const request = type === "inferenceservices"
+    ? `${API}/apis/v1alpha1/${type}${namespace ? `?namespace=${namespace}` : ''}`
+    : `${API}/apis/v1alpha1/${type}`
+  const response = await sendRequest(request)
+  let assets = response
 
   assets = (type === "inferenceservices" ? assets.items : assets[type]).map((asset: Artifact) => {
     const { featured, publish_approved } = asset
@@ -58,14 +77,40 @@ export async function fetchArtifact(API: string, type: string, namespace?: strin
   return assets
 }
 
-export async function fetchArtifactById(API: string, type: string, id: string) {
+export async function fetchAssetById(API: string, type: string, id: string) {
   if (!supported.includes(type))
     throw Error(`Can't fetch assets for type <${type}>. Unsupported.`)
 
   console.log(`fetching ${type} <id=${id}>`)
 
-  const response = await fetch(`${API}/apis/v1alpha1/${type}/${id}`)
-  return { ...(await response.json()), type }
+  const request = `${API}/apis/v1alpha1/${type}/${id}`
+  return sendRequest(request)
+}
+
+export async function fetchAssetTemplates(API: string, type: string, asset: any) {
+  const request = `${API}/apis/v1alpha1/${type}/${asset.id}/templates`
+  const data = await sendRequest(request)
+
+  const typesWithMultipleTemplates = [ 'operators' ]
+
+  if (Array.isArray(data)) {
+    if (!typesWithMultipleTemplates.includes(type))
+      throw Error(`Received multiple templates for <${type}>. Expected one.`)
+    
+    return ({
+      ...asset,
+      templates: Object.fromEntries(await Promise.all(data.map(({ template: raw, url }: any) => {
+        const template = yaml.load(raw);
+        return [ template.kind || 'Definition', { raw, template, url } ]
+      }, data)))
+    })
+  }
+
+  return ({
+    ...asset,
+    yaml: data.template,
+    template: yaml.safeLoad(data.template)
+  })
 }
 
 export async function setFeaturedArtifacts(API: string, type: string, ids: string[]) {
