@@ -18,7 +18,7 @@ import StoreContext from '../lib/stores/context'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router';
 import { capitalize } from '../lib/util'
-import { upload } from '../lib/api/upload'
+import { upload, uploadFromUrl } from '../lib/api/upload'
 import PageFooter from '../components/PageFooter';
 
 import Button from '../components/Button'
@@ -50,7 +50,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
   const { store, dispatch } = useContext(StoreContext)
   const { artifacts, settings } = store
   const API = settings.endpoints.api.value || settings.endpoints.api.default
-  const singularType = capitalize(type.substring(0, type.length - 1))
+  const singularType = type.substring(0, type.length - 1)
 
   const assets: {[key: string]: Artifact} = Object.fromEntries(artifacts[type]
     .map((asset: Artifact) => [asset.name, asset]))
@@ -71,11 +71,19 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (file) {
+    if (file || url) {
       setLoading(true)
-      const response = await upload(API, type, file, {
-        name, url, token: enterpriseToken
-      })
+      let response;
+      if (file) {
+        response = await upload(API, type, file, {
+          name, url, token: enterpriseToken
+        })
+      }
+      else {
+        response = await uploadFromUrl(API, type, url, {
+          name, url, token: enterpriseToken
+        })
+      }
       setLoading(false)
 
       if (response.status < 200 || response.status >= 300)
@@ -107,6 +115,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
       }
 
       setFile(null)
+      setUrl("")
     }
   }
 
@@ -130,7 +139,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
       <div className="upload-wrapper">
         <Paper className="upload-form-wrapper">
           <Typography variant="title" className="upload-heading">
-            Enter a name and upload a <code>.tgz</code>, <code>.tar.gz</code>, <code>.yaml</code>, or <code>.yml</code> file to register a new {type.substring(0, type.length - 1)}.
+            Enter a name for your new {singularType}.
           </Typography>
           <form
             method="post" 
@@ -144,24 +153,11 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
               margin="dense"
               variant="outlined"
               autoCorrect="false"
-              label={`${singularType} Name`}
+              label={`${capitalize(singularType)} Name`}
               helperText={`The ${singularType} name should be in title case without periods (.), dashes (-), or underscores (_).`}
               InputLabelProps={{ shrink: true }}
             />
             <div style={{ margin: '0.5rem 0' }} />
-            {type === 'operators' &&
-              <TextField
-                value={url}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setUrl(e.currentTarget.value)}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                autoCorrect="false"
-                label={`${capitalize(type)} GitHub or OperatorHub URL`}
-                helperText="If no value is entered, a default will be chosen from the source YAML file."
-                InputLabelProps={{ shrink: true }}
-              />
-            }
             {type === 'notebooks' &&
               <TextField
                 value={enterpriseToken}
@@ -177,42 +173,43 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
                 }}
               />
             }
-            {!file ? 
-              <div className="filePicker-wrapper">
-                <Button 
-                  className="hero-buttons upload-button" 
-                  variant="contained" 
-                  color="primary">
-                  <Icon>cloud_upload</Icon>
-                  {` Select File`}
-                </Button>
-                <input 
-                  type="file" 
-                  name="component-file"
-                  onChange={handleFile}
-                  accept=".tgz, .gz, .yaml, .yml"
-                />
-              </div>
-              :
-              <div className="filePicker-wrapper">
-                <Button 
-                  className="hero-buttons upload-button" 
-                  variant="contained" 
-                  color="primary"
-                  type="submit"
-                >
-                  <Icon>cloud_upload</Icon>
-                  {`Upload`}
-                </Button>
-              </div>
-            }
+            <Typography variant="title" className="upload-heading">
+              Select a <code>.tgz</code>, <code>.tar.gz</code>, <code>.yaml</code>, or <code>.yml</code> file or enter a github url to register a new {type.substring(0, type.length - 1)}.
+            </Typography>
+            <div className="filePicker-wrapper">
+              <input 
+                type="file" 
+                onChange={handleFile}
+                accept=".tgz, .gz, .yaml, .yml"
+              />
+            </div>
           </form>
-          { uploadStatus.link ?
-            <Link to={`/${type}/${uploadStatus.link}`}>
-              <p className="selected-file">{uploadStatus.fullStatus}</p>
-            </Link> :
-            <p className="selected-file">{uploadStatus.fullStatus}</p> 
-          }
+          <Typography variant="title" className="upload-heading">
+            Alternatively, use a github url to register a new {type.substring(0, type.length - 1)}.
+          </Typography>
+          <TextField
+            value={url}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setUrl(e.currentTarget.value)}
+            fullWidth
+            margin="dense"
+            variant="outlined"
+            autoCorrect="false"
+            label={`${capitalize(singularType)} GitHub URL`}
+            helperText={`A Github URL to a ${singularType} asset.`}
+            InputLabelProps={{ shrink: true }}
+          />
+          <div className="upload-button-wrapper">
+            <Button 
+              className="hero-buttons upload-button" 
+              variant="contained" 
+              color="primary"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              <Icon>cloud_upload</Icon>
+              {`Upload`}
+            </Button>
+          </div>
           {error && 
             <p className="error-msg">
               {`Upload Error: Please Retry - ${error}`}
@@ -222,6 +219,11 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
             <p className="upload-msg">
               {`Uploading...`}
             </p>
+          }
+          { uploadStatus.link &&
+            <Link to={`/${type}/${uploadStatus.link}`}>
+              <p className="selected-file">{uploadStatus.fullStatus}</p>
+            </Link>
           }
         </Paper>
       </div>
