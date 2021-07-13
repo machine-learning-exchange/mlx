@@ -28,20 +28,56 @@ const mocked: any[] = [
   // 'notebooks'
 ]
 
+interface cacheEntry {
+  response: any,
+  time: number
+}
+
+// Time to live references the lifespan of elements in the cache
+const timeToLive = process.env.REACT_APP_TTL ?  Number(process.env.REACT_APP_TTL) : 24 * 60 * 60
+// Cache check interval is the minimum time between checks on the validity of cache entries
+const cacheCheckInterval = process.env.REACT_APP_CACHE_INTERVAL ? Number(process.env.REACT_APP_CACHE_INTERVAL) : 24 * 60 * 60
+
+export async function resetCache() {
+  Object.keys(localStorage).forEach((key: string) => {
+    if (key.substring(0,9) === "mlx-cache") {
+      localStorage.removeItem(key)
+    }
+  })
+}
+
+// Remove any cache entries older than the time to live
+export async function findInvalidCacheEntries() {
+  const lastCheck = localStorage.getItem("mlx-last-invalid-cache-check")
+  const currentDate = Date.now()
+  // If there is no time stamp or the time stamp is older than the time to live then check 
+  // for invalid entries. Division by 1000 is due to Date counting in milliseconds.
+  if (!lastCheck || (currentDate - Number(lastCheck)) / 1000 > cacheCheckInterval) {
+    localStorage.setItem("mlx-last-invalid-cache-check", "" + currentDate)
+    Object.keys(localStorage).forEach((key: string) => {
+      if (key.substring(0,9) === "mlx-cache" && (currentDate - Number(JSON.parse(localStorage.getItem(key)).time)) / 1000 > timeToLive) {
+        localStorage.removeItem(key)
+      }
+    })
+  }
+}
+
 async function sendRequestApi(request: string) {
   return (await fetch(request)).json()
 }
 
+// Pull response from cache if available otherwise send api request
 async function sendRequest(request: string) {
-  const cacheKey = `cache-${request}`
+  const cacheKey = `mlx-cache-${request}`
   const cachedRequest = localStorage.getItem(cacheKey)
-  if (cachedRequest) {
-    return Promise.resolve(JSON.parse(cachedRequest))
+  // If a cache entry exists and it is still valid return that, otherwise make an API call
+  if (cachedRequest && (Date.now() - Number(JSON.parse(cachedRequest).time)) / 1000 < timeToLive) {
+    return Promise.resolve(JSON.parse(cachedRequest).response)
   }
   else {
-    const template = await sendRequestApi(request)
+    const template : cacheEntry = {response: await sendRequestApi(request), time: Date.now()}
     localStorage.setItem(cacheKey, JSON.stringify(template))
-    return Promise.resolve(template)
+    return Promise.resolve(template.response)
   }
 }
 

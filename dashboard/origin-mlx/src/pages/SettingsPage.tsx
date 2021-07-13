@@ -17,6 +17,7 @@ import * as React from 'react';
 import StoreContext from '../lib/stores/context'
 import { updateSettings, resetSettings } from '../lib/api/settings';
 import { SET_SETTINGS } from '../lib/stores/settings';
+import { resetCache } from '../lib/api/artifacts';
 
 import Hero from '../components/Hero'
 import Link from '../components/Link'
@@ -365,6 +366,17 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
                   },
                 ]}
               />  */}
+              <DataList
+                title="Cache Settings:"
+                items={[
+                  { 
+                    itemClass: "button",
+                    name: "Reset Cache",
+                    thirdColData: "Invalidate all cache entries",
+                    handleClick: resetCache
+                  },
+                ]}
+              />
               <DataList
                 title="Artifact Types:"
                 items={Object.values(artifacts).map((setting: any) => ({ 
