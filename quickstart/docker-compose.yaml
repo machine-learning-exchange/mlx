@@ -7,7 +7,7 @@ version: '3.7'
 services:
 
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2021-07-12T02-44-53Z
     volumes:
       - data-minio:/data
     ports:
