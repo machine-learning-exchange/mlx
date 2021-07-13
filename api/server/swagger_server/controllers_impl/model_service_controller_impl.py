@@ -399,6 +399,8 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
     store_file(bucket_name="mlpipeline", prefix=f"models/{api_model.id}/",
                file_name="template.yaml", file_content=yaml_file_content)
 
+    enable_anonymous_read_access(bucket_name="mlpipeline", prefix="models/*")
+
     return api_model, 201
 
 
