@@ -79,6 +79,14 @@ There are a few environment variables that can be defined that dictate how MLX i
   http://<ip_address>:<port>/<basepath>)
 * REACT_APP_BRAND - The brand name to use on the website
 * REACT_APP_DISABLE_LOGIN - A switch to turn off login mechanism
+* REACT_APP_TTL - The amount of seconds a cached entry remains valid for (24 hours by default)
+* REACT_APP_CACHE_INTERVAL - The minimum amount of time in seconds between two checks on the validity of the cache's contents (24 hours by default)
+
+# Cache Details
+
+The cache saves each request and response pair made from the UI to the API in local storage. If a request is made which matches a previous request and the difference of the time between the two requests is less than `REACT_APP_TTL` then the previously recorded response is returned. Every `REACT_APP_CACHE_INTERVAL` seconds a new check on the validity of the cache can be run. Whenever the UI is refreshed a check will be made if enough time has passed since the last cache validity check, if so then a cache validity check is started. Any item in the cache which has lasted longer than `REACT_APP_TTL` seconds is removed from the cache.
+
+To invalidate or hard reset the cache, navigate to the settings page (clicking the three dots at the bottom of the sidebar) and click on the `Reset Cache` button.
 
 # Project Overview:
 

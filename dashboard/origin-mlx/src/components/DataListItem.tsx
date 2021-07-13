@@ -192,6 +192,17 @@ const buildItem = (props:any) => {
         </>
       )
     }
+  } else if (itemClass === 'button') {
+    return (
+      <Button
+        className="hero-buttons upload-button" 
+        variant="contained" 
+        color="primary"
+        onClick={handleClick}
+      >
+        {name}
+      </Button>
+    )
   } else {
     return (
       <Typography 

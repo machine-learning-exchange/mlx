@@ -51,6 +51,9 @@ const SidebarListItem: React.FunctionComponent<SidebarListItemProps> = (props) =
   else if (props.name === 'Workspace') {
     link = 'workspace'
   }
+  else if (props.name === 'Home') {
+    link = ''
+  }
   else {
     link = 'inferenceservices'
   }

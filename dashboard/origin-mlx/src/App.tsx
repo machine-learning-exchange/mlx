@@ -13,11 +13,12 @@
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 */
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import reducer, { initial } from './lib/stores/reducer';
 import StoreContext, { Store } from './lib/stores/context';
 import { Action, State } from './lib/stores/types';
 import { GET_SETTINGS } from './lib/stores/settings';
+import { findInvalidCacheEntries } from './lib/api/artifacts';
 import { getSettings } from './lib/api/settings';
 import { getUserInfo, hasRole } from './lib/util';
 
@@ -66,6 +67,11 @@ function App() {
       break;
     }
   });
+
+  // Removes any invalid cache entries after enough time has passed since the last invalid check
+  useEffect(() => {
+    findInvalidCacheEntries()
+  })
 
   return (
     <div className="app-wrapper">
