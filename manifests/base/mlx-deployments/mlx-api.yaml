@@ -20,7 +20,6 @@ metadata:
     service: mlx-api
     environment: dev
 spec:
-  type: NodePort
   ports:
   - name: mlx-api
     port: 80
@@ -79,10 +78,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        resources:
-          limits:
-            cpu: 250m
-            memory: 256Mi
         volumeMounts:
         - name: context
           mountPath: "/root/.config/kfp"
@@ -137,26 +132,3 @@ kind: ServiceAccount
 metadata:
   name: mlx-api
   namespace: kubeflow
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: mlx-api
-  namespace: kubeflow
-spec:
-  gateways:
-  - kubeflow-gateway
-  hosts:
-  - '*'
-  http:
-  - match:
-    - uri:
-        prefix: /apis/v1alpha1
-    rewrite:
-      uri: /apis/v1alpha1
-    route:
-    - destination:
-        host: mlx-api.kubeflow.svc.cluster.local
-        port:
-          number: 80
-    timeout: 300s

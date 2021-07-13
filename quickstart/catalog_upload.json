@@ -135,6 +135,26 @@
     {
       "name": "ResourceOp Basic",
       "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/resourceop_basic.yaml"
+    },
+    {
+      "name": "Trusted AI Pipeline",
+      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/trusted-ai-pipeline.yaml"
+    },
+    {
+      "name": "Watson Machine Learning",
+      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/wml-pipeline.yaml"
+    },
+    {
+      "name": "Calculation Pipeline",
+      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/calculation-pipeline.yaml"
+    },
+    {
+      "name": "Katib Early Stopping Experiment",
+      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/katib-pipeline.yaml"
+    },
+    {
+      "name": "Nested Pipeline",
+      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/nested-pipeline.yaml"
     }
   ]
 }

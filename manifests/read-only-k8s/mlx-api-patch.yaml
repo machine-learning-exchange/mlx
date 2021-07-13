@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlx-api
+  namespace: kubeflow
+spec:
+  template:
+    spec:
+      containers:
+      - name: mlx-api-server
+        env:
+        - name: ML_PIPELINE_SERVICE_HOST
+          value: UNAVAILABLE
+        - name: ML_PIPELINE_SERVICE_PORT
+          value: UNAVAILABLE

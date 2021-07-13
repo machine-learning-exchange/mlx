@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: kubeflow
+spec:
+  ports:
+  - # We cannot have name: mysql here, because some requests through istio fail with it.
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: mysql
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mysql
+  namespace: kubeflow
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  namespace: kubeflow
+spec:
+  # storageClassName: ""
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: kubeflow
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      serviceAccountName: mysql
+      containers:
+      # https://dev.mysql.com/doc/refman/5.7/en/server-options.html#option_mysqld_ignore-db-dir
+      # Ext4, Btrfs etc. volumes root directories have a lost+found directory that should not be treated as a database.
+      - args:
+        - --ignore-db-dir=lost+found
+        - --datadir
+        - /var/lib/mysql
+        env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "true"
+        - name: MYSQL_DATABASE
+          value: "mlpipeline"
+        image: gcr.io/ml-pipeline/mysql:5.7
+        name: mysql
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-persistent-storage
+        - name: mysql-initdb
+          mountPath: /docker-entrypoint-initdb.d
+        resources:
+            requests:
+              cpu: 100m
+              memory: 800Mi
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: mysql-initdb
+        configMap:
+          name: mysql-initdb-config
+# For free tier Kubernetes Cluster
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: local-volume-2
+#   namespace: kubeflow
+#   labels:
+#     type: local
+# spec:
+#   capacity:
+#     storage: 20Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: /tmp/data-2
+#   persistentVolumeReclaimPolicy: Recycle

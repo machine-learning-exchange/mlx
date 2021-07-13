@@ -34,7 +34,7 @@ For a full deployment, we use [Kubeflow Kfctl](https://github.com/kubeflow/kfctl
 
 * #### [MLX using Docker Compose (Asset Catalog Only)](./quickstart)
 
-* #### [MLX Deployment on Kubernetes or OpenShift](./docs/mlx-install-with-kubeflow.md)
+* #### [MLX Deployment on Kubernetes or OpenShift](./docs/mlx-setup.md)
 
 * #### [MLX on an existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
 

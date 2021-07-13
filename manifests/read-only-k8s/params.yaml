@@ -1,0 +1,9 @@
+varReference:
+- path: data
+  kind: Secret
+- path: spec/tls/hosts
+  kind: Ingress
+- path: spec/rules/host
+  kind: Ingress
+- path: spec/tls/secretName
+  kind: Ingress

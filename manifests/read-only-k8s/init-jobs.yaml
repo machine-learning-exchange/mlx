@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: miniosetup
+  namespace: kubeflow
+  labels:
+    app: miniosetup
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - args:
+        - |
+          /usr/bin/mc config host add miniohost http://minio-service:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY;
+          /usr/bin/mc mb -p miniohost/mlpipeline;
+          /usr/bin/mc policy set download miniohost/mlpipeline;
+        command:
+          - /bin/sh
+          - -c
+        env:
+        - name: MINIO_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mlpipeline-minio-artifact
+              key: accesskey
+        - name: MINIO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mlpipeline-minio-artifact
+              key: secretkey
+        image: minio/mc
+        name: minio
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: katalog
+  namespace: kubeflow
+  labels:
+    app: katalog
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - command:
+          - /bin/sh
+          - -c
+          - |
+            cd /tmp &&
+            curl -L --output init_catalog.sh https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/init_catalog.sh &&
+            curl -L --output catalog_upload.json https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/bootstrapper/catalog_upload.json &&
+            chmod 777 init_catalog.sh &&
+            ./init_catalog.sh
+        env:
+        - name: MLX_API_SERVER
+          value: mlx-api:80
+        image: curlimages/curl
+        name: katalog

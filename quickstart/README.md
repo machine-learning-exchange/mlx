@@ -19,7 +19,7 @@ available with this Docker Compose setup.
 
 ## Prerequisites
 
-* Install [Docker Compose](https://docs.docker.com/compose/install/). 
+* Install [Docker Compose](https://docs.docker.com/compose/install/).
 * It may be necessary to increase the [Docker resources](https://docs.docker.com/docker-for-mac/#resources) from the
 default of 2 GB memory to 4 GB.
 * Approximately 10 GB of free storage
@@ -41,11 +41,11 @@ Wait for the containers to start up. When the MLX API and UI are ready, this
 message should show up in the terminal log:
 
 ```Markdown
-dashboard_1   | 
+dashboard_1   |
 dashboard_1   | ================================================
-dashboard_1   |  Open the MLX Dashboard at http://localhost:80/ 
+dashboard_1   |  Open the MLX Dashboard at http://localhost:80/
 dashboard_1   | ================================================
-dashboard_1   | 
+dashboard_1   |
 ```
 
 Now open a web browser and type `localhost` in the address bar to open the MLX
