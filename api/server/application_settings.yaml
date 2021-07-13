@@ -82,6 +82,6 @@ sections:
       default: yes
       value: on
     - name: "Inference Services"
-      description: "Enable or Disable the Services section"
-      default: yes
-      value: on
+      description: "Enable or Disable the Inference Services section"
+      default: no
+      value: off
