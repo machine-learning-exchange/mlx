@@ -143,7 +143,7 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
               <Tab 
                 className="comp-tab"
                 value="source" 
-                label="Pipeline YAML"
+                label="Dataset YAML"
               />
               { this.state.selectedGraphNode &&
                 <Tab 

@@ -62,6 +62,12 @@ function SidebarList() {
         />
         {artifacts && 
           <ul className="sidebar-list">
+            <SidebarListItem
+              key={"Home"}
+              name={"Home"}
+              icon={"home"}
+              active={active === 'home'}
+            />
             {artifacts
               .filter(type => type !== "workspace")
               .map(type => 
@@ -98,9 +104,9 @@ function SidebarList() {
               <SecretMenu/>
             </div>
           :
-          <div className="secret-tab" onClick={() => setSecretVisible(true)}>
-            <Icon>more_horiz</Icon>
-          </div>
+            <div className="secret-tab" onClick={() => setSecretVisible(true)}>
+              <Icon>more_horiz</Icon>
+            </div>
         )}
       </div>
     </div>
