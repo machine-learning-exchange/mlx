@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and 
 # limitations under the License. 
 import datetime
+import logging
 
 import six
 import typing
+
+from flask import request
 
 
 def _deserialize(data, klass):
@@ -182,6 +185,10 @@ class ApiError(Exception):
         return self.__str__()
 
 
+# cache results of GET requests, POST/PUT/PATCH/DELETE request will invalidate
+response_cache = dict()
+
+
 def invoke_controller_impl(controller_name=None, parameters=None, method_name=None):
     """
     Invoke the controller implementation of the method called on the parent frame.
@@ -256,7 +263,24 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
 
     if impl_func:
         try:
-            results = impl_func(**parameters)
+            results = None
+            request_cache_key = (controller_name, method_name, str(parameters))
+
+            if request.method == "GET" and method_name != "health_check":
+                results = response_cache.get(request_cache_key)
+
+            if not results:
+                results = impl_func(**parameters)
+
+                if request.method == "GET" and method_name != "health_check":
+                    response_cache[request_cache_key] = results
+
+                if request.method in ("DELETE", "POST", "PATCH", "PUT") and not method_name.startswith("run_"):
+                    # any modifying method clears all cached entries, to avoid loopholes like delete '*',
+                    # upload has no 'id', catalog modifies other asset types (represented by controller class), ...
+                    response_cache.clear()
+                    logging.getLogger("cache").info("Cleared response cache")
+
             return results
 
         except ApiError as e:

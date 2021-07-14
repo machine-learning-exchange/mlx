@@ -25,11 +25,11 @@ from werkzeug.datastructures import FileStorage
 from swagger_server.controllers_impl import download_file_content_from_url
 from swagger_server.controllers_impl import get_yaml_file_content_from_uploadfile
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
-    retrieve_file_content, enable_anonymous_read_access, create_tarfile
+    get_file_content_and_url, enable_anonymous_read_access, create_tarfile, NoSuchKey
 from swagger_server.data_access.mysql_client import store_data, generate_id, \
     load_data, delete_data, num_rows, update_multiple
 from swagger_server.gateways.kubeflow_pipeline_service import generate_model_run_script,\
-    run_model_in_experiment
+    run_model_in_experiment, _host as KFP_HOST
 from swagger_server.models.api_generate_model_code_response import ApiGenerateModelCodeResponse  # noqa: E501
 from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
 from swagger_server.models.api_list_models_response import ApiListModelsResponse  # noqa: E501
@@ -160,9 +160,12 @@ def generate_model_code(id):  # noqa: E501
         source_combinations.extend([("serve", p) for p in api_model.servable_tested_platforms])
 
     for stage, platform in source_combinations:
-        source_code = retrieve_file_content(bucket_name="mlpipeline", prefix=f"models/{id}/",
-                                            file_extensions=[".py"],
-                                            file_name_filter=f"{stage}_{platform}")
+        # TODO: re-enable check for uploaded script, until then save time by not doing Minio lookup
+        # source_code = retrieve_file_content(bucket_name="mlpipeline", prefix=f"models/{id}/",
+        #                                     file_extensions=[".py"],
+        #                                     file_name_filter=f"{stage}_{platform}")
+        source_code = None
+
         if not source_code:
             source_code = generate_model_run_script(api_model, stage, platform)
 
@@ -199,14 +202,22 @@ def get_model_template(id):  # noqa: E501
 
     :rtype: ApiGetTemplateResponse
     """
-    template_yaml = retrieve_file_content(bucket_name="mlpipeline", prefix=f"models/{id}/",
-                                          file_extensions=[".yaml", ".yml"])
-    if template_yaml:
+
+    try:
+        template_yaml, url = get_file_content_and_url(bucket_name="mlpipeline",
+                                                      prefix=f"models/{id}/",
+                                                      file_name="template.yaml")
         template_response = ApiGetTemplateResponse(template=template_yaml)
+
         return template_response, 200
 
-    else:
+    except NoSuchKey:
+
         return f"Model template with id '{id}' does not exist", 404
+
+    except Exception as e:
+
+        return str(e), 500
 
 
 def list_models(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
@@ -266,6 +277,9 @@ def run_model(id, pipeline_stage, execution_platform, run_name=None, parameters:
 
     :rtype: ApiRunCodeResponse
     """
+    if KFP_HOST == "UNAVAILABLE":
+        return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 503
+
     api_model, status_code = get_model(id)
 
     if status_code > 200:
@@ -397,7 +411,8 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
     api_model.id = uuid
 
     store_file(bucket_name="mlpipeline", prefix=f"models/{api_model.id}/",
-               file_name="template.yaml", file_content=yaml_file_content)
+               file_name="template.yaml", file_content=yaml_file_content,
+               content_type="text/yaml")
 
     enable_anonymous_read_access(bucket_name="mlpipeline", prefix="models/*")
 
