@@ -24,9 +24,10 @@ services:
       retries: 3
 
   miniosetup:
-    image: minio/mc
+    image: minio/mc:RELEASE.2021-06-13T17-48-22Z
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     entrypoint: ["/bin/sh","-c"]
     command:
     - |
