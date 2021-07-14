@@ -15,19 +15,17 @@
 import connexion
 import json
 import os
-import tarfile
 import typing
 import yaml
 
 from datetime import datetime
 from collections import Counter
-from os import environ as env
 from typing import AnyStr
 
 from swagger_server.controllers_impl import download_file_content_from_url
 from swagger_server.controllers_impl import get_yaml_file_content_from_uploadfile
 from swagger_server.data_access.minio_client import store_file, delete_object, \
-    delete_objects, retrieve_file_content, retrieve_file_content_and_url, \
+    delete_objects, get_file_content_and_url, NoSuchKey, \
     enable_anonymous_read_access, create_tarfile
 from swagger_server.data_access.mysql_client import store_data, generate_id, load_data, \
     delete_data, num_rows, update_multiple
@@ -37,8 +35,7 @@ from swagger_server.gateways.kubeflow_pipeline_service import upload_pipeline_to
 from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
 from swagger_server.models.api_list_pipelines_response import ApiListPipelinesResponse  # noqa: E501
 from swagger_server.models.api_pipeline import ApiPipeline  # noqa: E501
-from swagger_server.models import ApiPipelineCustomRunPayload, ApiPipelineTask, ApiPipelineDAG
-from swagger_server.models.api_metadata import ApiMetadata
+from swagger_server.models import ApiPipelineCustomRunPayload, ApiPipelineTask  # , ApiPipelineDAG
 from swagger_server.models.api_parameter import ApiParameter
 from swagger_server.models.api_pipeline_extension import ApiPipelineExtension  # noqa: E501
 from swagger_server.models.api_pipeline_extended import ApiPipelineExtended  # noqa: E501
@@ -157,15 +154,19 @@ def get_template(id):  # noqa: E501
 
     :rtype: ApiGetTemplateResponse
     """
-    files_w_url = retrieve_file_content_and_url(bucket_name="mlpipeline", prefix=f"pipelines/{id}",
-                                                file_extensions=[""])
-    if files_w_url:
-        template_yaml, url = files_w_url[0]
+    try:
+        template_yaml, url = get_file_content_and_url(bucket_name="mlpipeline", prefix="pipelines", file_name=id)
         template_response = ApiGetTemplateResponse(template=template_yaml, url=url)
+
         return template_response, 200
 
-    else:
+    except NoSuchKey:
+
         return f"Pipeline template with id '{id}' does not exist", 404
+
+    except Exception as e:
+
+        return str(e), 500
 
 
 def list_pipelines(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
@@ -242,7 +243,7 @@ def run_custom_pipeline(run_custom_pipeline_payload, run_name=None):  # noqa: E5
     assert not missing_run_parameters, f"missing parameters to run pipeline: {missing_run_parameters}"
 
     # make sure we enable anonymous read access to pipeline task components
-    for artifact_type in set([t.artifact_type for t in  pipeline_tasks_by_name.values()]):
+    for artifact_type in set([t.artifact_type for t in pipeline_tasks_by_name.values()]):
         enable_anonymous_read_access(bucket_name="mlpipeline", prefix=f"{artifact_type}s/*")
 
     try:
@@ -269,7 +270,7 @@ def run_pipeline(id, run_name=None, parameters=None):  # noqa: E501
     :rtype: ApiRunCodeResponse
     """
     if KFP_HOST == "UNAVAILABLE":
-        return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 501
+        return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 503
 
     if not parameters and connexion.request.is_json:
         parameter_dict = dict(connexion.request.get_json())  # noqa: E501
@@ -421,7 +422,8 @@ def _store_pipeline(yaml_file_content: AnyStr, name=None, description=None):
     api_pipeline.id = uuid
 
     store_file(bucket_name="mlpipeline", prefix=f"pipelines/",
-               file_name=f"{pipeline_id}", file_content=yaml_file_content)
+               file_name=f"{pipeline_id}", file_content=yaml_file_content,
+               content_type="text/yaml")
 
     enable_anonymous_read_access(bucket_name="mlpipeline", prefix="pipelines/*")
 

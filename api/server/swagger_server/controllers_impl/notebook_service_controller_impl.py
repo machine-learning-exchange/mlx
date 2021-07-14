@@ -28,12 +28,12 @@ from werkzeug.datastructures import FileStorage
 from swagger_server.controllers_impl import download_file_content_from_url, \
     get_yaml_file_content_from_uploadfile, validate_parameters
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
-    retrieve_file_content, retrieve_file_content_and_url, enable_anonymous_read_access, \
-    create_tarfile, store_file, get_object_url
+    get_file_content_and_url, enable_anonymous_read_access, NoSuchKey, \
+    create_tarfile, get_object_url
 from swagger_server.data_access.mysql_client import store_data, generate_id, \
     load_data, delete_data, num_rows, update_multiple
 from swagger_server.gateways.kubeflow_pipeline_service import generate_notebook_run_script,\
-    run_notebook_in_experiment
+    run_notebook_in_experiment, _host as KFP_HOST
 from swagger_server.models.api_generate_code_response import ApiGenerateCodeResponse  # noqa: E501
 from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
 from swagger_server.models.api_list_notebooks_response import ApiListNotebooksResponse  # noqa: E501
@@ -153,9 +153,10 @@ def generate_notebook_code(id):  # noqa: E501
 
     api_notebook = api_notebooks[0]
 
-    source_code = retrieve_file_content(bucket_name="mlpipeline",
-                                        prefix=f"notebooks/{id}/",
-                                        file_extensions=[".py"])
+    # TODO: re-enable check for uploaded script, until then save time by not doing Minio lookup
+    # source_code = retrieve_file_content(bucket_name="mlpipeline", prefix=f"notebooks/{id}/",
+    #                                     file_extensions=[".py"])
+    source_code = None
 
     if not source_code:
         source_code = generate_notebook_run_script(api_notebook)
@@ -168,7 +169,7 @@ def generate_notebook_code(id):  # noqa: E501
         return f"Could not generate source code for notebook {id}", 500
 
 
-def get_notebook(id):  # noqa: E501
+def get_notebook(id):
     """get_notebook
 
     :param id: 
@@ -192,15 +193,20 @@ def get_notebook_template(id):  # noqa: E501
 
     :rtype: ApiGetTemplateResponse
     """
-    files_w_url = retrieve_file_content_and_url(bucket_name="mlpipeline", prefix=f"notebooks/{id}/",
-                                                file_extensions=[".yaml", ".yml"])
-    if files_w_url:
-        template_yaml, url = files_w_url[0]
+    try:
+        template_yaml, url = get_file_content_and_url(bucket_name="mlpipeline", prefix=f"notebooks/{id}/",
+                                                      file_name="template.yaml")
         template_response = ApiGetTemplateResponse(template=template_yaml, url=url)
+
         return template_response, 200
 
-    else:
+    except NoSuchKey:
+
         return f"Notebook template with id '{id}' does not exist", 404
+
+    except Exception as e:
+
+        return str(e), 500
 
 
 def list_notebooks(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
@@ -253,6 +259,9 @@ def run_notebook(id, run_name=None, parameters: dict = None):  # noqa: E501
 
     :rtype: ApiRunCodeResponse
     """
+    if KFP_HOST == "UNAVAILABLE":
+        return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 503
+
     if not parameters and connexion.request.is_json:
         parameter_dict = dict(connexion.request.get_json())  # noqa: E501
     else:
@@ -417,7 +426,8 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
     api_notebook.id = uuid
 
     store_file(bucket_name="mlpipeline", prefix=f"notebooks/{notebook_id}/",
-               file_name="template.yaml", file_content=yaml_file_content)
+               file_name="template.yaml", file_content=yaml_file_content,
+               content_type="text/yaml")
 
     s3_url = store_file(bucket_name="mlpipeline",
                         prefix=f"notebooks/{notebook_id}/",

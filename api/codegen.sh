@@ -69,11 +69,19 @@ grep "invoke_controller_impl" "${UTIL_FILE}" -q || cat <<'EOF' >> "${UTIL_FILE}"
 class ApiError(Exception):
 
     def __init__(self, message, http_status_code=500):
-
         self.message = message
         self.http_status_code = http_status_code
-
         super(ApiError, self).__init__(message)
+
+    def __str__(self):
+        return f"{self.message} ({self.http_status_code})"
+
+    def __repr__(self):
+        return self.__str__()
+
+
+# cache results of GET requests, POST/PUT/PATCH/DELETE request will invalidate
+response_cache = dict()
 
 
 def invoke_controller_impl(controller_name=None, parameters=None, method_name=None):
@@ -150,12 +158,39 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
 
     if impl_func:
         try:
-            results = impl_func(**parameters)
+            results = None
+            request_cache_key = (controller_name, method_name, str(parameters))
+
+            if request.method == "GET" and method_name != "health_check":
+                results = response_cache.get(request_cache_key)
+
+            if not results:
+                results = impl_func(**parameters)
+
+                if request.method == "GET" and method_name != "health_check":
+                    response_cache[request_cache_key] = results
+
+                if request.method in ("DELETE", "POST", "PATCH", "PUT") and not method_name.startswith("run_"):
+                    # any modifying method clears all cached entries, to avoid loopholes like delete '*',
+                    # upload has no 'id', catalog modifies other asset types (represented by controller class), ...
+                    response_cache.clear()
+                    logging.getLogger("cache").info("Cleared response cache")
+
             return results
 
         except ApiError as e:
             print(traceback.format_exc())
             return e.message, e.http_status_code
+
+        except AssertionError as e:
+            print(traceback.format_exc())
+            return str(e), 422
+
+        # TODO: this is for debugging during development, but we may not want to return details
+        #  on just any error in production, revise this!
+        except Exception as e:
+            print(traceback.format_exc())
+            return f"{e.__class__.__name__}: {str(e)}", 500
 
     else:
         return f'Method not found: {module_name}.{method_name}()', 501

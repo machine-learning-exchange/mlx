@@ -25,11 +25,11 @@ from werkzeug.datastructures import FileStorage
 from swagger_server.controllers_impl import download_file_content_from_url, \
     get_yaml_file_content_from_uploadfile, validate_parameters
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
-    retrieve_file_content, retrieve_file_content_and_url, enable_anonymous_read_access, \
-    create_tarfile
+    get_file_content_and_url, NoSuchKey, enable_anonymous_read_access, create_tarfile
 from swagger_server.data_access.mysql_client import store_data, generate_id, load_data, \
     delete_data, num_rows, update_multiple
-from swagger_server.gateways.kubeflow_pipeline_service import generate_component_run_script, run_component_in_experiment
+from swagger_server.gateways.kubeflow_pipeline_service import generate_component_run_script, \
+    run_component_in_experiment, _host as KFP_HOST
 from swagger_server.models.api_component import ApiComponent  # noqa: E501
 from swagger_server.models.api_generate_code_response import ApiGenerateCodeResponse  # noqa: E501
 from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
@@ -146,7 +146,10 @@ def generate_component_code(id):  # noqa: E501
 
     api_component = api_components[0]
 
-    source_code = retrieve_file_content(bucket_name="mlpipeline", prefix=f"components/{id}/", file_extensions=[".py"])
+    # TODO: re-enable check for uploaded script, until then save time by not doing Minio lookup
+    # source_code = retrieve_file_content(bucket_name="mlpipeline", prefix=f"components/{id}/",
+    #                                     file_extensions=[".py"])
+    source_code = None
 
     if not source_code:
         api_template, _ = get_component_template(id)
@@ -186,15 +189,21 @@ def get_component_template(id):  # noqa: E501
 
     :rtype: ApiGetTemplateResponse
     """
-    files_w_url = retrieve_file_content_and_url(bucket_name="mlpipeline", prefix=f"components/{id}/",
-                                                file_extensions=[".yaml", ".yml"])
-    if files_w_url:
-        template_yaml, url = files_w_url[0]
+    try:
+        template_yaml, url = get_file_content_and_url(bucket_name="mlpipeline",
+                                                      prefix=f"components/{id}/",
+                                                      file_name="template.yaml")
         template_response = ApiGetTemplateResponse(template=template_yaml, url=url)
+
         return template_response, 200
 
-    else:
+    except NoSuchKey:
+
         return f"Component template with id '{id}' does not exist", 404
+
+    except Exception as e:
+
+        return str(e), 500
 
 
 def list_components(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
@@ -247,6 +256,9 @@ def run_component(id, parameters, run_name=None):  # noqa: E501
 
     :rtype: ApiRunCodeResponse
     """
+    if KFP_HOST == "UNAVAILABLE":
+        return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 503
+
     if connexion.request.is_json:
         parameters = [ApiParameter.from_dict(d) for d in connexion.request.get_json()]  # noqa: E501
 
@@ -386,7 +398,8 @@ def _upload_component_yaml(yaml_file_content: AnyStr, name=None, existing_id=Non
     api_component.id = uuid
 
     store_file(bucket_name="mlpipeline", prefix=f"components/{component_id}/",
-               file_name="template.yaml", file_content=yaml_file_content)
+               file_name="template.yaml", file_content=yaml_file_content,
+               content_type="text/yaml")
 
     enable_anonymous_read_access(bucket_name="mlpipeline", prefix="components/*")
 

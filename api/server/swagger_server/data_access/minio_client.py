@@ -62,14 +62,14 @@ def health_check():
     return True
 
 
-def store_file(bucket_name, prefix, file_name, file_content) -> str:
+def store_file(bucket_name, prefix, file_name, file_content, content_type="application/octet-stream") -> str:
     client = _get_minio_client()
     f = tempfile.TemporaryFile()
     f.write(file_content)
     size = f.tell()
     f.seek(0)  # return to beginning of file
     object_name = f"{prefix.rstrip('/')}/{file_name}"
-    client.put_object(bucket_name, object_name, f, size)  # f.read()
+    client.put_object(bucket_name, object_name, f, size, content_type)  # f.read()
     f.close()  # close and delete temporary file
     object_url = f"http://{_host}:{_port}/{bucket_name}/{object_name}"
     return object_url
@@ -85,7 +85,7 @@ def store_tgz(bucket_name, prefix, tgz_file: FileStorage):
         if file_ext in [".yaml", ".yml", ".md", ".py"]:
             object_name = f"{prefix.rstrip('/')}/{member.name}"
             f = tar.extractfile(member)
-            client.put_object(bucket_name, object_name, f, f.raw.size)  # f.read()
+            client.put_object(bucket_name, object_name, f, f.raw.size, "text/plain")  # f.read()
             f.close()
 
     tar.close()
@@ -150,6 +150,14 @@ def create_tarfile(bucket_name: str, prefix: str, file_extensions: [str], keep_o
         tar.close()
 
     return tar, tar_file
+
+
+def get_file_content_and_url(bucket_name, prefix, file_name) -> (str, str):
+    client = _get_minio_client()
+    object_name = f"{prefix.rstrip('/')}/{file_name}"
+    file_content = client.get_object(bucket_name, object_name)
+    object_url = f"http://{_host}:{_port}/{bucket_name}/{object_name}"
+    return file_content.data.decode('utf-8'), object_url
 
 
 def retrieve_file_content_and_url(bucket_name, prefix, file_extensions: [str], file_name_filter="") -> [(str, str)]:
