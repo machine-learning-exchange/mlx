@@ -2,14 +2,14 @@
 
 To deploy the MLX single user mode on an existing Kubernetes Cluster, we can clone the MLX manifests and deploy it with Kustomize. This MLX deployment doesn't include model serving with KFServing. To experience the other MLX features such as KFServing, multi-user, and Istio mutual TLS, please install the extra plugins by follow one of the instructions on the [main README](/README.md/#2-deployment).
 
-This MLX contains:
+This MLX deployment includes:
 - Istio
 - Kubeflow Pipeline single user
 - Tekton Pipeline
 - Datashim
 - MLX
 
-We will be using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) to align with Kubeflow's requirements because we will be also install kubeflow components as part of this MLX deployment.
+We are using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) to align with Kubeflow's requirements because we will install kubeflow components as part of this MLX deployment.
 
 ```shell
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user

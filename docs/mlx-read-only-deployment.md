@@ -1,9 +1,7 @@
 
-## Deploy the MLX ReadOnly mode on an Existing Kubernetes Cluster
+## Deploy the MLX Read-Only mode on an Existing Kubernetes Cluster
 
-To deploy the minimum MLX on an existing Kubernetes Cluster, we can clone the MLX manifests and deploy it with Kustomize. The minimum MLX is only for Read only. To deploy the MLX ReadOnly mode on an existing Kubernetes Cluster, run the following commands
-
-This MLX ReadOnly mode only contains MLX ReadOnly deployment.
+To deploy MLX in read-only mode on an existing Kubernetes cluster without Kubeflow, clone the MLX repo and apply the manifest using Kustomize:
 
 ```shell
 git clone https://github.com/machine-learning-exchange/mlx
