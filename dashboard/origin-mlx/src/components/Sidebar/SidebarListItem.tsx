@@ -20,33 +20,81 @@ import Icon from '@material-ui/core/Icon';
 interface SidebarListItemProps {
   name: string;
   icon: string;
-  active: boolean;
+  active: string;
+}
+
+interface ExpandableItemProps {
+  title: string;
+  link: string;
+  icon: string;
+  active: string;
+  expandableItems: ExpandableItem[]
+}
+
+interface ExpandableItem {
+  name: string;
+  link: string;
+  icon: string;
 }
 
 const SidebarListItem: React.FunctionComponent<SidebarListItemProps> = (props) => {
-  const { active: isActive } = props
   var link = props.name.toLocaleLowerCase();
+
+  const pipelinesExpandable: ExpandableItemProps = {
+    title: "Pipelines",
+    link: "pipelines",
+    icon:"device_hub", 
+    active: props.active,
+    expandableItems: [
+      {name: "Pipelines", link:"pipelines", icon:"device_hub"},
+      {name: "Components", link:"components", icon:"developer_boards"}
+    ]
+  };
+
+  const modelsExpandable: ExpandableItemProps = {
+    title: "Models",
+    link: "models",
+    icon:"layers", 
+    active: props.active,
+    expandableItems: [
+      {name: "Registered Models", link:"models", icon:"layers"},
+      {name: "Deployed Models", link:"inferenceservices", icon:"layers"}
+    ]
+  };
 
   if (props.name === 'Pipelines') {
     link = 'pipelines'
-  }
-  else if (props.name === "Datasets") {
-    link = 'datasets'
+    return (
+      ExpandableItem(pipelinesExpandable)
+    )
+
   }
   else if (props.name === 'Components') {
     link = 'components'
+    return (
+      <></>
+    );
   }
   else if (props.name === 'Models') {
     link = 'models'
+    return (
+      ExpandableItem(modelsExpandable)
+    )
+  }
+  else if (props.name === 'KFServices') {
+    link = 'inferenceservices'
+    return (
+      <></>
+    );
+  }
+  else if (props.name === "Datasets") {
+    link = 'datasets'
   }
   else if (props.name === 'Notebooks') {
     link = 'notebooks'
   }
   else if (props.name === 'Operators') {
     link = 'operators'
-  }
-  else if (props.name === 'KFServices') {
-    link = 'inferenceservices'
   }
   else if (props.name === 'Workspace') {
     link = 'workspace'
@@ -58,7 +106,7 @@ const SidebarListItem: React.FunctionComponent<SidebarListItemProps> = (props) =
   return (
     <li className="sidebar-list-wrap">
       <Link to={`/${link}`}>
-        <h3 className={`sidebar-list-item ${isActive ? 'active' : 'not-active'}`}>
+        <h3 className={`sidebar-list-item ${props.active === link ? 'active' : 'not-active'}`}>
           <Icon className="sidebar-icon">{props.icon}</Icon>
           {props.name}
         </h3>
@@ -66,5 +114,37 @@ const SidebarListItem: React.FunctionComponent<SidebarListItemProps> = (props) =
     </li>
   );
 };
+
+function ExpandableItem(props: ExpandableItemProps) {
+  const [isClicked, setIsClicked] = React.useState(false);
+
+  const handleExpandClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault()
+    setIsClicked(!isClicked)
+  };
+
+  return (
+    <li className="sidebar-list-wrap">
+      <Link key={`expandable-${props.title}`} to={""} onClick={handleExpandClick}>
+        <h3 className={`sidebar-list-item ${isClicked ? 'active' : 'not-active'}`}>
+          <Icon className="sidebar-icon">{props.icon}</Icon>
+          {props.title}
+        </h3>
+      </Link>
+      { isClicked &&
+        props.expandableItems.map((expandableItem: ExpandableItem) => {
+          return (
+            <Link key={expandableItem.link} to={`/${expandableItem.link}`} className="sidebar-sublist-item">
+              <h3 className={`sidebar-list-item ${props.active === expandableItem.link ? 'active' : 'not-active'}`}>
+                <Icon className="sidebar-icon">{expandableItem.icon}</Icon>
+                {expandableItem.name}
+              </h3>
+            </Link>
+          )
+        })
+      }
+    </li>
+  )
+}
 
 export default SidebarListItem;

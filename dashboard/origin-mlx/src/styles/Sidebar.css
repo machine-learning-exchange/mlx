@@ -70,6 +70,10 @@ ul {
   display: inline-block;
 }
 
+.sidebar-sublist-item {
+  margin-left: 20px;
+}
+
 .sidebar-list-item.active,
 .sidebar-list-item:active,
 .sidebar-list-item.active,
