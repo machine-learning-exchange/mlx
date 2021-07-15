@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlx-api
+  namespace: kubeflow
+spec:
+  template:
+    spec:
+      containers:
+      - name: mlx-api-server
+        volumeMounts:
+        - name: context
+          mountPath: "/root/.config/kfp"
+          readOnly: true
+      volumes:
+      - name: context
+        configMap:
+          name: mlx-api-configmap
+          items:
+          - key: kfp-context
+            path: context.json
