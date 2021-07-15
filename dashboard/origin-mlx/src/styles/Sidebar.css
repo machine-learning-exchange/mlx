@@ -160,7 +160,11 @@ body>* {
   width: 96%;
   margin-left: 4%;
   margin-top: 2%;
-  margin-bottom: 100px;
+  margin-bottom: 2%;
+}
+
+.conversation-margin {
+  margin-bottom: 40%;
 }
 
 .footer-list-item {

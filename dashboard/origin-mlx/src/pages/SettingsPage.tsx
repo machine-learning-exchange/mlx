@@ -1,18 +1,18 @@
-/* 
+/*
 *  Copyright 2021 IBM Corporation
-* 
-*  Licensed under the Apache License, Version 2.0 (the "License"); 
-*  you may not use this file except in compliance with the License. 
-*  You may obtain a copy of the License at 
-* 
-*      http://www.apache.org/licenses/LICENSE-2.0 
-* 
-*  Unless required by applicable law or agreed to in writing, software 
-*  distributed under the License is distributed on an "AS IS" BASIS, 
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-*  See the License for the specific language governing permissions and 
-*  limitations under the License. 
-*/ 
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*/
 import * as React from 'react';
 import StoreContext from '../lib/stores/context'
 import { updateSettings, resetSettings } from '../lib/api/settings';
@@ -59,7 +59,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
     super(props)
 
     this.state = {
-      textField: { 
+      textField: {
         API: '',
         KFP: '',
         namespace: ''
@@ -101,7 +101,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
   //     execution: newSettings.sections[1].settings[1],
   //     numFeatured: newSettings.sections[2].settings[0],
   //     savedSettings: newSettings,
-  //     textField: { 
+  //     textField: {
   //       API: newSettings.sections[0].settings[0].value || process.env.REACT_APP_API,
   //       KFP: newSettings.sections[0].settings[1].value || process.env.REACT_APP_KFP
   //     },
@@ -124,7 +124,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
   //   }
   //   return settings;
   // }
-  
+
   handleToggle = (name: string) => async (event: any) =>
     this.apply(name, event.currentTarget.checked)
 
@@ -189,7 +189,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
     }
     fileReader.readAsText(e.currentTarget.files[0])
   }
-    
+
   saveText = (name:string) => async (event:any) => {
     let value = ''
     if (name === 'API Endpoint') {
@@ -227,11 +227,11 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
 
   // getArtifactList = () => {
   //   let maxIndex = this.state.execution.value === true ? 6 : 5;
-    
+
   //   const aList = this.state.savedSettings.sections[3].settings
   //     .slice(0, maxIndex)
   //     .map((aType:any, i:number) => {
-  //       return ({ 
+  //       return ({
   //         itemClass: "toggle-switch",
   //         name: aType.name,
   //         data: aType.value,
@@ -286,7 +286,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
               <DataList
                 title="Bulk Imports:"
                 items={[
-                  { 
+                  {
                     itemClass: "file-button",
                     name: "Catalog Import",
                     data: this.state.textField.API,
@@ -296,11 +296,11 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
                     progress: this.state.progress
                   },
                 ]}
-              /> 
+              />
               <DataList
                 title="KFServing Settings:"
                 items={[
-                  { 
+                  {
                     itemClass: "text-input",
                     name: kfserving.namespace.name,
                     data: this.state.textField.namespace,
@@ -310,41 +310,18 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
                     saveValue: this.saveText
                   },
                 ]}
-              /> 
-              <DataList
-                title="Connections:"
-                items={[
-                  { 
-                    itemClass: "text-input",
-                    name: endpoints.api.name,
-                    data: this.state.textField.API,
-                    savedValue: endpoints.api.value,
-                    thirdColData: endpoints.api.description,
-                    handleType: this.handleText,
-                    saveValue: this.saveText
-                  },
-                  { 
-                    itemClass: "text-input",
-                    name: endpoints.kfp.name,
-                    data: this.state.textField.KFP,
-                    savedValue: endpoints.kfp.value,
-                    thirdColData: endpoints.kfp.description,
-                    handleType: this.handleText,
-                    saveValue: this.saveText
-                  },
-                ]}
-              /> 
+              />
               <DataList
                 title="Capabilities:"
                 items={[
-                  { 
+                  {
                     itemClass: "toggle-switch",
                     name: capabilities.upload.name,
                     data: capabilities.upload.value,
                     thirdColData: capabilities.upload.description,
                     handleClick: this.handleToggle
                   },
-                  { 
+                  {
                     itemClass: "toggle-switch",
                     name: capabilities.execute.name,
                     data: capabilities.execute.value,
@@ -352,11 +329,11 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
                     handleClick: this.handleToggle
                   }
                 ]}
-              /> 
+              />
               {/* <DataList
                 title="Appearance:"
                 items={[
-                  { 
+                  {
                     itemClass: "drop-down",
                     name: this.state.numFeatured.name,
                     data: this.state.numFeatured.value,
@@ -369,7 +346,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
               <DataList
                 title="Cache Settings:"
                 items={[
-                  { 
+                  {
                     itemClass: "button",
                     name: "Reset Cache",
                     thirdColData: "Invalidate all cache entries",
@@ -379,7 +356,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
               />
               <DataList
                 title="Artifact Types:"
-                items={Object.values(artifacts).map((setting: any) => ({ 
+                items={Object.values(artifacts).map((setting: any) => ({
                   itemClass: "toggle-switch",
                   name: setting.name,
                   data: setting.value,
@@ -387,16 +364,16 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
                   handleClick: this.handleToggle
                 }))}
               />
-              
+
               <div className="default-btn-wrapper">
                 <Button
-                  className="hero-buttons" 
+                  className="hero-buttons"
                   variant="contained"
                   onClick={this.reset}>
                     Reset Defaults
                 </Button>
               </div>
-            </div>  
+            </div>
           :
             <div className="loading-wrapper">
               <Typography variant="subtitle1">
@@ -422,9 +399,9 @@ export class SettingsPage extends React.Component<ISettingsPageProps, any> {
                   )
                 }}
               />
-              <Button 
-                className="hero-buttons password-button" 
-                variant="contained" 
+              <Button
+                className="hero-buttons password-button"
+                variant="contained"
                 color="primary"
                 onClick={ this.passwordCheck }>
                 <Icon>build</Icon>

@@ -515,6 +515,23 @@ td>span.checked {
   margin-bottom: 10px;
 }
 
+.file-button-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width:100%;
+  margin-bottom: 10px;
+}
+
+.file-button-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
 .upload-button-wrapper {
   display: flex;
   margin-bottom: 10px;
