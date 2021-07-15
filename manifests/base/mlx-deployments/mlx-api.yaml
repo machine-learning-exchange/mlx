@@ -27,24 +27,6 @@ spec:
   selector:
     service: mlx-api
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mlx-api-configmap
-  namespace: kubeflow
-data:
-  # for kfp context.json
-  # Note: currently these is only one user profile and mlx namespace.
-  #       use the context which using 'mlx' namespace, to create kfp.KfpClient
-  #       and send proper user headers to ml-pipeline api
-  #       need to find a way to support multi user profile in the future
-  kfp-context: |
-    {
-      "namespace": "mlx",
-      "client_authentication_header_name": "kubeflow-userid",
-      "client_authentication_header_value": "mlx@ibm.com"
-    }
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -78,10 +60,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        volumeMounts:
-        - name: context
-          mountPath: "/root/.config/kfp"
-          readOnly: true
         livenessProbe:
           httpGet:
             path: /apis/v1alpha1/health_check?check_database=true&check_object_store=true
@@ -90,13 +68,6 @@ spec:
           timeoutSeconds: 10
           periodSeconds: 60
           failureThreshold: 3
-      volumes:
-      - name: context
-        configMap:
-          name: mlx-api-configmap
-          items:
-          - key: kfp-context
-            path: context.json
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding

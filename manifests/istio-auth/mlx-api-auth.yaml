@@ -41,3 +41,21 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mlx-api-configmap
+  namespace: kubeflow
+data:
+  # for kfp context.json
+  # Note: currently these is only one user profile and mlx namespace.
+  #       use the context which using 'mlx' namespace, to create kfp.KfpClient
+  #       and send proper user headers to ml-pipeline api
+  #       need to find a way to support multi user profile in the future
+  kfp-context: |
+    {
+      "namespace": "mlx",
+      "client_authentication_header_name": "kubeflow-userid",
+      "client_authentication_header_value": "mlx@ibm.com"
+    }
