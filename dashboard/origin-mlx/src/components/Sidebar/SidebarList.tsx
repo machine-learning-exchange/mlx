@@ -91,7 +91,7 @@ function SidebarList() {
         }
       </div>
       <div className="bottom-sidebar">
-        <div className="sidebar-list-wrap footer-list-wrap">
+        <div className={"sidebar-list-wrap footer-list-wrap" + (!secretVisible ? " conversation-margin" : "")}>
           <Link to="/external-links">
             <h3 className={`sidebar-list-item footer-list-item ${false ? 'active' : 'not-active'}`}>
               <Icon className="sidebar-icon">chat</Icon>
@@ -99,6 +99,9 @@ function SidebarList() {
             </h3>
           </Link>
         </div>
+        { !secretVisible &&
+          <div className="secret-divider"></div>
+        }
         { isAdmin && (secretVisible ?
             <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
               <SecretMenu/>

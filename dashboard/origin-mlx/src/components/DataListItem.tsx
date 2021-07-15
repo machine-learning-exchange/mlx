@@ -166,7 +166,7 @@ const buildItem = (props:any) => {
   } else if (itemClass === 'file-button') {
     if (!progress && progress !== 0) {
       return (
-        <div className="filePicker-wrapper">
+        <div className="file-button-wrapper">
           <Button 
             className="hero-buttons upload-button" 
             variant="contained" 
