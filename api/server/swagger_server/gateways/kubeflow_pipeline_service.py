@@ -481,10 +481,16 @@ def generate_notebook_run_script(api_notebook: ApiNotebook,
     # output_file_path = f"{output_folder}/{output_file_name}"
     # output_file_url = f"http://{minio_host}:{minio_port}/mlpipeline/{output_file_path}"
 
+    # TODO: do we really need this url:
+    #   client = TektonClient(${pipeline_server})
+    # vs:
+    #   client = TektonClient()
+    # ... kfp.Client can figure out the in-cluster IP and port automatically
     kfp_url = f"'{_pipeline_service_url}'" if "POD_NAMESPACE" not in os.environ else ""
 
     substitutions = {
         "name": api_notebook.name,
+        "description": api_notebook.description,
         "notebook": notebook_file,
         "cos_bucket": "mlpipeline",
         "cos_directory": f"notebooks/{api_notebook.id}/",
