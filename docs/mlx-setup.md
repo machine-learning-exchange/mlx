@@ -16,7 +16,7 @@ This MLX deployment includes:
 - Datashim
 - MLX
 
-We are using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) to align with Kubeflow's requirements because we will install kubeflow components as part of this MLX deployment.
+This MLX deployment doesn't include model serving with KFServing. To experience the other MLX features such as KFServing, multi-user mode, and Istio mutual TLS, please install the extra plugins by following the instructions on [deploying it on an existing Kubeflow](/docs/install-mlx-on-kubeflow.md#deploy-mlx-on-an-existing-kubeflow-cluster).
 
 ```shell
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user
