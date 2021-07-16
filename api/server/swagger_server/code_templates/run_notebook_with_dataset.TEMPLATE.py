@@ -24,8 +24,8 @@ from tempfile import gettempdir
 ############################################################
 
 @dsl.pipeline(
-    name='Run Jupyter Notebook ${name}',
-    description='A pipeline to run a Jupyter notebook using the elyra-ai/kfp-notebook library.'
+    name='${name}',
+    description='${description}'
 )
 def notebook_pipeline():
     """A pipeline to run a Jupyter notebook with elyra-ai/kfp-notebook and Papermill."""
@@ -33,7 +33,7 @@ def notebook_pipeline():
     from kfp_notebook.pipeline import NotebookOp
 
     notebook_op = NotebookOp(name="${name}",
-                             pipeline_name="run-jupyter-notebook-${name}",
+                             pipeline_name="${name}",
                              experiment_name="NOTEBOOK_RUNS",
                              notebook="${notebook}",
                              cos_endpoint="${cos_endpoint}",

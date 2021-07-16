@@ -20,7 +20,6 @@ import yaml
 from datetime import datetime
 
 from kfp import Client as KfpClient
-from kfp.compiler.compiler import sanitize_k8s_name
 
 from kfp_server_api import ApiRun
 from kfp_server_api import ApiPipeline as KfpPipeline
@@ -490,7 +489,8 @@ def generate_notebook_run_script(api_notebook: ApiNotebook,
     kfp_url = f"'{_pipeline_service_url}'" if "POD_NAMESPACE" not in os.environ else ""
 
     substitutions = {
-        "name": sanitize_k8s_name(api_notebook.name),
+        "name": api_notebook.name,
+        "description": api_notebook.description,
         "notebook": notebook_file,
         "cos_bucket": "mlpipeline",
         "cos_directory": f"notebooks/{api_notebook.id}/",
