@@ -1,14 +1,22 @@
-## Deploy the Minimum MLX Stack on an Existing Kubernetes Cluster
+# Deploy MLX on an existing Kubernetes cluster
 
-To deploy the minimum MLX on an existing Kubernetes Cluster, we can clone the MLX manifests and deploy it with Kustomize. The minimum MLX is only for running basic pipelines on MLX which doesn't support dataset deployment and model serving with KFServing. To experience the other MLX features, please follow one of the instructions on the [main README](/README.md/#2-deployment).
+## Prerequisites
+* An existing Kubernetes cluster. Version 1.17+
+* The minimum recommended capacity requirement for MLX is 8 vCPUs and 16GB RAM
+* If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using [IBM Cloud Public](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
+* If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-openshift_tutorial)
+* [`kustomize v3.0+`](https://kubernetes-sigs.github.io/kustomize/installation/) is installed
 
-This minimum MLX contains:
+To deploy the MLX single user mode on an existing Kubernetes Cluster, clone the MLX manifests and deploy it with Kustomize. 
+
+This MLX deployment includes:
 - Istio
 - Kubeflow Pipeline single user
 - Tekton Pipeline
+- Datashim
 - MLX
 
-We will be using [kustomize 3.2.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) to align with Kubeflow's requirements because we will be using kubeflow pipelines as the MLX pipeline engine.
+This MLX deployment doesn't include model serving with KFServing. To experience the other MLX features such as KFServing, multi-user mode, and Istio mutual TLS, please install the extra plugins by following the instructions on [deploying it on an existing Kubeflow](/docs/install-mlx-on-kubeflow.md#deploy-mlx-on-an-existing-kubeflow-cluster).
 
 ```shell
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user
@@ -19,14 +27,10 @@ while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply
 Then access the MLX page using http://<cluster_node_ip>:30380/mlx/
 
 
-## Deploy the MLX ReadOnly mode on an Existing Kubernetes Cluster
+## Delete the MLX deployment
 
-To deploy the MLX ReadOnly mode on an existing Kubernetes Cluster, run the following commands
+To delete the above MLX deployment, simply run the following commands in the same repo.
 
-This MLX ReadOnly mode only contains MLX ReadOnly deployment.
-
-```shell
-git clone https://github.com/machine-learning-exchange/mlx
-cd mlx
-kubectl apply -k manifests/read-only-k8s
+```
+kustomize build example | kubectl delete -f -
 ```
