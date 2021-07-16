@@ -91,6 +91,15 @@ function UploadPage() {
             Featured
           </Button>
         </Link>
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
+          </Button>
+        </Link>
       </Hero>
       <div className="upload-wrapper">
         <Paper style={{height: '30%'}} className="upload-form-wrapper">

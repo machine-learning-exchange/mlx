@@ -124,7 +124,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
     const grafana = `http${process.env.HTTPS ? 's' : ""}://${process.env.REACT_APP_GRAFANA}`
     const kialiLink = `${kiali}/kiali/console/services?duration=60&namespaces=${namespace}&servicename=` + service.metadata.name + "&kiosk=true"
     const graphLink = `${kiali}/kiali/console/graph/namespaces/?edges=requestsPercentage&graphType=service&namespaces=${namespace}&unusedNodes=false&injectServiceNodes=true&duration=21600&refresh=10000&layout=dagre&kiosk=true`
-    const grafanaLink = `${grafana}/d/UbsSZTDik/istio-workload-dashboard?orgId=1&var-namespace=${namespace}&var-workload=` + service.status.default.predictor.name + `-deployment&var-srcns=All&var-srcwl=All&var-dstsvc=All`
+    const grafanaLink = `${grafana}/d/UbsSZTDik/istio-workload-dashboard?orgId=1&var-namespace=${namespace}&var-workload=` + service.metadata.name + `-deployment&var-srcns=All&var-srcwl=All&var-dstsvc=All`
 
     /////////////PREDICTOR/////////////
     let predictorStatusIcon = <ErrorIcon className="error-icon"/>
@@ -251,7 +251,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
                 </Tabs>
               </div>
               {this.state.leftTab === 'detail' &&
-                <div style={{overflow: "auto"}}>
+                <div>
                   <MetadataView content={{
                       Overview: [
                         { name: "Service Name", data: capitalize(service.metadata.name)},
@@ -261,7 +261,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
                       ]
                     }}
                   />
-                  <div style={{ overflow: 'none', height: 'auto', padding: '0.5rem' }}>
+                  <div style={{ overflow: 'none', height: 'auto' }}>
                     <Typography 
                       variant="h5" 
                       className="inputs-label">

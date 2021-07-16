@@ -42,7 +42,6 @@ const styles = {
 function MetaFeatured(props: MetaFeaturedProps) {
   const { assets, classes } = props
 
-  // console.log(assets)
   return (
     <div className={classes.wrapper}>
       <Grid container
@@ -70,11 +69,10 @@ function MetaFeatured(props: MetaFeaturedProps) {
               }
             }
           }
-          
           const description = asset.kind;
-          const tag = Object.keys(asset.spec.default)[0] + ',' + Object.keys(asset.spec.default)[1]
+          const tag = Object.keys(asset.spec).join(",")
           const link = "inferenceservices"
-          const predictor = asset.spec.default.predictor
+          const predictor = asset.spec.predictor
           const framework = predictor.tensorflow ? "tensorflow" 
                             : predictor.keras ? "keras"
                             : predictor.sklearn ? "sklearn"

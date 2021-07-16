@@ -42,7 +42,7 @@ export async function upload(
   data.append('uploadfile', file)
   data.append('enterprise_github_token', token)
 
-  const endpoint = `/${type}/upload?` + (name && `name=${name}`) + (url && `&url=${url}`)
+  const endpoint = `/${type}/upload?` + (name ? `name=${name}` : ``) + (url ? `&url=${url}` : ``)
   return await fetch(`${API}/apis/v1alpha1${endpoint}`, {
     method: 'POST',
     body: data

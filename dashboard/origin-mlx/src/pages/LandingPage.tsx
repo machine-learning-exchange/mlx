@@ -38,15 +38,15 @@ export default function LandingPage() {
         title={name} 
         subtitle=" "
       >
-      <Link to="https://github.com/machine-learning-exchange/mlx">
-        <Button
-          className="hero-buttons-outline"
-          variant="outlined"
-          color="primary"
-        >
-          Github
-        </Button>
-      </Link>
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
+          </Button>
+        </Link>
       </Hero>
       <div className="landing-page-wrapper">
         <h4 className="landing-page-text">
