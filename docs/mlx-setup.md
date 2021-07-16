@@ -7,6 +7,8 @@
 * If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-openshift_tutorial)
 * [`kustomize v3.0+`](https://kubernetes-sigs.github.io/kustomize/installation/) is installed
 
+## Deploy
+
 To deploy the MLX single user mode on an existing Kubernetes Cluster, clone the MLX manifests and deploy it with Kustomize. 
 
 This MLX deployment includes:
@@ -16,8 +18,6 @@ This MLX deployment includes:
 - Datashim
 - MLX
 
-This MLX deployment doesn't include model serving with KFServing. To experience the other MLX features such as KFServing, multi-user mode, and Istio mutual TLS, please install the extra plugins by following the instructions on [deploying it on an existing Kubeflow](/docs/install-mlx-on-kubeflow.md#deploy-mlx-on-an-existing-kubeflow-cluster).
-
 ```shell
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user
 cd manifests
@@ -26,6 +26,12 @@ while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply
 ```
 Then access the MLX page using http://<cluster_node_ip>:30380/mlx/
 
+Above MLX deployment doesn't include:
+- KFServing for model deployment
+- Multi-user mode
+- Istio mutual TLS
+
+To get the above features please install the extra plugins by following the instructions for [MLX deployment an existing Kubeflow cluster](/docs/install-mlx-on-kubeflow.md#deploy-mlx-on-an-existing-kubeflow-cluster).
 
 ## Delete the MLX deployment
 
