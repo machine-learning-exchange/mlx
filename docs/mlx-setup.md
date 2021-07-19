@@ -9,14 +9,14 @@
 
 ## Deploy
 
-To deploy the MLX single user mode on an existing Kubernetes Cluster, clone the MLX manifests and deploy it with Kustomize. 
+To deploy the MLX single-user mode on an existing Kubernetes Cluster, clone the MLX manifests and deploy it with Kustomize. 
 
 This MLX deployment includes:
-- Istio
-- Kubeflow Pipeline single user
-- Tekton Pipeline
-- Datashim
-- MLX
+- [Istio](https://istio.io/)
+- [Kubeflow Pipelines](https://www.kubeflow.org/docs/components/pipelines/), single-user
+- [Tekton Pipelines](https://github.com/tektoncd/pipeline#-tekton-pipelines)
+- [Datashim](https://datashim-io.github.io/datashim/) to provide access to S3 and NFS Datasets within pods
+- MLX API and UI
 
 ```shell
 git clone https://github.com/machine-learning-exchange/manifests -b mlx-single-user
@@ -24,18 +24,19 @@ cd manifests
 # run the below command two times if the CRDs take too long to provision.
 while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 ```
-Then access the MLX page using http://<cluster_node_ip>:30380/mlx/
 
-Above MLX deployment doesn't include:
+Then access the MLX web page on http://<cluster_node_ip>:30380/mlx/
+
+This MLX deployment doesn't include or support:
 - KFServing for model deployment
 - Multi-user mode
 - Istio mutual TLS
 
-To get the above features please install the extra plugins by following the instructions for [MLX deployment an existing Kubeflow cluster](/docs/install-mlx-on-kubeflow.md#deploy-mlx-on-an-existing-kubeflow-cluster).
+To get these features, please install the additional plugins by following the instructions for [MLX deployment an existing Kubeflow cluster](/docs/install-mlx-on-kubeflow.md#deploy-mlx-on-an-existing-kubeflow-cluster).
 
 ## Delete the MLX deployment
 
-To delete the above MLX deployment, simply run the following commands in the same repo.
+To delete the this MLX deployment, run the following commands in the same manifests folder.
 
 ```
 kustomize build example | kubectl delete -f -
