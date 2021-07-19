@@ -369,13 +369,21 @@ def _upload_pipeline_yaml(yaml_file_content: AnyStr, name=None, description=None
             f.write(yaml_file_content)
 
         if KFP_HOST == "UNAVAILABLE":
-            # inside docker-compose we don't have KFP
+            # when running inside Docker Compose w/out KFP we store pipelines ourselves
             api_pipeline: ApiPipeline = _store_pipeline(yaml_file_content, name, description)
-        else:
-            api_pipeline: ApiPipeline = upload_pipeline_to_kfp(uploadfile=filename, name=name)
 
-        if description:
-            update_multiple(ApiPipeline, [api_pipeline.id], "description", description)
+        else:
+            # when deployed on top of KFP, we let KFP store pipelines
+
+            # KFP does not extract the description, so let's parse that out
+            if not description:
+                yaml_dict = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
+                template_metadata = yaml_dict.get("metadata") or dict()
+                annotations = template_metadata.get("annotations", {})
+                pipeline_spec = json.loads(annotations.get("pipelines.kubeflow.org/pipeline_spec", "{}"))
+                description = description or pipeline_spec.get("description", "").strip()
+
+            api_pipeline: ApiPipeline = upload_pipeline_to_kfp(filename, name, description)
 
         store_data(ApiPipelineExtension(id=api_pipeline.id))
 
@@ -393,7 +401,9 @@ def _upload_pipeline_yaml(yaml_file_content: AnyStr, name=None, description=None
 
 
 def _store_pipeline(yaml_file_content: AnyStr, name=None, description=None):
-
+    #
+    # Note: this code path is only used in Docker Compose without KFP
+    #
     yaml_dict = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
 
     template_metadata = yaml_dict.get("metadata") or dict()
@@ -401,7 +411,7 @@ def _store_pipeline(yaml_file_content: AnyStr, name=None, description=None):
     pipeline_spec = json.loads(annotations.get("pipelines.kubeflow.org/pipeline_spec", "{}"))
 
     name = name or template_metadata["name"]
-    description = pipeline_spec.get("description", "").strip()
+    description = description or pipeline_spec.get("description", "").strip()
     namespace = pipeline_spec.get("namespace", "").strip()
     pipeline_id = "-".join([generate_id(length=l) for l in [8, 4, 4, 4, 12]])
     created_at = datetime.now()
