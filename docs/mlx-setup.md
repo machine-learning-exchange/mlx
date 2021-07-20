@@ -36,7 +36,7 @@ To get these features, please install the additional plugins by following the in
 
 ## Delete the MLX deployment
 
-To delete the this MLX deployment, run the following commands in the same manifests folder.
+To delete this MLX deployment, run the following commands in the same manifests folder.
 
 ```
 kustomize build example | kubectl delete -f -
