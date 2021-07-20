@@ -1,6 +1,15 @@
 # Deploy MLX on an Existing Kubeflow Cluster
 
-To deploy MLX on an existing Kubeflow 1.3.0 Cluster, we can simply use the kustomize plugin that comes with `kubectl` client on v1.17+. Clone the [MLX](https://github.com/machine-learning-exchange/mlx) repo and run the following commands based on your Kubeflow setup.
+This is a complete deployment of MLX which includes all of the following components:
+
+- [Istio](https://istio.io/) (with [mutual TLS](https://istio.io/latest/docs/tasks/security/authentication/authn-policy/#auto-mutual-tls))
+- [Kubeflow Pipelines](https://www.kubeflow.org/docs/components/pipelines/), in [Multi-User mode](https://www.kubeflow.org/docs/components/pipelines/multi-user/)
+- [Tekton Pipelines](https://github.com/tektoncd/pipeline#-tekton-pipelines)
+- [Datashim](https://datashim-io.github.io/datashim/) to provide access to S3 and NFS Datasets within pods
+- [KFServing](https://www.kubeflow.org/docs/components/kfserving/kfserving/) for model deployment
+- MLX API and UI
+
+To deploy MLX on a Kubernetes cluster which has Kubeflow 1.3.0 already installed, we use the kustomize plugin that comes with `kubectl` client v1.17+. Clone the [MLX](https://github.com/machine-learning-exchange/mlx) repo and run the following commands based on your Kubeflow setup.
 
 ```shell
 git clone https://github.com/machine-learning-exchange/mlx
