@@ -87,6 +87,15 @@ function MetaDetailPage(props: MetaDetailPageProps) {
             {capitalize(type)}
           </Button>
         </Link>
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
+          </Button>
+        </Link>
         { runLink && 
           <Button
             className="hero-buttons-outline"

@@ -135,6 +135,15 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
             Featured
           </Button>
         </Link>
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
+          </Button>
+        </Link>
       </Hero>
       <div className="upload-wrapper">
         <Paper className="upload-form-wrapper">

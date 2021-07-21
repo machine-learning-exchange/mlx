@@ -86,11 +86,9 @@ function MetaAllPage(props: MetaAllPageProps) {
     { id: 'components', label: 'Components', numeric: false },
     { id: 'cat', label: 'Namespace', numeric: false },
   ]
-  // console.log(columns)
   const { store, dispatch } = useContext(StoreContext)
   const { artifacts, settings, pipeline } = store
-  const assets: {[key: string]: any} = Object.fromEntries(artifacts[type] || []
-    .map((asset: any) => [asset.metadata.name, asset]))
+  const assets: {[key: string]: any} = artifacts[type]
   const API = settings.endpoints.api.value || settings.endpoints.api.default
   const namespace = settings.kfserving.namespace.value || settings.kfserving.namespace.default
   useEffect(() => {
@@ -129,23 +127,9 @@ function MetaAllPage(props: MetaAllPageProps) {
   }
 
   function getTags(asset: any) {
-    let getPredictor = false;
-    let getExplainer = false;
-    let getTransformer = false;
-    asset.status?.conditions.forEach((condition: any) => {
-      if (condition.type === "DefaultPredictorReady") {
-        getPredictor = true;
-      }
-      if (condition.type === "DefaultExplainerReady") {
-        getExplainer = true;
-      }
-      if (condition.type === "DefaultTransformerReady") {
-        getTransformer = true;
-      }
-    })
-    const predictor = getPredictor ? predictorIcon : ""
-    const explainer = getExplainer ? explainerIcon : ""
-    const transformer = getTransformer ? transformerIcon : ""
+    const predictor = asset.spec.predictor ? predictorIcon : ""
+    const explainer = asset.spec.explainer ? explainerIcon : ""
+    const transformer = asset.spec.transformer ? transformerIcon : ""
     return (
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <img style={{marginLeft: '10px', marginTop: '10px'}} src={predictor} alt={predictor} height="18"/>
@@ -156,16 +140,16 @@ function MetaAllPage(props: MetaAllPageProps) {
   } 
   function getFramework(asset: any) {
     let framework = ""
-    if (Object.keys(asset.spec.default.predictor)[0] === "tensorflow") {
+    if (Object.keys(asset.spec.predictor)[0] === "tensorflow") {
       framework = tfLogo
     }
-    else if (Object.keys(asset.spec.default.predictor)[0] === "pytorch") {
+    else if (Object.keys(asset.spec.predictor)[0] === "pytorch") {
       framework = pytorchLogo
     }
-    else if (Object.keys(asset.spec.default.predictor)[0] === "keras") {
+    else if (Object.keys(asset.spec.predictor)[0] === "keras") {
       framework = kerasLogo
     }
-    else if (Object.keys(asset.spec.default.predictor)[0] === "sklearn" || Object.keys(asset.spec.default.predictor)[0] === "scikit-learn") {
+    else if (Object.keys(asset.spec.predictor)[0] === "sklearn" || Object.keys(asset.spec.predictor)[0] === "scikit-learn") {
       framework = sklearnLogo
     }
     else {
@@ -183,7 +167,6 @@ function MetaAllPage(props: MetaAllPageProps) {
       month: 'long',
       day: 'numeric',
     });
-    console.log(dateTimeFormat.format(timestamp));
     let finalTimestamp = dateTimeFormat.format(timestamp)
     
     return <div style={{marginLeft: '10px', marginTop: '10px'}}>{finalTimestamp}</div>
@@ -208,8 +191,8 @@ function MetaAllPage(props: MetaAllPageProps) {
         { canShow(leftAdmin, isAdmin) &&
         <Link to={leftLink}>
           <Button
-            className="hero-buttons-outline"
-            variant="outlined"
+            className="hero-buttons"
+            variant="contained"
             color="primary"
           >
             {leftIcon && <Icon>{leftIcon}</Icon>}
@@ -217,6 +200,15 @@ function MetaAllPage(props: MetaAllPageProps) {
           </Button>
         </Link>
         }
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
+          </Button>
+        </Link>
         { canShow(rightAdmin, isAdmin) &&
         <Link to={rightLink}>
           <Button
@@ -253,7 +245,7 @@ function MetaAllPage(props: MetaAllPageProps) {
                 <TableRow
                   hover
                   tabIndex={-1}
-                  key={asset.name}
+                  key={asset.metadata.name}
                 >
                   {/* <TableCell padding="checkbox">
                     <Checkbox

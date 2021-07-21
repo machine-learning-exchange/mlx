@@ -165,12 +165,21 @@ function MetaAllPage(props: MetaAllPageProps) {
       >
         <Link to={leftLink}>
           <Button
-            className="hero-buttons-outline"
-            variant="outlined"
+            className="hero-buttons"
+            variant="contained"
             color="primary"
           >
             {leftIcon && <Icon>{leftIcon}</Icon>}
             {leftBtn}
+          </Button>
+        </Link>
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
           </Button>
         </Link>
         <Link to={rightLink}>
