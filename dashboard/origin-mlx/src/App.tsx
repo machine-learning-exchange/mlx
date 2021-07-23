@@ -45,6 +45,7 @@ import MetaAllPage from './pages/MetaAllPage';
 import UploadPage from './pages/UploadPage';
 import MetaDetailPage from './pages/MetaDetailPage';
 import IframePage from './pages/IframePage';
+import Default404Page from './pages/Default404Page';
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
@@ -438,6 +439,7 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
+      <Route render={()=><Default404Page/>}/>
     </Switch>
   )
 }

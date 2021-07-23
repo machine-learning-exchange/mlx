@@ -326,6 +326,22 @@ td>span.checked {
   font-weight: 300;
 }
 
+/********************
+ * Default 404 Page *
+ ********************/
+
+.default-404-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.default-404-page-text {
+  text-align: center;
+  color: #fff;
+}
+
+
 /*****************
  * Featured Page *
  *****************/
