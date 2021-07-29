@@ -37,33 +37,49 @@ function MetaDetailPage(props: MetaDetailPageProps) {
   const { children, type, id } = props
   const [ asset, setAsset ] = useState(props.asset.state)
   const [ runLink, setRunLink ] = useState("")
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const { store } = useContext(StoreContext)
   const { api } = store.settings.endpoints
   const API = api.value || api.default
 
+  const fetchTemplates = () => {
+    fetchAssetTemplates(API, type, asset)
+    .then((template: any) => {
+      if (props.asset.search) {
+        const url_params = props.asset.search.substring(1).split("&")
+        const url_params_json: {[key: string]: string} = {}
+        url_params.forEach((param: string) => {
+          const split = param.split("=")
+          let key = decodeURIComponent(split[0])
+          const value = decodeURIComponent(split[1])
+          if (type === "pipelines")
+            key = key.replace(/_/g,"-")
+          url_params_json[key] = value
+        })
+        template.url_parameters = url_params_json
+      }
+      else
+        template.url_parameters = {}
+      setAsset(template)
+    })
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (!asset?.template && !asset?.templates) {
+      setIsLoading(true)
       if (!asset)
         fetchAssetById(API, type, id)
-      fetchAssetTemplates(API, type, asset)
-      .then((template: any) => {
-        if (props.asset.search) {
-          const url_params = props.asset.search.substring(1).split("&")
-          const url_params_json: {[key: string]: string} = {}
-          url_params.forEach((param: string) => {
-            const split = param.split("=")
-            if (type === "pipelines")
-              url_params_json[split[0].replace(/_/g,"-")] = split[1]
-            else
-              url_params_json[split[0]] = split[1]
-          })
-          template.url_parameters = url_params_json
-        }
-        else
-          template.url_parameters = {}
-        setAsset(template)
-      })
+        .then((asset: any) => {
+          setAsset(asset)
+        })
+        .catch((error) => {
+          console.error('Error fetching asset: ', error);
+        });
+      else {
+        fetchTemplates()
+      }
     }
   }, [API, asset, id, props.asset.search, type])
 
@@ -72,8 +88,8 @@ function MetaDetailPage(props: MetaDetailPageProps) {
   return (
     <div className="page-wrapper">
       <Hero
-        title={formatTitle(asset ? asset.name : type)}
-        subtitle={asset
+        title={formatTitle(asset ? asset.name || "" : type)}
+        subtitle={asset && asset.description
           ? asset.description.split('.')[0] + '.'
           : `Now loading your wonderful ${type}.`}
       >
@@ -143,7 +159,9 @@ function MetaDetailPage(props: MetaDetailPageProps) {
       { !runLink ?
         asset && (asset.template || asset.templates)
           ? <div className="body-wrapper"> {React.cloneElement(child, { API, type, id, ...child.props, asset, setRunLink})} </div>
-          : <LoadingMessage assetType={type} /> 
+          : isLoading 
+            ? <LoadingMessage assetType={type} />
+            : <h1> Asset not found </h1>
         : <iframe
             id="iframe-run"
             title="Kubeflow Pipelines Experiment Run"
