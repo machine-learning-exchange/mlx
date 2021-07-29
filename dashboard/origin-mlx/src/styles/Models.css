@@ -351,6 +351,10 @@ td>span.checked {
   overflow-x: hidden;
 }
 
+.search-box {
+  margin-bottom: 10px !important;
+}
+
 /************
  * All Page *
  ************/
