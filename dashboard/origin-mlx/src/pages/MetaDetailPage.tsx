@@ -50,7 +50,7 @@ function MetaDetailPage(props: MetaDetailPageProps) {
         const url_params = props.asset.search.substring(1).split("&")
         const url_params_json: {[key: string]: string} = {}
         url_params.forEach((param: string) => {
-          const split = param.split("=")
+          const split = decodeURIComponent(param).split("=")
           if (type === "pipelines")
             url_params_json[split[0].replace(/_/g,"-")] = split[1]
           else
@@ -71,12 +71,10 @@ function MetaDetailPage(props: MetaDetailPageProps) {
       if (!asset)
         fetchAssetById(API, type, id)
         .then((asset: any) => {
-          console.log("asset by id")
-          console.log(asset)
           setAsset(asset)
         })
         .catch((error) => {
-          console.error('Error:', error);
+          console.error('Error fetching asset: ', error);
         });
       else {
         fetchTemplates()
