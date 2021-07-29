@@ -50,11 +50,12 @@ function MetaDetailPage(props: MetaDetailPageProps) {
         const url_params = props.asset.search.substring(1).split("&")
         const url_params_json: {[key: string]: string} = {}
         url_params.forEach((param: string) => {
-          const split = decodeURIComponent(param).split("=")
+          const split = param.split("=")
+          let key = decodeURIComponent(split[0])
+          const value = decodeURIComponent(split[1])
           if (type === "pipelines")
-            url_params_json[split[0].replace(/_/g,"-")] = split[1]
-          else
-            url_params_json[split[0]] = split[1]
+            key = key.replace(/_/g,"-")
+          url_params_json[key] = value
         })
         template.url_parameters = url_params_json
       }
