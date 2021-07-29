@@ -71,18 +71,16 @@ app.all('/session-validation*', getSessionValidator(!disableLogin));
 
 const staticHandler = StaticHandler(staticDir, {redirect: false})
 
-app.use(REACT_APP_BASE_PATH, StaticHandler(staticDir, {redirect: true}));
-app.use(REACT_APP_BASE_PATH + '/pipelines/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/components/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/models/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/operators/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/notebooks/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/inferenceservices/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/upload/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/settings', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/delete/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/kiali/', staticHandler);
-app.use(REACT_APP_BASE_PATH + '/experiments/', staticHandler);
+app.use(REACT_APP_BASE_PATH, (req, res, next) => {
+  const staticIndex = req.url.indexOf('/static/')
+  if (staticIndex !== -1) {
+    req.url = req.url.substring(staticIndex)
+  }
+  else {
+    req.url = '/'
+  }
+  StaticHandler(staticDir)(req, res, next);
+});
 
 if (REACT_APP_BASE_PATH.length !== 0) {
   app.use('/', staticHandler);
