@@ -37,7 +37,7 @@ function MetaDetailPage(props: MetaDetailPageProps) {
   const { children, type, id } = props
   const [ asset, setAsset ] = useState(props.asset.state)
   const [ runLink, setRunLink ] = useState("")
-  const [ assetNotFound, setAssetNotFound ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const { store } = useContext(StoreContext)
   const { api } = store.settings.endpoints
@@ -63,24 +63,20 @@ function MetaDetailPage(props: MetaDetailPageProps) {
         template.url_parameters = {}
       setAsset(template)
     })
+    setIsLoading(false)
   }
 
   useEffect(() => {
     if (!asset?.template && !asset?.templates) {
-      if (!asset) {
+      setIsLoading(true)
+      if (!asset)
         fetchAssetById(API, type, id)
         .then((asset: any) => {
-          if (asset === 'Not found') {
-            asset.template = undefined
-            setAssetNotFound(true)
-          }
           setAsset(asset)
         })
         .catch((error) => {
-          setAssetNotFound(true)
           console.error('Error fetching asset: ', error);
         });
-      }
       else {
         fetchTemplates()
       }
@@ -95,9 +91,7 @@ function MetaDetailPage(props: MetaDetailPageProps) {
         title={formatTitle(asset ? asset.name || "" : type)}
         subtitle={asset && asset.description
           ? asset.description.split('.')[0] + '.'
-          : assetNotFound 
-            ?  `${formatTitle(type)} not found.`
-            : `Now loading your wonderful ${type}.`}
+          : `Now loading your wonderful ${type}.`}
       >
         <Link to={`/${type}`}>
           <Button
@@ -107,6 +101,15 @@ function MetaDetailPage(props: MetaDetailPageProps) {
           >
             <Icon>arrow_back</Icon>
             {capitalize(type)}
+          </Button>
+        </Link>
+        <Link to="https://github.com/machine-learning-exchange/mlx">
+          <Button
+            className="hero-buttons-outline"
+            variant="outlined"
+            color="primary"
+          >
+            Github
           </Button>
         </Link>
         { runLink && 
@@ -156,9 +159,9 @@ function MetaDetailPage(props: MetaDetailPageProps) {
       { !runLink ?
         asset && (asset.template || asset.templates)
           ? <div className="body-wrapper"> {React.cloneElement(child, { API, type, id, ...child.props, asset, setRunLink})} </div>
-          : assetNotFound
-            ? <div className="not-found-wrapper"><h1> 404: Asset not found </h1></div>
-            : <LoadingMessage assetType={type} />
+          : isLoading 
+            ? <LoadingMessage assetType={type} />
+            : <h1> Asset not found </h1>
         : <iframe
             id="iframe-run"
             title="Kubeflow Pipelines Experiment Run"
