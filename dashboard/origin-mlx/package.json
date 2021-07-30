@@ -20,6 +20,7 @@
     "codemirror": "^5.45.0",
     "dagre": "https://registry.npmjs.org/dagre/-/dagre-0.8.4.tgz",
     "deepmerge": "^4.0.0",
+    "fuzzysort": "^1.1.4",
     "js-cookie": "^2.2.1",
     "js-yaml": "^3.12.2",
     "react": "^16.13.1",
