@@ -367,6 +367,12 @@ td>span.checked {
   overflow-x: hidden;
 }
 
+.search-box input {
+  margin-left: 10px !important;
+  color: #ccc !important;
+  margin-bottom: 10px !important;
+}
+
 /************
  * All Page *
  ************/
@@ -505,6 +511,13 @@ td>span.checked {
   font-weight: 700 !important;
 }
 /* End Component Detail Specific */
+
+.not-found-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
 
 /***************
  * Upload Page *

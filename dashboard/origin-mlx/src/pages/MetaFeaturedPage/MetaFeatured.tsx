@@ -16,10 +16,10 @@
 import React from 'react'
 import { withStyles, WithStyles } from '@material-ui/core'
 
-import Grid from '@material-ui/core/Grid'
 import MetaCard from './MetaCard'
 import PageFooter from '../../components/PageFooter';
 
+import Grid from '@material-ui/core/Grid'
 
 interface MetaFeaturedProps extends WithStyles<typeof styles> {
   assets: any[]
@@ -80,7 +80,6 @@ const getDetails = (asset: any, type: string) => {
 
 function MetaFeatured(props: MetaFeaturedProps) {
   const { assets, assetType, classes } = props
-
   return (
     <div className={classes.wrapper}>
       <Grid container
@@ -89,7 +88,7 @@ function MetaFeatured(props: MetaFeaturedProps) {
         justify="flex-start"
         style={{ overflow: 'auto' }}
       >
-        {assets.map(asset => {
+        { assets.map(asset => {
           const { name, description } = asset
           const { tag, link, framework } = getDetails(asset, assetType);
           return (
