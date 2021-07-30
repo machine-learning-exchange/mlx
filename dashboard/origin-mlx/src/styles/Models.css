@@ -367,8 +367,9 @@ td>span.checked {
   overflow-x: hidden;
 }
 
-.search-box {
-  margin-bottom: 10px !important;
+.search-box input {
+  margin-left: 10px !important;
+  color: #ccc !important;
 }
 
 /************

@@ -13,19 +13,13 @@
 *  See the License for the specific language governing permissions and 
 *  limitations under the License. 
 */ 
-import React, { useState } from 'react'
+import React from 'react'
 import { withStyles, WithStyles } from '@material-ui/core'
-import fuzzysort from 'fuzzysort'
 
 import MetaCard from './MetaCard'
 import PageFooter from '../../components/PageFooter';
 
 import Grid from '@material-ui/core/Grid'
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
 
 interface MetaFeaturedProps extends WithStyles<typeof styles> {
   assets: any[]
@@ -86,52 +80,15 @@ const getDetails = (asset: any, type: string) => {
 
 function MetaFeatured(props: MetaFeaturedProps) {
   const { assets, assetType, classes } = props
-  const assetNames = assets.map((asset: any) => asset.name)
-  const [search, setSearch] = useState('')
-  let filteredAssets = assets
-  if (search !== '') {
-    const searchResults = fuzzysort.go(search, assetNames)
-    filteredAssets =  searchResults.reduce(function(result, searchResult) {
-      const index = assets.findIndex((asset: any) => asset.name === searchResult.target)
-      if (index !== -1)
-        result.push(assets[index])
-      return result;
-    }, []);
-  }
-
   return (
     <div className={classes.wrapper}>
-      <FormControl className="search-box">
-        <Input
-          id="standard-adornment-weight"
-          value={search}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>)=>setSearch(event.target.value)}
-          placeholder="Search"
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          }
-          inputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-      </FormControl>
       <Grid container
         spacing={16}
         alignItems="flex-start"
         justify="flex-start"
         style={{ overflow: 'auto' }}
       >
-        { filteredAssets.map(asset => {
+        { assets.map(asset => {
           const { name, description } = asset
           const { tag, link, framework } = getDetails(asset, assetType);
           return (
