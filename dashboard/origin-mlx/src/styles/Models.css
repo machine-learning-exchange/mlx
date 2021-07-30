@@ -494,6 +494,13 @@ td>span.checked {
 }
 /* End Component Detail Specific */
 
+.not-found-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
 /***************
  * Upload Page *
  ***************/
