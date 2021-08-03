@@ -453,11 +453,11 @@ def main():
     # delete the pipeline we just uploaded
     delete_pipeline(pipeline_id)
 
-    # set featured pipelines
-    set_featured_pipelines(pipeline_ids)
-
     # approve pipelines to be published
-    approve_pipelines_for_publishing(pipeline_ids)
+    approve_pipelines_for_publishing(pipeline_ids[:7])
+
+    # set featured pipelines
+    set_featured_pipelines(pipeline_ids[:4])
 
     # randomly selected a pipeline
     i = random.randint(0, len(pipeline_ids)-1)

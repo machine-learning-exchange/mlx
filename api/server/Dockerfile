@@ -11,7 +11,7 @@ ENV PYTHON_PIP_VERSION 20.2.4
 
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
 
-RUN apk add --update --virtual=build-dependencies \
+RUN apk add --update --virtual build-dependencies \
         pkgconfig \
         openssl-dev \
         libffi-dev \

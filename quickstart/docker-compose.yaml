@@ -19,9 +19,9 @@ services:
     command: server /data --console-address ":9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   miniosetup:
     image: minio/mc:RELEASE.2021-06-13T17-48-22Z
@@ -47,6 +47,11 @@ services:
     volumes:
       - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
       - data-mysql:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   mlx-api:
     image: mlexchange/mlx-api:nightly-main
@@ -59,6 +64,11 @@ services:
       MYSQL_SERVICE_PORT: "3306"
       ML_PIPELINE_SERVICE_HOST: "UNAVAILABLE"
       ML_PIPELINE_SERVICE_PORT: "UNAVAILABLE"
+#    healthcheck:  # disable healthcheck, it's filling up the logs
+#      test: [ "CMD", "wget", "-qO-", 'http://localhost:8080/apis/v1alpha1/health_check?check_database=true&check_object_store=true' ]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 10
 
   mlx-ui:
     image: mlexchange/mlx-ui:nightly-origin-main
@@ -76,9 +86,12 @@ services:
   catalog:
     image: curlimages/curl
     depends_on:
-      - minio
-      - mysql
-      - mlx-api
+      miniosetup:
+        condition: service_completed_successfully
+      mysql:
+        condition: service_healthy
+      mlx-api:
+        condition: service_started  # NOT service_healthy as that pollutes the logs
     volumes:
       - ./catalog_upload.json:/catalog_upload.json
       - ./init_catalog.sh:/init_catalog.sh
