@@ -29,7 +29,19 @@ Clone this repository and navigate to the `quickstart` folder:
     git clone https://github.com/machine-learning-exchange/mlx.git
     cd mlx/quickstart
 
+## Keep up to date
+
+If some time has passed since the `mlx` repository was cloned, 
+make sure to pull the latest sources for the _Quickstart_:
+
+    git pull
+
 ## Pull the Docker Images
+
+Our Docker images for the [mlx-api](https://hub.docker.com/r/mlexchange/mlx-api/tags?name=nightly)
+and
+[mlx-ui](https://hub.docker.com/r/mlexchange/mlx-ui/tags?name=nightly) 
+get rebuilt nightly. To get the latest version, run:
 
     docker compose pull
 
