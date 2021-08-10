@@ -39,8 +39,7 @@ make sure to pull the latest sources for the _Quickstart_:
 ## Pull the Docker Images
 
 Our Docker images for the [mlx-api](https://hub.docker.com/r/mlexchange/mlx-api/tags?name=nightly)
-and
-[mlx-ui](https://hub.docker.com/r/mlexchange/mlx-ui/tags?name=nightly) 
+and [mlx-ui](https://hub.docker.com/r/mlexchange/mlx-ui/tags?name=nightly) 
 get rebuilt nightly. To get the latest version, run:
 
     docker compose pull
@@ -81,4 +80,24 @@ Press `control` + `c` on the Terminal to stop and then remove the containers:
 
 ## Remove the Data Created by Minio and MySQL
 
+    docker volume prune -f
+
+## Troubleshooting
+
+If you are working on a local clone of your fork, rather than a clone of the source
+repository, make sure to keep your code up to date:
+
+    git remote add upstream https://github.com/machine-learning-exchange/mlx.git
+    git fetch upstream
+    git checkout main
+    git rebase upstream/main
+    git push origin main --force
+
+Since we are actively developing MLX, there may have been changes to the data schema
+which could conflict with the data created by running the Quickstart in days prior.
+The symptoms of this could be empty dashboards with endlessly spinning wheels.
+To remove all previously created Docker Compose data run the following commands:
+
+    docker compose down -v --remove-orphans
+    docker compose rm -v -f
     docker volume prune -f
