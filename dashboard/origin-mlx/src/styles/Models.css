@@ -528,6 +528,7 @@ td>span.checked {
 
 .detail-contents {
   display: flex;
+  flex-direction: column;
   overflow: auto;
 }
 

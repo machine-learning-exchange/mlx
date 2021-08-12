@@ -51,7 +51,7 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
     this.state = {
       rightTab: 'source',
       leftTab: 'description',
-      codeTab: '',
+      codeTab: 'kubernetes',
       model: props.asset,
     };
   }
@@ -99,17 +99,6 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
     const model = this.state.model
 
     const showCode = this.state.leftTab === 'serve' || this.state.leftTab === 'train'
-
-
-    console.log("state")
-    console.log(this.state)
-    console.log(this.state.model.code)
-    try {
-      console.log(this.getCode(this.state.codeTab))
-    }catch {
-
-      console.log("catch")
-    }
   
     return (
       <div className="detail-wrapper">
