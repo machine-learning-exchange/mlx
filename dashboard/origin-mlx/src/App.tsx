@@ -127,10 +127,10 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
 
   return (
     <Switch>
-      <Route exact path="/" component={LandingPage} />
-      <Route exact path="/external-links" component={ExternalLinksPage} />
-      <Route exact path="/pipelines"
-        render={routeProps =>
+      <RouteWrapper exact path="/" render={LandingPage} />
+      <RouteWrapper exact path="/external-links" render={ExternalLinksPage} />
+      <RouteWrapper exact path="/pipelines"
+        render={(routeProps: any) =>
           <MetaFeaturedPage
             assetType="pipelines"
             description="Pipelines for your machine learning workloads."
@@ -145,8 +145,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           />
         }
       />
-      <Route exact path="/datasets"
-        render={routeProps =>
+      <RouteWrapper exact path="/datasets"
+        render={(routeProps: any) =>
           <MetaFeaturedPage
             assetType="datasets"
             description="Datasets for your machine learning workloads."
@@ -161,8 +161,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           />
         }
       />
-      <Route exact path="/components"
-        render={ routeProps =>
+      <RouteWrapper exact path="/components"
+        render={(routeProps: any) =>
           <MetaFeaturedPage
             { ...routeProps }
             assetType="components"
@@ -177,8 +177,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           />
         }
       />
-      <Route exact path="/models"
-        render={ routeProps =>
+      <RouteWrapper exact path="/models"
+        render={(routeProps: any) =>
           <MetaFeaturedPage
             { ...routeProps }
             assetType="models"
@@ -196,8 +196,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           />
         }
       />
-      <Route exact path="/inferenceservices"
-        render={ routeProps =>
+      <RouteWrapper exact path="/inferenceservices"
+        render={(routeProps: any) =>
           <KFServingFeaturedPage
             { ...routeProps }
             assetType="inferenceservices"
@@ -213,15 +213,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           />
         }
       />
-      <Route path="/workspace"
-        render={(routeProps) => {
-          window.open(`${KFP}/hub/login`, '_blank')
-          routeProps.history.goBack()
-          return null
-        }}
-      />
-      <Route exact path="/notebooks"
-        render={routeProps =>
+      <RouteWrapper exact path="/notebooks"
+        render={(routeProps: any) =>
           <MetaFeaturedPage
             { ...routeProps }
             assetType="notebooks"
@@ -373,8 +366,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
         }
       />
       <ProtectedRoute path="/settings" render={(routeProps: any) => <SettingsPage alternateBG />} />
-      <Route path="/pipelines/:id"
-        render={({ match, location })=> (
+      <RouteWrapper path="/pipelines/:id"
+        render={({ match, location }: any)=> (
           <MetaDetailPage
             type="pipelines"
             id={match.params.id}
@@ -384,8 +377,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/datasets/:id"
-        render={({ match, location })=> (
+      <RouteWrapper path="/datasets/:id"
+        render={({ match, location }: any)=> (
           <MetaDetailPage
             type="datasets"
             id={match.params.id}
@@ -395,8 +388,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/components/:id"
-        render={({ match, location })=> (
+      <RouteWrapper path="/components/:id"
+        render={({ match, location }: any)=> (
           <MetaDetailPage
             type="components"
             id={match.params.id}
@@ -406,8 +399,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/models/:id"
-        render={({ match, location })=> (
+      <RouteWrapper path="/models/:id"
+        render={({ match, location }: any)=> (
           <MetaDetailPage
             type="models"
             id={match.params.id}
@@ -417,8 +410,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/inferenceservices/:id"
-        render={({ match, location })=> (
+      <RouteWrapper path="/inferenceservices/:id"
+        render={({ match, location }: any)=> (
           <KFServingDetailPage
             type="inferenceservices"
             id={match.params.id}
@@ -428,8 +421,8 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </KFServingDetailPage>
         )}
       />
-      <Route path="/notebooks/:id"
-        render={({ match, location })=> (
+      <RouteWrapper path="/notebooks/:id"
+        render={({ match, location }: any)=> (
           <MetaDetailPage
             type="notebooks"
             id={match.params.id}
@@ -439,7 +432,7 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route render={()=><Default404Page/>}/>
+      {/*<RouteWrapper render={()=><Default404Page/>}/>*/}
     </Switch>
   )
 }
@@ -452,12 +445,30 @@ interface ProtectedRouteProps {
 function ProtectedRoute(props: ProtectedRouteProps) {
 
   return (
-    <Route 
+    <RouteWrapper
       { ...props }
       render={isAdmin 
         ? props.render 
         : () => <Redirect to='/login'></Redirect>
       }
+    />
+  )
+}
+
+interface RouteWrapperProps {
+  exact?: boolean,
+  path: string,
+  render: ({ match, location }: any)=>{},
+}
+function RouteWrapper(props: RouteWrapperProps) {
+
+  return (
+    <Route 
+      { ...props }
+      render={({match, location}) => {
+        console.log("route changed");
+        return props.render({match, location});
+      }}
     />
   )
 }
