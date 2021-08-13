@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown'
 
-export default class MarkdownViewer extends React.Component<{}, {terms: any}> {
+export default class MarkdownViewer extends React.Component<{url: string}, {terms: any}> {
     constructor(props: any) {
       super(props)
   
@@ -9,7 +9,7 @@ export default class MarkdownViewer extends React.Component<{}, {terms: any}> {
     }
   
     componentWillMount() {
-      fetch("https://raw.githubusercontent.com/IBM/MAX-Object-Detector/master/README.md").then((response) => response.text()).then((text) => {
+      fetch(this.props.url).then((response) => response.text()).then((text) => {
         this.setState({ terms: text })
       })
     }

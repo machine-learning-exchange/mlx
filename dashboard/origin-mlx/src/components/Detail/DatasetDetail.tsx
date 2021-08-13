@@ -22,6 +22,8 @@ import Tab from '@material-ui/core/Tab';
 import yaml from 'js-yaml';
 import { getUserInfo, hasRole } from '../../lib/util';
 import MarkdownViewer from '../MarkdownViewer';
+import LoadingMessage from '../LoadingMessage';
+import MetadataView from '../MetadataView';
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
@@ -59,6 +61,9 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
     const dataset = this.state.dataset
     const setRunLink = this.props.setRunLink
 
+    console.log("dataset:")
+    console.log(dataset)
+
     return (
       <div className="detail-wrapper">
         <Tabs 
@@ -91,9 +96,29 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
             />
           }
         </Tabs>
-        <div className="detail-content">
-          { this.state.leftTab === 'description' &&
-            <MarkdownViewer></MarkdownViewer>
+        <div className="detail-contents">
+          { this.state.leftTab === 'description' && dataset.template && dataset.template.readme_url &&
+            <MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
+          }
+          { this.state.leftTab === 'description' && !(dataset.template && dataset.template.readme_url) &&
+            <div className="component-detail-side">
+              {!dataset.yaml
+                ? <LoadingMessage message="Loading Pipeline details..." />
+                : <MetadataView 
+                    content={{
+                      about: [
+                        { name: "Source", data: dataset.template.source.name },
+                        { name: "Data Format", data: dataset.template.format[0].type },
+                        { name: "License", data: dataset.license },
+                        { name: "Number of records", data: dataset.number_of_records.toString() },
+                        { name: "Version", data: dataset.template.version },
+                        { name: "Created at", data: dataset.created_at },
+                        { name: "Description", data: dataset.description },
+                      ]
+                    }}
+                  />
+              }
+            </div>
           }
           { this.state.leftTab === "source" &&
             <SourceCodeDisplay 
