@@ -377,6 +377,7 @@ def _upload_component_yaml(yaml_file_content: AnyStr, name=None, existing_id=Non
     created_at = datetime.now()
     name = name or yaml_dict["name"]
     description = (yaml_dict["description"] or "").strip()[:255]
+    filter_categories = yaml_dict.get("filter_categories") or dict()
 
     metadata = ApiMetadata(annotations=template_metadata.get("annotations"),
                            labels=template_metadata.get("labels"),
@@ -391,7 +392,8 @@ def _upload_component_yaml(yaml_file_content: AnyStr, name=None, existing_id=Non
                                  name=name,
                                  description=description,
                                  metadata=metadata,
-                                 parameters=parameters)
+                                 parameters=parameters,
+                                 filter_categories=filter_categories)
 
     uuid = store_data(api_component)
 
