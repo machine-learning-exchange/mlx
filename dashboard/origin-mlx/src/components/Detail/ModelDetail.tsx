@@ -17,7 +17,6 @@ import * as React from 'react';
 import StoreContext from '../../lib/stores/context'
 import { capitalize, getUserInfo, hasRole } from '../../lib/util'
 
-import Grid from '@material-ui/core/Grid';
 import LoadingMessage from '../LoadingMessage';
 import ModelRunForm from '../RunView/ModelRunView';
 import SourceCodeDisplay from '../SourceCodeDisplay';
@@ -51,8 +50,8 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
     super(props);
     this.state = {
       rightTab: 'source',
-      leftTab: 'detail',
-      codeTab: '',
+      leftTab: 'description',
+      codeTab: 'kubernetes',
       model: props.asset,
     };
   }
@@ -83,9 +82,10 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
   }
 
   getCode = (platform: string) =>
-    this.state.model.code
+    (this.state.model.code
       .find(({ execution_platform }: any) =>
-        execution_platform === platform).script_code
+        execution_platform === platform
+      ) || {}).script_code
 
   public render() {
     const { store } = this.context
@@ -98,38 +98,49 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
 
     const model = this.state.model
 
-    const showCode = this.state.rightTab === 'serve' || this.state.rightTab === 'train'
+    const showCode = this.state.leftTab === 'serve' || this.state.leftTab === 'train'
   
     return (
-      <Grid
-        container
-        spacing={ 0 } 
-        justify="center">
-        <Grid 
-          className="left-wrapper"
-          item xs={ 6 }>
-
-          <div className="tab-nav">
-            <Tabs 
-              variant="fullWidth"
-              className="comp-tabs" 
-              value={ this.state.leftTab }
-              onChange={(_, value: string) => this.setState({ leftTab: value })}>
-              <Tab 
-                className="comp-tab"
-                value="detail" 
-                label="Details" 
-              />
-              {canRun && isAdmin &&
-                <Tab 
-                  className="comp-tab"
-                  value="runCreation" 
-                  label="Launch" 
-                />
-              }
-            </Tabs>
-          </div>
-          {this.state.leftTab === 'detail' &&
+      <div className="detail-wrapper">
+        <Tabs 
+          variant="fullWidth"
+          className="comp-tabs" 
+          value={ this.state.leftTab }
+          onChange={(_, value: string) => this.setState({ leftTab: value })}>
+          <Tab 
+            className="comp-tab"
+            value="description" 
+            label="Description" 
+          />
+          {canRun && isAdmin &&
+            <Tab 
+              className="comp-tab"
+              value="runCreation" 
+              label="Launch" 
+            />
+          }
+          <Tab 
+            className="comp-tab"
+            value="source" 
+            label="YAML Definition"
+          />
+          {model.servable &&
+            <Tab 
+              className="comp-tab"
+              value="serve" 
+              label="Sample Serving Code"
+            />
+          }
+          {model.trainable &&
+            <Tab 
+              className="comp-tab"
+              value="train" 
+              label="Sample Training Code"
+            />
+          }
+        </Tabs>
+        <div className="detail-contents">
+          {this.state.leftTab === 'description' &&
             <MetadataView content={{
               about: [
                 { name: "model identifier", data: model.template.model_identifier },
@@ -188,42 +199,8 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
               KFP={KFP}
               API={API}
               setRunLink={setRunLink}
-            />}
-        </Grid>
-        <Grid 
-          className="right-wrapper"
-          item xs={ 6 }>
-          <div className="tab-nav">
-            <Tabs 
-              variant="fullWidth"
-              className="comp-tabs" 
-              value={ this.state.rightTab }
-              onChange={(_, value: string) => this.setState({
-                rightTab: value,
-                codeTab: this.getCodeType(value)[0]
-              })}>
-              <Tab 
-                className="comp-tab"
-                value="source" 
-                label="YAML Definition"
-              />
-              {model.servable &&
-                <Tab 
-                  className="comp-tab"
-                  value="serve" 
-                  label="Sample Serving Code"
-                />
-              }
-              {model.trainable &&
-                <Tab 
-                  className="comp-tab"
-                  value="train" 
-                  label="Sample Training Code"
-                />
-              }
-            </Tabs>
-          </div>
-
+            />
+          }
           {/* BEGIN: second tab row */}
           {showCode &&
             <div className="tab-nav second-row">
@@ -231,11 +208,11 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
                 variant="fullWidth"
                 className="comp-tabs second-row" 
                 value={this.state.codeTab || this.setState({
-                  codeTab: this.getCodeType(this.state.rightTab)[0]
+                  codeTab: this.getCodeType(this.state.leftTab)[0]
                 })}
                 onChange={(_, value: string) => this.setState({ codeTab: value })}
               >
-                {this.getCodeType(this.state.rightTab).filter((platform : string) => platform !== "knative").map((platform: string) =>
+                {this.getCodeType(this.state.leftTab).filter((platform : string) => platform !== "knative").map((platform: string) =>
                   <Tab 
                     key={platform}
                     className="comp-tab"
@@ -248,21 +225,21 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
           }
           {/* END: second tab row */}
 
-          {this.state.rightTab === "source" &&
+          {this.state.leftTab === "source" &&
             <SourceCodeDisplay 
               isYAML={ true }
               code={model.yaml}
             />
           }
-          {this.state.rightTab !== 'source' && (!model.code
+          {this.state.leftTab === 'serve' && (!model.code
               ? <LoadingMessage message="Loading Model sample code..." />
               : <SourceCodeDisplay 
                   isYAML={false}
                   code={this.getCode(this.state.codeTab)}
                 />
           )}
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     )
   }
 }

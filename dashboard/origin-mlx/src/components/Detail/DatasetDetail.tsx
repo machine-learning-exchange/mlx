@@ -16,16 +16,14 @@
 import * as React from 'react';
 import StoreContext from '../../lib/stores/context'
 
-import Grid from '@material-ui/core/Grid';
-import LoadingMessage from '../LoadingMessage';
-import RunView from '../RunView'
 import SourceCodeDisplay from '../SourceCodeDisplay';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import yaml from 'js-yaml';
-import MetadataView from '../MetadataView';
-import RelatedAssetView from '../RelatedAssetView';
 import { getUserInfo, hasRole } from '../../lib/util';
+import MarkdownViewer from '../MarkdownViewer';
+import LoadingMessage from '../LoadingMessage';
+import MetadataView from '../MetadataView';
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
@@ -42,7 +40,7 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
     super(props);
     this.state = {
       rightTab: 'source',
-      leftTab: 'detail',
+      leftTab: 'description',
       selectedGraphNode: '',
       dataset: props.asset
     }
@@ -63,44 +61,46 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
     const dataset = this.state.dataset
     const setRunLink = this.props.setRunLink
 
-    return (
-      <Grid
-        container 
-        spacing={ 0 } 
-        justify="center"
-      >
-        <Grid 
-          className="left-wrapper"
-          item xs={ 6 }>
+    console.log("dataset:")
+    console.log(dataset)
 
-          <div className="tab-nav">
-            <Tabs 
-              variant="fullWidth"
-              className="comp-tabs" 
-              value={ this.state.leftTab }
-              onChange={(_, leftTab: string) => this.setState({ leftTab })}>              
-              <Tab 
-                className="comp-tab"
-                value="detail" 
-                label="Details" 
-              />
-              {canRun && isAdmin &&
-                <Tab
-                  className="comp-tab"
-                  value="runCreation"
-                  label="Launch"
-                />
-              }
-              { dataset.related_assets && dataset.related_assets.length !== 0 &&
-                <Tab
-                  className="comp-tab"
-                  value="relatedAssets"
-                  label="Related Assets"
-                />
-              }
-            </Tabs>
-          </div>
-          { this.state.leftTab === 'detail' &&
+    return (
+      <div className="detail-wrapper">
+        <Tabs 
+          variant="fullWidth"
+          className="comp-tabs" 
+          value={ this.state.leftTab }
+          onChange={(_, leftTab: string) => this.setState({ leftTab })}>              
+          <Tab 
+            className="comp-tab"
+            value="description" 
+            label="Description" 
+          />
+          <Tab 
+            className="comp-tab"
+            value="source" 
+            label="Dataset YAML"
+          />
+          { this.state.selectedGraphNode &&
+            <Tab 
+              className="comp-tab"
+              value="component-code" 
+              label={ `${ this.state.selectedGraphNode } Component` }
+            />
+          }
+          {canRun && isAdmin &&
+            <Tab
+              className="comp-tab"
+              value="runCreation"
+              label="Launch"
+            />
+          }
+        </Tabs>
+        <div className="detail-contents">
+          { this.state.leftTab === 'description' && dataset.template && dataset.template.readme_url &&
+            <MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
+          }
+          { this.state.leftTab === 'description' && !(dataset.template && dataset.template.readme_url) &&
             <div className="component-detail-side">
               {!dataset.yaml
                 ? <LoadingMessage message="Loading Pipeline details..." />
@@ -120,59 +120,22 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
               }
             </div>
           }
-          {this.state.leftTab === 'runCreation' &&
-            <RunView type="datasets" asset={dataset} setRunLink={setRunLink}/>
-          }
-          { this.state.leftTab === 'relatedAssets' &&
-            <RelatedAssetView
-              datasetId={dataset.id}
-              relatedAssets={dataset.related_assets} 
-              setRunLink={setRunLink}
-            />
-          }
-        </Grid>
-        <Grid 
-          className="right-wrapper"
-          item xs={ 6 }>
-          <div className="tab-nav">
-            <Tabs 
-              variant="fullWidth"
-              className="comp-tabs" 
-              value={ this.state.rightTab }
-              onChange={(_, rightTab: string) => this.setState({ rightTab })}>
-              <Tab 
-                className="comp-tab"
-                value="source" 
-                label="Dataset YAML"
-              />
-              { this.state.selectedGraphNode &&
-                <Tab 
-                  className="comp-tab"
-                  value="component-code" 
-                  label={ `${ this.state.selectedGraphNode } Component` }
-                />
-              }
-            </Tabs>
-          </div>
-
-          { this.state.rightTab === "source" &&
+          { this.state.leftTab === "source" &&
             <SourceCodeDisplay 
               scrollMe={true}
               isYAML={true}
               code={dataset.yaml || ``}
             />
           }
-
-          { this.state.rightTab === "component-code" &&
+          { this.state.leftTab === "component-code" &&
             <SourceCodeDisplay 
               scrollMe={true}
               isYAML={true}
               code={this.getComponentYAML(this.state.selectedGraphNode) || ``}
             />
           }
-
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     )
   }
 }
