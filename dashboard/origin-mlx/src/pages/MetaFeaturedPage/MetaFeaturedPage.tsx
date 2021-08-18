@@ -89,8 +89,8 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
   const assets: Artifact[] = artifacts[assetType]
   const [search, setSearch] = useState('')
 
-  let filteredAssets = assets
-  const assetNames = assets.filter(asset => asset.featured && asset.publish_approved).map((asset: any) => asset.name)
+  let filteredAssets = assets.filter(asset => asset.featured && asset.publish_approved)
+  const assetNames = filteredAssets.map((asset: any) => asset.name)
   if (search !== '') {
     const searchResults = fuzzysort.go(search, assetNames)
     filteredAssets = searchResults.reduce(function(result, searchResult) {

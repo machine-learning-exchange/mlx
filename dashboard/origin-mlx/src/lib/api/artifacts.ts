@@ -85,12 +85,10 @@ export async function fetchArtifact(API: string, type: string, namespace?: strin
   if (!supported.includes(type) && !mocked.includes(type))
     throw Error(`Can't fetch assets for type <${type}>. Unsupported.`)
 
-  console.log(`fetching assets for ${type}`)
-
   const request = type === "inferenceservices"
     ? `${API}/apis/v1alpha1/${type}${namespace ? `?namespace=${namespace}` : ''}`
     : `${API}/apis/v1alpha1/${type}`
-  const response = await sendRequest(request)
+  const response = await sendRequestApi(request)
   let assets = response
 
   assets = (type === "inferenceservices" ? assets.items : assets[type]).map((asset: Artifact) => {
