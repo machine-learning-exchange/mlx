@@ -38,7 +38,8 @@ function Sidebar(props: { children: ReactNode }) {
         sidebar:{
           "color": sideNavColors.fgActive,
           "backgroundColor": sideNavColors.bg,
-          "width":"230px"
+          "width":"230px",
+          "overflow":"hidden"
         }
       }}
     >
