@@ -82,6 +82,7 @@ services:
       REACT_APP_API: "${DOCKER_HOST_IP:-localhost}:8080"
       REACT_APP_KFP: ""
       REACT_APP_DISABLE_LOGIN: "true"
+      REACT_APP_GTM_ID: "${GTM_ID}"
 
   catalog:
     image: curlimages/curl
