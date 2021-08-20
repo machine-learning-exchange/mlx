@@ -28,7 +28,7 @@ class ApiAsset(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, featured: bool=None, publish_approved: bool=None, related_assets: List[str]=None):  # noqa: E501
+    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, featured: bool=None, publish_approved: bool=None, related_assets: List[str]=None, filter_categories: Dict[str, str]=None):  # noqa: E501
         """ApiAsset - a model defined in Swagger
 
         :param id: The id of this ApiAsset.  # noqa: E501
@@ -45,6 +45,8 @@ class ApiAsset(Model):
         :type publish_approved: bool
         :param related_assets: The related_assets of this ApiAsset.  # noqa: E501
         :type related_assets: List[str]
+        :param filter_categories: The filter_categories of this ApiAsset.  # noqa: E501
+        :type filter_categories: Dict[str, str]
         """
         self.swagger_types = {
             'id': str,
@@ -53,7 +55,8 @@ class ApiAsset(Model):
             'description': str,
             'featured': bool,
             'publish_approved': bool,
-            'related_assets': List[str]
+            'related_assets': List[str],
+            'filter_categories': Dict[str, str]
         }
 
         self.attribute_map = {
@@ -63,7 +66,8 @@ class ApiAsset(Model):
             'description': 'description',
             'featured': 'featured',
             'publish_approved': 'publish_approved',
-            'related_assets': 'related_assets'
+            'related_assets': 'related_assets',
+            'filter_categories': 'filter_categories'
         }
 
         self._id = id
@@ -73,6 +77,7 @@ class ApiAsset(Model):
         self._featured = featured
         self._publish_approved = publish_approved
         self._related_assets = related_assets
+        self._filter_categories = filter_categories
 
     @classmethod
     def from_dict(cls, dikt) -> 'ApiAsset':
@@ -235,3 +240,24 @@ class ApiAsset(Model):
         """
 
         self._related_assets = related_assets
+
+    @property
+    def filter_categories(self) -> Dict[str, str]:
+        """Gets the filter_categories of this ApiAsset.
+
+
+        :return: The filter_categories of this ApiAsset.
+        :rtype: Dict[str, str]
+        """
+        return self._filter_categories
+
+    @filter_categories.setter
+    def filter_categories(self, filter_categories: Dict[str, str]):
+        """Sets the filter_categories of this ApiAsset.
+
+
+        :param filter_categories: The filter_categories of this ApiAsset.
+        :type filter_categories: Dict[str, str]
+        """
+
+        self._filter_categories = filter_categories

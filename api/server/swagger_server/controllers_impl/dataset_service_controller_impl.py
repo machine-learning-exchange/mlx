@@ -392,6 +392,7 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
     format_type = yaml_dict["format"][0]["type"]
     size = yaml_dict["content"][0].get("size")
     version = yaml_dict["version"]
+    filter_categories = yaml_dict.get("filter_categories") or dict()
 
     # # extract number of records and convert thousand separators based on Locale
     # num_records_str = yaml_dict["statistics"]["number_of_records"]
@@ -428,7 +429,8 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
         number_of_records=number_of_records,
         license=license_name,
         metadata=metadata,
-        related_assets=related_assets
+        related_assets=related_assets,
+        filter_categories=filter_categories
     )
 
     uuid = store_data(api_dataset)

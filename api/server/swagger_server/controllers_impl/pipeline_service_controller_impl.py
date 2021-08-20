@@ -192,8 +192,13 @@ def list_pipelines(page_token=None, page_size=None, sort_by=None, filter=None): 
 
     filter_dict = json.loads(filter) if filter else None
 
-    api_pipelines: [ApiPipeline] = load_data(ApiPipelineExtended, filter_dict=filter_dict, sort_by=sort_by,
-                                             count=page_size, offset=offset)
+    # TODO: add filter_categories to ApiPipelineExtension (and give users a way
+    #  to add category labels to pipelines) until then remove categories from filter
+    if "filter_categories" in filter_dict:
+        del filter_dict["filter_categories"]
+
+    api_pipelines: [ApiPipeline] = load_data(ApiPipelineExtended, filter_dict=filter_dict,
+                                             sort_by=sort_by, count=page_size, offset=offset)
 
     next_page_token = offset + page_size if len(api_pipelines) == page_size else None
 

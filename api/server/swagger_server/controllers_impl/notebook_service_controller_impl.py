@@ -401,6 +401,7 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
     description = yaml_dict["description"].strip()
     url = yaml_dict["implementation"]["github"]["source"]
     requirements = yaml_dict["implementation"]["github"].get("requirements")
+    filter_categories = yaml_dict.get("filter_categories") or dict()
 
     metadata = ApiMetadata(annotations=template_metadata.get("annotations"),
                            labels=template_metadata.get("labels"),
@@ -419,7 +420,8 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
                                description=description,
                                url=url,
                                metadata=metadata,
-                               parameters=parameters)
+                               parameters=parameters,
+                               filter_categories=filter_categories)
 
     uuid = store_data(api_notebook)
 

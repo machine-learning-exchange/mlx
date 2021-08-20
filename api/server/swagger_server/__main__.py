@@ -37,7 +37,7 @@ def main():
 
     log.info("MLX API version: %s" % VERSION)
 
-    cx_app = connexion.App(__name__, specification_dir='./swagger/')
+    cx_app = connexion.App("MLX-API", specification_dir='./swagger/')
     cx_app.add_api('swagger.yaml', arguments={'title': 'MLX API'})
 
     flask_app = cx_app.app

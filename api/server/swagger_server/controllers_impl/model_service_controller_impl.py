@@ -390,6 +390,7 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
         domain=model_def.get("domain") or "",
         labels=model_def.get("labels") or dict(),
         framework=model_def["framework"],
+        filter_categories=model_def.get("filter_categories") or dict(),
         trainable=model_def.get("train", {}).get("trainable") or False,
         trainable_tested_platforms=model_def.get("train", {}).get("tested_platforms") or [],
         trainable_credentials_required=model_def.get("train", {}).get("credentials_required") or False,

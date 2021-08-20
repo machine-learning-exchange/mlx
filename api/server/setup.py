@@ -17,7 +17,7 @@ import sys
 from setuptools import setup, find_packages
 
 NAME = "mlx-api"
-VERSION = "0.1.27"  # 0.1.27-pipeline-namespace
+VERSION = "0.1.29-filter-categories"
 
 # To install the library, run the following
 #

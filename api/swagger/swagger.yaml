@@ -15,7 +15,7 @@
 swagger: "2.0"
 
 info:
-  version: "0.1.27-pipeline-namespace"
+  version: "0.1.29-filter-categories"
   title: "MLX API"
   description: "MLX API Extension for Kubeflow Pipelines"
 
@@ -2090,7 +2090,7 @@ definitions:
 
   apiAsset:
     type: "object"
-    description: "Abstract asset with properties shared across all MLX asset types."
+    description: "Abstract asset with properties shared across all MLX asset types (except pipelines)."
     properties:
       id:
         type: "string"
@@ -2109,14 +2109,24 @@ definitions:
         type: "array"
         items:
           type: "string"
+      filter_categories:
+        type: "object"
+        additionalProperties:
+          type: "string"
     required:
       - name
       - description
     example:
       id: "05au-84nr-1tey-0qwr"
       created_at: "2019-01-23T04:56:07.000+00:00"
-      name: "Train a Deep Learning Model"
-      description: "A deep learning model"
+      name: "Image Recognition Model"
+      description: "A machine learning model to identify objects in images"
+      filter_categories:
+        domain: image-recognition
+        platform:
+          - kubernetes
+          - kfserving
+        language: python
 
   apiCatalogUpload:
     type: "object"

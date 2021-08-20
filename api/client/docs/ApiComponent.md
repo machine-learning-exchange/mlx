@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **featured** | **bool** |  | [optional] 
 **publish_approved** | **bool** |  | [optional] 
 **related_assets** | **list[str]** |  | [optional] 
+**filter_categories** | **dict(str, str)** |  | [optional] 
 **metadata** | [**ApiMetadata**](ApiMetadata.md) |  | [optional] 
 **parameters** | [**list[ApiParameter]**](ApiParameter.md) |  | [optional] 
 
