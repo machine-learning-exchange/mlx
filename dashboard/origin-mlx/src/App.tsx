@@ -22,6 +22,8 @@ import { findInvalidCacheEntries } from './lib/api/artifacts';
 import { getSettings } from './lib/api/settings';
 import { getUserInfo, hasRole } from './lib/util';
 
+import TagManager from 'react-gtm-module';
+
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import PipelineDetail from './components/Detail/PipelineDetail';
@@ -46,6 +48,15 @@ import UploadPage from './pages/UploadPage';
 import MetaDetailPage from './pages/MetaDetailPage';
 import IframePage from './pages/IframePage';
 import Default404Page from './pages/Default404Page';
+
+// initialize Google Analytics (Google Tag Manager)
+if (process.env.REACT_APP_GTM_ID) {
+  console.log("Google Analytics is enabled.");
+  const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM_ID
+  }
+  TagManager.initialize(tagManagerArgs);
+}
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
