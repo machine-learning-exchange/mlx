@@ -41,7 +41,8 @@ port = '8080'
 
 api_base_path = 'apis/v1alpha1'
 
-yaml_files = sorted(filter(lambda f: "template" not in f, glob("./../../../katalog/model-samples/*.yaml")))
+yaml_files = sorted(filter(lambda f: "template" not in f,
+                           glob("./../../../katalog/model-samples/**/*.yaml", recursive=True)))
 
 
 def get_swagger_client():
@@ -384,4 +385,5 @@ def main():
 
 
 if __name__ == '__main__':
+    pprint(yaml_files)
     main()
