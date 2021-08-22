@@ -190,7 +190,7 @@ def list_pipelines(page_token=None, page_size=None, sort_by=None, filter=None): 
     # TODO: do not misuse page_token as MySQL result offset
     offset = int(page_token) if page_token and page_token.isdigit() else 0
 
-    filter_dict = json.loads(filter) if filter else None
+    filter_dict = json.loads(filter) if filter else {}
 
     # TODO: add filter_categories to ApiPipelineExtension (and give users a way
     #  to add category labels to pipelines) until then remove categories from filter
