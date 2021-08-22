@@ -35,6 +35,8 @@ RUN pip list
 
 COPY . /usr/src/app
 
+RUN ls */*
+
 EXPOSE 8080
 
 ENTRYPOINT ["python3"]
