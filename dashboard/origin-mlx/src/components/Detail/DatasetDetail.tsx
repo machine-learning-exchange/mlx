@@ -21,6 +21,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import yaml from 'js-yaml';
 import { getUserInfo, hasRole } from '../../lib/util';
+import RunView from '../RunView'
+import RelatedAssetView from '../RelatedAssetView';
 import MarkdownViewer from '../MarkdownViewer';
 import LoadingMessage from '../LoadingMessage';
 import MetadataView from '../MetadataView';
@@ -61,16 +63,20 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
     const dataset = this.state.dataset
     const setRunLink = this.props.setRunLink
 
-    console.log("dataset:")
-    console.log(dataset)
-
     return (
       <div className="detail-wrapper">
-        <Tabs 
+        <Tabs
           variant="fullWidth"
-          className="comp-tabs" 
+          className="comp-tabs"
           value={ this.state.leftTab }
-          onChange={(_, leftTab: string) => this.setState({ leftTab })}>              
+          onChange={(_, leftTab: string) => this.setState({ leftTab })}>
+          { dataset.template && dataset.template.readme_url &&
+            <Tab 
+              className="comp-tab"
+              value="readme" 
+              label="Asset Readme" 
+            />
+          }
           <Tab 
             className="comp-tab"
             value="description" 
@@ -95,12 +101,19 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
               label="Launch"
             />
           }
+          { dataset.related_assets && dataset.related_assets.length !== 0 &&
+            <Tab
+              className="comp-tab"
+              value="relatedAssets"
+              label="Related Assets"
+            />
+          }
         </Tabs>
         <div className="detail-contents">
-          { this.state.leftTab === 'description' && dataset.template && dataset.template.readme_url &&
+          { this.state.leftTab === 'readme' &&
             <MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
           }
-          { this.state.leftTab === 'description' && !(dataset.template && dataset.template.readme_url) &&
+          { this.state.leftTab === 'description' &&
             <div className="component-detail-side">
               {!dataset.yaml
                 ? <LoadingMessage message="Loading Pipeline details..." />
@@ -119,6 +132,16 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
                   />
               }
             </div>
+          }
+          { this.state.leftTab === 'relatedAssets' &&
+            <RelatedAssetView
+              datasetId={dataset.id}
+              relatedAssets={dataset.related_assets} 
+              setRunLink={setRunLink}
+            />
+          }
+          {this.state.leftTab === 'runCreation' &&
+            <RunView type="datasets" asset={dataset} setRunLink={setRunLink}/>
           }
           { this.state.leftTab === "source" &&
             <SourceCodeDisplay 
