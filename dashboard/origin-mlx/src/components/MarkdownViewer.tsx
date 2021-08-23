@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown'
-import remarkToc from 'remark-toc'
+import remarkGfm from 'remark-gfm'
 
 export default class MarkdownViewer extends React.Component<{url: string}, {terms: any}> {
     constructor(props: any) {
@@ -18,7 +18,7 @@ export default class MarkdownViewer extends React.Component<{url: string}, {term
     render() {
       return (
         <div className="content">
-          <ReactMarkdown source={this.state.terms} plugins={[remarkToc]}/>
+          <ReactMarkdown source={this.state.terms} plugins={[remarkGfm]}/>
         </div>
       )
     }

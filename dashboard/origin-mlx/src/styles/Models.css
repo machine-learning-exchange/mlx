@@ -64,18 +64,18 @@ td>span.checked {
   color: #1ccdc7 !important;
 }
 
-tr {
+.content tr {
   border-top: 1px solid #c6cbd1;
   background: #fff;
 }
 
-th,
-td {
+.content th,
+.content td {
   padding: 6px 13px;
   border: 1px solid #dfe2e5;
 }
 
-table tr:nth-child(2n) {
+.content table tr:nth-child(2n) {
   background: #f6f8fa;
 }
 
