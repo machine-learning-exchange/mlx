@@ -40,14 +40,14 @@ port = '8080'
 
 api_base_path = 'apis/v1alpha1'
 
-yaml_files = sorted(filter(lambda f: "lorem_ipsum" not in f, glob("./../../../katalog/dataset-samples/*.yaml")))
+yaml_files = sorted(filter(lambda f: "template" not in f,
+                           glob("./../../../katalog/dataset-samples/**/*.yaml", recursive=True)))
 
 
 def get_swagger_client():
     config = Configuration()
     config.host = f'http://{host}:{port}/{api_base_path}'
     api_client = ApiClient(configuration=config)
-
     return api_client
 
 
@@ -57,7 +57,6 @@ def print_function_name_decorator(func):
         print(f"---[ {func.__name__}{args}{kwargs} ]---")
         print()
         return func(*args, **kwargs)
-
     return wrapper
 
 

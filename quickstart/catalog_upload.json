@@ -44,11 +44,11 @@
     },
     {
       "name": "Groningen Meaning Bank",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/gmb.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/gmb/gmb.yaml"
     },
     {
       "name": "NOAA Weather Data",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk/jfk.yaml"
     },
     {
       "name": "PubLayNet",
