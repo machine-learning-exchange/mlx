@@ -64,6 +64,21 @@ td>span.checked {
   color: #1ccdc7 !important;
 }
 
+.content tr {
+  border-top: 1px solid #c6cbd1;
+  background: #fff;
+}
+
+.content th,
+.content td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.content table tr:nth-child(2n) {
+  background: #f6f8fa;
+}
+
 /****************
  * Page Styling *
  ****************/

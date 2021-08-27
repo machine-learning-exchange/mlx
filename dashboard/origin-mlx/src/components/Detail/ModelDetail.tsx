@@ -23,6 +23,7 @@ import SourceCodeDisplay from '../SourceCodeDisplay';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import MetadataView from '../MetadataView';
+import MarkdownViewer from '../MarkdownViewer';
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
@@ -107,6 +108,13 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
           className="comp-tabs" 
           value={ this.state.leftTab }
           onChange={(_, value: string) => this.setState({ leftTab: value })}>
+          { model.template && model.template.readme_url &&
+            <Tab 
+              className="comp-tab"
+              value="readme" 
+              label="Asset Readme" 
+            />
+          }
           <Tab 
             className="comp-tab"
             value="description" 
@@ -140,6 +148,9 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
           }
         </Tabs>
         <div className="detail-contents">
+          { this.state.leftTab === 'readme' &&
+            <MarkdownViewer url={model.template.readme_url}></MarkdownViewer>
+          }
           {this.state.leftTab === 'description' &&
             <MetadataView content={{
               about: [
