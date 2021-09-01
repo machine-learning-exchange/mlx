@@ -72,7 +72,7 @@ function SidebarList() {
   const [secretVisible, setSecretVisible] = useState(false)
   const { height } = useWindowDimensions()
   // Ensures the "Join the Conversation" button is away from the other buttons (if there is enough space)
-  const guardHeight = height > 700 ? (height - 670) / 2 : 0
+  const guardHeight = height > 700 && !secretVisible ? (height - 670) / 2 : 0
 
   console.log(height)
 
@@ -116,12 +116,14 @@ function SidebarList() {
               />
             }
             <div style={{"height": guardHeight}}></div>
-            <Link to="/external-links">
-              <h3 className={`sidebar-list-item footer-list-item ${false ? 'active' : 'not-active'}`}>
-                <Icon className="sidebar-icon">chat</Icon>
-                Join the Conversation
-              </h3>
-            </Link>
+            <li className="sidebar-list-wrap">
+              <Link to="/external-links">
+                <h3 className={`sidebar-list-item ${false ? 'active' : 'not-active'}`}>
+                  <Icon className="sidebar-icon">chat</Icon>
+                  Join the Conversation
+                </h3>
+              </Link>
+            </li>
           </ul>
         }
       </div>

@@ -143,6 +143,7 @@ body>* {
   justify-content: center;
   align-items: center;
   padding-top: 17px;
+  padding-right: 40px;
 }
 
 .secret-tab:hover {
