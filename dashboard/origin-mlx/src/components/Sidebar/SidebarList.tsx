@@ -13,7 +13,7 @@
 *  See the License for the specific language governing permissions and 
 *  limitations under the License. 
 */ 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StoreContext from '../../lib/stores/context'
 import SidebarHeader from './SideBarHeader';
 import SidebarListItem from './SidebarListItem';
@@ -34,6 +34,29 @@ const sideNavColors = {
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
 function SidebarList() {
   const { store } = useContext(StoreContext)
   const { settings, pages } = store
@@ -47,10 +70,15 @@ function SidebarList() {
 
   const artifacts = Object.keys(store.settings.artifacts).filter(enabled).filter((artifact: string) => {return artifact !== "workspace" && artifact !== "operators"})
   const [secretVisible, setSecretVisible] = useState(false)
+  const { height } = useWindowDimensions()
+  // Ensures the "Join the Conversation" button is away from the other buttons (if there is enough space)
+  const guardHeight = height > 700 && !secretVisible ? (height - 670) / 2 : 0
+
+  console.log(height)
 
   return (
     <div className="sidebar-container">
-      <div 
+      <div
         style={{
           "textAlign": "left",
           "color": sideNavColors.fgActive,
@@ -87,18 +115,19 @@ function SidebarList() {
                 active={'Workspace' === active}
               />
             }
+            <div style={{"height": guardHeight}}></div>
+            <li className="sidebar-list-wrap">
+              <Link to="/external-links">
+                <h3 className={`sidebar-list-item ${false ? 'active' : 'not-active'}`}>
+                  <Icon className="sidebar-icon">chat</Icon>
+                  Join the Conversation
+                </h3>
+              </Link>
+            </li>
           </ul>
         }
       </div>
       <div className="bottom-sidebar">
-        <div className={"sidebar-list-wrap footer-list-wrap" + (!secretVisible ? " conversation-margin" : "")}>
-          <Link to="/external-links">
-            <h3 className={`sidebar-list-item footer-list-item ${false ? 'active' : 'not-active'}`}>
-              <Icon className="sidebar-icon">chat</Icon>
-              Join the Conversation
-            </h3>
-          </Link>
-        </div>
         { !secretVisible &&
           <div className="secret-divider"></div>
         }
@@ -108,10 +137,13 @@ function SidebarList() {
             </div>
           :
             <div className="secret-tab" onClick={() => setSecretVisible(true)}>
-              <Icon>more_horiz</Icon>
+              <div className="display-secret-menu-button">
+                <Icon>settings</Icon> 
+                <h3 className="secret-title">Settings</h3>
+              </div>
             </div>
         )}
-      </div>
+        </div>
     </div>
   )
 }

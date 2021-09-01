@@ -44,28 +44,6 @@ function MetaDetailPage(props: MetaDetailPageProps) {
   const { api } = store.settings.endpoints
   const API = api.value || api.default
 
-  const fetchTemplates = () => {
-    fetchAssetTemplates(API, type, asset)
-    .then((template: any) => {
-      if (props.asset.search) {
-        const url_params = props.asset.search.substring(1).split("&")
-        const url_params_json: {[key: string]: string} = {}
-        url_params.forEach((param: string) => {
-          const split = param.split("=")
-          let key = decodeURIComponent(split[0])
-          const value = decodeURIComponent(split[1])
-          if (type === "pipelines")
-            key = key.replace(/_/g,"-")
-          url_params_json[key] = value
-        })
-        template.url_parameters = url_params_json
-      }
-      else
-        template.url_parameters = {}
-      setAsset(template)
-    })
-  }
-
   useEffect(() => {
     if (!asset?.template && !asset?.templates) {
       if (!asset) {
@@ -83,7 +61,25 @@ function MetaDetailPage(props: MetaDetailPageProps) {
         });
       }
       else {
-        fetchTemplates()
+        fetchAssetTemplates(API, type, asset)
+        .then((template: any) => {
+          if (props.asset.search) {
+            const url_params = props.asset.search.substring(1).split("&")
+            const url_params_json: {[key: string]: string} = {}
+            url_params.forEach((param: string) => {
+              const split = param.split("=")
+              let key = decodeURIComponent(split[0])
+              const value = decodeURIComponent(split[1])
+              if (type === "pipelines")
+                key = key.replace(/_/g,"-")
+              url_params_json[key] = value
+            })
+            template.url_parameters = url_params_json
+          }
+          else
+            template.url_parameters = {}
+          setAsset(template)
+        })
       }
     }
   }, [API, asset, id, props.asset.search, type])
