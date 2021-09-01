@@ -70,13 +70,6 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
           className="comp-tabs"
           value={ this.state.leftTab }
           onChange={(_, leftTab: string) => this.setState({ leftTab })}>
-          { dataset.template && dataset.template.readme_url &&
-            <Tab 
-              className="comp-tab"
-              value="readme" 
-              label="Asset Readme" 
-            />
-          }
           <Tab 
             className="comp-tab"
             value="description" 
@@ -110,28 +103,8 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
           }
         </Tabs>
         <div className="detail-contents">
-          { this.state.leftTab === 'readme' &&
-            <MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
-          }
           { this.state.leftTab === 'description' &&
-            <div className="component-detail-side">
-              {!dataset.yaml
-                ? <LoadingMessage message="Loading Pipeline details..." />
-                : <MetadataView 
-                    content={{
-                      about: [
-                        { name: "Source", data: dataset.template.source.name },
-                        { name: "Data Format", data: dataset.template.format[0].type },
-                        { name: "License", data: dataset.license },
-                        { name: "Number of records", data: dataset.number_of_records.toString() },
-                        { name: "Version", data: dataset.template.version },
-                        { name: "Created at", data: dataset.created_at },
-                        { name: "Description", data: dataset.description },
-                      ]
-                    }}
-                  />
-              }
-            </div>
+            <MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
           }
           { this.state.leftTab === 'relatedAssets' &&
             <RelatedAssetView

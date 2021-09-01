@@ -64,6 +64,10 @@ td>span.checked {
   color: #1ccdc7 !important;
 }
 
+.content {
+  padding-left: 10px;
+}
+
 .content tr {
   border-top: 1px solid #c6cbd1;
   background: #fff;
