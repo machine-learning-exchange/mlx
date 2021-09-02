@@ -1,10 +1,4 @@
 {
-  "api_access_tokens": [
-    {
-      "api_token": "IBM_GITHUB_ENTERPRISE_API_TOKEN",
-      "url_host": "github.ibm.com"
-    }
-  ],
   "components": [
     {
       "name": "Generate Dataset Metadata",
@@ -42,11 +36,11 @@
   "datasets": [
     {
       "name": "Thematic Clustering",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering/thematic_clustering.yaml"
     },
     {
       "name": "Finance Proposition Bank",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/fpb.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/fpb/fpb.yaml"
     },
     {
       "name": "Groningen Meaning Bank",
@@ -57,16 +51,20 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk/jfk.yaml"
     },
     {
+      "name": "Project CodeNet",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet/codenet.yaml"
+    },
+    {
       "name": "PubLayNet",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/publaynet.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/publaynet/publaynet.yaml"
     },
     {
       "name": "PubTabNet",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/pubtabnet.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/pubtabnet/pubtabnet.yaml"
     },
     {
       "name": "TensorFlow Speech Commands",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc/tsc.yaml"
     }
   ],
   "models": [
@@ -76,7 +74,7 @@
     },
     {
       "name": "MAX Image Resolution Enhancer",
-      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/model-samples/max-image-resolution-enhancer.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-resolution-enhancer.yaml"
     },
     {
       "name": "MAX Optical Character Recognition",
@@ -127,6 +125,14 @@
     {
       "name": "JFK Airport Analysis",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/JFK-airport.yaml"
+    },
+    {
+      "name": "Project CodeNet Language Classification",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/codenet-lang.yaml"
+    },
+    {
+      "name": "Project CodeNet Masked Language Model",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/codenet-mlm.yaml"
     }
   ],
   "pipelines": [
@@ -144,23 +150,23 @@
     },
     {
       "name": "Trusted AI Pipeline",
-      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/trusted-ai-pipeline.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/trusted-ai-pipeline.yaml"
     },
     {
       "name": "Watson Machine Learning",
-      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/wml-pipeline.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/wml-pipeline.yaml"
     },
     {
       "name": "Calculation Pipeline",
-      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/calculation-pipeline.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/calculation-pipeline.yaml"
     },
     {
       "name": "Katib Early Stopping Experiment",
-      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/katib-pipeline.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/katib-pipeline.yaml"
     },
     {
       "name": "Nested Pipeline",
-      "url": "https://github.com/machine-learning-exchange/katalog/blob/main/pipeline-samples/nested-pipeline.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/nested-pipeline.yaml"
     }
   ]
 }
