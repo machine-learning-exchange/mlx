@@ -35,10 +35,6 @@
   ],
   "datasets": [
     {
-      "name": "Thematic Clustering",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering.yaml"
-    },
-    {
       "name": "Finance Proposition Bank",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/fpb.yaml"
     },
@@ -49,6 +45,10 @@
     {
       "name": "NOAA Weather Data",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk.yaml"
+    },
+    {
+      "name": "Project CodeNet Dataset",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet.yaml"
     },
     {
       "name": "PubLayNet",
@@ -63,8 +63,8 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc.yaml"
     },
     {
-      "name": "CodeNet Dataset",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet.yaml"
+      "name": "Thematic Clustering",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering.yaml"
     }
   ],
   "models": [
@@ -125,6 +125,14 @@
     {
       "name": "JFK Airport Analysis",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/JFK-airport.yaml"
+    },
+    {
+      "name": "Project CodeNet Language Classification",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/codenet-lang.yaml"
+    },
+    {
+      "name": "Project CodeNet Masked Language Model",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/codenet-mlm.yaml"
     }
   ],
   "pipelines": [
