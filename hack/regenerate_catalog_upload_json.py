@@ -45,13 +45,10 @@ def get_list_of_yaml_files_in_katalog(asset_type: str):
 
     yaml_files = glob(f"{katalog_dir}/{asset_type}-samples/**/*.yaml", recursive=True)
 
-    yaml_files = sorted(filter(lambda f: "template" not in f, yaml_files))
+    yaml_files = [filepath for filepath in yaml_files
+                  if not any(word in filepath for word in ["template", "test", "src"])]
 
-    yaml_files = sorted(filter(lambda f: "test" not in f, yaml_files))
-
-    yaml_files = sorted(filter(lambda f: "src" not in f, yaml_files))
-
-    return yaml_files
+    return sorted(yaml_files)
 
 
 def generate_katalog_dict() -> dict:
@@ -89,7 +86,9 @@ def rewrite_catalog_upload_json_files(katalog: dict):
     for file_path in catalog_upload_json_files:
 
         with open(file_path, "w") as output_file:
+
             print(" - " + relpath(file_path, project_dir))
+
             output_file.write(json.dumps(katalog, sort_keys=False, indent=2))
             output_file.write("\n")
 
