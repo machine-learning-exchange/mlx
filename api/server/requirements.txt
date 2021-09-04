@@ -1,38 +1,20 @@
 # requirements are grouped in blocks that are related
 
-# force old version of pip (legacy resolver), tolerate kubernetes version conflict between kfp and kfserving
-# TODO: remove after upgrading to kfp==1.5.x, kf_serving==0.5.x
-pip==20.2.4
-
-setuptools>=41.2.0
-
-# TODO: remove after upgrading kfp-tekton 0.8.1, which depends on kfp==1.6.2
-kfp-tekton@git+https://github.com/kubeflow/kfp-tekton.git@v0.8.0#egg=kfp-tekton&subdirectory=sdk/python
-# kfp==1.6.2
-# kfp-tekton==0.8.0
-
-kfp-notebook==0.23.0
-kfserving==0.5.1
-
-# force kubernetes version to "decide" version conflict between kfp and kfserving
-# TODO: remove after upgrading to kfp==1.5.x, kf_serving==0.5.x
-kubernetes<13,>=8.0.0
+kfp-tekton==1.0.0
+kfp-notebook
+kfserving
 
 requests>=2.25.0
 Werkzeug>=1.0.1
 python_dateutil>=2.8.1
 connexion[swagger-ui]>=2.7.0
-Flask>=1.1.4
+Flask>=1.1.4 #,<2.0.0
 flask-cors>=2.1.2  # https://github.com/corydolphin/flask-cors/issues/138
-
 waitress>=2.0.0
 
 PyYaml>=5.3.1
-
 mysql-connector-python>=8.0.22
-
 minio<7.0.0  # TODO: fix import error after 6.0.2 (https://github.com/minio/minio-py/pull/968)
 
 ai_pipeline_params>=0.0.3
-
 autopep8>=1.5.4
