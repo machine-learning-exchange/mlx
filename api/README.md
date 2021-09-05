@@ -50,12 +50,6 @@ will automatically download the _"correct"_ version of the `swagger-codegen-cli.
 
     python3 -m venv .venv
     source .venv/bin/activate
-
-    # force pip to use legacy dependency version conflict resolver
-    # "kfserving 0.4.1 requires kubernetes==10.0.1, but you'll have kubernetes 11.0.0 which is incompatible."
-    export PYTHON_PIP_VERSION=20.2.4
-    pip install pip=="$PYTHON_PIP_VERSION" --force-reinstall
-
     pip install -r ./requirements.txt
 
 ## (Re-)Generate Swagger Client and Server Code

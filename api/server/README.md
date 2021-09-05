@@ -9,15 +9,14 @@ Flask server.
 This example uses the [Connexion](https://github.com/zalando/connexion) library on top of Flask.
 
 ## Requirements
-Python 3.5.2+
+Python 3.6.1+
 
 ## Usage
 
 To run the server, please execute the following from the root directory:
 
 ```
-pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-pip3 install 'connexion[swagger-ui]'  # https://stackoverflow.com/a/57207557/5601796
+pip3 install -r requirements.txt
 python3 -m swagger_server
 ```
 
