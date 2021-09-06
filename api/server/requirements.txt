@@ -8,7 +8,7 @@ requests>=2.25.0
 Werkzeug>=1.0.1
 python_dateutil>=2.8.1
 connexion[swagger-ui]>=2.7.0
-Flask>=1.1.4 #,<2.0.0
+Flask>=1.1.4,<2.0.0  #  Flask>2.0.0 requires Werkzeug>=2.0, but connexion[swagger-ui]==2.9.0 requires werkzeug<2.0,>=1.0
 flask-cors>=2.1.2  # https://github.com/corydolphin/flask-cors/issues/138
 waitress>=2.0.0
 
