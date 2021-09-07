@@ -27,6 +27,11 @@ from waitress import serve
 from threading import current_thread
 
 
+def get_request_log_msg():
+    return '(%03d) %s %s %s ...' % (current_thread().ident % 1000, request.remote_addr,
+                                    request.method, request.full_path)
+
+
 def main():
 
     logging.basicConfig(format="%(asctime)s.%(msecs)03d %(levelname)-7s [%(name)-.8s] %(message)s",
@@ -47,10 +52,6 @@ def main():
     CORS(flask_app, origins='*')
 
     start_times = dict()
-
-    def get_request_log_msg():
-        return '(%03d) %s %s %s ...' % (current_thread().ident % 1000, request.remote_addr,
-                                        request.method, request.full_path)
 
     @flask_app.before_request
     def before_request():
