@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 hash_comment () {
+  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
     sed -i '' '1i\
@@ -16,6 +17,7 @@ hash_comment () {
 }
 
 slash_comment () {
+  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
     sed -i '' '1i\
@@ -27,6 +29,7 @@ slash_comment () {
 }
 
 css_comment () {
+  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
     sed -i '' '1i\
@@ -40,6 +43,7 @@ css_comment () {
 }
 
 html_comment () {
+  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
     sed -i '' '1i\
@@ -54,7 +58,10 @@ html_comment () {
 
 export -f hash_comment slash_comment css_comment html_comment
 
+echo "Adding license headers to ..."
+
 # Python, YAML, Bash
+echo " - Python, YAML, Shell scripts"
 find . -type f -not -path '*/temp/*' -a -not -path '*/\.*' -a \( -name '*.py' -o -name '*.yaml' -o -name '*.yml' -o -name '*.sh' \) -exec bash -c 'hash_comment "$0"' {} \;
 find . -type f -not -path '*/temp/*' -a -name '.travis.yml' -exec bash -c 'hash_comment "$0"' {} \;
 
