@@ -15,8 +15,8 @@ services:
 
 jobs:
   include:
-    - stage: test
-      name: "UI Build"
+    - name: "UI Build"
+      stage: test
       env:
         - DIFF_DETECTED_ERR_CODE=169
         - DIFF_DIR=dashboard/origin-mlx
@@ -54,5 +54,8 @@ jobs:
     - name: "Python flake8 check"
       script:
         - flake8 . --count --exclude=./api/server/swagger_server/code_templates --select=E9,F63,F7,F82 --show-source --statistics
+    - name: "Check license headers"
+      script:
+        - make check_license
 notifications:
   email: false
