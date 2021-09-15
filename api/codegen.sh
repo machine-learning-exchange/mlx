@@ -84,6 +84,12 @@ class ApiError(Exception):
 response_cache = dict()
 
 
+def should_cache(controller_name, method_name):
+    return request.method == "GET" \
+           and method_name != "health_check" \
+           and "inference_service" not in controller_name
+
+
 def invoke_controller_impl(controller_name=None, parameters=None, method_name=None):
     """
     Invoke the controller implementation of the method called on the parent frame.
@@ -161,14 +167,16 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
             results = None
             request_cache_key = (controller_name, method_name, str(parameters))
 
-            if request.method == "GET" and method_name != "health_check":
+            if should_cache(controller_name, method_name):
                 results = response_cache.get(request_cache_key)
 
             if not results:
                 results = impl_func(**parameters)
 
-                if request.method == "GET" and method_name != "health_check":
+                if should_cache(controller_name, method_name):
                     response_cache[request_cache_key] = results
+                    log_msg = get_request_log_msg()
+                    logging.getLogger("GETcache").info(f"{log_msg} added to cache")
 
                 if request.method in ("DELETE", "POST", "PATCH", "PUT") and not method_name.startswith("run_"):
                     # any modifying method clears all cached entries, to avoid loopholes like delete '*',
