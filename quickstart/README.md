@@ -101,3 +101,17 @@ To remove all previously created Docker Compose data run the following commands:
     docker compose down -v --remove-orphans
     docker compose rm -v -f
     docker volume prune -f
+    
+### Windows Subsystem for Linux (WSL) Issues
+
+#### Quickstart - init_catalog.sh
+After you run:
+
+    docker compose up
+If you are experiencing the below error with the init_catalog.sh file not being found by docker:
+
+    catalog_1     | /bin/sh: /init_catalog.sh: not found
+    catalog_1 exited with code 127
+Make sure you originally cloned/forked the source repo from WSL, not Windows. Error happens because you have files with Windows line endings which bash cannot run (https://askubuntu.com/questions/966488/how-do-i-fix-r-command-not-found-errors-running-bash-scripts-in-wsl#comment1553686_966488).
+The error prevents loading of assets and objects into the MLX UI.
+
