@@ -104,14 +104,16 @@ To remove all previously created Docker Compose data run the following commands:
     
 ### Windows Subsystem for Linux (WSL) Issues
 
-#### Quickstart - init_catalog.sh
-After you run:
+#### Featured Assets Pages are Empty
 
-    docker compose up
-If you are experiencing the below error with the init_catalog.sh file not being found by docker:
+If there are no featured asset cards showing up in the MLX web UI and the Docker Compose log shows an error like this:
 
     catalog_1     | /bin/sh: /init_catalog.sh: not found
     catalog_1 exited with code 127
-Make sure you originally cloned/forked the source repo from WSL, not Windows. Error happens because you have files with Windows line endings which bash cannot run (https://askubuntu.com/questions/966488/how-do-i-fix-r-command-not-found-errors-running-bash-scripts-in-wsl#comment1553686_966488).
-The error prevents loading of assets and objects into the MLX UI.
+    
+Make sure you originally cloned/forked the source repo from inside the WSL sub-system, not Windows. This error happens
+because the MLX source files have Windows line endings (`\r\n` - CRLF) which `bash` cannot run.
+(https://askubuntu.com/questions/966488/how-do-i-fix-r-command-not-found-errors-running-bash-scripts-in-wsl#comment1553686_966488).
+This error in the `catalog_1` service prevents the loading of assets and objects into the MLX catalog.
+
 
