@@ -1,16 +1,16 @@
 {
   "components": [
     {
+      "name": "Create Secret - Kubernetes Cluster",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/create-secret/component.yaml"
+    },
+    {
       "name": "Generate Dataset Metadata",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/dax-to-dlf/component.yaml"
     },
     {
       "name": "Create Dataset Volume",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/dlf/component.yaml"
-    },
-    {
-      "name": "Create Secret - Kubernetes Cluster",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/component-samples/create-secret/component.yaml"
     },
     {
       "name": "Echo Sample",
@@ -35,6 +35,18 @@
   ],
   "datasets": [
     {
+      "name": "Project CodeNet",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet/codenet.yaml"
+    },
+    {
+      "name": "Project CodeNet - Language Classifier",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet_langclass/codenet_langclass.yaml"
+    },
+    {
+      "name": "Project CodeNet - MLM",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet_mlm/codenet_mlm.yaml"
+    },
+    {
       "name": "Finance Proposition Bank",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/fpb/fpb.yaml"
     },
@@ -47,10 +59,6 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/jfk/jfk.yaml"
     },
     {
-      "name": "Project CodeNet",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/codenet/codenet.yaml"
-    },
-    {
       "name": "PubLayNet",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/publaynet/publaynet.yaml"
     },
@@ -59,57 +67,73 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/pubtabnet/pubtabnet.yaml"
     },
     {
-      "name": "TensorFlow Speech Commands",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc/tsc.yaml"
-    },
-    {
       "name": "Thematic Clustering",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/thematic_clustering/thematic_clustering.yaml"
+    },
+    {
+      "name": "TensorFlow Speech Commands",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/dataset-samples/tsc/tsc.yaml"
     }
   ],
   "models": [
     {
+      "name": "CodeNet Language Classification",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/codenet-language-classification/codenet-language-classification.yaml"
+    },
+    {
       "name": "MAX Human Pose Estimator",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-human-pose-estimator.yaml"
-    },
-    {
-      "name": "MAX Image Resolution Enhancer",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-resolution-enhancer.yaml"
-    },
-    {
-      "name": "MAX Optical Character Recognition",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-ocr.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-human-pose-estimator/max-human-pose-estimator.yaml"
     },
     {
       "name": "MAX Image Caption Generator",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-caption-generator.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-caption-generator/max-image-caption-generator.yaml"
     },
     {
-      "name": "MAX Toxic Comment Classifier",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-toxic-comment-classifier.yaml"
+      "name": "MAX Image Resolution Enhancer",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-resolution-enhancer/max-image-resolution-enhancer.yaml"
     },
     {
-      "name": "MAX Question Answering",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-question-answering.yaml"
-    },
-    {
-      "name": "MAX Recommender System",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-recommender.yaml"
+      "name": "MAX Named Entity Tagger",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-named-entity-tagger/max-named-entity-tagger.yaml"
     },
     {
       "name": "MAX Object Detector",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-object-detector.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-object-detector/max-object-detector.yaml"
+    },
+    {
+      "name": "MAX Optical Character Recognition",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-ocr/max-ocr.yaml"
+    },
+    {
+      "name": "MAX Question Answering",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-question-answering/max-question-answering.yaml"
+    },
+    {
+      "name": "MAX Recommender System",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-recommender/max-recommender.yaml"
     },
     {
       "name": "MAX Text Sentiment Classifier",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-text-sentiment-classifier.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-text-sentiment-classifier/max-text-sentiment-classifier.yaml"
+    },
+    {
+      "name": "MAX Toxic Comment Classifier",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-toxic-comment-classifier/max-toxic-comment-classifier.yaml"
     },
     {
       "name": "MAX Weather Forecaster",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-weather-forecaster.yaml"
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-weather-forecaster/max-weather-forecaster.yaml"
     }
   ],
   "notebooks": [
+    {
+      "name": "JFK Airport Analysis",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/JFK-airport.yaml"
+    },
+    {
+      "name": "AIF360 Bias detection example",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif-bias.yaml"
+    },
     {
       "name": "ART detector model",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-detector.yaml"
@@ -119,20 +143,20 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/art-poison.yaml"
     },
     {
-      "name": "AIF360 Bias detection example",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/aif-bias.yaml"
-    },
-    {
-      "name": "JFK Airport Analysis",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/JFK-airport.yaml"
-    },
-    {
-      "name": "Project CodeNet Language Classification",
+      "name": "Project CodeNet - Language Classification",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/codenet-lang.yaml"
     },
     {
-      "name": "Project CodeNet Masked Language Model",
+      "name": "Project CodeNet - MLM",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/codenet-mlm.yaml"
+    },
+    {
+      "name": "Qiskit Quantum Kernel Machine Learning",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/qiskit-ml.yaml"
+    },
+    {
+      "name": "Qiskit Neural Network Classifier and Regressor",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/notebook-samples/qiskit-nncr.yaml"
     }
   ],
   "pipelines": [
@@ -149,14 +173,6 @@
       "url": "https://github.com/kubeflow/kfp-tekton/blob/master/sdk/python/tests/compiler/testdata/resourceop_basic.yaml"
     },
     {
-      "name": "Trusted AI Pipeline",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/trusted-ai-pipeline.yaml"
-    },
-    {
-      "name": "Watson Machine Learning",
-      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/wml-pipeline.yaml"
-    },
-    {
       "name": "Calculation Pipeline",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/calculation-pipeline.yaml"
     },
@@ -167,6 +183,14 @@
     {
       "name": "Nested Pipeline",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/nested-pipeline.yaml"
+    },
+    {
+      "name": "Trusted AI Pipeline",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/trusted-ai-pipeline.yaml"
+    },
+    {
+      "name": "Watson Machine Learning",
+      "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/pipeline-samples/wml-pipeline.yaml"
     }
   ]
 }
