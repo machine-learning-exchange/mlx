@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Copyright 2021 IBM Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -97,6 +99,8 @@ def main():
 
     print("Regenerating catalog_upload.json files:")
 
+    # TODO: read current catalog_upload.json file(s) to capture non-katalog assets and restore later
+
     katalog_dict = generate_katalog_dict()
 
     rewrite_catalog_upload_json_files(katalog_dict)
@@ -107,4 +111,3 @@ def main():
 if __name__ == '__main__':
 
     main()
-
