@@ -83,6 +83,7 @@ function SidebarList() {
           "textAlign": "left",
           "color": sideNavColors.fgActive,
           "backgroundColor": sideNavColors.bg, 
+          "height": "100%",
       }}>
         <SidebarHeader 
           name="Home"
@@ -126,24 +127,21 @@ function SidebarList() {
             </li>
           </ul>
         }
-      </div>
-      <div className="bottom-sidebar">
-        { !secretVisible &&
-          <div className="secret-divider"></div>
-        }
-        { isAdmin && (secretVisible ?
-            <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
-              <SecretMenu/>
-            </div>
-          :
-            <div className="secret-tab" onClick={() => setSecretVisible(true)}>
-              <div className="display-secret-menu-button">
-                <Icon>settings</Icon> 
-                <h3 className="secret-title">Settings</h3>
+        <div className="bottom-sidebar">
+          { isAdmin && (secretVisible ?
+              <div className="secret-tab-open" onClick={() => setSecretVisible(false)}>
+                <SecretMenu/>
               </div>
-            </div>
-        )}
+            :
+              <div className="secret-tab sidebar-list-wrap" onClick={() => setSecretVisible(true)}>
+                <div className="display-secret-menu-button sidebar-list-item">
+                  <Icon>settings</Icon> 
+                  <h3 className="secret-title">Settings</h3>
+                </div>
+              </div>
+          )}
         </div>
+      </div>
     </div>
   )
 }
