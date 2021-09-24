@@ -76,3 +76,63 @@ or:
 
     kubectl delete -f ./server/mlx-api.yml
     kubectl apply -f ./server/mlx-api.yml
+
+## Testing API Code Changes with Docker Compose
+
+You can test most code changes without a Kubernetes cluster. A K8s cluster is only
+required to `run` the generated sample pipeline code. Running the Quickstart with
+Docker Compose is sufficient to test any `katalog` related API endpoints.
+
+A development setup that works very well requires to 3 shell terminals:
+
+### Terminal 1 - Quickstart without `mlx-api` service
+
+Bring up the Quickstart without the `mlx-api` service, since we will run the MLX API
+from our local source code, instead of using the pre-built Docker image `mlexchange/mlx-api:nightly-main`.
+
+    # cd <mlx_root_directory>
+    cd quickstart
+    
+    docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui
+
+After testing or debugging your code changes, bring down the Docker Compose stack:
+
+    # control + C 
+
+    docker compose --project-name  no_api  down  minio miniosetup mysql mlx-ui
+
+Optional, to delete all data in Minio and MySQL, run the following commands:
+
+    docker compose down -v --remove-orphans
+    docker compose rm -v -f
+    docker volume prune -f
+
+
+### Terminal 2 - Swagger server
+
+Bring up the API code and set the required environment variables to connect to MySQL and Minio 
+
+    # cd <mlx_root_directory>
+    cd api/server/swagger_server
+
+    export MINIO_SERVICE_SERVICE_HOST=localhost
+    export MINIO_SERVICE_SERVICE_PORT=9000
+    export MYSQL_SERVICE_HOST=localhost
+    export MYSQL_SERVICE_PORT=3306
+    export ML_PIPELINE_SERVICE_HOST=UNAVAILABLE
+    export ML_PIPELINE_SERVICE_PORT=UNAVAILABLE
+
+    python3 -m swagger_server
+
+After testing or debugging your code changes, bring down the Swagger Server
+
+    # control + C
+
+### Terminal 3 - Initialize the catalog
+
+First time you bring up the Quickstart for API development, you need to populate the
+MLX Katalog
+
+    # cd <mlx_root_directory>
+    cd quickstart
+    ./init_catalog.sh
