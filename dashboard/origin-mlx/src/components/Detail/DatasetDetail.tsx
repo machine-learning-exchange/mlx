@@ -103,9 +103,22 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
           }
         </Tabs>
         <div className="detail-contents">
-          { this.state.leftTab === 'description' &&
-            <MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
-          }
+          { this.state.leftTab === 'description' && ((dataset.template && dataset.template.readme_url)
+            ?<MarkdownViewer url={dataset.template.readme_url}></MarkdownViewer>
+            : <MetadataView 
+                content={{
+                  about: [
+                    { name: "Source", data: dataset.template.source.name },
+                    { name: "Data Format", data: dataset.template.format[0].type },
+                    { name: "License", data: dataset.license },
+                    { name: "Number of records", data: dataset.number_of_records.toString() },
+                    { name: "Version", data: dataset.template.version },
+                    { name: "Created at", data: dataset.created_at },
+                    { name: "Description", data: dataset.description },
+                  ]
+                }}
+              />
+          )}
           { this.state.leftTab === 'relatedAssets' &&
             <RelatedAssetView
               datasetId={dataset.id}
