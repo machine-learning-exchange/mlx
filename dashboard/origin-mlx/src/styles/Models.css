@@ -561,7 +561,7 @@ td>span.checked {
   align-items: center;
   flex: 1;
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: auto;
   justify-items: center;
 }
 
