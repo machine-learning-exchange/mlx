@@ -81,47 +81,47 @@
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/codenet-language-classification/codenet-language-classification.yaml"
     },
     {
-      "name": "MAX Human Pose Estimator",
+      "name": "Human Pose Estimator",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-human-pose-estimator/max-human-pose-estimator.yaml"
     },
     {
-      "name": "MAX Image Caption Generator",
+      "name": "Image Caption Generator",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-caption-generator/max-image-caption-generator.yaml"
     },
     {
-      "name": "MAX Image Resolution Enhancer",
+      "name": "Image Resolution Enhancer",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-image-resolution-enhancer/max-image-resolution-enhancer.yaml"
     },
     {
-      "name": "MAX Named Entity Tagger",
+      "name": "Named Entity Tagger",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-named-entity-tagger/max-named-entity-tagger.yaml"
     },
     {
-      "name": "MAX Object Detector",
+      "name": "Object Detector",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-object-detector/max-object-detector.yaml"
     },
     {
-      "name": "MAX Optical Character Recognition",
+      "name": "Optical Character Recognition",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-ocr/max-ocr.yaml"
     },
     {
-      "name": "MAX Question Answering",
+      "name": "Question Answering",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-question-answering/max-question-answering.yaml"
     },
     {
-      "name": "MAX Recommender System",
+      "name": "Recommender System",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-recommender/max-recommender.yaml"
     },
     {
-      "name": "MAX Text Sentiment Classifier",
+      "name": "Text Sentiment Classifier",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-text-sentiment-classifier/max-text-sentiment-classifier.yaml"
     },
     {
-      "name": "MAX Toxic Comment Classifier",
+      "name": "Toxic Comment Classifier",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-toxic-comment-classifier/max-toxic-comment-classifier.yaml"
     },
     {
-      "name": "MAX Weather Forecaster",
+      "name": "Weather Forecaster",
       "url": "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/model-samples/max-weather-forecaster/max-weather-forecaster.yaml"
     }
   ],
