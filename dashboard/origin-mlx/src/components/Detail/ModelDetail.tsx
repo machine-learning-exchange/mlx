@@ -107,18 +107,12 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
           variant="fullWidth"
           className="comp-tabs" 
           value={ this.state.leftTab }
-          onChange={(_, value: string) => this.setState({ leftTab: value })}>
-          { model.template && model.template.readme_url &&
-            <Tab 
-              className="comp-tab"
-              value="readme" 
-              label="Asset Readme" 
-            />
-          }
-          <Tab 
+          onChange={(_, value: string) => this.setState({ leftTab: value })}
+        >
+          <Tab
             className="comp-tab"
-            value="description" 
-            label="Description" 
+            value="description"
+            label="Description"
           />
           {canRun && isAdmin &&
             <Tab 
@@ -148,55 +142,8 @@ export default class ModelDetail extends React.Component<ModelDetailProps, Model
           }
         </Tabs>
         <div className="detail-contents">
-          { this.state.leftTab === 'readme' &&
+          { this.state.leftTab === 'description' &&
             <MarkdownViewer url={model.template.readme_url}></MarkdownViewer>
-          }
-          {this.state.leftTab === 'description' &&
-            <MetadataView content={{
-              about: [
-                { name: "model identifier", data: model.template.model_identifier },
-                { name: "domain", data: model.template.domain },
-                { name: "description", data: model.template.description },
-              ],
-              'Usage Info': [
-                { 
-                  name: "framework name",
-                  data: capitalize(model.template.framework.name),
-                  thirdColData: model.template.framework.version ? ` v` + model.template.framework.version: ''
-                },
-                model.isTrainable && { 
-                  name: "runtime",
-                  data: capitalize(model.template.framework.runtimes.name),
-                  thirdColData: model.template.framework.runtimes ? ` v` + model.template.framework.runtimes.version: ''
-                },
-                { name: "license", data: model.template.license },
-                { name: "website", data: model.template.website, itemClass: "model-link" },
-              ],
-              'Serving Details': model.isServable && [
-                { 
-                  name: "tested platforms",
-                  data: model.template.serving.tested_platforms.map((name:string)=>name).join(`, `)
-                },
-                { 
-                  name: "container image",
-                  data: String(model.template.serving.serving_container_image.container_image_url)
-                },
-              ],
-              'Training Details': model.isTrainable && [
-                { 
-                  name: "tested platforms",
-                  data: model.template.training.tested_platforms.map((name:string)=>name).join(`, `)
-                },
-                model.template.training.training_container_image && { 
-                  name: "container image",
-                  data: model.template.training.training_container_image ? model.template.training.training_container_image.container_image_url : ``
-                },
-                { 
-                  name: "execution command",
-                  data: model.template.training.execution.command
-                },
-              ]
-            }}/>
           }
           {this.state.leftTab === 'runCreation' &&
             <ModelRunForm 
