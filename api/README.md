@@ -2,6 +2,8 @@
 
 An extension to the Kubeflow Pipeline API for Components and Models
 
+---
+
 # Quickstart    
 
 ## Deploy to Kubernetes
@@ -117,7 +119,10 @@ Optional, to delete all data in Minio and MySQL, run the following commands:
 
 ### TERMINAL 2 - Swagger Server
 
-Bring up the API code and set the required environment variables to connect to MySQL and Minio 
+Bring up the API code and set the required environment variables to connect to MySQL and Minio.
+
+Make sure to have activated you Python virtual environment with the required package dependencies
+installed as described [above](#create-a-python-virtual-environment-for-development).
 
     # cd <mlx_root_dir>
     cd api/server/swagger_server
