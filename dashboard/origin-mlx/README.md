@@ -7,24 +7,24 @@ This repo contains the code for the front end UI of the Machine Learning Exchang
 To run this app, you'll need a current version of Node.js installed.
 
 1. First, clone this repo:
-``` bash
-$ git clone https://github.com/machine-learning-exchange/mlx.git
+```Bash
+git clone https://github.com/machine-learning-exchange/mlx.git
 ```
 
 2. Next, install the dependencies by running this command from within the newly created directory:
-``` bash
-$ npm install
+```Bash
+npm install
 ```
 
 3. Start the app with the following command:
-``` bash
-$ npm start
+```Bash
+npm start
 ```
 
 4. The app should now be accessible in your web browser at:
 ```
 http://localhost:3000
-````
+```
 
 ## Configure usage of MLX API and KFP API
 
@@ -46,18 +46,18 @@ http://localhost:3000/settings
 ## Deploy MLX UI to Kubernetes
 
 First deploy the MLX UI.
-```
+```Bash
 kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
 ```
 
 Find the UI Host and Port. It may take some time before the MLX UI becomes available.
-```
-    export UI_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')
-    export UI_PORT=$(kubectl get service mlx-ui -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')
+```Bash
+export UI_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')
+export UI_PORT=$(kubectl get service mlx-ui -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')
 ```
 Open the webpage in a browser:
 
-```
+```Bash
 open "http://${UI_HOST}:${UI_PORT}"
 ```
 
@@ -65,7 +65,7 @@ open "http://${UI_HOST}:${UI_PORT}"
 
 ## Build a Docker Image for MLX UI
 
-```
+```Bash
 cd dashboard/origin-mlx
 docker build -t <your docker user-id>/<repo name>:<tag name> -f Dockerfile .
 docker push <your docker user-id>/<repo name>:<tag name>
@@ -75,7 +75,7 @@ docker push <your docker user-id>/<repo name>:<tag name>
 
 Change the Docker image tag in the deployment spec server/mlx-ui.yml from image: ibmandrewbutler/open-ui:add-homepage to image: <your_docker_user_id>/<repo name>:<tag name> and then run:
 
-```
+```Bash
 kubectl delete -f ./dashboard/origin-mlx/mlx-ui.yml
 kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
 ```
@@ -93,22 +93,28 @@ A development setup that works very well requires to 2 shell terminals:
 Bring up the Quickstart without the `mlx-ui` service, since we will run the MLX UI
 from our local source code, instead of using the pre-built Docker image `mlexchange/mlx-ui:nightly-origin-main`.
 
-    # cd <mlx_root_directory>
-    cd quickstart
-    
-    docker compose --project-name  no_ui   up   minio miniosetup mysql mlx-api catalog
+```Bash
+# cd <mlx_root_directory>
+cd quickstart
 
-After testing or debugging your code changes, bring down the Docker Compose stack:
+docker compose --project-name  no_ui   up   minio miniosetup mysql mlx-api catalog
+```
 
-    # control + C 
+Remember to bring down the Docker Compose stack after testing your UI code changes:
 
-    docker compose --project-name  no_ui  down  minio miniosetup mysql mlx-api catalog
+```Bash
+# control + C 
+
+docker compose --project-name  no_ui  down  minio miniosetup mysql mlx-api catalog
+```
 
 Optional, to delete all data in Minio and MySQL, run the following commands:
 
-    docker compose down -v --remove-orphans
-    docker compose rm -v -f
-    docker volume prune -f
+```Bash
+docker compose down -v --remove-orphans
+docker compose rm -v -f
+docker volume prune -f
+```
 
 ### Terminal 2 - Start the UI server
 
