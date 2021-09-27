@@ -112,6 +112,13 @@ Optional, to delete all data in Minio and MySQL, run the following commands:
 
 ### Terminal 2 - Start the UI server
 
+Navigate to the UI source folder:
+
+```Bash
+# cd <mlx_root_directory>
+cd dashboard/origin-mlx
+```
+
 Install the package dependencies:
 
 ```Bash
@@ -120,20 +127,25 @@ npm install
 ```
 
 Set the `REACT_APP_API` environment variable so the MLX UI can connect to the MLX API
-backend from the Docker Compose stack and the start the MLX UI with `npm start`:
+backend from the Docker Compose stack:
 
 ```Bash
 export REACT_APP_API="localhost:8080"
 export REACT_APP_RUN="false"
 export REACT_APP_UPLOAD="true"
 export REACT_APP_DISABLE_LOGIN="true"
+```
 
+Start the MLX Web UI server:
+
+```Bash
 npm start
 ```
 
 The MLX web UI should open up in your web browser at:
+
 ```
-http://localhost:3000
+http://localhost:3000/
 ```
 
 After testing the UI stop the `npm` server with `control` + `C`
