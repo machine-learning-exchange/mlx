@@ -50,6 +50,12 @@ will automatically download the _"correct"_ version of the `swagger-codegen-cli.
 
     python3 -m venv .venv
     source .venv/bin/activate
+
+## Install the Python Package Dependencies
+
+    # cd <mlx_root_dir>
+    # cd api
+
     pip install -r ./requirements.txt
 
 ## (Re-)Generate Swagger Client and Server Code
@@ -62,6 +68,7 @@ will automatically download the _"correct"_ version of the `swagger-codegen-cli.
     docker build -t <your_docker_user_id>/mlx-api-server:0.1 .
     docker login
     docker push <your_docker_user_id>/mlx-api-server:0.1
+    cd ..
 
 ## (Re-)Deploy to Kubernetes Cluster
 
@@ -70,7 +77,7 @@ from `image: docker.io/aipipeline/mlx-api:nightly-master`
 to `image: docker.io/<your_docker_user_id>/mlx-api-server:0.1`
 and then run:
 
-    ./api/deploy.sh
+    ./deploy.sh
 
 or:
 
@@ -85,12 +92,12 @@ Docker Compose is sufficient to test any `katalog` related API endpoints.
 
 A development setup that works very well requires to 3 shell terminals:
 
-### Terminal 1 - Quickstart without `mlx-api` service
+### TERMINAL 1 - Quickstart without `mlx-api` Service
 
 Bring up the Quickstart without the `mlx-api` service, since we will run the MLX API
 from our local source code, instead of using the pre-built Docker image `mlexchange/mlx-api:nightly-main`.
 
-    # cd <mlx_root_directory>
+    # cd <mlx_root_dir>
     cd quickstart
     
     docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui
@@ -108,11 +115,11 @@ Optional, to delete all data in Minio and MySQL, run the following commands:
     docker volume prune -f
 
 
-### Terminal 2 - Swagger server
+### TERMINAL 2 - Swagger Server
 
 Bring up the API code and set the required environment variables to connect to MySQL and Minio 
 
-    # cd <mlx_root_directory>
+    # cd <mlx_root_dir>
     cd api/server/swagger_server
 
     export MINIO_SERVICE_SERVICE_HOST=localhost
@@ -124,14 +131,28 @@ Bring up the API code and set the required environment variables to connect to M
 
     python3 -m swagger_server
 
+The terminal should show log messages like these:
+
+    2021/09/27 15:44:47.575 INFO    [flaskapp] MLX API version: 0.1.29-dont-cache-kfservices
+    2021/09/27 15:44:48.329 INFO    [flaskapp] Enable cross-origin support with 'flask-cors': origins='*'
+    2021/09/27 15:44:48.335 INFO    [waitress] Serving on http://0.0.0.0:8080
+
+Now you can bring up the MLX UI which should be connected to the MLX API on local port `8080`
+
+    http://localhost:80/
+
+Or bring up the Swagger API spec on port `8080` to test API endpoints directly
+
+    http://localhost:8080/apis/v1alpha1/ui/
+
 After testing or debugging your code changes, bring down the Swagger Server
 
     # control + C
 
-### Terminal 3 - Initialize the catalog
+### TERMINAL 3 - Initialize the Catalog
 
-First time you bring up the Quickstart for API development, you need to populate the
-MLX Katalog
+**Note**: The first time you bring up the Quickstart for API development, you need
+to populate the MLX asset catalog
 
     # cd <mlx_root_directory>
     cd quickstart
