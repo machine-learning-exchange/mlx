@@ -126,7 +126,7 @@ backend from the Docker Compose stack and the start the MLX UI with `npm start`:
 export REACT_APP_API="localhost:8080"
 export REACT_APP_RUN="false"
 export REACT_APP_UPLOAD="true"
-export REACT_APP_DISABLE_LOGIN: "true"
+export REACT_APP_DISABLE_LOGIN="true"
 
 npm start
 ```
