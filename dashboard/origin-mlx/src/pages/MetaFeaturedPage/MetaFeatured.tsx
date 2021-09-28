@@ -31,8 +31,7 @@ const styles = {
   wrapper: {
     overflow: 'auto',
     padding: '0.8rem 0.6rem',
-    flex: '1 0 auto',
-    color: 'red'
+    flex: '1 0 auto'
   },
   card: {
     // width: '20%'
