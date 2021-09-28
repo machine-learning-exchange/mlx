@@ -30,7 +30,9 @@ interface MetaFeaturedProps extends WithStyles<typeof styles> {
 const styles = {
   wrapper: {
     overflow: 'auto',
-    padding: '0.8rem 0.6rem'
+    padding: '0.8rem 0.6rem',
+    flex: '1 0 auto',
+    color: 'red'
   },
   card: {
     // width: '20%'
@@ -105,7 +107,6 @@ function MetaFeatured(props: MetaFeaturedProps) {
             </Grid>
           )
         })}
-        <PageFooter/>
       </Grid>
     </div>
   )
