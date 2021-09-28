@@ -92,9 +92,9 @@ You can test most code changes without a Kubernetes cluster. A K8s cluster is on
 required to `run` the generated sample pipeline code. Running the Quickstart with
 Docker Compose is sufficient to test any `katalog` related API endpoints.
 
-A development setup that works very well requires to 3 shell terminals:
+A development setup that works well requires 3 shell terminals in parallel:
 
-### TERMINAL 1 - Quickstart without `mlx-api` Service
+### TERMINAL 1 - Quickstart without the `mlx-api` Service
 
 Bring up the Quickstart without the `mlx-api` service, since we will run the MLX API
 from our local source code, instead of using the pre-built Docker image `mlexchange/mlx-api:nightly-main`.
@@ -103,6 +103,22 @@ from our local source code, instead of using the pre-built Docker image `mlexcha
     cd quickstart
     
     docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui
+
+When the MLX UI is ready, the log messages should show something like this:
+
+    mlx-ui_1      | The build folder is ready to be deployed.
+    mlx-ui_1      | 
+    mlx-ui_1      | Find out more about deployment here:
+    mlx-ui_1      | 
+    mlx-ui_1      |   bit.ly/CRA-deploy
+    mlx-ui_1      | 
+    mlx-ui_1      | [HPM] Proxy created: /  ->  http://mlx-api
+    mlx-ui_1      | Server listening at http://localhost:3000
+
+Now you could bring up the MLX UI on `localhost` port `80` (not `3000`), but it will not yet be
+connected to the MLX API, which we will start in [TERMINAL 2](#terminal-2---swagger-server)
+
+    http://localhost:80/
 
 After testing or debugging your code changes, bring down the Docker Compose stack:
 
@@ -142,11 +158,12 @@ The terminal should show log messages like these:
     2021/09/27 15:44:48.329 INFO    [flaskapp] Enable cross-origin support with 'flask-cors': origins='*'
     2021/09/27 15:44:48.335 INFO    [waitress] Serving on http://0.0.0.0:8080
 
-Now you can bring up the MLX UI which should be connected to the MLX API on local port `8080`
+Now you can bring up the MLX UI on `localhost` port `80` which should be connected to the
+MLX API on local port `8080`
 
     http://localhost:80/
 
-Or bring up the Swagger API spec on port `8080` to test API endpoints directly
+You can also bring up the Swagger API spec on port `8080` to test API endpoints directly
 
     http://localhost:8080/apis/v1alpha1/ui/
 
