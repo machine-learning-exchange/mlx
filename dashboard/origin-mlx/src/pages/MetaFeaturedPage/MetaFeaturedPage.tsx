@@ -26,6 +26,7 @@ import Hero from '../../components/Hero';
 import Icon from '@material-ui/core/Icon'
 import Link from '../../components/Link'
 import MetaFeatured from './MetaFeatured';
+import PageFooter from '../../components/PageFooter';
 
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -203,6 +204,7 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
             assets={filteredAssets} 
           /> 
         }
+      <PageFooter/>
     </div>
   );
 }
