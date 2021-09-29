@@ -17,7 +17,6 @@ import React from 'react'
 import { withStyles, WithStyles } from '@material-ui/core'
 
 import MetaCard from './MetaCard'
-import PageFooter from '../../components/PageFooter';
 
 import Grid from '@material-ui/core/Grid'
 
@@ -30,7 +29,8 @@ interface MetaFeaturedProps extends WithStyles<typeof styles> {
 const styles = {
   wrapper: {
     overflow: 'auto',
-    padding: '0.8rem 0.6rem'
+    padding: '0.8rem 0.6rem',
+    flex: '1 0 auto'
   },
   card: {
     // width: '20%'
@@ -105,7 +105,6 @@ function MetaFeatured(props: MetaFeaturedProps) {
             </Grid>
           )
         })}
-        <PageFooter/>
       </Grid>
     </div>
   )
