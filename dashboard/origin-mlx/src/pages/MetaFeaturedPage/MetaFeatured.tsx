@@ -17,7 +17,6 @@ import React from 'react'
 import { withStyles, WithStyles } from '@material-ui/core'
 
 import MetaCard from './MetaCard'
-import PageFooter from '../../components/PageFooter';
 
 import Grid from '@material-ui/core/Grid'
 
