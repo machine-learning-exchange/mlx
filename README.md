@@ -13,6 +13,9 @@ Allows upload, registration, execution, and deployment of:
  - Datasets
  - Notebooks
 
+For more details about the project please follow this [announcement blog post](https://lfaidata.foundation/blog/2021/09/28/machine-learning-exchange-mlx/). 
+
+
 <img src="docs/images/mlx.png" height="90%" width="90%">
 
 Additionally it provides:
