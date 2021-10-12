@@ -27,6 +27,7 @@ ul {
 }
 
 .sidebar-container {
+  height: 100%;
   min-height: 100%;
 }
 
@@ -46,8 +47,10 @@ ul {
 }
 
 .sidebar-list {
-  padding: 0;
-  margin: 0 auto 0 auto;
+  height: 90%;
+  margin: 0%;
+  padding: 0%;
+  overflow-y: auto;
 }
 
 .sidebar-list-item.header {
@@ -65,6 +68,7 @@ ul {
 .sidebar-list-item {
   list-style: none;
   margin-top: 5%;
+  margin-bottom: 5%;
   text-align: left;
   width: 60%;
   display: inline-block;
@@ -105,9 +109,14 @@ body>* {
   flex-direction: column;
 }
 
+.bottom-sidebar-divider {
+  height: 10%;
+}
+
 .bottom-sidebar {
+  height: 10%;
   width: 100%;
-  position: absolute;
+  position: static;
   bottom: 0;
   left: 0;
   display: flex;
@@ -137,20 +146,15 @@ body>* {
 
 .secret-tab {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   background-color: rgb(48, 48, 48);
-  width: 100%;
   justify-content: center;
   align-items: center;
-  padding-top: 17px;
-  padding-right: 40px;
 }
 
 .secret-tab:hover {
   color: darkcyan;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .secret-tab:hover {
@@ -160,6 +164,11 @@ body>* {
 .secret-tab:hover::before {
   content: "click to expose options";
   color: #888 !important;
+}
+
+.secret-tab::before {
+  content: "click to expose options";
+  color: rgb(48, 48, 48) !important;
 }
 
 .secret-menu.visible {
