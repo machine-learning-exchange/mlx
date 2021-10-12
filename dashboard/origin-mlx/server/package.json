@@ -10,6 +10,7 @@
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "session-file-store": "^1.5.0",
+    "set-value": "^4.1.0",
     "typescript": "^3.5.2"
   },
   "devDependencies": {
