@@ -72,8 +72,8 @@ function SidebarList() {
   const [secretVisible, setSecretVisible] = useState(false)
   const { height } = useWindowDimensions()
   // Ensures the "Join the Conversation" button is away from the other buttons (if there is enough space)
-  
-  const guardHeight = isAdmin ? (0) : (height > 700 && !secretVisible ? (height - 600) : 0)
+  let buffer = !isAdmin ? (height - 600) : (height - 670) / 2 // checks if you are an admin , spacing for guardHeight will change such that elements are placed at the bottom
+  const guardHeight = height > 700 && !secretVisible ? buffer : 0
 
   console.log(height)
 
