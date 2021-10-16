@@ -120,8 +120,10 @@ function SidebarList() {
             <li className="sidebar-list-wrap">
               <Link to="/external-links">
                 <h3 className={`sidebar-list-item ${false ? 'active' : 'not-active'}`}>
-                  <Icon className="sidebar-icon">chat</Icon>
-                  Join the Conversation
+                  <div style={{"display": "flex"}}>
+                    <Icon className="sidebar-icon">chat</Icon>
+                    <text>Join the Conversation</text>
+                  </div>
                 </h3>
               </Link>
             </li>
