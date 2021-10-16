@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 IBM IBM Corp. All Rights Reserved.
+ * Copyright 2021 The MLX Contributors
  *
  * SPDX-License-Identifier: Apache-2.0
  */

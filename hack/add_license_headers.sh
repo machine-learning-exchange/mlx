@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2021 IBM Corporation
+# Copyright 2021 The MLX Contributors
 #
 # SPDX-License-Identifier: Apache-2.0
 
@@ -9,7 +9,7 @@ hash_comment () {
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
     sed -i '' '1i\
-    # Copyright 2021 IBM Corporation\
+    # Copyright 2021 The MLX Contributors\
     #\
     # SPDX-License-Identifier: Apache-2.0\
     ' "$1"
@@ -21,7 +21,7 @@ slash_comment () {
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
     sed -i '' '1i\
-    // Copyright 2021 IBM Corporation\
+    // Copyright 2021 The MLX Contributors\
     //\
     // SPDX-License-Identifier: Apache-2.0\
     ' "$1"
@@ -34,7 +34,7 @@ css_comment () {
   then
     sed -i '' '1i\
     /*\
-    * Copyright 2021 IBM Corporation\
+    * Copyright 2021 The MLX Contributors\
     *\
     * SPDX-License-Identifier: Apache-2.0\
     */\
@@ -48,7 +48,7 @@ html_comment () {
   then
     sed -i '' '1i\
     <!--\
-     Copyright 2021 IBM Corporation\
+     Copyright 2021 The MLX Contributors\
       \
       SPDX-License-Identifier: Apache-2.0\
     -->\
