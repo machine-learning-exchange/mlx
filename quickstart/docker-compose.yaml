@@ -1,3 +1,6 @@
+# Copyright 2021 The MLX Contributors
+#
+# SPDX-License-Identifier: Apache-2.0
 version: '3.7'
 
 # starts 4 Docker containers: Minio, MySQL, MLX-API, MLX-UI

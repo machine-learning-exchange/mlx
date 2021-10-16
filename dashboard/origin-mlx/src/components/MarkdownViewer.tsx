@@ -1,3 +1,8 @@
+/*
+* Copyright 2021 The MLX Contributors
+*
+* SPDX-License-Identifier: Apache-2.0
+*/
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'

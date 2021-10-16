@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Copyright 2021 The MLX Contributors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 MLX_API_SERVER=${MLX_API_SERVER:-"localhost:8080"}
 MLX_API_URL="http://${MLX_API_SERVER}/apis/v1alpha1"
 
