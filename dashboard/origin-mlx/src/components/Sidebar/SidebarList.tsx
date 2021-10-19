@@ -121,7 +121,7 @@ function SidebarList() {
               <Link to="/external-links">
                 <h3 className={`sidebar-list-item ${false ? 'active' : 'not-active'}`}>
                   <div style={{"display": "flex"}}>
-                    <Icon className="sidebar-icon" style={{ "paddingTop" : 3}}>chat</Icon>
+                    <Icon className="sidebar-icon" style={{ "paddingTop" : 7}}>chat</Icon>
                     <text>Join the Conversation</text>
                   </div>
                 </h3>
