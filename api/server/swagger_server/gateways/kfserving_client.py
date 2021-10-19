@@ -12,41 +12,94 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from kfserving import KFServingClient
 import yaml
-
-
-def get_kfserving_client():
-    client = KFServingClient()
-    return client
+from kubernetes import client, config
+import logging
 
 
 def get_all_services(name=None, namespace=None):
-    client = get_kfserving_client()
+
+    log = logging.getLogger("inf_serv")
     if not namespace:
         namespace = 'default'
-    return client.get(name, namespace=namespace)
+
+    config.load_incluster_config()
+    api = client.CustomObjectsApi()
+    if name is None:
+        resource = api.list_namespaced_custom_object(
+            group="serving.kserve.io",
+            version="v1alpha1",
+            namespace=namespace,
+            plural="predictors",
+        )
+    else:
+        resource = api.get_namespaced_custom_object(
+            group="serving.kserve.io",
+            version="v1alpha1",
+            namespace=namespace,
+            name=name,
+            plural="predictors",
+        )
+    return resource
 
 
 def post_service(inferenceservice=None, namespace=None):
-    client = get_kfserving_client()
+    
+    log = logging.getLogger("inf_serv")
+    config.load_incluster_config()
+    api = client.CustomObjectsApi() 
+
     service_dict = inferenceservice.to_dict()
-    name = service_dict['metadata']['name']
     if not namespace:
         namespace = service_dict['metadata'].get('namespace', 'default')
+
     try:
-        return client.create(service_dict, namespace=namespace)
+        # create the resource
+        api.create_namespaced_custom_object(
+            group="serving.kserve.io",
+            version="v1alpha1",
+            namespace=namespace,
+            plural="predictors",
+            body=service_dict,
+        )
     except:
-        return client.patch(name, service_dict, namespace=namespace)
+        # If the creating the resource fails, try patching the resource
+        log.info("Creation failed: Attempting to patch the resource.")
+        api.patch_namespaced_custom_object(
+            group="serving.kserve.io",
+            version="v1alpha1",
+            namespace=namespace,
+            plural="predictors",
+            body=service_dict,
+        )
 
 
 def from_client_upload_service(upload_file=None, namespace=None):
-    client = get_kfserving_client()
+
+    log = logging.getLogger("inf_serv")
+    config.load_incluster_config()
+    api = client.CustomObjectsApi()
+
     yaml_object = yaml.safe_load(upload_file)
-    name = yaml_object['metadata']['name']
     if not namespace:
         namespace = yaml_object['metadata'].get('namespace', 'default')
+
     try:
-        return client.create(yaml_object, namespace=namespace)
-    except:
-        return client.patch(name, yaml_object, namespace=namespace)
+        # create the resource
+        api.create_namespaced_custom_object(
+            group="serving.kserve.io",
+            version="v1alpha1",
+            namespace=namespace,
+            plural="predictors",
+            body=yaml_object,
+        )
+    except Exception as err:
+        # If the creating the resource fails, try patching the resource
+        log.info("Creation failed: Attempting to patch the resource.")
+        api.patch_namespaced_custom_object(
+            group="serving.kserve.io",
+            version="v1alpha1",
+            namespace=namespace,
+            plural="predictors",
+            body=yaml_object,
+        )
