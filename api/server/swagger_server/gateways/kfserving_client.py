@@ -14,92 +14,80 @@
 
 import yaml
 from kubernetes import client, config
-import logging
 
 
-def get_all_services(name=None, namespace=None):
-
-    log = logging.getLogger("inf_serv")
-    if not namespace:
-        namespace = 'default'
+def get_all_services(name=None, namespace=None, group=None, version=None, plural=None):
 
     config.load_incluster_config()
     api = client.CustomObjectsApi()
+
+    if not namespace:
+        namespace = 'default'
+
     if name is None:
         resource = api.list_namespaced_custom_object(
-            group="serving.kserve.io",
-            version="v1alpha1",
+            group=group,
+            version=version,
             namespace=namespace,
-            plural="predictors",
+            plural=plural,
         )
     else:
         resource = api.get_namespaced_custom_object(
-            group="serving.kserve.io",
-            version="v1alpha1",
+            group=group,
+            version=version,
             namespace=namespace,
             name=name,
-            plural="predictors",
+            plural=plural,
         )
     return resource
 
 
-def post_service(inferenceservice=None, namespace=None):
-    
-    log = logging.getLogger("inf_serv")
+def post_service(inferenceservice=None, namespace=None, group=None, version=None, plural=None):
+
     config.load_incluster_config()
     api = client.CustomObjectsApi() 
 
     service_dict = inferenceservice.to_dict()
+    # Get resource information from the dict
+    version_split = service_dict['apiVersion'].split("/")
+    group = version_split[0]
+    version = version_split[1]
+    plural = service_dict['kind'].lower() + "s"
     if not namespace:
         namespace = service_dict['metadata'].get('namespace', 'default')
 
-    try:
-        # create the resource
-        api.create_namespaced_custom_object(
-            group="serving.kserve.io",
-            version="v1alpha1",
-            namespace=namespace,
-            plural="predictors",
-            body=service_dict,
-        )
-    except:
-        # If the creating the resource fails, try patching the resource
-        log.info("Creation failed: Attempting to patch the resource.")
-        api.patch_namespaced_custom_object(
-            group="serving.kserve.io",
-            version="v1alpha1",
-            namespace=namespace,
-            plural="predictors",
-            body=service_dict,
-        )
+    # create the resource
+    ns_obj = api.create_namespaced_custom_object(
+        group=group,
+        version=version,
+        namespace=namespace,
+        plural=plural,
+        body=service_dict,
+    )
+    return ns_obj
 
 
-def from_client_upload_service(upload_file=None, namespace=None):
+def from_client_upload_service(upload_file=None, namespace=None, group=None, version=None, plural=None):
 
-    log = logging.getLogger("inf_serv")
     config.load_incluster_config()
     api = client.CustomObjectsApi()
 
     yaml_object = yaml.safe_load(upload_file)
+    # Get resource information from the yaml
+    name = yaml_object['metadata']['name']
+    version_split = yaml_object['apiVersion'].split("/")
+    group = version_split[0]
+    version = version_split[1]
+    plural = yaml_object['kind'].lower() + "s"
     if not namespace:
         namespace = yaml_object['metadata'].get('namespace', 'default')
 
-    try:
-        # create the resource
-        api.create_namespaced_custom_object(
-            group="serving.kserve.io",
-            version="v1alpha1",
-            namespace=namespace,
-            plural="predictors",
-            body=yaml_object,
-        )
-    except Exception as err:
-        # If the creating the resource fails, try patching the resource
-        log.info("Creation failed: Attempting to patch the resource.")
-        api.patch_namespaced_custom_object(
-            group="serving.kserve.io",
-            version="v1alpha1",
-            namespace=namespace,
-            plural="predictors",
-            body=yaml_object,
-        )
+    # create the resource
+    ns_obj = api.create_namespaced_custom_object(
+        group=group,
+        version=version,
+        namespace=namespace,
+        plural=plural,
+        body=yaml_object,
+    )
+    return ns_obj
