@@ -6,7 +6,11 @@ name: Build MLX API and UI images
 
 on:
   push:
-    branches: [main]
+    branches: 
+    - main
+    
+    tags:
+    - v*
 
   # Run tests for any PRs.
   pull_request:
@@ -45,6 +49,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - uses: docker/build-push-action@v2
         if: github.event_name != 'push'
         with:
@@ -53,12 +60,19 @@ jobs:
           file: dashboard/origin-mlx/Dockerfile
           tags: ${{ env.DOCKER_REGISTRY }}/mlx-ui:${{ env.UI_IMAGE_TAG }}
       - uses: docker/build-push-action@v2
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           context: dashboard/origin-mlx
           push: true
           file: dashboard/origin-mlx/Dockerfile
           tags: ${{ env.DOCKER_REGISTRY }}/mlx-ui:${{ env.UI_IMAGE_TAG }}
+      - uses: docker/build-push-action@v2
+        if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+        with:
+          context: dashboard/origin-mlx
+          push: true
+          file: dashboard/origin-mlx/Dockerfile
+          tags: ${{ env.DOCKER_REGISTRY }}/mlx-ui:${{ steps.get_version.outputs.VERSION }}
   api-build:
     runs-on: ubuntu-latest
     steps:
@@ -71,6 +85,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - uses: docker/build-push-action@v2
         if: github.event_name != 'push'
         with:
@@ -79,9 +96,16 @@ jobs:
           file: api/server/Dockerfile
           tags: ${{ env.DOCKER_REGISTRY }}/mlx-api:${{ env.API_IMAGE_TAG }}
       - uses: docker/build-push-action@v2
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           context: api/server
           push: true
           file: api/server/Dockerfile
           tags: ${{ env.DOCKER_REGISTRY }}/mlx-api:${{ env.API_IMAGE_TAG }}
+      - uses: docker/build-push-action@v2
+        if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+        with:
+          context: api/server
+          push: true
+          file: api/server/Dockerfile
+          tags: ${{ env.DOCKER_REGISTRY }}/mlx-api:${{ steps.get_version.outputs.VERSION }}
