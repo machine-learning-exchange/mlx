@@ -99,7 +99,7 @@ rules:
   verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
 - apiGroups: ["serving.kserve.io"]
   resources: ["predictors", "inferenceservices"]
-  verbs: ["get", "list", "create"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
 ---
 apiVersion: v1
 kind: ServiceAccount
