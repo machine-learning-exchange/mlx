@@ -80,7 +80,18 @@ function MetaCard(props: MetaCardProps) {
 
   const description = firstSentence(props.description || 'Component for your Pipelines.')
 
-  const tags = Object.keys(asset.filter_categories).map((key: any) => asset.filter_categories[key])
+  const tags = asset.filter_categories 
+    ? Object.keys(asset.filter_categories).flatMap((key: any) => {
+        const value = asset.filter_categories[key]
+        if (value.substring(0,1) === "[") {
+          return JSON.parse(value.replaceAll("'", "\""))
+        }
+        else {
+          return value
+        }
+      })
+    : []
+
   const logo = getLogo(framework)
 
   return (
