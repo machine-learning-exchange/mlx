@@ -271,6 +271,9 @@ def run_notebook(id, run_name=None, parameters: dict = None):  # noqa: E501
     # if parameter_errors:
     #     return parameter_errors, status_code
 
+    # Elyra pulls the requirements.txt from Minio, requiring anonymous read access
+    enable_anonymous_read_access(bucket_name="mlpipeline", prefix="notebooks/*")
+
     try:
         run_id = run_notebook_in_experiment(notebook=api_notebook,
                                             parameters=parameter_dict,
