@@ -20,7 +20,7 @@ from tempfile import gettempdir
 def notebook_pipeline():
     """A pipeline to run a Jupyter notebook with elyra-ai/kfp-notebook and Papermill."""
 
-    from kfp_notebook.pipeline import NotebookOp
+    from elyra.kfp.operator import ExecuteFileOp as NotebookOp
 
     notebook_op = NotebookOp(name="${name}",
                              pipeline_name="${name}",

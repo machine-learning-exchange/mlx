@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-VERSION = "0.1.29-dont-cache-kfservices"
+VERSION = "0.1.29-elyra-notebook-update"
