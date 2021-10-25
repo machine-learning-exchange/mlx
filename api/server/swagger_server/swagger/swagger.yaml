@@ -5,7 +5,7 @@
 swagger: "2.0"
 info:
   description: "MLX API Extension for Kubeflow Pipelines"
-  version: "0.1.29-dont-cache-kfservices"
+  version: "0.1.29-elyra-notebook-update"
   title: "MLX API"
 basePath: "/apis/v1alpha1"
 schemes:

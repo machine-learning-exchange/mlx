@@ -1,7 +1,7 @@
 # requirements are grouped in blocks that are related
 
-kfp-tekton==1.0.0
-kfp-notebook
+kfp-tekton==1.0.1
+elyra-server==3.2.1
 kfserving
 
 requests>=2.25.0
