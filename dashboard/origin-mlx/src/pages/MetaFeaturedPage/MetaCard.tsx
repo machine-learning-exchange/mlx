@@ -80,7 +80,7 @@ function MetaCard(props: MetaCardProps) {
 
   const description = firstSentence(props.description || 'Component for your Pipelines.')
 
-  const tags = asset.filter_categories 
+  let tags = asset.filter_categories 
     ? Object.keys(asset.filter_categories).flatMap((key: any) => {
         const value = asset.filter_categories[key]
         if (value.substring(0,1) === "[") {
@@ -91,6 +91,11 @@ function MetaCard(props: MetaCardProps) {
         }
       })
     : []
+
+  // Temporarily limit the number of tags to 3
+  if (tags.length > 3) {
+    tags = tags.slice(0,3)
+  }
 
   const logo = getLogo(framework)
 
