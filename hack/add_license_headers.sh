@@ -1,36 +1,30 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash -i
 
 # Copyright 2021 The MLX Contributors
 #
 # SPDX-License-Identifier: Apache-2.0
 
-sed_for_linux() {
-  sed -i '1i\
-  # Copyright 2021 The MLX Contributors\
-  #\
-  # SPDX-License-Identifier: Apache-2.0\
-  ' "$1"
-}
-
-sed_for_macos() {
-  sed -i '' '1i\
-  # Copyright 2021 The MLX Contributors\
-  #\
-  # SPDX-License-Identifier: Apache-2.0\
-  ' "$1"
-}
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then  # Linux
+    alias gsed="sed -i"
+elif [[ "$OSTYPE" == "darwin"* ]]; then  # macOS
+    alias gsed="sed -i ''"
+elif [[ "$OSTYPE" == "cygwin" ]]; then  # POSIX compatible emulation for Windows
+    alias gsed="sed -i"
+else
+    echo "FAILED. OS not compatible with script '/hack/add_license_headers.sh'"
+    exit 1
+fi
+export gsed
 
 hash_comment () {
   echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      $(sed_for_linux $1)
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-      $(sed_for_macos $1)
-    else
-      echo "FAILED | OS not compatible | Check /hack/add_license_headers.sh "
-    fi
+    gsed '1i\
+    # Copyright 2021 The MLX Contributors\
+    #\
+    # SPDX-License-Identifier: Apache-2.0\
+    ' "$1"
   fi
 }
 
@@ -38,13 +32,11 @@ slash_comment () {
   echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      $(sed_for_linux $1)
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-      $(sed_for_macos $1)
-    else
-      echo "FAILED | OS not compatible | Check /hack/add_license_headers.sh "
-    fi
+    gsed '1i\
+    // Copyright 2021 The MLX Contributors\
+    //\
+    // SPDX-License-Identifier: Apache-2.0\
+    ' "$1"
   fi
 }
 
@@ -52,13 +44,13 @@ css_comment () {
   echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      $(sed_for_linux $1)
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-      $(sed_for_macos $1)
-    else
-      echo "FAILED | OS not compatible | Check /hack/add_license_headers.sh "
-    fi
+    gsed '1i\
+    /*\
+    * Copyright 2021 The MLX Contributors\
+    *\
+    * SPDX-License-Identifier: Apache-2.0\
+    */\
+    ' "$1"
   fi
 }
 
@@ -66,17 +58,17 @@ html_comment () {
   echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      $(sed_for_linux $1)
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-      $(sed_for_macos $1)
-    else
-      echo "FAILED | OS not compatible | Check /hack/add_license_headers.sh "
-    fi
+    gsed '' '1i\
+    <!--\
+     Copyright 2021 The MLX Contributors\
+      \
+      SPDX-License-Identifier: Apache-2.0\
+    -->\
+    ' "$1"
   fi
 }
 
-export -f sed_for_linux sed_for_macos hash_comment slash_comment css_comment html_comment
+export -f hash_comment slash_comment css_comment html_comment
 
 echo "Adding missing license headers"
 
