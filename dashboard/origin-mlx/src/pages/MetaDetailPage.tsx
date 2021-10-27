@@ -39,7 +39,6 @@ function MetaDetailPage(props: MetaDetailPageProps) {
       if (!asset) {
         fetchAssetById(API, type, id)
         .then((asset: any) => {
-          console.log("ASSET: ", asset)
           if (asset === 'Not found' || (asset.publish_approved === 0 && !hasRole(getUserInfo(), 'admin'))) {
             asset.template = undefined
             setAssetNotFound(true)
