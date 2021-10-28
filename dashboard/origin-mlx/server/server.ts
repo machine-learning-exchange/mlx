@@ -22,6 +22,7 @@ const {
   SESSION_SECRET          = randomBytes(64).toString('hex'),
   KUBEFLOW_USERID_HEADER  = 'kubeflow-userid',
   REACT_APP_DISABLE_LOGIN = 'false',
+  REACT_APP_RATE_LIMIT    = 100,
 } = process.env;
 
 const app = express() as Application;
@@ -66,7 +67,7 @@ app.use(REACT_APP_BASE_PATH, (req, res, next) => {
   if (staticIndex !== -1) {
     req.url = req.url.substring(staticIndex)
   }
-  else {
+  else if (!req.url.endsWith('.js')) {
     req.url = '/'
   }
   StaticHandler(staticDir)(req, res, next);
@@ -89,7 +90,7 @@ if (REACT_APP_BASE_PATH.length !== 0) {
 
 var limiter = new ratelimit({
   windowMs: 1*60*1000, // 1 minute
-  max: 5
+  max: REACT_APP_RATE_LIMIT
 });
 
 app.get('*', limiter, (req, res) => {
