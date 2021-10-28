@@ -72,6 +72,9 @@ app.use(REACT_APP_BASE_PATH, (req, res, next) => {
   StaticHandler(staticDir)(req, res, next);
 });
 
+// TODO: This may or may not be needed anymore. Originally there were routing issues that 
+// caused routes to incorrectly fail when refreshing the react page.
+// These should be fixed now, but should be tested to ensure they are.
 if (REACT_APP_BASE_PATH.length !== 0) {
   app.use('/', staticHandler);
   app.use('/pipelines/', staticHandler);
