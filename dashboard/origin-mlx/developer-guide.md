@@ -1,9 +1,90 @@
 # MLX UI (w/ React)
+
+## React Design Principles
+The key feature of React is composition of components. React works by having pages use components to add functionality which themselves use components to add functionality.
+
+![LandingPage](/docs/images/LandingPage.png)
+
+Image 1: The Landing Page divided into some of its components.
+
+![MLX UI Diagram](/docs/images/mlx-ui-diagram.png)
+
+Image 2: MLX UI structure
+
+
+React Props vs. State:
+
+A components props and state are variables which dictate the changeable content of a component. For example, take a parent component that is a webpage and take a child component which represents a Button. The parent could ask for two Buttons with the text="Press" on one and text="Click" on the other. "Press" and "Click" would be the value of the variable props.text and should not be changed inside of the Button component. The state of these Buttons could be something like "clickNum" which defines how many times the button has been clicked. 
+Props - Parameters passed from the parent component. Props should not be changed inside the child component. If a prop is changed in a parent component then the child component will be recreated.
+State - Variables that dictate the current condition of the component. State can be changed inside the component. If a state variable is changed in a component then the component will be recreated.
+
+
+Lifecycle Methods:
+
+Each component has several “lifecycle methods” that you can override to run code at particular times in the process. Putting functions in different lifecycle methods will cause the function to be run at a specific point in a component's lifecycle. An example of this is running a function after a component is being unmounted (removed or refreshed).
+
+## Startup
+
+General Startup Instructions: https://github.com/machine-learning-exchange/mlx/tree/main/dashboard/origin-mlx
+
+### Starting the MLX UI locally
+
+To run this app, you'll need a current version of Node.js installed.
+
+1. First, clone this repo:
+```Bash
+git clone https://github.com/machine-learning-exchange/mlx.git
+```
+
+2. Next, install the dependencies by running this command from within the newly created directory:
+```Bash
+npm install
+```
+
+3. Start the app with the following command:
+```Bash
+npm start
+```
+
+4. The app should now be accessible in your web browser at:
+```
+http://localhost:3000
+```
+
+### Starting the MLX UI locally with Docker API
+```
+git clone https://github.com/machine-learning-exchange/mlx.git
+cd mlx/
+cd dashboard/origin-mlx/
+rm -rf package-lock.json 
+npm install
+export REACT_APP_API="localhost:8080"
+export REACT_APP_RUN="false"
+export REACT_APP_UPLOAD="true"
+export REACT_APP_DISABLE_LOGIN="true"
+npm start
+```
+
+### Building an MLX UI Image
+
+```
+cd dashboard/origin-mlx
+docker build -t <your docker user-id>/<repo name>:<tag name> -f Dockerfile .
+docker push <your docker user-id>/<repo name>:<tag name>
+```
+
+### Change the UI image on a cluster deployment
+Change the image in /manifests/base/mlx-deployments/mlx-ui.yaml under the container with the name mlx-ui at spec.template.spec.containers
+```
+kubectl delete -f /manifests/base/mlx-deployments/mlx-ui.yaml
+kubectl apply -f /manifests/base/mlx-deployments/mlx-ui.yaml
+```
+
 ## UI File Structure
  
 The folders which contain the pieces of the MLX UI:
 
-<img width="222" alt="Screen Shot 2021-10-21 at 8 30 21 AM" src="https://user-images.githubusercontent.com/32145094/139307391-2b1c6af8-e977-4e07-aeb3-df4cd1411e6d.png">
+![LandingPage](/docs/images/ui-folder-tree.png)
 
 
 
