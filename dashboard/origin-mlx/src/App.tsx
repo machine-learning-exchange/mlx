@@ -63,9 +63,13 @@ function App() {
     const { data, origin } = event;
     switch (data.type) {
     case 'iframe-connected':
-      const element = document.getElementById("iframe") as HTMLIFrameElement;
-      // TODO: get namespace from user info, use fixed value: mlx for now
-      element.contentWindow.postMessage({type: 'namespace-selected', value: 'mlx'}, origin);
+      ['iframe', 'iframe-run'].forEach((id) => {
+        const element = document.getElementById(id) as HTMLIFrameElement;
+        if (element) {
+          // TODO: get namespace from user info, use fixed value: mlx for now
+          element.contentWindow.postMessage({type: 'namespace-selected', value: 'mlx'}, origin);
+        }
+      })
       break;
     }
   });
