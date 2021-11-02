@@ -46,9 +46,6 @@ def audit_npm(continue_to_audit: bool):
 
 
 def fix_vulnerabilities() -> Tuple[bool, str]:
-    continue_audit = False
-    format_vulnerablility_output = ""
-
     run(["rm", "package-lock.json"], cwd="./dashboard/origin-mlx/")
     update_npm = run(
         "npm update", cwd="./dashboard/origin-mlx/", stdout=PIPE, shell=True
@@ -80,12 +77,24 @@ def identify_remaining_vulnerabilities(
 
 def verify_npm_packages():
     check_outdated = run("npm outdated", cwd="./dashboard/origin-mlx/", shell=True)
-    packages_outdated = f"\n\nFound outdated npm packages\n\nRun {colorText.BLUE}make update_npm_packages{colorText.END} to update\n"
+    packages_outdated = f"\n\nFound outdated npm packages\n"
     packages_up_to_date = "All packages up to date"
 
-    print(packages_outdated) if check_outdated.returncode == 1 else print(
-        packages_up_to_date
-    )
+    check_vulnerabilities = run("npm audit", cwd="./dashboard/origin-mlx/", stdout=PIPE, shell=True
+    ).stdout.decode("utf-8").split('\n')
+    vulnerabilities = [word for word in check_vulnerabilities if 'vulnerabilities' in word]
+    packages_vulnerable = f'''\nFound vulnerable packages\n\n{colorText.RED}{vulnerabilities[0]}{colorText.END}\n
+                            \rRun {colorText.BLUE}make update_npm_packages{colorText.END} to secure/update\n'''
+    packages_safe = "\nNo vulnerabilities found"
+
+    print(packages_up_to_date) if check_outdated.returncode == 0 else print(packages_outdated)
+    print('-' * 40)
+
+    if "0 vulnerabilities" not in vulnerabilities[0]:
+        print(packages_vulnerable)
+        exit(1)
+    else:
+        print(packages_safe)
 
 
 if __name__ == "__main__":
