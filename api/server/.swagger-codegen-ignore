@@ -28,8 +28,10 @@ swagger_server/models/protobuf_any.py
 swagger_server/util.py
 swagger_server/__main__.py
 
-Dockerfile
 .dockerignore
+.travis.yml
+Dockerfile
 README.md
+git_push.sh
 requirements.txt
 tox.ini

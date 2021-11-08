@@ -14,15 +14,15 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then  # macOS
 elif [[ "$OSTYPE" == "cygwin" ]]; then  # POSIX compatible emulation for Windows
     alias gsed="sed -i"
 else
-    echo "FAILED. OS not compatible with script '/hack/add_license_headers.sh'"
+    echo "FAILED. OS not compatible with script '${BASH_SOURCE[0]}'"
     exit 1
 fi
 export gsed
 
 hash_comment () {
-  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
+    echo "$1"
     gsed '1i\
     # Copyright 2021 The MLX Contributors\
     #\
@@ -32,9 +32,9 @@ hash_comment () {
 }
 
 slash_comment () {
-  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
+    echo "$1"
     gsed '1i\
     // Copyright 2021 The MLX Contributors\
     //\
@@ -44,9 +44,9 @@ slash_comment () {
 }
 
 css_comment () {
-  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
+    echo "$1"
     gsed '1i\
     /*\
     * Copyright 2021 The MLX Contributors\
@@ -58,14 +58,14 @@ css_comment () {
 }
 
 html_comment () {
-  echo "$1"
   if ! grep -q "SPDX-License-Identifier" "$1"
   then
+    echo "$1"
     gsed '1i\
     <!--\
-     Copyright 2021 The MLX Contributors\
-      \
-      SPDX-License-Identifier: Apache-2.0\
+    Copyright 2021 The MLX Contributors\
+    \
+    SPDX-License-Identifier: Apache-2.0\
     -->\
     ' "$1"
   fi
