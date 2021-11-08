@@ -2,41 +2,82 @@
 # 
 # SPDX-License-Identifier: Apache-2.0
 
-from kfserving import KFServingClient
 import yaml
+from kubernetes import client, config
 
 
-def get_kfserving_client():
-    client = KFServingClient()
-    return client
+def get_all_services(name=None, namespace=None, group=None, version=None, plural=None):
 
+    config.load_incluster_config()
+    api = client.CustomObjectsApi()
 
-def get_all_services(name=None, namespace=None):
-    client = get_kfserving_client()
     if not namespace:
         namespace = 'default'
-    return client.get(name, namespace=namespace)
+
+    if name is None:
+        resource = api.list_namespaced_custom_object(
+            group=group,
+            version=version,
+            namespace=namespace,
+            plural=plural,
+        )
+    else:
+        resource = api.get_namespaced_custom_object(
+            group=group,
+            version=version,
+            namespace=namespace,
+            name=name,
+            plural=plural,
+        )
+    return resource
 
 
-def post_service(inferenceservice=None, namespace=None):
-    client = get_kfserving_client()
+def post_service(inferenceservice=None, namespace=None, group=None, version=None, plural=None):
+
+    config.load_incluster_config()
+    api = client.CustomObjectsApi() 
+
     service_dict = inferenceservice.to_dict()
-    name = service_dict['metadata']['name']
+    # Get resource information from the dict
+    version_split = service_dict['apiVersion'].split("/")
+    group = version_split[0]
+    version = version_split[1]
+    plural = service_dict['kind'].lower() + "s"
     if not namespace:
         namespace = service_dict['metadata'].get('namespace', 'default')
-    try:
-        return client.create(service_dict, namespace=namespace)
-    except:
-        return client.patch(name, service_dict, namespace=namespace)
+
+    # create the resource
+    ns_obj = api.create_namespaced_custom_object(
+        group=group,
+        version=version,
+        namespace=namespace,
+        plural=plural,
+        body=service_dict,
+    )
+    return ns_obj
 
 
-def from_client_upload_service(upload_file=None, namespace=None):
-    client = get_kfserving_client()
+def from_client_upload_service(upload_file=None, namespace=None, group=None, version=None, plural=None):
+
+    config.load_incluster_config()
+    api = client.CustomObjectsApi()
+
     yaml_object = yaml.safe_load(upload_file)
+    # Get resource information from the yaml
     name = yaml_object['metadata']['name']
+    version_split = yaml_object['apiVersion'].split("/")
+    group = version_split[0]
+    version = version_split[1]
+    plural = yaml_object['kind'].lower() + "s"
     if not namespace:
         namespace = yaml_object['metadata'].get('namespace', 'default')
-    try:
-        return client.create(yaml_object, namespace=namespace)
-    except:
-        return client.patch(name, yaml_object, namespace=namespace)
+
+    # create the resource
+    ns_obj = api.create_namespaced_custom_object(
+        group=group,
+        version=version,
+        namespace=namespace,
+        plural=plural,
+        body=yaml_object,
+    )
+    return ns_obj

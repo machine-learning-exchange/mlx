@@ -388,7 +388,7 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
 
     template_metadata = yaml_dict.get("metadata") or dict()
 
-    notebook_id = existing_id or generate_id(name=name or yaml_dict["name"])
+    notebook_id = existing_id or yaml_dict.get("id") or generate_id(name=name or yaml_dict["name"])
     created_at = datetime.now()
     name = name or yaml_dict["name"]
     description = yaml_dict["description"].strip()

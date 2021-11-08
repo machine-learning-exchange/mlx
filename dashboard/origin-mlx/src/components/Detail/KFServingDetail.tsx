@@ -89,6 +89,8 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
     const API = this.props.API || ""
     const namespace = this.props.namespace || ""
     const service = this.state.service
+    console.log("Asset:")
+    console.log(this.props.asset)
 
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({...this.state, file: e.currentTarget.files[0]})
@@ -140,7 +142,8 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
     let transformerMessage = ""
     //let transformerSeverity = ""
 
-    if (service.status) {
+
+    if (service.status?.condition) {
       for (let conditionIter=0; conditionIter<service.status.conditions.length; conditionIter++) {
         let condition = service.status.conditions[conditionIter]
         // If this is the DefaultPredictorReady status then scrape some info
@@ -185,6 +188,12 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
           }
         }
       }
+    }
+    else {
+      predictorTimestamp = service.metadata.creationTimestamp
+      predictorStatusIcon = service.status.activeModelState == "Ready" 
+        ? <CheckCircleIcon className="check-icon"/>
+        : <ErrorIcon className="error-icon"/>
     }
   
     return (

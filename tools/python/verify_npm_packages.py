@@ -75,6 +75,8 @@ def identify_remaining_vulnerabilities(
         return True if user_input in ["Y", "y"] else False
 
 
+# TODO: Raise errors only if severe vulnerability is found as opposed to outdated packages
+# TODO: As oppososed to using npm audit fix, upgrade the individual packages manually instead of `npm audit fix`
 def verify_npm_packages():
     check_outdated = run("npm outdated", cwd="./dashboard/origin-mlx/", shell=True)
     packages_outdated = f"\n\nFound outdated npm packages\n"

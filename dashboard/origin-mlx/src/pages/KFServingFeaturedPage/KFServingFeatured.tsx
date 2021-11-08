@@ -32,6 +32,11 @@ const styles = {
 function MetaFeatured(props: MetaFeaturedProps) {
   const { assets, classes } = props
 
+  console.log("Asset:")
+  console.log(props.assets)
+
+  //return (<h1> Placeholder </h1>)
+
   return (
     <div className={classes.wrapper}>
       <Grid container
@@ -42,32 +47,49 @@ function MetaFeatured(props: MetaFeaturedProps) {
       >
         {assets.map(asset => {
           const name = asset.metadata.name;
-          var runningStatus = asset.status?.conditions[0]?.status || ""
-          var statusIcon = ""
+          
+          let runningStatus = ""
+          let statusIcon = ""
+          if (asset.status.conditions) {
+            runningStatus = asset.status?.conditions[0]?.status || ""
 
-          if (asset.status) {
-            for (var i=0; i< asset.status.conditions.length; i++) {
-              if (asset.status.conditions[i].type === "Ready") {
-                const index = asset.status.conditions.indexOf(asset.status.conditions[i])
-                runningStatus = asset.status.conditions[index].status
-                if (runningStatus === 'True') {
-                  statusIcon = checkmark
-                }
-                else {
-                  statusIcon = cancel
+            if (asset.status) {
+              for (var i=0; i< asset.status.conditions.length; i++) {
+                if (asset.status.conditions[i].type === "Ready") {
+                  const index = asset.status.conditions.indexOf(asset.status.conditions[i])
+                  runningStatus = asset.status.conditions[index].status
+                  if (runningStatus === 'True') {
+                    statusIcon = checkmark
+                  }
+                  else {
+                    statusIcon = cancel
+                  }
                 }
               }
             }
           }
+          else {
+            runningStatus = asset.status.available
+            if (runningStatus === 'true')
+              statusIcon = checkmark
+            else
+              statusIcon = cancel
+          }
           const description = asset.kind;
           const tag = Object.keys(asset.spec).join(",")
           const link = "inferenceservices"
-          const predictor = asset.spec.predictor
-          const framework = predictor.tensorflow ? "tensorflow" 
-                            : predictor.keras ? "keras"
-                            : predictor.sklearn ? "sklearn"
-                            : predictor["scikit-learn"] ? "sklearn"
-                            : predictor.pytorch ? "pytorch" : "custom"
+          let predictor = asset.spec.predictor
+          let framework = ""
+          if (asset.spec.predictor) {
+            framework = predictor.tensorflow ? "tensorflow" 
+                              : predictor.keras ? "keras"
+                              : predictor.sklearn ? "sklearn"
+                              : predictor["scikit-learn"] ? "sklearn"
+                              : predictor.pytorch ? "pytorch" : "custom"
+          }
+          else {
+            framework = asset.spec.modelType.name
+          }
           return (
             <Grid item key={name} xs md={4}
              lg={3} xl={2} className={classes.card} >

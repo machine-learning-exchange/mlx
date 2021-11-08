@@ -41,12 +41,28 @@ swagger-codegen generate -i swagger/swagger.yaml -l python       -o client 2>&1 
 echo "Generating Python server:"
 swagger-codegen generate -i swagger/swagger.yaml -l python-flask -o server 2>&1 | grep -v -E "writing file|/test/" | sed "s|${SCRIPT_DIR}|.|g"
 
+# set interactive mode to enable defining a gsed alias
+shopt -s expand_aliases
+
+# we use sed to make in-file text replacements, but sed works differently on macOS and Linux
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then  # Linux
+    alias gsed="sed -i"
+elif [[ "$OSTYPE" == "darwin"* ]]; then  # macOS
+    alias gsed="sed -i ''"
+elif [[ "$OSTYPE" == "cygwin" ]]; then  # POSIX compatible emulation for Windows
+    alias gsed="sed -i"
+else
+    echo "FAILED. OS not compatible with script '${BASH_SOURCE[0]}'"
+    exit 1
+fi
+export gsed
+
 # we need to modify the generated controller methods to 'do some magic!' ...
 # replace:
 #     return 'do some magic!'
 # with:
 #     return util.invoke_controller_impl(__name__, locals())
-sed -i '' "s/'do some magic\!'/util.invoke_controller_impl()/g" "${SCRIPT_DIR}"/server/swagger_server/controllers/*.py
+gsed "s/'do some magic\!'/util.invoke_controller_impl()/g" "${SCRIPT_DIR}"/server/swagger_server/controllers/*.py
 
 # and add the 'magic' utility method to forward the controller invocations ... unless we already did
 grep "invoke_controller_impl" "${UTIL_FILE}" -q || cat <<'EOF' >> "${UTIL_FILE}"
