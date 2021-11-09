@@ -79,13 +79,15 @@ services:
       - "80:3000"
     environment:
       REACT_APP_BRAND: "Machine Learning Exchange"
-      REACT_APP_RUN: "false"
       REACT_APP_UPLOAD: "true"
+      REACT_APP_RUN: "false"
       REACT_APP_BASE_PATH: ""
       REACT_APP_API: "${DOCKER_HOST_IP:-localhost}:8080"
       REACT_APP_KFP: ""
       REACT_APP_DISABLE_LOGIN: "true"
       REACT_APP_GTM_ID: "${GTM_ID}"
+      REACT_APP_TTL: "0"
+      REACT_APP_CACHE_INTERVAL: "0"
 
   catalog:
     image: curlimages/curl
