@@ -6,17 +6,20 @@ import connexion
 import json
 import traceback
 
-from swagger_server.models import ApiCatalogUploadError
-from swagger_server.models.api_catalog_upload import ApiCatalogUpload  # noqa: E501
-from swagger_server.models.api_catalog_upload_response import ApiCatalogUploadResponse
-from swagger_server.models.api_list_catalog_items_response import ApiListCatalogItemsResponse  # noqa: E501
+from swagger_server.data_access.mysql_client import update_multiple
+
+from swagger_server.models import ApiCatalogUpload, ApiCatalogUploadError
+from swagger_server.models import ApiCatalogUploadResponse, ApiListCatalogItemsResponse
+from swagger_server.models import ApiComponent, ApiDataset, ApiModel, ApiNotebook, ApiPipelineExtension
 
 from swagger_server.controllers_impl import download_file_content_from_url
+
 from swagger_server.controllers_impl.component_service_controller_impl import list_components, upload_component_from_url
 from swagger_server.controllers_impl.dataset_service_controller_impl import list_datasets, upload_dataset_from_url
 from swagger_server.controllers_impl.model_service_controller_impl import list_models, upload_model_from_url
 from swagger_server.controllers_impl.notebook_service_controller_impl import list_notebooks, upload_notebook_from_url
 from swagger_server.controllers_impl.pipeline_service_controller_impl import list_pipelines, upload_pipeline_from_url
+
 from swagger_server.util import ApiError
 
 
@@ -106,6 +109,12 @@ def upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
 
 def _upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
 
+    # TODO: parameterize `publish_all` and `feature_all` flags, maybe? Although
+    #   uploading a whole catalog is an admin activity, who most likely wants to
+    #   register a curated list of assets that are to be published and featured
+    publish_all = True
+    feature_all = True
+
     def get_access_token_for_url(url: str) -> str:
         for api_access_token in body.api_access_tokens or []:
             if api_access_token.url_host in url:
@@ -156,6 +165,20 @@ def _upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
                 print(traceback.format_exc())
 
     api_response.total_errors = len(api_response.errors)
+
+    if publish_all or feature_all:
+        api_classes = {
+            "components": ApiComponent,
+            "datasets": ApiDataset,
+            "models": ApiModel,
+            "notebooks": ApiNotebook,
+            "pipelines": ApiPipelineExtension
+        }
+        for asset_type, api_class in api_classes.items():
+            asset_list = api_response.__getattribute__(asset_type)
+            asset_ids = [asset.id for asset in asset_list]
+            update_multiple(api_class, asset_ids, "publish_approved", publish_all)
+            update_multiple(api_class, asset_ids, "featured", feature_all)
 
     response_status = \
         201 if api_response.total_created > 0 and api_response.total_errors == 0 else \
