@@ -9,9 +9,9 @@ import traceback
 from swagger_server.models import ApiCatalogUploadError
 from swagger_server.models.api_catalog_upload import ApiCatalogUpload  # noqa: E501
 from swagger_server.models.api_catalog_upload_response import ApiCatalogUploadResponse
-from swagger_server.models.api_catalog_upload_item import ApiCatalogUploadItem
 from swagger_server.models.api_list_catalog_items_response import ApiListCatalogItemsResponse  # noqa: E501
 
+from swagger_server.controllers_impl import download_file_content_from_url
 from swagger_server.controllers_impl.component_service_controller_impl import list_components, upload_component_from_url
 from swagger_server.controllers_impl.dataset_service_controller_impl import list_datasets, upload_dataset_from_url
 from swagger_server.controllers_impl.model_service_controller_impl import list_models, upload_model_from_url
@@ -71,16 +71,40 @@ def list_all_assets(page_token=None, page_size=None, sort_by=None, filter=None):
     return api_response, 200
 
 
+def upload_catalog_from_url(url, access_token=None):  # noqa: E501
+    """upload_catalog_from_url
+
+     # noqa: E501
+
+    :param url: URL pointing to the catalog YAML file.
+    :type url: str
+    :param access_token: Optional, the Bearer token to access the &#39;url&#39;.
+    :type access_token: str
+
+    :rtype: ApiCatalogUploadResponse
+    """
+
+    json_file_content = download_file_content_from_url(url, access_token)
+    catalog_dict = json.loads(json_file_content)
+    catalog = ApiCatalogUpload.from_dict(catalog_dict)
+    return _upload_multiple_assets(catalog)
+
+
 def upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
     """upload_multiple_assets
 
-    :param body: 
+    :param body:
     :type body: ApiCatalogUpload
 
     :rtype: ApiCatalogUploadResponse
     """
     if connexion.request.is_json:
         body = ApiCatalogUpload.from_dict(connexion.request.get_json())  # noqa: E501
+
+    return _upload_multiple_assets(body)
+
+
+def _upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
 
     def get_access_token_for_url(url: str) -> str:
         for api_access_token in body.api_access_tokens or []:
