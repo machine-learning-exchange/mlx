@@ -95,7 +95,7 @@ from our local source code, instead of using the pre-built Docker image `mlexcha
 
 ```Bash
 # cd <mlx_root_directory>
-cd quickstart
+cd bootstrapper
 
 docker compose --project-name  no_ui   up   minio miniosetup mysql mlx-api catalog
 ```

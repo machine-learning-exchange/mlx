@@ -31,11 +31,11 @@ Additionally it provides:
 ## 1. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
 
-For a simple up-and-running MLX with asset catalog only, we created a [Quickstart Guide](./quickstart) using [Docker Compose](https://docs.docker.com/compose/install/).
+For a simple up-and-running MLX with asset catalog only, we created a [Quickstart Guide](./bootstrapper) using [Docker Compose](https://docs.docker.com/compose/install/).
 
 For a full deployment, we use [Kubeflow Kfctl](https://github.com/kubeflow/kfctl) tooling. 
 
-* #### [MLX using Docker Compose (Asset Catalog Only)](./quickstart)
+* #### [MLX using Docker Compose (Asset Catalog Only)](./bootstrapper)
 
 * #### [MLX Deployment on Kubernetes or OpenShift](./docs/mlx-setup.md)
 
