@@ -66,6 +66,7 @@ function MetaAllPage(props: MetaAllPageProps) {
     { id: 'feat', label: 'Featured', numeric: false },
     { id: 'pub', label: 'Published', numeric: false },
     { id: 'cat', label: tagName, numeric: false },
+    { id: 'del', label: 'Delete Asset', numeric: false },
   ]
 
   const { store, dispatch } = useContext(StoreContext)
@@ -236,6 +237,15 @@ function MetaAllPage(props: MetaAllPageProps) {
                     />
                   </TableCell>
                   <TableCell padding="dense">{getTag(asset)}</TableCell>
+                  <TableCell padding="dense" align="right">
+                    <Button
+                      className="delete-button"
+                      variant="contained"
+                      onClick={() => console.log("hello")}
+                      >
+                      <span className="delete-button-text">DELETE</span>
+                    </Button>
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
