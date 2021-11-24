@@ -140,6 +140,8 @@ export REACT_APP_API="localhost:8080"
 export REACT_APP_RUN="false"
 export REACT_APP_UPLOAD="true"
 export REACT_APP_DISABLE_LOGIN="true"
+export REACT_APP_TTL="0"                # Disable the cache
+export REACT_APP_CACHE_INTERVAL="0"     # Ignore checking cache
 ```
 
 Start the MLX Web UI server:
