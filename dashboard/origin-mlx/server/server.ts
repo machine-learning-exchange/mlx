@@ -22,6 +22,7 @@ const {
   SESSION_SECRET          = randomBytes(64).toString('hex'),
   KUBEFLOW_USERID_HEADER  = 'kubeflow-userid',
   REACT_APP_DISABLE_LOGIN = 'false',
+  REACT_APP_RATE_LIMIT    = 100,
 } = process.env;
 
 const app = express() as Application;
@@ -66,12 +67,15 @@ app.use(REACT_APP_BASE_PATH, (req, res, next) => {
   if (staticIndex !== -1) {
     req.url = req.url.substring(staticIndex)
   }
-  else {
+  else if (!req.url.endsWith('.js')) {
     req.url = '/'
   }
   StaticHandler(staticDir)(req, res, next);
 });
 
+// TODO: This may or may not be needed anymore. Originally there were routing issues that 
+// caused routes to incorrectly fail when refreshing the react page.
+// These should be fixed now, but should be tested to ensure they are.
 if (REACT_APP_BASE_PATH.length !== 0) {
   app.use('/', staticHandler);
   app.use('/pipelines/', staticHandler);
@@ -89,7 +93,7 @@ if (REACT_APP_BASE_PATH.length !== 0) {
 
 var limiter = new ratelimit({
   windowMs: 1*60*1000, // 1 minute
-  max: 5
+  max: REACT_APP_RATE_LIMIT
 });
 
 app.get('*', limiter, (req, res) => {

@@ -4,7 +4,7 @@
 * SPDX-License-Identifier: Apache-2.0
 */ 
 import React, { useContext, useEffect, useState, Children, ReactNode, ReactElement } from 'react'
-import { capitalize, formatTitle } from '../lib/util';
+import { capitalize, formatTitle, getUserInfo, hasRole } from '../lib/util';
 import StoreContext from '../lib/stores/context'
 
 import Button from '../components/Button/Button';
@@ -39,11 +39,13 @@ function MetaDetailPage(props: MetaDetailPageProps) {
       if (!asset) {
         fetchAssetById(API, type, id)
         .then((asset: any) => {
-          if (asset === 'Not found') {
+          if (asset === 'Not found' || (asset.publish_approved === 0 && !hasRole(getUserInfo(), 'admin'))) {
             asset.template = undefined
             setAssetNotFound(true)
           }
-          setAsset(asset)
+          else {
+            setAsset(asset)
+          }
         })
         .catch((error) => {
           setAssetNotFound(true)

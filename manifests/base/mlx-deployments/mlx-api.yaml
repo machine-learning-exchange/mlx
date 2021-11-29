@@ -87,6 +87,9 @@ rules:
 - apiGroups: ["serving.knative.dev"]
   resources: ["services", "revisions", "configurations"]
   verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+- apiGroups: ["serving.kserve.io"]
+  resources: ["predictors", "inferenceservices"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
 ---
 apiVersion: v1
 kind: ServiceAccount
