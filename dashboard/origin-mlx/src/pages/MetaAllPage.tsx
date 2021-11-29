@@ -241,7 +241,12 @@ function MetaAllPage(props: MetaAllPageProps) {
                     <Button
                       className="delete-button"
                       variant="contained"
-                      onClick={() => console.log("hello")}
+                      onClick={async function() {
+                        await fetch(`${API}/apis/v1alpha1/${asset.type}/${asset.id}`, {
+                          method: 'DELETE'
+                        });
+                        window.location.reload();
+                       }}
                       >
                       <span className="delete-button-text">DELETE</span>
                     </Button>
