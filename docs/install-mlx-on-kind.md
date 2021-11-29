@@ -38,6 +38,12 @@ Increase the default resources for Docker:
 - Memory: 8 GB RAM
 - Disk: 32+ GB
 
+**Note**: We found that on older laptops, like a 2016 15 in MacBook Pro (2.7 GHz i7, 16 GB) the MLX
+deployment on KIND may require to give all available resources to the Docker daemon in order to be
+able to deploy the manifests and run basic pipelines. Even then, trying to run notebooks or deploying 
+a model, will cause the laptop to get very slow with fans running full throttle. It may even cause
+other application to crash.
+
 
 ## Create KIND Cluster
 
@@ -61,17 +67,17 @@ while ! kustomize build mlx-single | \
 # check pod status
 kubectl get pods --all-namespaces
 
-# make the MLX UI available to your local browser on http://localhost:3000/mlx/
-kubectl port-forward -n kubeflow svc/mlx-ui 3000:80
+# make the MLX UI available to your local browser on http://localhost:3000/
+kubectl port-forward -n istio-system svc/istio-ingressgateway 3000:80
 ```
 
-Now paste the URL http://localhost:3000/mlx/ into your browser and proceed to
+Now paste the URL http://localhost:3000/ into your browser and proceed to
 [import the MLX catalog](import-assets.md).
 
-Delete the mlx cluster when it is no longer needed:
+Delete the `mlx` cluster when it is no longer needed:
 
 ```Bash
-kind delete cluster --name kfp
+kind delete cluster --name mlx
 ```
 
 
