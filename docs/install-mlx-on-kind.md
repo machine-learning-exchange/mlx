@@ -67,7 +67,7 @@ git clone https://github.com/IBM/manifests -b v1.4.0-mlx
 cd manifests
 
 # run the below command two times if the CRDs take too long to provision.
-while ! kustomize build mlx-single | \
+while ! kustomize build mlx-single-kind | \
   kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 
 # check pod status
