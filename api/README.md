@@ -4,7 +4,7 @@ An extension to the Kubeflow Pipeline API for Components and Models
 
 ---
 
-# Quickstart    
+# Quickstart
 
 ## Deploy to Kubernetes
 
@@ -100,7 +100,7 @@ Bring up the Quickstart without the `mlx-api` service, since we will run the MLX
 from our local source code, instead of using the pre-built Docker image `mlexchange/mlx-api:nightly-main`.
 
     # cd <mlx_root_dir>
-    cd quickstart
+    cd bootstrapper
     
     docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui
 
@@ -177,5 +177,5 @@ After testing or debugging your code changes, bring down the Swagger Server
 to populate the MLX asset catalog
 
     # cd <mlx_root_directory>
-    cd quickstart
+    cd bootstrapper
     ./init_catalog.sh

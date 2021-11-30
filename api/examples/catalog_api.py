@@ -23,7 +23,7 @@ port = '8080'
 
 api_base_path = 'apis/v1alpha1'
 
-catalog_upload_file = "./../../bootstrapper/catalog_upload.json"
+catalog_upload_file = "../../bootstrapper/catalog_upload.json"
 
 IBM_GHE_API_TOKEN = env.get("IBM_GHE_API_TOKEN")
 

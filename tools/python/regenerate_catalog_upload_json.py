@@ -27,10 +27,7 @@ project_dir = dirname(script_path)
 katalog_dir = f"{project_dir}/../katalog"  # TODO: don't assume user cloned katalog and mlx repos into same parent folder
 katalog_url = "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/"
 
-catalog_upload_json_files = [
-    f"{project_dir}/bootstrapper/catalog_upload.json",
-    f"{project_dir}/quickstart/catalog_upload.json",
-]
+catalog_upload_json = "bootstrapper/catalog_upload.json"
 
 
 def get_list_of_yaml_files_in_katalog(asset_type: str):
@@ -45,7 +42,7 @@ def get_list_of_yaml_files_in_katalog(asset_type: str):
 
 def generate_katalog_dict() -> dict:
 
-    katalog_dict = dict()
+    katalog_dict = {}
 
     for asset_type in asset_types:
 
@@ -73,31 +70,23 @@ def generate_katalog_dict() -> dict:
     return katalog_dict
 
 
-def rewrite_catalog_upload_json_files(katalog: dict):
+def rewrite_catalog_upload_json(katalog: dict):
 
-    for file_path in catalog_upload_json_files:
+    with open(f"{project_dir}/{catalog_upload_json}", "w") as output_file:
 
-        with open(file_path, "w") as output_file:
+        print(f" - {catalog_upload_json}")
 
-            print(" - " + relpath(file_path, project_dir))
-
-            output_file.write(json.dumps(katalog, sort_keys=False, indent=2))
-            output_file.write("\n")
+        output_file.write(json.dumps(katalog, sort_keys=False, indent=2))
+        output_file.write("\n")
 
 
-def main():
+if __name__ == "__main__":
 
-    print("Regenerating catalog_upload.json files:")
+    print("Regenerating catalog_upload.json:")
 
-    # TODO: read current catalog_upload.json file(s) to capture non-katalog assets and restore later
+    # TODO: read current catalog_upload.json file to capture non-katalog assets and restore later
 
-    katalog_dict = generate_katalog_dict()
-
-    rewrite_catalog_upload_json_files(katalog_dict)
+    # Generate new catalog_upload.json
+    rewrite_catalog_upload_json(generate_katalog_dict())
 
     print("Done. Use git diff to evaluate if and which changes are desired!")
-
-
-if __name__ == '__main__':
-
-    main()

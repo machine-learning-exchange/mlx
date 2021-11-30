@@ -54,7 +54,7 @@ spec:
           - -c
           - |
             cd /tmp &&
-            curl -L --output init_catalog.sh https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/init_catalog.sh &&
+            curl -L --output init_catalog.sh https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/bootstrapper/init_catalog.sh &&
             curl -L --output catalog_upload.json https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/bootstrapper/catalog_upload.json &&
             chmod 777 init_catalog.sh &&
             ./init_catalog.sh
