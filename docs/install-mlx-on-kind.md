@@ -16,7 +16,7 @@ any of the registered MLX assets.
 ### Install Required CLIs (macOS)
 
 After installing Docker and Homebrew (linked above) you can install the `kind`,
-`kustomize`, and `kubectl` CLI with `brew install`. For Windows and Linux follow
+`kustomize`, and `kubectl` CLIs with `brew install`. For Windows and Linux follow
 the respective home pages for installation instructions.
 
 ```Bash
@@ -29,6 +29,12 @@ kubectl version --client
 brew install kustomize
 kustomize version
 ```
+
+**Note:** We successfully tested this KIND deployment with the latest version of `kustomize` `v4.4.0`.
+However, there have been issues in the past with versions later then `v3.2.0`. To be on the safe side
+you could download the `kustomize` `v3.2.0` binary as described
+[here](https://www.kubeflow.org/docs/distributions/ibm/deploy/deployment-process/#install-kubectl-and-kustomize)
+
 
 ## Docker Resources
 
