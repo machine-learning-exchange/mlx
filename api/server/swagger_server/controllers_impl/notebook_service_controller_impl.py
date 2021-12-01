@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, \
-    get_yaml_file_content_from_uploadfile, validate_parameters
+    get_yaml_file_content_from_uploadfile, validate_parameters, validate_id
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, enable_anonymous_read_access, NoSuchKey, \
     create_tarfile, get_object_url
@@ -395,6 +395,11 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
     url = yaml_dict["implementation"]["github"]["source"]
     requirements = yaml_dict["implementation"]["github"].get("requirements")
     filter_categories = yaml_dict.get("filter_categories") or dict()
+
+    errors, status = validate_id(notebook_id)
+
+    if errors:
+        return errors, status
 
     metadata = ApiMetadata(annotations=template_metadata.get("annotations"),
                            labels=template_metadata.get("labels"),
