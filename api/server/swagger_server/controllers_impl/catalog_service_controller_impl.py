@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
+import json
 import traceback
 
 from swagger_server.data_access.mysql_client import update_multiple
@@ -10,6 +11,8 @@ from swagger_server.data_access.mysql_client import update_multiple
 from swagger_server.models import ApiCatalogUpload, ApiCatalogUploadError
 from swagger_server.models import ApiCatalogUploadResponse, ApiListCatalogItemsResponse
 from swagger_server.models import ApiComponent, ApiDataset, ApiModel, ApiNotebook, ApiPipelineExtension
+
+from swagger_server.controllers_impl import download_file_content_from_url
 
 from swagger_server.controllers_impl.component_service_controller_impl import list_components, upload_component_from_url
 from swagger_server.controllers_impl.dataset_service_controller_impl import list_datasets, upload_dataset_from_url
@@ -71,16 +74,40 @@ def list_all_assets(page_token=None, page_size=None, sort_by=None, filter=None):
     return api_response, 200
 
 
+def upload_catalog_from_url(url, access_token=None):  # noqa: E501
+    """upload_catalog_from_url
+
+     # noqa: E501
+
+    :param url: URL pointing to the catalog YAML file.
+    :type url: str
+    :param access_token: Optional, the Bearer token to access the &#39;url&#39;.
+    :type access_token: str
+
+    :rtype: ApiCatalogUploadResponse
+    """
+
+    json_file_content = download_file_content_from_url(url, access_token)
+    catalog_dict = json.loads(json_file_content)
+    catalog = ApiCatalogUpload.from_dict(catalog_dict)
+    return _upload_multiple_assets(catalog)
+
+
 def upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
     """upload_multiple_assets
 
-    :param body: 
+    :param body:
     :type body: ApiCatalogUpload
 
     :rtype: ApiCatalogUploadResponse
     """
     if connexion.request.is_json:
         body = ApiCatalogUpload.from_dict(connexion.request.get_json())  # noqa: E501
+
+    return _upload_multiple_assets(body)
+
+
+def _upload_multiple_assets(body: ApiCatalogUpload):  # noqa: E501
 
     # TODO: parameterize `publish_all` and `feature_all` flags, maybe? Although
     #   uploading a whole catalog is an admin activity, who most likely wants to
