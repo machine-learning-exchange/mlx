@@ -109,7 +109,6 @@ services:
     image: curlimages/curl
     depends_on:
       - mlx-ui
-      - catalog
     entrypoint: ["/bin/sh","-c"]
     command:
     - |

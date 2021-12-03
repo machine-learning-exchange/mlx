@@ -102,7 +102,7 @@ from our local source code, instead of using the pre-built Docker image `mlexcha
     # cd <mlx_root_dir>
     cd quickstart
     
-    docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui
+    docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui dashboard
 
 When the MLX UI is ready, the log messages should show something like this:
 
@@ -124,7 +124,7 @@ After testing or debugging your code changes, bring down the Docker Compose stac
 
     # control + C 
 
-    docker compose --project-name  no_api  down  minio miniosetup mysql mlx-ui
+    docker compose --project-name  no_api  down
 
 Optional, to delete all data in Minio and MySQL, run the following commands:
 
