@@ -174,8 +174,18 @@ After testing or debugging your code changes, bring down the Swagger Server
 ### TERMINAL 3 - Initialize the Catalog
 
 **Note**: The first time you bring up the Quickstart for API development, you need
-to populate the MLX asset catalog
+to populate the MLX asset catalog, or, the next time after you brought down the 
+Docker Compose stack with the `-v` option (`docker compose --project-name no_api down -v`)
 
     # cd <mlx_root_directory>
-    cd quickstart
-    ./init_catalog.sh
+    cd bootstrapper
+    
+    # ./init_catalog.sh  # still being worked on in PR #262
+    # until PR #262 is merged, we use curl
+
+    curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H 'Accept: application/json' \
+        -d @catalog_upload.json \
+        http://localhost:8080/apis/v1alpha1/catalog
+
