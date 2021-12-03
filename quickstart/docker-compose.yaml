@@ -109,7 +109,6 @@ services:
     image: curlimages/curl
     depends_on:
       - mlx-ui
-      #- catalog        # There is no catalog in API dev setup, so message never appears.
     entrypoint: ["/bin/sh","-c"]
     command:
     - |
