@@ -40,11 +40,11 @@ you could download the `kustomize` `v3.2.0` binary as described
 
 Increase the default resources for Docker:
 
-- CPUs: 4 Cores
-- Memory: 8 GB RAM
+- CPUs: 8 Cores
+- Memory: 16 GB RAM
 - Disk: 32+ GB
 
-**Note**: We found that on older laptops, like a 2016 15 in MacBook Pro (2.7 GHz i7, 16 GB) the MLX
+**Note**: We found that on older laptops, like a 2016 MacBook Pro (2.7 GHz i7, 16 GB RAM) the MLX
 deployment on KIND may require to give all available resources to the Docker daemon in order to be
 able to deploy the manifests and run basic pipelines. Even then, trying to run notebooks or deploying 
 a model, will cause the laptop to get very slow with fans running full throttle. It may even cause
@@ -66,19 +66,37 @@ kubectl get pods --all-namespaces
 git clone https://github.com/IBM/manifests -b v1.4.0-mlx
 cd manifests
 
-# run the below command two times if the CRDs take too long to provision.
+# run the below command two times if the CRDs take too long to provision
 while ! kustomize build mlx-single-kind | \
   kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+
+# wait while the MLX deployment is starting up, may take 10 to 20 minutes
+while $( kubectl get pods --all-namespaces | grep -q -v "STATUS\|Running" ); do \
+  echo "Hold tight, still waiting for $( kubectl get pods --all-namespaces | grep -v "STATUS\|Running" | wc -l ) pods ..."; \
+  sleep 10; \
+done
 
 # check pod status
 kubectl get pods --all-namespaces
 
 # make the MLX UI available to your local browser on http://localhost:3000/
-kubectl port-forward -n istio-system svc/istio-ingressgateway 3000:80
+kubectl port-forward -n istio-system svc/istio-ingressgateway 3000:80 &
 ```
 
-Now paste the URL http://localhost:3000/ into your browser and proceed to
-[import the MLX catalog](import-assets.md).
+Now paste the URL http://localhost:3000/login into your browser and proceed to
+[import the MLX catalog](import-assets.md), or, upload the assets from the
+[default MLX asset catalog](https://github.com/machine-learning-exchange/katalog)
+using the MLX API directly with `curl`:
+
+```Bash
+UPLOAD_API="http://localhost:3000/apis/v1alpha1/catalog/upload_from_url"
+CATALOG_URL="https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/bootstrapper/catalog_upload.json"
+
+curl -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -F url="${CATALOG_URL}" \
+    -s "${UPLOAD_API}" | grep -iE "total_|error"
+```
 
 Delete the `mlx` cluster when it is no longer needed:
 
@@ -87,7 +105,7 @@ kind delete cluster --name mlx
 ```
 
 
-## Install Kubeflow Pipelines (for reference, optional)
+## Install Kubeflow Pipelines (for Reference only, Optional)
 
 ```Bash
 kind create cluster --name kfp
