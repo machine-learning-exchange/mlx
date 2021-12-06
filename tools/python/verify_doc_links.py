@@ -75,7 +75,8 @@ def get_links_from_md_file(md_file_path: str) -> [(int, str, str)]: # -> [(line,
 
         # find plain http(s)-style links
         for url in re.findall(r"[\n\r\s\"'](https?://[^\s]+)[\n\r\s\"']", line_text):
-            if not any(s in url for s in ["localhost", "...", "lorem", "ipsum", "/path/to/", "address", "port"]):
+            if not any(s in url for s in
+                       ["localhost", "...", "lorem", "ipsum", "/path/to/", "address", "port", "${OS}"]):
                 try:
                     parse_url(url)
                     line_text_url.append((line_number + 1, "", url))

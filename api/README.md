@@ -39,7 +39,7 @@ download it the first time it runs:
     # function swagger-codegen() { java -jar "swagger-codegen-cli-2.4.8.jar" "$@"; }
     # export -f swagger-codegen
 
-It is **not recommended** to install [`swagger-codegen@2`](https://formulae.brew.sh/formula-linux/swagger-codegen@2)
+It is **not recommended** to install [`swagger-codegen@2`](https://formulae.brew.sh/formula/swagger-codegen@2)
 via [Homebrew](https://docs.brew.sh/Installation) on macOS, since `brew install swagger-codegen@2`
 does not allow selecting the _"old"_ version `2.4.8`. Instead, the `generate_code.sh` script
 will automatically download the _"correct"_ version of the `swagger-codegen-cli.jar` file.
