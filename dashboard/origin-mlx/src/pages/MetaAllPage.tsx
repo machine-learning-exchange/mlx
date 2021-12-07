@@ -66,7 +66,7 @@ function MetaAllPage(props: MetaAllPageProps) {
     { id: 'feat', label: 'Featured', numeric: false },
     { id: 'pub', label: 'Published', numeric: false },
     { id: 'cat', label: tagName, numeric: false },
-    { id: 'del', label: 'Delete Asset', numeric: false },
+    { id: 'del', label: 'Delete', numeric: false },
   ]
 
   const { store, dispatch } = useContext(StoreContext)
@@ -239,7 +239,7 @@ function MetaAllPage(props: MetaAllPageProps) {
                   <TableCell padding="dense">{getTag(asset)}</TableCell>
                   <TableCell padding="dense" align="right">
                     <Button
-                      className="delete-button"
+                      className="delete-button-assetpage"
                       variant="contained"
                       onClick={async function() {
                         await fetch(`${API}/apis/v1alpha1/${asset.type}/${asset.id}`, {
@@ -248,7 +248,7 @@ function MetaAllPage(props: MetaAllPageProps) {
                         window.location.reload();
                        }}
                       >
-                      <span className="delete-button-text">DELETE</span>
+                      <span className="delete-button-text-assetpage">Delete</span>
                     </Button>
                   </TableCell>
                 </TableRow>

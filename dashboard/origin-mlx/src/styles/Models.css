@@ -677,8 +677,17 @@ div:hover>.upload-button {
   border-color: red !important;
 }
 
+.delete-button-assetpage {
+  background-color: #1ccdc7 !important;
+}
+
 .delete-button-text {
   color: red !important;
+}
+
+.delete-button-text-assetpage {
+  color: white !important;
+  text-transform: capitalize !important;
 }
 
 .third-table-column {
