@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 
 NAME = "mlx-api"
-VERSION = "0.1.29-filter-categories"
+VERSION = "0.1.30-upload-catalog-from-url"
 
 # To install the library, run the following
 #

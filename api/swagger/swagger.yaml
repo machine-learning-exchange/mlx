@@ -5,7 +5,7 @@
 swagger: "2.0"
 
 info:
-  version: "0.1.29-filter-categories"
+  version: "0.1.30-upload-catalog-from-url"
   title: "MLX API"
   description: "MLX API Extension for Kubeflow Pipelines"
 
@@ -167,6 +167,40 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/apiCatalogUpload"
+      responses:
+        201:
+          description: "All objects were created successfully."
+          schema:
+            $ref: "#/definitions/apiCatalogUploadResponse"
+        207:
+          description: "Some objects were created successfully, some errors occurred."
+          schema:
+            $ref: "#/definitions/apiCatalogUploadResponse"
+        default:
+          description: "Something went wrong."
+          schema:
+            $ref: "#/definitions/apiStatus"
+
+  /catalog/upload_from_url:
+    post:
+      tags:
+        - "CatalogService"
+      operationId: "upload_catalog_from_url"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "url"
+          description: "URL pointing to the catalog YAML file."
+          in: "formData"
+          required: true
+          type: "string"
+        - name: "access_token"
+          description: "Optional, the Bearer token to access the 'url'."
+          in: "formData"
+          required: false
+          type: "string"
       responses:
         201:
           description: "All objects were created successfully."
