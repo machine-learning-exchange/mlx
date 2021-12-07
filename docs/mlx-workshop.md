@@ -15,6 +15,16 @@ The specific dataset, notebook, and model we will use can be found here:
 - https://ml-exchange.org/models/codenet-language-classification
 
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Login to the MLX Web UI](#login-to-the-mlx-web-ui)
+- [Prepare the Dataset to be Mounted](#prepare-the-dataset-to-be-mounted)
+- [Run the Notebook](#run-the-notebook)
+- [Serve the Model](#serve-the-model)
+- [Conclusion](#conclusion)
+
+
 ## Prerequisites
 
 For this workshop you will need access to a Kubernetes cluster with MLX deployed,
@@ -36,15 +46,15 @@ guide.
 
 Open the MLX Web UI in your browser and login as the admin user:
 
-```Bash
-open http://localhost:3000/login
+```
+http://localhost:3000/login
 ```
 
 Once you are logged in, you should see the **Settings** menu item at the
 bottom of the left-hand navigation.
 
 
-## Mount The Dataset
+## Prepare the Dataset to be Mounted
 
 For this workshop we will use a small subset of the
 [CodeNet dataset](https://developer.ibm.com/exchanges/data/all/project-codenet/)
@@ -71,7 +81,7 @@ the dataset and create the PVC.
 * Enter a **Run Name** of your choice or leave the default value
 * Enter the **Namespace** for the PVC to be created in. The namespace will vary 
   depending on your MLX deployment. For single-user deployments of MLX, like MLX 
-  on KIND, enter `kubeflow`, for multi-user deployments enter `mlx`
+  on KIND, enter `kubeflow` (for multi-user deployments enter `mlx`)
 * Click **SUBMIT** to start the pipeline run
 
 ![Datasets Run Graph](./images/workshop/Datasets-run-graph.png)
@@ -85,15 +95,8 @@ the **Logs**.
 Once the pipeline is finished, click on the second task of
 the pipeline and select the **Input/Output** tab.
 Under the **Output Parameters**, **dataset-status**, find the **name** of the PVC
-that was created: "`codenet-langclass`". Select and Copy it to the clipboard.
-We will need that in the next step.
-
-![Datasets Related Assets](./images/workshop/Datasets-related-assets.png)
-
-Click on the **RELATED ASSETS** tab to run another pipeline to train and test
-the language classifier model using the _"Project CodeNet Language Classification"_
-Notebook, or go the Notebook directly and launch the pipeline run from there like
-described in the next section of our workshop.
+that was created: "`codenet-langclass`", which should be the same as the ID of
+the dataset. Select and Copy it to the clipboard. We will need that in the next step.
 
 
 ## Run the Notebook
@@ -148,10 +151,10 @@ kubectl port-forward -n kubeflow svc/minio-service 9000:9000
 ```
 
 Now we should be able to download the notebook by pasting the URL in our
-browser's address bar or opening it from the command line:
+browser's address bar:
 
-```Bash
-open http://localhost:9000/mlpipeline/notebooks/project-codenet-language-classification/Project_CodeNet_LangClass.html
+```
+http://localhost:9000/mlpipeline/notebooks/project-codenet-language-classification/Project_CodeNet_LangClass.html
 ```
 
 Open the notebook in a browser tab and scroll close to the bottom to find out
@@ -202,11 +205,11 @@ following command:
 kubectl port-forward svc/codenet-language-classification 5000:5000
 ```
 
-Now we should be able to access the model by pasting `localhost:5000` into our
-browser's address bar or opening it from the command line:
+Now we should be able to access the UI page for the deployed model by pasting
+`localhost:5000` into our browser's address bar:
 
-```Bash
-open http://localhost:5000/
+```
+http://localhost:5000/
 ```
 
 Expand the first section called **model** and click on **POST /model/predict**
@@ -226,8 +229,9 @@ file
 
 ![Open Source File](./images/workshop/Models-predict-open-source-file.png)
 
-Now click **Execute** to get the model's prediction. The 	
-Response should look similar to this:
+Now click **Execute** to get the model's prediction.
+
+The Response should look similar to this:
 
 **Response body**
 
