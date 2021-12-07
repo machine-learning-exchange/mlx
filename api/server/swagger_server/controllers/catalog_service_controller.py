@@ -27,6 +27,21 @@ def list_all_assets(page_token=None, page_size=None, sort_by=None, filter=None):
     return util.invoke_controller_impl()
 
 
+def upload_catalog_from_url(url, access_token=None):  # noqa: E501
+    """upload_catalog_from_url
+
+     # noqa: E501
+
+    :param url: URL pointing to the catalog YAML file.
+    :type url: str
+    :param access_token: Optional, the Bearer token to access the &#39;url&#39;.
+    :type access_token: str
+
+    :rtype: ApiCatalogUploadResponse
+    """
+    return util.invoke_controller_impl()
+
+
 def upload_multiple_assets(body):  # noqa: E501
     """upload_multiple_assets
 
