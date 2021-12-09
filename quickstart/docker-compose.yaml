@@ -94,6 +94,7 @@ services:
       HEALTH_API: "http://mlx-api:8080/apis/v1alpha1/health_check?check_database=true&check_object_store=true"
       UPLOAD_API: "http://mlx-api:8080/apis/v1alpha1/catalog/upload_from_url"
       CATALOG_URL: "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/bootstrapper/catalog_upload.json"
+      SETTINGS_API: "http://mlx-api:8080/apis/v1alpha1/settings"
     command:
     - |
       until curl -I -s "$${HEALTH_API}" | grep -q "200 OK"; do
@@ -104,6 +105,10 @@ services:
         -H "Content-Type: multipart/form-data" \
         -F url="$${CATALOG_URL}" \
         -s "$${UPLOAD_API}" | grep -iE "total_|error"
+      curl -X PUT \
+        -H 'Content-Type: application/json' \
+        -d '{"Execution enabled": false, "Inference Services": false}' \
+        -s "$${SETTINGS_API}" -o /dev/null --show-error
 
   dashboard:
     image: curlimages/curl

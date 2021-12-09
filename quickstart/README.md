@@ -21,7 +21,8 @@ To deploy MLX locally with Kubernetes on Docker (KIND) follow this
 In a nutshell, run these two commands and bring up MLX in your browser when
 you see the log message `Open the MLX Dashboard at http://localhost:80/`:
 
-    wget https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/docker-compose.yaml
+    curl -O https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/docker-compose.yaml
+
     docker compose up
 
 
@@ -43,7 +44,7 @@ default of 2 GB memory to 4 GB.
 
 Either, download the `docker-compose.yaml` directly:
 
-    wget https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/docker-compose.yaml
+    curl -O https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/docker-compose.yaml
 
 Or, clone this repository and navigate to the `quickstart` folder:
 
