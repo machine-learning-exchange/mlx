@@ -140,6 +140,9 @@ export REACT_APP_API="localhost:8080"
 export REACT_APP_RUN="false"
 export REACT_APP_UPLOAD="true"
 export REACT_APP_DISABLE_LOGIN="true"
+export REACT_APP_KFP_STANDALONE="true"  # KFP is standalone deployment or not
+export REACT_APP_TTL="0"                # Disable the cache
+export REACT_APP_CACHE_INTERVAL="0"     # Ignore checking cache
 ```
 
 Start the MLX Web UI server:
@@ -171,6 +174,7 @@ There are a few environment variables that can be defined that dictate how MLX i
   http://<ip_address>:<port>/<basepath>)
 * `REACT_APP_BRAND` - The brand name to use on the website
 * `REACT_APP_DISABLE_LOGIN` - A switch to turn off login mechanism
+* `REACT_APP_KFP_STANDALONE` - The KFP is standalone deployment or not
 * `REACT_APP_TTL` - The amount of seconds a cached entry remains valid for (24 hours by default)
 * `REACT_APP_CACHE_INTERVAL` - The minimum amount of time in seconds between two checks on the validity of the cache's contents (24 hours by default)
 

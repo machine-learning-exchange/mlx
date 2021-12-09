@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost/apis/v1alpha1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**list_all_assets**](CatalogServiceApi.md#list_all_assets) | **GET** /catalog | 
+[**upload_catalog_from_url**](CatalogServiceApi.md#upload_catalog_from_url) | **POST** /catalog/upload_from_url | 
 [**upload_multiple_assets**](CatalogServiceApi.md#upload_multiple_assets) | **POST** /catalog | 
 
 
@@ -56,6 +57,53 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **upload_catalog_from_url**
+> ApiCatalogUploadResponse upload_catalog_from_url(url, access_token=access_token)
+
+
+
+### Example
+```python
+from __future__ import print_function
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CatalogServiceApi()
+url = 'url_example' # str | URL pointing to the catalog YAML file.
+access_token = 'access_token_example' # str | Optional, the Bearer token to access the 'url'. (optional)
+
+try:
+    api_response = api_instance.upload_catalog_from_url(url, access_token=access_token)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CatalogServiceApi->upload_catalog_from_url: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **url** | **str**| URL pointing to the catalog YAML file. | 
+ **access_token** | **str**| Optional, the Bearer token to access the &#39;url&#39;. | [optional] 
+
+### Return type
+
+[**ApiCatalogUploadResponse**](ApiCatalogUploadResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
