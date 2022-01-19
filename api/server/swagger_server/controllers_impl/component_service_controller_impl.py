@@ -366,7 +366,7 @@ def _upload_component_yaml(yaml_file_content: AnyStr, name=None, existing_id=Non
     component_id = existing_id or generate_id(name=name or yaml_dict["name"])
     created_at = datetime.now()
     name = name or yaml_dict["name"]
-    description = (yaml_dict["description"] or "").strip()[:255]
+    description = (yaml_dict.get("description") or name).strip()[:255]
     filter_categories = yaml_dict.get("filter_categories") or dict()
 
     metadata = ApiMetadata(annotations=template_metadata.get("annotations"),
