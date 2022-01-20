@@ -11,6 +11,7 @@ import yaml
 from datetime import datetime
 
 from kfp import Client as KfpClient
+from kfp.components._naming import _sanitize_python_function_name as sanitize
 
 from kfp_server_api import ApiRun
 from kfp_server_api import ApiPipeline as KfpPipeline
@@ -100,13 +101,16 @@ def quote_string_value(value):
 
 def generate_method_arg_from_parameter(parameter):
 
+    param_name = sanitize(parameter.name)
+
     if parameter.value or parameter.default:
         value = quote_string_value(parameter.value or parameter.default)
-        arg = f"{parameter.name}={value}"
+        arg = f"{param_name}={value}"
     elif parameter.value == '' or parameter.default == '':  # TODO: should empty string != None ?
-        arg = f"{parameter.name}=''"
+        arg = f"{param_name}=''"
     else:
-        arg = parameter.name
+        arg = param_name
+
     return arg
 
 
@@ -128,9 +132,9 @@ def generate_component_run_script(component: ApiComponent, component_template_ur
 
     pipeline_method_args = generate_pipeline_method_args(component.parameters)
 
-    parameter_names = ",".join([p.name for p in component.parameters])
+    parameter_names = ",".join([sanitize(p.name) for p in component.parameters])
 
-    parameter_dict = json.dumps({p.name: run_parameters.get(p.name) or p.default or ""
+    parameter_dict = json.dumps({sanitize(p.name): run_parameters.get(p.name) or p.default or ""
                                  for p in component.parameters},
                                 indent=4).replace('"', "'")
 
