@@ -1,6 +1,6 @@
 # Running MLX with Docker Compose
 
-This _"quickstart"_ setup uses  [Docker Compose](https://docs.docker.com/compose/)
+This _"quickstart"_ setup uses [Docker Compose](https://docs.docker.com/compose/)
 to bring up the MLX API server and the MLX Dashboard, together with the MySQL
 database and Minio S3 storage backend.
 In this configuration, the preloaded asset catalog of Components, Datasets, Models,
@@ -12,10 +12,25 @@ In a Kubernetes cluster deployment of MLX, _Pipelines_ are registered using
 the KFP API and metadata storage is managed by KFP. In this Docker Compose setup
 the _Pipelines_ are stored in Minio and MySQL by the MLX API server.
 
+To deploy MLX locally with Kubernetes on Docker (KIND) follow this
+[guide](../docs/install-mlx-on-kind.md).
+
+
+## TL;DR
+
+In a nutshell, run these two commands and bring up MLX in your browser when
+you see the log message `Open the MLX Dashboard at http://localhost:80/`:
+
+    curl -O https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/docker-compose.yaml
+
+    docker compose up
+
+
 ## Limitations
 
 The _Kubeflow Pipelines_ dashboard and _Inference Service_ capabilities are not
 available with this Docker Compose setup.
+
 
 ## Prerequisites
 
@@ -24,17 +39,23 @@ available with this Docker Compose setup.
 default of 2 GB memory to 4 GB.
 * Approximately 10 GB of free storage
 
-Clone this repository and navigate to the `quickstart` folder:
+
+## Download our `docker-compose.yaml` or Clone the MLX Repository
+
+Either, download the `docker-compose.yaml` directly:
+
+    curl -O https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/quickstart/docker-compose.yaml
+
+Or, clone this repository and navigate to the `quickstart` folder:
 
     git clone https://github.com/machine-learning-exchange/mlx.git
     cd mlx/quickstart
 
-## Keep up to date
-
-If some time has passed since the `mlx` repository was cloned, 
-make sure to pull the latest sources for the _Quickstart_:
+**Note:** If you chose to clone the MLX repo, and if some time has passed since 
+then, make sure to pull the latest sources for the _Quickstart_:
 
     git pull
+
 
 ## Pull the Docker Images
 
@@ -43,6 +64,7 @@ and [mlx-ui](https://hub.docker.com/r/mlexchange/mlx-ui/tags?name=nightly)
 get rebuilt nightly. To get the latest version, run:
 
     docker compose pull
+
 
 ## Bring up the Docker Containers
 
@@ -72,15 +94,18 @@ to the MLX API on the Docker host.
     export DOCKER_HOST_IP=127.0.0.1
     docker compose up
 
+
 ## Shut Down the Docker Containers
 
 Press `control` + `c` on the Terminal to stop and then remove the containers:
 
     docker compose down -v
 
+
 ## Remove the Data Created by Minio and MySQL
 
     docker volume prune -f
+
 
 ## Troubleshooting
 
@@ -115,5 +140,3 @@ Make sure you originally cloned/forked the source repo from inside the WSL sub-s
 because the MLX source files have Windows line endings (`\r\n` - CRLF) which `bash` cannot run.
 (https://askubuntu.com/questions/966488/how-do-i-fix-r-command-not-found-errors-running-bash-scripts-in-wsl#comment1553686_966488).
 This error in the `catalog_1` service prevents the loading of assets and objects into the MLX catalog.
-
-

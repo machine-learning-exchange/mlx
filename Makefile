@@ -10,6 +10,16 @@ help: ## List the Make targets with description
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: check_npm_packages
+check_npm_packages: ## Verify NPM packages
+	@python3 tools/python/verify_npm_packages.py --verify
+	@echo "$@: OK"
+
+.PHONY: update_npm_packages
+update_npm_packages: ## Update NPM packages
+	@python3 tools/python/verify_npm_packages.py --update
+	@echo "$@: OK"
+
 .PHONY: check_doc_links
 check_doc_links: ## Check markdown files for invalid links
 	@pip3 show requests > /dev/null || pip3 install requests

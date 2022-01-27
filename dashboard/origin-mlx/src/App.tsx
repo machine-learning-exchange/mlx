@@ -53,6 +53,7 @@ const isAdmin = hasRole(getUserInfo(), 'admin');
 function App() {
 
   var prefix = process.env.REACT_APP_BASE_PATH || ""
+  var kfpStandalone = process.env.REACT_APP_KFP_STANDALONE === 'true'
 
   // Removes the stored path if the user navigated away from the /experiments page
   if (!window.location.pathname.substring(0, prefix.length+12).includes(prefix + "/experiments"))
@@ -63,13 +64,15 @@ function App() {
     const { data, origin } = event;
     switch (data.type) {
     case 'iframe-connected':
-      ['iframe', 'iframe-run'].forEach((id) => {
-        const element = document.getElementById(id) as HTMLIFrameElement;
-        if (element) {
-          // TODO: get namespace from user info, use fixed value: mlx for now
-          element.contentWindow.postMessage({type: 'namespace-selected', value: 'mlx'}, origin);
-        }
-      })
+      if (!kfpStandalone) {
+        ['iframe', 'iframe-run'].forEach((id) => {
+          const element = document.getElementById(id) as HTMLIFrameElement;
+          if (element) {
+            // TODO: get namespace from user info, use fixed value: mlx for now
+            element.contentWindow.postMessage({type: 'namespace-selected', value: 'mlx'}, origin);
+          }
+        })
+      }
       break;
     }
   });

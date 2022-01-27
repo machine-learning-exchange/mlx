@@ -39,7 +39,7 @@ download it the first time it runs:
     # function swagger-codegen() { java -jar "swagger-codegen-cli-2.4.8.jar" "$@"; }
     # export -f swagger-codegen
 
-It is **not recommended** to install [`swagger-codegen@2`](https://formulae.brew.sh/formula-linux/swagger-codegen@2)
+It is **not recommended** to install [`swagger-codegen@2`](https://formulae.brew.sh/formula/swagger-codegen@2)
 via [Homebrew](https://docs.brew.sh/Installation) on macOS, since `brew install swagger-codegen@2`
 does not allow selecting the _"old"_ version `2.4.8`. Instead, the `generate_code.sh` script
 will automatically download the _"correct"_ version of the `swagger-codegen-cli.jar` file.
@@ -102,7 +102,7 @@ from our local source code, instead of using the pre-built Docker image `mlexcha
     # cd <mlx_root_dir>
     cd quickstart
     
-    docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui
+    docker compose --project-name  no_api   up   minio miniosetup mysql mlx-ui dashboard
 
 When the MLX UI is ready, the log messages should show something like this:
 
@@ -124,7 +124,7 @@ After testing or debugging your code changes, bring down the Docker Compose stac
 
     # control + C 
 
-    docker compose --project-name  no_api  down  minio miniosetup mysql mlx-ui
+    docker compose --project-name  no_api  down
 
 Optional, to delete all data in Minio and MySQL, run the following commands:
 
@@ -174,8 +174,18 @@ After testing or debugging your code changes, bring down the Swagger Server
 ### TERMINAL 3 - Initialize the Catalog
 
 **Note**: The first time you bring up the Quickstart for API development, you need
-to populate the MLX asset catalog
+to populate the MLX asset catalog, or, the next time after you brought down the 
+Docker Compose stack with the `-v` option (`docker compose --project-name no_api down -v`)
 
     # cd <mlx_root_directory>
-    cd quickstart
-    ./init_catalog.sh
+    cd bootstrapper
+    
+    # ./init_catalog.sh  # still being worked on in PR #262
+    # until PR #262 is merged, we use curl
+
+    curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H 'Accept: application/json' \
+        -d @catalog_upload.json \
+        http://localhost:8080/apis/v1alpha1/catalog
+

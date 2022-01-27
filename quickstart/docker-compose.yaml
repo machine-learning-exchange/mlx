@@ -1,6 +1,7 @@
 # Copyright 2021 The MLX Contributors
 #
 # SPDX-License-Identifier: Apache-2.0
+
 version: '3.7'
 
 # starts 4 Docker containers: Minio, MySQL, MLX-API, MLX-UI
@@ -20,26 +21,27 @@ services:
       MINIO_ROOT_USER: "minio"
       MINIO_ROOT_PASSWORD: "minio123"
     command: server /data --console-address ":9001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
   miniosetup:
     image: minio/mc:RELEASE.2021-06-13T17-48-22Z
     depends_on:
-      minio:
-        condition: service_healthy
+      - minio
     entrypoint: ["/bin/sh","-c"]
+    environment:
+      HEALTH_API: "http://minio:9000/minio/health/live"
     command:
     - |
+      until curl -I -s "$${HEALTH_API}" | grep -q "200 OK"; do
+        echo "Waiting for Minio at $${HEALTH_API}"
+        sleep 1
+      done
       /usr/bin/mc config host add miniohost http://minio:9000 minio minio123
       /usr/bin/mc mb -p miniohost/mlpipeline
       /usr/bin/mc policy set download miniohost/mlpipeline
 
   mysql:
     image: mysql:5.7
+    platform: linux/amd64
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -48,16 +50,13 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
       - data-mysql:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
   mlx-api:
     image: mlexchange/mlx-api:nightly-main
+    depends_on:
+      - miniosetup
+      - mysql
     ports:
       - "8080:8080"
     environment:
@@ -67,11 +66,6 @@ services:
       MYSQL_SERVICE_PORT: "3306"
       ML_PIPELINE_SERVICE_HOST: "UNAVAILABLE"
       ML_PIPELINE_SERVICE_PORT: "UNAVAILABLE"
-#    healthcheck:  # disable healthcheck, it's filling up the logs
-#      test: [ "CMD", "wget", "-qO-", 'http://localhost:8080/apis/v1alpha1/health_check?check_database=true&check_object_store=true' ]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 10
 
   mlx-ui:
     image: mlexchange/mlx-ui:nightly-origin-main
@@ -92,24 +86,34 @@ services:
   catalog:
     image: curlimages/curl
     depends_on:
-      miniosetup:
-        condition: service_completed_successfully
-      mysql:
-        condition: service_healthy
-      mlx-api:
-        condition: service_started  # NOT service_healthy as that pollutes the logs
-    volumes:
-      - ./catalog_upload.json:/catalog_upload.json
-      - ./init_catalog.sh:/init_catalog.sh
-    entrypoint: ["/bin/sh", "-c", "/init_catalog.sh"]
+      - miniosetup
+      - mysql
+      - mlx-api
+    entrypoint: [ "/bin/sh", "-c" ]
     environment:
-      MLX_API_SERVER: "mlx-api:8080"
+      HEALTH_API: "http://mlx-api:8080/apis/v1alpha1/health_check?check_database=true&check_object_store=true"
+      UPLOAD_API: "http://mlx-api:8080/apis/v1alpha1/catalog/upload_from_url"
+      CATALOG_URL: "https://raw.githubusercontent.com/machine-learning-exchange/mlx/main/bootstrapper/catalog_upload.json"
+      SETTINGS_API: "http://mlx-api:8080/apis/v1alpha1/settings"
+    command:
+    - |
+      until curl -I -s "$${HEALTH_API}" | grep -q "200 OK"; do
+        echo "Waiting for MLX API at $${HEALTH_API}"
+        sleep 3
+      done
+      curl -X POST \
+        -H "Content-Type: multipart/form-data" \
+        -F url="$${CATALOG_URL}" \
+        -s "$${UPLOAD_API}" | grep -iE "total_|error"
+      curl -X PUT \
+        -H 'Content-Type: application/json' \
+        -d '{"Execution enabled": false, "Inference Services": false}' \
+        -s "$${SETTINGS_API}" -o /dev/null --show-error
 
   dashboard:
     image: curlimages/curl
     depends_on:
       - mlx-ui
-      - catalog
     entrypoint: ["/bin/sh","-c"]
     command:
     - |

@@ -62,7 +62,8 @@ function SidebarList() {
   const [secretVisible, setSecretVisible] = useState(false)
   const { height } = useWindowDimensions()
   // Ensures the "Join the Conversation" button is away from the other buttons (if there is enough space)
-  const guardHeight = height > 700 && !secretVisible ? (height - 670) / 2 : 0
+  let buffer = !isAdmin ? (height - 600) : (height - 670) / 2 // checks if you are an admin , spacing for guardHeight will change such that elements are placed at the bottom
+  const guardHeight = height > 700 && !secretVisible ? buffer : 0
 
   console.log(height)
 
@@ -110,8 +111,14 @@ function SidebarList() {
             <li className="sidebar-list-wrap">
               <Link to="/external-links">
                 <h3 className={`sidebar-list-item ${false ? 'active' : 'not-active'}`}>
-                  <Icon className="sidebar-icon">chat</Icon>
-                  Join the Conversation
+                  <div style={{"display": "flex"}}>
+                    <div style={{"paddingRight": 5, "verticalAlign": "middle"}}>
+                    <Icon className="sidebar-icon" style={{ "marginTop" : 7}}>chat</Icon>
+                    </div>
+                    <div>
+                    <text>Join the Conversation</text>
+                    </div>
+                  </div>
                 </h3>
               </Link>
             </li>

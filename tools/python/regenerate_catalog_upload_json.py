@@ -29,7 +29,7 @@ katalog_url = "https://raw.githubusercontent.com/machine-learning-exchange/katal
 
 catalog_upload_json_files = [
     f"{project_dir}/bootstrapper/catalog_upload.json",
-    f"{project_dir}/quickstart/catalog_upload.json",
+    # f"{project_dir}/quickstart/catalog_upload.json",
 ]
 
 

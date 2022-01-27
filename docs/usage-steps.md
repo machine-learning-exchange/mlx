@@ -12,7 +12,7 @@
 
 3. [Models](../models/README.md)
     - [Create Model Metadata](../models/README.md#Create-Model-Metadata)
-    - [Register Model](./models/README.md#Register-Model)
+    - [Register Model](../models/README.md#Register-Model)
     - [Use Models in Pipelines](../models/README.md#Use-Models-in-Pipelines)
     - [Model Metadata Template](../models/template.yaml)
 
