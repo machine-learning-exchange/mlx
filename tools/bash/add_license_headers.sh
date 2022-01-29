@@ -13,6 +13,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then  # macOS
     alias gsed="sed -i ''"
 elif [[ "$OSTYPE" == "cygwin" ]]; then  # POSIX compatible emulation for Windows
     alias gsed="sed -i"
+elif [[ "$OSTYPE" == "msys"* ]]; then  # Git Bash (Windows)
+    alias gsed="sed -i"
 else
     echo "FAILED. OS not compatible with script '${BASH_SOURCE[0]}'"
     exit 1
