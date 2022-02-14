@@ -38,7 +38,7 @@ spec:
         - name: REACT_APP_UPLOAD
           value: "true"
         - name: REACT_APP_BASE_PATH
-          value: /os
+          value: /mlx
         ports:
         - containerPort: 3000
       serviceAccountName: mlx-ui
@@ -92,9 +92,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /os
+        prefix: /mlx
     rewrite:
-      uri: /os
+      uri: /mlx
     route:
     - destination:
         host: mlx-ui.kubeflow.svc.cluster.local
