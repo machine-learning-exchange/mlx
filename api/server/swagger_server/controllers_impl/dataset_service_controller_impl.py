@@ -13,7 +13,7 @@ from typing import AnyStr
 from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, \
-    get_yaml_file_content_from_uploadfile
+    get_yaml_file_content_from_uploadfile, validate_id
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, NoSuchKey, enable_anonymous_read_access, create_tarfile
 from swagger_server.data_access.mysql_client import store_data, generate_id, \
@@ -370,6 +370,11 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
 
     # if yaml_dict.get("id") != dataset_id:
     #     raise ValueError(f"Dataset.id contains non k8s character: {yaml_dict.get('id')}")
+
+    errors, status = validate_id(dataset_id)
+
+    if errors:
+        return errors, status
 
     # TODO: re-evaluate if we should use dataset update time as our MLX "created_at" time
     if "updated" in yaml_dict:

@@ -12,7 +12,7 @@ from io import BytesIO
 from typing import AnyStr
 from werkzeug.datastructures import FileStorage
 
-from swagger_server.controllers_impl import download_file_content_from_url
+from swagger_server.controllers_impl import download_file_content_from_url, validate_id
 from swagger_server.controllers_impl import get_yaml_file_content_from_uploadfile
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, enable_anonymous_read_access, create_tarfile, NoSuchKey
@@ -396,6 +396,11 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
     if type(api_model.servable_tested_platforms) == str:
         api_model.servable_tested_platforms = api_model.servable_tested_platforms.replace(", ", ",").split(",")
+
+    errors, status = validate_id(api_model.id)
+
+    if errors:
+        return errors, status
 
     uuid = store_data(api_model)
 
