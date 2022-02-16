@@ -52,13 +52,13 @@ For a full deployment, we use [Kubeflow Kfctl](https://github.com/kubeflow/kfctl
 
 By default, the MLX UI is available at http://<cluster_node_ip>:30380/mlx/
 
-**If you deployed on a Kubernetes cluster, run the following and look for the ExternalIP column to find the public IP of a node.**
+If you deployed on a **Kubernetes** cluster, run the following and look for the External-IP column to find the public IP of a node.
 
 ```bash
 kubectl get node -o wide
 ```
 
-**If you deployed using OpenShift, you can use IstioIngresGateway Route. You can find it in the OpenShift Console or using the CLI.**
+If you deployed using **OpenShift**, you can use IstioIngresGateway Route. You can find it in the OpenShift Console or using the CLI.
 
 ```bash
 oc get route -n istio-system
