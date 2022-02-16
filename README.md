@@ -50,7 +50,7 @@ For a full deployment, we use [Kubeflow Kfctl](https://github.com/kubeflow/kfctl
 
 ## 2. Access the MLX UI
 
-By default, the MLX UI is available at <public-ip-of-node>:30380/mlx
+By default, the MLX UI is available at http://<cluster_node_ip>:30380/mlx/
 
 **If you deployed on a Kubernetes cluster, run the following and look for the ExternalIP column to find the public IP of a node.**
 
