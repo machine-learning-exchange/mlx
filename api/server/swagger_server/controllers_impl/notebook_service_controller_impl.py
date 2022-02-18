@@ -388,6 +388,11 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
 
     template_metadata = yaml_dict.get("metadata") or dict()
 
+    errors, status = validate_id(yaml_dict.get("id"))
+
+    if errors:
+        return errors, status
+
     notebook_id = existing_id or yaml_dict.get("id") or generate_id(name=name or yaml_dict["name"])
     created_at = datetime.now()
     name = name or yaml_dict["name"]
@@ -395,11 +400,6 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
     url = yaml_dict["implementation"]["github"]["source"]
     requirements = yaml_dict["implementation"]["github"].get("requirements")
     filter_categories = yaml_dict.get("filter_categories") or dict()
-
-    errors, status = validate_id(notebook_id)
-
-    if errors:
-        return errors, status
 
     metadata = ApiMetadata(annotations=template_metadata.get("annotations"),
                            labels=template_metadata.get("labels"),

@@ -363,6 +363,11 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
 
     yaml_dict = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
 
+    errors, status = validate_id(yaml_dict.get("id"))
+
+    if errors:
+        return errors, status
+
     name = name or yaml_dict["name"]
     description = yaml_dict["description"]
     dataset_id = existing_id or generate_id(name=yaml_dict.get("id", name))
@@ -370,11 +375,6 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
 
     # if yaml_dict.get("id") != dataset_id:
     #     raise ValueError(f"Dataset.id contains non k8s character: {yaml_dict.get('id')}")
-
-    errors, status = validate_id(dataset_id)
-
-    if errors:
-        return errors, status
 
     # TODO: re-evaluate if we should use dataset update time as our MLX "created_at" time
     if "updated" in yaml_dict:

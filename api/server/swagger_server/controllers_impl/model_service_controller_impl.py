@@ -372,6 +372,11 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
     model_def = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
 
+    errors, status = validate_id(model_def.get("model_identifier"))
+
+    if errors:
+        return errors, status
+
     api_model = ApiModel(
         id=existing_id or model_def.get("model_identifier") or generate_id(name=name or model_def["name"]),
         created_at=datetime.now(),
@@ -396,11 +401,6 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
     if type(api_model.servable_tested_platforms) == str:
         api_model.servable_tested_platforms = api_model.servable_tested_platforms.replace(", ", ",").split(",")
-
-    errors, status = validate_id(api_model.id)
-
-    if errors:
-        return errors, status
 
     uuid = store_data(api_model)
 
