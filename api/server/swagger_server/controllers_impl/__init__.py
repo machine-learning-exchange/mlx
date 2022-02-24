@@ -6,6 +6,7 @@ import requests
 
 from werkzeug.datastructures import FileStorage
 
+from kfp_tekton.compiler._k8s_helper import sanitize_k8s_name;
 from swagger_server.data_access.minio_client import extract_yaml_from_tarfile
 from swagger_server.models.api_parameter import ApiParameter
 from swagger_server.util import ApiError
@@ -49,6 +50,14 @@ def validate_parameters(api_parameters: [ApiParameter], parameters: dict) -> (st
 
     if missing_parameters:
         return f"Missing required parameter(s): {missing_parameters}", 422
+
+    return None, 200
+
+
+def validate_id(id: str) -> (str, int):
+
+    if id != sanitize_k8s_name(id):
+        return f"Identifiers must contain lower case alphanumeric characters or '-' only.", 422
 
     return None, 200
 

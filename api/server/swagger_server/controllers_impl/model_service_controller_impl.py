@@ -12,7 +12,7 @@ from io import BytesIO
 from typing import AnyStr
 from werkzeug.datastructures import FileStorage
 
-from swagger_server.controllers_impl import download_file_content_from_url
+from swagger_server.controllers_impl import download_file_content_from_url, validate_id
 from swagger_server.controllers_impl import get_yaml_file_content_from_uploadfile
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, enable_anonymous_read_access, create_tarfile, NoSuchKey
@@ -371,6 +371,11 @@ def upload_model_from_url(url, name=None, access_token=None):  # noqa: E501
 def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
     model_def = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
+
+    errors, status = validate_id(model_def.get("model_identifier"))
+
+    if errors:
+        return errors, status
 
     api_model = ApiModel(
         id=existing_id or model_def.get("model_identifier") or generate_id(name=name or model_def["name"]),
