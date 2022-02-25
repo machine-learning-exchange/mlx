@@ -40,7 +40,6 @@
     "styled-components": "^4.3.1",
     "title-case": "^3.0.3",
     "typescript": "^3.5.2",
-    "typescript-logging": "^1.0.0",
     "typestyle": "^2.0.1",
     "yamljs": "^0.3.0"
   },
