@@ -6,6 +6,7 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
 
 export default class MarkdownViewer extends React.Component<{url: string}, {terms: any}> {
     constructor(props: any) {
@@ -23,7 +24,9 @@ export default class MarkdownViewer extends React.Component<{url: string}, {term
     render() {
       return (
         <div className="content">
-          <ReactMarkdown source={this.state.terms} plugins={[remarkGfm]}/>
+          <ReactMarkdown children={this.state.terms}
+                         remarkPlugins={[remarkGfm]}
+                         rehypePlugins={[rehypeSlug]}/>
         </div>
       )
     }
