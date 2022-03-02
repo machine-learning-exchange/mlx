@@ -6,3 +6,8 @@ kind: Kustomization
 resources:
   - mlx-api.yaml
   - mlx-ui.yaml
+images:
+  - name: mlexchange/mlx-api
+    newTag: v0.2.0
+  - name: mlexchange/mlx-ui
+    newTag: v0.2.0
