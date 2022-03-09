@@ -20,9 +20,7 @@
 
 Run the following commands to set up and deploy Kubeflow:
 
-1. Download the latest kfctl {{% kf-latest-version %}} release from the
-  [Kubeflow releases 
-  page](https://github.com/kubeflow/kfctl/releases/tag/{{% kf-latest-version %}}).
+1. Download the [latest kfctl release](https://github.com/kubeflow/kfctl/releases/latest) from the [Kubeflow releases page](https://github.com/kubeflow/kfctl/releases/).
   
   **Note**: You're strongly recommended to install **kfctl v1.2** or above because kfctl v1.2 addresses several critical bugs that can break the Kubeflow deployment.
 
