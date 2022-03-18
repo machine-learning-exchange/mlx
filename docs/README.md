@@ -1,4 +1,4 @@
-| Documentation                                                                                                     | Description   |
+| Document                                                                                                     | Description   |
 | :-----------                                                                                                      | :------------- |
 | [import-assets.md](./import-assets.md)                           | Import a catalog of assets to an MLX instance |
 | [install-mlx-on-kind.md](./install-mlx-on-kind.md)               | Deploy MLX on [Kubernetes in Docker (KIND)](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)  |
