@@ -13,11 +13,6 @@ Allows upload, registration, execution, and deployment of:
  - Datasets
  - Notebooks
 
-For more details about the project please follow this [announcement blog post](https://lfaidata.foundation/blog/2021/09/28/machine-learning-exchange-mlx/). 
-
-
-<img src="docs/images/mlx.png" height="90%" width="90%">
-
 Additionally it provides:
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
@@ -27,6 +22,12 @@ Additionally it provides:
  - Preregistered Datasets from [Data Asset Exchange (DAX)](https://developer.ibm.com/exchanges/data/) and Models from [Model Asset Exchange (MAX)](https://developer.ibm.com/exchanges/models/)
  - Serving engine by [KFServing](https://github.com/kubeflow/kfserving)
  - Model Metadata schemas
+
+For more details about the project please follow this [announcement blog post](https://lfaidata.foundation/blog/2021/09/28/machine-learning-exchange-mlx/). 
+
+
+<img src="docs/images/mlx.png" height="90%" width="90%">
+
 
 ## 1. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
@@ -67,13 +68,21 @@ oc get route -n istio-system
 
 ## 3. Import Data and AI Assets in MLX Catalog
 
-[Import data and AI assets using MLX's catalog importer](/docs/import-assets.md)
+For information on how to import data and AI assets using MLX's catalog importer, use this [guide](/docs/import-assets.md).
 
 ## 4. Use MLX
 
-[MLX Usage Instructions](/docs/usage-steps.md)
-	
-## 5. Troubleshooting
+For information on how to use MLX and create assets check out this [guide](/docs/usage-steps.md).
+
+## 5. How to Contribute
+
+Contributions can be made to either the UI or API.
+
+For information about adding new features, bug fixing, communication
+or UI and API setup, please refer to this [document](CONTRIBUTING.md).
+
+
+## 6. Troubleshooting
 
 [MLX Troubleshooting Instructions](/docs/troubleshooting.md)
 	

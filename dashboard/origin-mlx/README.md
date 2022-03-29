@@ -4,6 +4,8 @@
 
 This repo contains the code for the front end UI of the Machine Learning Exchange project.
 
+### Starting the MLX UI locally
+
 To run this app, you'll need a current version of Node.js installed.
 
 1. First, clone this repo:
@@ -72,6 +74,8 @@ docker push <your docker user-id>/<repo name>:<tag name>
 ```
 
 ## (Re-)Deploy to Kubernetes Cluster
+For information on how to deploy MLX on a Kubernetes Cluster or OpenShift on IBM Cloud, check out the guide [here](../../docs/mlx-setup.md).
+Once the clusters have been deployed, they will need to be redeployed for UI work.
 
 Change the Docker image tag in the deployment spec server/mlx-ui.yml from image: ibmandrewbutler/open-ui:add-homepage to image: <your_docker_user_id>/<repo name>:<tag name> and then run:
 
@@ -79,8 +83,33 @@ Change the Docker image tag in the deployment spec server/mlx-ui.yml from image:
 kubectl delete -f ./dashboard/origin-mlx/mlx-ui.yml
 kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
 ```
+Change the image in /manifests/base/mlx-deployments/mlx-ui.yaml under the container with the name mlx-ui at spec.template.spec.containers
+```
+kubectl delete -f /manifests/base/mlx-deployments/mlx-ui.yaml
+kubectl apply -f /manifests/base/mlx-deployments/mlx-ui.yaml
+```
 
 ## UI Development with Docker Compose
+For information on how to get started with Docker Compose, and it's appropriate setup, check out the 
+[Quick Start Guide](../../quickstart/README.md).
+
+To bring up the Docker Compose stack run:
+```Bash
+docker compose --project-name  mlx  up
+```
+Don't forget to bring the stack down with:
+```Bash
+docker compose --project-name  mlx  down
+```
+To bring up the stack without the UI run:
+```Bash
+docker compose --project-name  mlx_no_ui  up  minio miniosetup mysql mlx-api catalog
+```
+Once finished, run:
+```Bash
+docker compose --project-name  mlx_no_ui  down
+```
+
 
 You can test most code changes without a Kubernetes cluster. A K8s cluster is only
 required to `run` the generated sample pipeline code. Running the Quickstart with
@@ -116,7 +145,7 @@ docker compose rm -v -f
 docker volume prune -f
 ```
 
-### Terminal 2 - Start the UI server
+### Terminal 2 - Start the MLX UI locally with Docker API
 
 Navigate to the UI source folder:
 

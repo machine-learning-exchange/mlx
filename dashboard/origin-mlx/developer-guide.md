@@ -23,62 +23,6 @@ Lifecycle Methods:
 
 Each component has several “lifecycle methods” that you can override to run code at particular times in the process. Putting functions in different lifecycle methods will cause the function to be run at a specific point in a component's lifecycle. An example of this is running a function after a component is being unmounted (removed or refreshed).
 
-## Startup
-
-General Startup Instructions: https://github.com/machine-learning-exchange/mlx/tree/main/dashboard/origin-mlx
-
-### Starting the MLX UI locally
-
-To run this app, you'll need a current version of Node.js installed.
-
-1. First, clone this repo:
-```Bash
-git clone https://github.com/machine-learning-exchange/mlx.git
-```
-
-2. Next, install the dependencies by running this command from within the newly created directory:
-```Bash
-npm install
-```
-
-3. Start the app with the following command:
-```Bash
-npm start
-```
-
-4. The app should now be accessible in your web browser at:
-```
-http://localhost:3000
-```
-
-### Starting the MLX UI locally with Docker API
-```
-git clone https://github.com/machine-learning-exchange/mlx.git
-cd mlx/
-cd dashboard/origin-mlx/
-rm -rf package-lock.json 
-npm install
-export REACT_APP_API="localhost:8080"
-export REACT_APP_RUN="false"
-export REACT_APP_UPLOAD="true"
-export REACT_APP_DISABLE_LOGIN="true"
-npm start
-```
-
-### Building an MLX UI Image
-
-```
-cd dashboard/origin-mlx
-docker build -t <your docker user-id>/<repo name>:<tag name> -f Dockerfile .
-docker push <your docker user-id>/<repo name>:<tag name>
-```
-
-### Change the UI image on a cluster deployment
-Change the image in /manifests/base/mlx-deployments/mlx-ui.yaml under the container with the name mlx-ui at spec.template.spec.containers
-```
-kubectl delete -f /manifests/base/mlx-deployments/mlx-ui.yaml
-kubectl apply -f /manifests/base/mlx-deployments/mlx-ui.yaml
-```
 
 ## UI File Structure
  
@@ -133,3 +77,5 @@ src/styles/ contains most (>90%) of the page styling in css. If the style needs 
 
 
 src/lib/api/ contains all of the calls to the MLX API. If some API call is going wrong, it will likely be an issue in this folder.
+
+For more information on UI Development Setup go [here](README.md)
