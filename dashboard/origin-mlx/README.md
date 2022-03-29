@@ -214,6 +214,9 @@ which matches a previous request and the difference of the time between the two 
 
 To invalidate or hard reset the cache, navigate to the settings page (clicking the three dots at the bottom of the sidebar) and click on the `Reset Cache` button.
 
+# Development Guidlines:
+For information on UI code structure, design principles, etc. check out the [MLX Developer Guide](developer-guide.md).
+
 # Project Overview:
 
 ![MLX Overview](src/images/image1.png)
