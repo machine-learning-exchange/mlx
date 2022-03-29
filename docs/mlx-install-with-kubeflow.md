@@ -2,10 +2,17 @@
 
 ## Prerequisites
 * An existing Kubernetes cluster. Version 1.17+
-* The minimum capacity requirement for MLX is 8 vCPUs and 16GB RAM
-* If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using [IBM Cloud Public](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
-* If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-openshift_tutorial)
-* [`kustomize v3.0+`](https://kubernetes-sigs.github.io/kustomize/installation/) is installed
+* The minimum recommended capacity requirement for MLX is 8 vCPUs and 16GB RAM
+* If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
+* If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift_tutorial)
+* [`kustomize v3.2.0`](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) is installed
+   * Kustomize v3.2.0 quick install:
+   ```
+   OS=$(uname) 
+   curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v3.2.0/kustomize_3.2.0_${OS}_amd64 --output kustomize
+   chmod +x kustomize
+   mv kustomize /usr/local/bin
+   ```
 
 ## Install Kfctl
 
@@ -13,9 +20,7 @@
 
 Run the following commands to set up and deploy Kubeflow:
 
-1. Download the latest kfctl {{% kf-latest-version %}} release from the
-  [Kubeflow releases 
-  page](https://github.com/kubeflow/kfctl/releases/tag/{{% kf-latest-version %}}).
+1. Download the [latest kfctl release](https://github.com/kubeflow/kfctl/releases/latest) from the [Kubeflow releases page](https://github.com/kubeflow/kfctl/releases/).
   
   **Note**: You're strongly recommended to install **kfctl v1.2** or above because kfctl v1.2 addresses several critical bugs that can break the Kubeflow deployment.
 

@@ -97,8 +97,8 @@ function MetaCard(props: MetaCardProps) {
             <div className="divider" />
             <CardContent className={classes.wrap}>
               <ReactMarkdown
-                source={description} renderers={{
-                  paragraph: ({children}) =>
+                children={description} components={{
+                  p: ({children}) =>
                     <Typography
                       variant="body1"
                       component="p"
@@ -106,7 +106,7 @@ function MetaCard(props: MetaCardProps) {
                     >
                       {children}
                     </Typography>, 
-                  link: ({children}) => children
+                  // link: ({children}) => children
                 }}
               />
             </CardContent>

@@ -32,6 +32,14 @@ maintainers of each component affected.
 
 For a list of the maintainers, see the [MAINTAINERS.md](MAINTAINERS.md) page.
 
+## Getting Started 
+
+ **MLX Dashboard Web UI**
+- Information regarding configuration, deployment, and development setup can be found [here](https://github.com/machine-learning-exchange/mlx/blob/main/dashboard/origin-mlx/README.md).
+
+**MLX API**
+- Quickstart and development setup documentation can be found [here](https://github.com/machine-learning-exchange/mlx/tree/main/api).
+
 ## Legal
 
 Each source file must include a license header for the Apache
@@ -71,14 +79,6 @@ git commit -s
 
 ## Communication
 Please feel free to connect with us on our [Slack channel](https://lfaifoundation.slack.com/archives/C0264LKNH63).
-
-## Setup
-**FIXME** Please add any special setup instructions for your project to help the developer
-become productive quickly.
-
-## Testing
-**FIXME** Please provide information that helps the developer test any changes they make
-before submitting.
 
 ## Coding style guidelines
 **FIXME** Optional, but recommended: please share any specific style guidelines you might

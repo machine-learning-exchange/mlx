@@ -13,7 +13,7 @@ from typing import AnyStr
 from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, \
-    get_yaml_file_content_from_uploadfile
+    get_yaml_file_content_from_uploadfile, validate_id
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, NoSuchKey, enable_anonymous_read_access, create_tarfile
 from swagger_server.data_access.mysql_client import store_data, generate_id, \
@@ -362,6 +362,11 @@ def upload_dataset_from_url(url, name=None, access_token=None):  # noqa: E501
 def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
     yaml_dict = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
+
+    errors, status = validate_id(yaml_dict.get("id"))
+
+    if errors:
+        return errors, status
 
     name = name or yaml_dict["name"]
     description = yaml_dict["description"]

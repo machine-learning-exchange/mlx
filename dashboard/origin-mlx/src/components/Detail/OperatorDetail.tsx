@@ -84,7 +84,7 @@ export default class OperatorDetail extends React.Component<IOperatorDetailProps
           </div>
           {this.state.leftTab === 'detail' &&
             <div className="component-detail-side">
-              <ReactMarkdown source={
+              <ReactMarkdown children={
                 `## ${operator.name}\n` +
                 operator.description + '\n' +
                 `### Running This Operator\n` +
