@@ -2,13 +2,13 @@
 
 | Document | Description |
 | --- | --- |
-| [import-assets.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/import-assets.md) | Import Data and AI Assets in MLX Catalog |
-| [install-mlx-on-kind.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/install-mlx-on-kind.md) | Deploy MLX on KIND |
-| [install-mlx-on-kubeflow.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/install-mlx-on-kubeflow.md) | Deploy MLX on an Existing Kubeflow Cluster |
-| [mlx-install-operator.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/mlx-install-operator.md) | Install Operator Manually |
-| [mlx-install-with-kubeflow.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/mlx-install-with-kubeflow.md) | MLX Deployment on Kubernetes or OpenShift (Asset Catalog and Execution Engine) |
-| [mlx-read-only-deployment.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/mlx-read-only-deployment.md) | Deploy the MLX Read-Only mode on an Existing Kubernetes Cluster |
-| [mlx-setup.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/mlx-setup.md) | Deploy MLX on an existing Kubernetes cluster |
-| [mlx-workshop.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/mlx-workshop.md) | MLX Workshop |
-| [troubleshooting.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/troubleshooting.md) | Troubleshooting |
-| [usage-steps.md](https://github.com/machine-learning-exchange/mlx/blob/master/docs/usage-steps.md) | Usage Steps |
+| [import-assets.md](./import-assets.md) | Import Data and AI Assets in MLX Catalog |
+| [install-mlx-on-kind.md](./install-mlx-on-kind.md) | Deploy MLX on KIND |
+| [install-mlx-on-kubeflow.md](./install-mlx-on-kubeflow.md) | Deploy MLX on an Existing Kubeflow Cluster |
+| [mlx-install-operator.md](./mlx-install-operator.md) | Install Operator Manually |
+| [mlx-install-with-kubeflow.md](./mlx-install-with-kubeflow.md) | MLX Deployment on Kubernetes or OpenShift (Asset Catalog and Execution Engine) |
+| [mlx-read-only-deployment.md](./mlx-read-only-deployment.md) | Deploy the MLX Read-Only mode on an Existing Kubernetes Cluster |
+| [mlx-setup.md](./mlx-setup.md) | Deploy MLX on an existing Kubernetes cluster |
+| [mlx-workshop.md](./mlx-workshop.md) | MLX Workshop |
+| [troubleshooting.md](./troubleshooting.md) | Troubleshooting |
+| [usage-steps.md](./usage-steps.md) | Usage Steps |

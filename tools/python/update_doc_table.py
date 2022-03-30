@@ -61,7 +61,7 @@ def update_doc_table() -> [str]:
     ]
 
     # 3. format filenames as Markdown hyperlinks: [name](url)
-    md_filenames = ["[" + split(file)[1] + "](" + github_repo_master_path + split(file)[1] + ")"
+    md_filenames = ["[" + split(file)[1] + "](./" + split(file)[1] + ")"
                     for file in md_file_paths]
 
     table = []
