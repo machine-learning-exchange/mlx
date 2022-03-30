@@ -4,15 +4,16 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+"""
+    This script is used to (re)generate the /docs/README.md file with a table that describes the
+    purpose of each document. Run it from the project root folder via `make update_doc_table`.
+"""
+
 import itertools
 import re
 
 from glob import glob
-from os import environ as env
 from os.path import abspath, dirname, split
-
-GITHUB_REPO = env.get(
-    "GITHUB_REPO", "https://github.com/machine-learning-exchange/mlx/")
 
 md_file_path_expressions = [
     "/docs/*.md"
@@ -20,9 +21,6 @@ md_file_path_expressions = [
 
 script_folder = abspath(dirname(__file__))
 project_root_dir = abspath(dirname(dirname(script_folder)))
-github_repo_master_path = "{}/blob/master/docs/".format(
-    GITHUB_REPO.rstrip("/"))
-
 
 def find_md_files() -> [str]:
 
