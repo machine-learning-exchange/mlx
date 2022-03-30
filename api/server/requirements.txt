@@ -14,10 +14,6 @@ ansiwrap==0.8.4
     # via papermill
 anyio==3.5.0
     # via jupyter-server
-appnope==0.1.2
-    # via
-    #   ipykernel
-    #   ipython
 argon2-cffi==21.3.0
     # via
     #   jupyter-server
@@ -612,7 +608,7 @@ urllib3==1.26.8
     #   kubernetes
     #   minio
     #   requests
-waitress==2.0.0
+waitress==2.1.1
     # via -r requirements.in
 watchdog==2.1.6
     # via elyra-server
