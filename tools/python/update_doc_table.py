@@ -22,6 +22,7 @@ md_file_path_expressions = [
 script_folder = abspath(dirname(__file__))
 project_root_dir = abspath(dirname(dirname(script_folder)))
 
+
 def find_md_files() -> [str]:
 
     print("Checking for Markdown files here:\n")
