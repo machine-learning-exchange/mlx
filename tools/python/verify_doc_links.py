@@ -24,6 +24,11 @@ md_file_path_expressions = [
     "/bootstrapper/catalog_upload.json",
 ]
 
+excluded_paths = [
+    "node_modules",
+    "temp",
+]
+
 script_folder = abspath(dirname(__file__))
 project_root_dir = abspath(dirname(dirname(script_folder)))
 github_repo_master_path = "{}/blob/master".format(GITHUB_REPO.rstrip("/"))
@@ -40,16 +45,25 @@ def find_md_files() -> [str]:
         print("  " + path_expr.lstrip("/"))
     print("")
 
-    md_files_list_of_lists = [glob(project_root_dir + path_expr, recursive=True)
-                              for path_expr in md_file_path_expressions]
+    list_of_lists = [glob(project_root_dir + path_expr, recursive=True)
+                     for path_expr in md_file_path_expressions]
 
-    return sorted(list(itertools.chain(*md_files_list_of_lists)))
+    flattened_list = list(itertools.chain(*list_of_lists))
+
+    filtered_list = [path for path in flattened_list
+                     if not any(s in path for s in excluded_paths)]
+
+    return sorted(filtered_list)
 
 
-def get_links_from_md_file(md_file_path: str) -> [(int, str, str)]: # -> [(line, link_text, URL)]
+def get_links_from_md_file(md_file_path: str) -> [(int, str, str)]:  # -> [(line, link_text, URL)]
 
     with open(md_file_path, "r") as f:
-        md_file_content = f.read()
+        try:
+            md_file_content = f.read()
+        except ValueError as e:
+            print(f"Error trying to load file {md_file_path}")
+            raise e
 
     folder = relpath(dirname(md_file_path), project_root_dir)
 
