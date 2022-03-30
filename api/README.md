@@ -4,20 +4,26 @@ An extension to the Kubeflow Pipeline API for Components and Models
 
 ---
 
-# Quickstart    
+# MLX API Codegen Workflow
 
-## Deploy to Kubernetes
+![This is an image](https://github.com/psspavan96/mlx/blob/API_Documentation_update/api/API_Codegen_Workflow.png)
 
-    kubectl apply -f ./server/mlx-api.yml
+The generation of Python code starts from Swagger Spec. The generated code has 2 outputs: the `/api/client` and the `/api/server` packages. There is no static HTML documentation that gets generated. There are also no Python resources with Swagger annotations from which we generate our Swagger spec, instead the Swagger UI will be generated on the fly when the Python server is started. There are however some docs under the client package, but those are in Markdown format which works well when browsing through the Github repo. The `/api/client/docs` contains some examples from which we create the Python scripts in the examples package. Once the server code is generated we need to copy any new API method stubs (if any new) from the `/api/server/swagger_server/controllers`  folder to the `/api/server/swagger_server/controllers_impl` folder and actually  write the business logic. If existing API method signatures got updated, we need to update the existing controller methods respectively.
 
-## Find API Server Host and Port
+# Deploy to Kubernetes    
 
-    export API_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')
-    export API_PORT=$(kubectl get service mlx-api -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')
+1) Run kubectl command to apply the manifest
 
-## Open the Swagger UI in a Web Browser
+    `kubectl apply -f ./server/mlx-api.yml`
 
-    open "http://${API_HOST}:${API_PORT}/apis/v1alpha1/ui/"
+2) Find API Server Host and Port
+
+    `export API_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')`
+    `export API_PORT=$(kubectl get service mlx-api -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')`
+
+3) Open the Swagger UI in a Web Browser
+
+    `open "http://${API_HOST}:${API_PORT}/apis/v1alpha1/ui/" `
     
 ---
 
