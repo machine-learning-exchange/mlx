@@ -90,26 +90,13 @@ kubectl apply -f /manifests/base/mlx-deployments/mlx-ui.yaml
 ```
 
 ## UI Development with Docker Compose
-For information on how to get started with Docker Compose, and it's appropriate setup, check out the 
-[Quick Start Guide](../../quickstart/README.md).
+For information on how to get started with Docker Compose before making any changes to the UI code, check out the [Quick Start Guide](../../quickstart/README.md) and take a look at the [docker-compose.yaml](../../quickstart/docker-compose.yaml) file to understand how the individual services like ```mysql```, ```minio```, ```mlx-api```, ```mlx-ui```, etc. are working together.
 
-To bring up the Docker Compose stack run:
+The Docker Compose stack can be brought up and taken down by running the following commands. The ```--project-name``` tag takes in the following argument as the name of the docker compose stack, which can be viewed using [Docker Desktop](https://www.docker.com/products/docker-desktop/):
 ```Bash
 docker compose --project-name  mlx  up
-```
-Don't forget to bring the stack down with:
-```Bash
 docker compose --project-name  mlx  down
 ```
-To bring up the stack without the UI run:
-```Bash
-docker compose --project-name  mlx_no_ui  up  minio miniosetup mysql mlx-api catalog
-```
-Once finished, run:
-```Bash
-docker compose --project-name  mlx_no_ui  down
-```
-
 
 You can test most code changes without a Kubernetes cluster. A K8s cluster is only
 required to `run` the generated sample pipeline code. Running the Quickstart with
