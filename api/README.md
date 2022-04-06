@@ -8,7 +8,12 @@ An extension to the Kubeflow Pipeline API for Components and Models
 
 ![This is an image](https://github.com/psspavan96/mlx/blob/API_Documentation_update/api/API_Codegen_Workflow.png)
 
-The generation of Python code starts from Swagger Spec. The generated code has 2 outputs: the `/api/client` and the `/api/server` packages. There is no static HTML documentation that gets generated. There are also no Python resources with Swagger annotations from which we generate our Swagger spec, instead the Swagger UI will be generated on the fly when the Python server is started. There are however some docs under the client package, but those are in Markdown format which works well when browsing through the Github repo. The `/api/client/docs` contains some examples from which we create the Python scripts in the examples package. Once the server code is generated we need to copy any new API method stubs (if any new) from the `/api/server/swagger_server/controllers`  folder to the `/api/server/swagger_server/controllers_impl` folder and actually  write the business logic. If existing API method signatures got updated, we need to update the existing controller methods respectively.
+- The generation of Python code starts from Swagger Spec. The generated code has 2 outputs: the /api/client and the /api/server packages.
+- No static HTML documentation gets generated from Swagger Spec. The Swagger UI will be generated on the fly when the Python server is started. There are some docs under the client package, but those are in Markdown format which works well when browsing through the Github repo.
+- The /api/client/docs contains some examples from which we create the Python scripts in the /api/examples package.
+- Once the server code is generated we need to copy any new API method stubs (if any new) from the /api/server/swagger_server/controllers folder to the /api/server/swagger_server/controllers_impl folder and actually write the business logic. If existing API method signatures got updated, we need to update the existing controller_impl methods respectively.
+
+
 
 # Deploy to Kubernetes    
 
