@@ -78,4 +78,4 @@ src/styles/ contains most (>90%) of the page styling in css. If the style needs 
 
 src/lib/api/ contains all of the calls to the MLX API. If some API call is going wrong, it will likely be an issue in this folder.
 
-For more information on UI Development Setup go [here](README.md)
+For more information on UI Setup and Deployment go [here](README.md)
