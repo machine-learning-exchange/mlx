@@ -75,7 +75,7 @@ docker push <your docker user-id>/<repo name>:<tag name>
 
 ## (Re-)Deploy to Kubernetes Cluster
 For information on how to deploy MLX on a Kubernetes Cluster or OpenShift on IBM Cloud, check out the guide [here](../../docs/mlx-setup.md).
-Once the clusters have been deployed, they will need to be redeployed for UI work.
+Once the cluster has been deployed, the MLX UI will need to be redeployed after changes to the UI code have been made.
 
 Change the Docker image tag in the deployment spec server/mlx-ui.yml from image: ibmandrewbutler/open-ui:add-homepage to image: <your_docker_user_id>/<repo name>:<tag name> and then run:
 
@@ -83,16 +83,21 @@ Change the Docker image tag in the deployment spec server/mlx-ui.yml from image:
 kubectl delete -f ./dashboard/origin-mlx/mlx-ui.yml
 kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
 ```
-Change the image in /manifests/base/mlx-deployments/mlx-ui.yaml under the container with the name mlx-ui at spec.template.spec.containers
+Change the image in `./dashboard/origin-mlx/mlx-ui.yml` or `./manifests/base/mlx-deployments/mlx-ui.yaml` under the container with the name mlx-ui at spec.template.spec.containers. Either:
 ```
 kubectl delete -f /manifests/base/mlx-deployments/mlx-ui.yaml
 kubectl apply -f /manifests/base/mlx-deployments/mlx-ui.yaml
 ```
+or
+```
+kubectl delete -f /dashboard/origin-mlx/mlx-ui.yml
+kubectl apply -f /dashboard/origin-mlx/mlx-ui.yml
+```
 
 ## UI Development with Docker Compose
-For information on how to get started with Docker Compose before making any changes to the UI code, check out the [Quick Start Guide](../../quickstart/README.md) and take a look at the [docker-compose.yaml](../../quickstart/docker-compose.yaml) file to understand how the individual services like ```mysql```, ```minio```, ```mlx-api```, ```mlx-ui```, etc. are working together.
+For information on how to get started with Docker Compose before making any changes to the UI code, check out the [Quick Start Guide](../../quickstart/README.md) and take a look at the [docker-compose.yaml](../../quickstart/docker-compose.yaml) file to understand how the individual services like `mysql`, `minio`, `mlx-api`, `mlx-ui`, etc. are working together.
 
-The Docker Compose stack can be brought up and taken down by running the following commands. The ```--project-name``` tag takes in the following argument as the name of the docker compose stack, which can be viewed using [Docker Desktop](https://www.docker.com/products/docker-desktop/):
+The Docker Compose stack can be brought up and taken down by running the following commands. The `--project-name` tag keeps the docker compose network and the volumes (stored assets) separate from the quickstart for development. Each docker compose project has separate network and volumes which can be viewed using [Docker Desktop](https://www.docker.com/products/docker-desktop/):
 ```Bash
 docker compose --project-name  mlx  up
 docker compose --project-name  mlx  down
@@ -132,7 +137,7 @@ docker compose rm -v -f
 docker volume prune -f
 ```
 
-### Terminal 2 - Start the MLX UI locally with Docker API
+### Terminal 2 - Start the MLX UI locally
 
 Navigate to the UI source folder:
 
@@ -202,7 +207,7 @@ which matches a previous request and the difference of the time between the two 
 To invalidate or hard reset the cache, navigate to the settings page (clicking the three dots at the bottom of the sidebar) and click on the `Reset Cache` button.
 
 # Development Guidlines:
-For information on UI code structure, design principles, etc. check out the [MLX Developer Guide](developer-guide.md).
+For information on UI code structure, design principles, etc. check out the [MLX UI Developer Guide](developer-guide.md).
 
 # Project Overview:
 
