@@ -27,7 +27,7 @@ check_doc_links: ## Check markdown files for invalid links
 	@echo "$@: OK"
 
 .PHONY: update_doc_table
-update_doc_table: ## Check markdown files for invalid links
+update_doc_table: ## Regenerate the /docs/README.md file
 	@python3 tools/python/update_doc_table.py
 	@echo "$@: OK"
 
