@@ -1,7 +1,11 @@
 # Deploy MLX on an existing Kubernetes cluster
 
 ## Prerequisites
-* An existing Kubernetes cluster. Version 1.17+
+* An existing Kubernetes cluster must be:
+   - **Versions 1.17 up to 1.21** 
+* The minimum recommended capacity requirement for MLX are: 
+   - **8 vCPUs**
+   - **16GB RAM**
 * The minimum recommended capacity requirement for MLX is 8 vCPUs and 16GB RAM
 * If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
 * If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift_tutorial)
@@ -47,4 +51,14 @@ To delete this MLX deployment, run the following commands in the same manifests 
 
 ```
 kustomize build example | kubectl delete -f -
+```
+
+## Troubleshoot
+- In order to avoid the error below please use Kubernetes version detailed in the prerequisites
+```
+unable to recognize "STDIN": no matches for kind "CustomResourceDefinition" in version "apiextensions.k8s.io/v1beta1"
+unable to recognize "STDIN": no matches for kind "RoleBinding" in version "rbac.authorization.k8s.io/v1beta1"
+unable to recognize "STDIN": no matches for kind "ClusterRoleBinding" in version "rbac.authorization.k8s.io/v1beta1"
+unable to recognize "STDIN": no matches for kind "EnvoyFilter" in version "networking.istio.io/v1alpha3"
+...
 ```
