@@ -426,7 +426,7 @@ pygments==2.11.2
     #   jupyterlab-pygments
     #   nbconvert
     #   nbdime
-pyjwt==2.3.0
+pyjwt==2.4.0
     # via
     #   adal
     #   pygithub
