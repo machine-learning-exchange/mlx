@@ -40,9 +40,9 @@ you could download the `kustomize` `v3.2.0` binary as described
 
 Increase the default resources for Docker:
 
-- CPUs: 8 Cores
-- Memory: 16 GB RAM
-- Disk: 32+ GB
+- **CPUs**: 8 Cores
+- **Memory**: 16 GB RAM
+- **Disk**: 32+ GB
 
 **Note**: We found that on older laptops, like a 2016 MacBook Pro (2.7 GHz i7, 16 GB RAM) the MLX
 deployment on KIND may require to give all available resources to the Docker daemon in order to be
@@ -54,7 +54,7 @@ other application to crash.
 ## Create KIND Cluster
 
 ```Bash
-kind create cluster --name mlx
+kind create cluster --name mlx --image kindest/node:v1.21.12
 kubectl cluster-info --context kind-mlx
 kubectl get pods --all-namespaces
 ```

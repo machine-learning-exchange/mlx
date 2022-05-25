@@ -1,8 +1,13 @@
 # Deploy MLX on an existing Kubernetes cluster
 
 ## Prerequisites
-* An existing Kubernetes cluster. Version 1.17+
-* The minimum recommended capacity requirement for MLX is 8 vCPUs and 16GB RAM
+* An existing Kubernetes cluster:
+   - **Min version: 1.17**
+   - **Max version: 1.21** 
+* The recommended minimum capacity requirement for MLX are: 
+   - **CPUs**: 8 Cores
+   - **Memory**: 16 GB RAM
+   - **Disk**: 32+ GB
 * If you are using IBM Cloud, follow the appropriate instructions for standing up your Kubernetes cluster using the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial#cs_cluster_tutorial)
 * If you are using OpenShift on IBM Cloud, please follow the instructions for standing up your [IBM Cloud Red Hat OpenShift cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift_tutorial)
 * [`kustomize v3.2.0`](https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0) is installed
@@ -48,3 +53,22 @@ To delete this MLX deployment, run the following commands in the same manifests 
 ```
 kustomize build example | kubectl delete -f -
 ```
+
+## Troubleshooting
+
+- If you see errors like these during the deployment, it may be because of a unsupported Kubernetes version.
+  Check the [Prerequisites](#prerequisites) for the supported Kubernetes versions.
+  
+  ```
+  # while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+  ...
+  unable to recognize "STDIN": no matches for kind "CustomResourceDefinition" in version "apiextensions.k8s.io/v1beta1"
+  unable to recognize "STDIN": no matches for kind "RoleBinding" in version "rbac.authorization.k8s.io/v1beta1"
+  unable to recognize "STDIN": no matches for kind "ClusterRoleBinding" in version "rbac.authorization.k8s.io/v1beta1"
+  unable to recognize "STDIN": no matches for kind "EnvoyFilter" in version "networking.istio.io/v1alpha3"
+  ...
+  ```
+  To find your Kubernetes server version, run `kubectl version | grep Server`:
+  ```
+  Server Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.12", ...
+  ```
