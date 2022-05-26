@@ -591,7 +591,7 @@ traitlets==5.1.1
     #   notebook
 typing-extensions==4.0.1
     # via black
-ujson==5.1.0
+ujson==5.2.0
     # via
     #   python-lsp-jsonrpc
     #   python-lsp-server
