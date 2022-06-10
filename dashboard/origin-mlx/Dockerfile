@@ -19,4 +19,4 @@ RUN cd server && npm install && npm run build
 
 # start app
 ENV NODE_ENV=production
-CMD ["sh", "-c", "npm run build && mv build/ proc/ && node server/dist/server.js proc/ $PORT"]
+CMD ["sh", "-c", "npm run build && node server/dist/server.js build/ $PORT"]
