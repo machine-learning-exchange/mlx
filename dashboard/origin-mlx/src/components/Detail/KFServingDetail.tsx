@@ -191,7 +191,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
     }
     else {
       predictorTimestamp = service.metadata.creationTimestamp
-      predictorStatusIcon = service.status.activeModelState == "Ready" 
+      predictorStatusIcon = service.status.activeModelState === "Ready" 
         ? <CheckCircleIcon className="check-icon"/>
         : <ErrorIcon className="error-icon"/>
     }
