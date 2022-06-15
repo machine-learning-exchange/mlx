@@ -56,7 +56,7 @@ http://localhost:3000/settings
 
 ```Bash
 cd dashboard/origin-mlx
-docker build -t <your docker user-id>/<repo name>:<tag name> -f Dockerfile .
+docker build -t <your docker user-id>/mlx-ui:<tag name> -f Dockerfile .
 docker push <your docker user-id>/<repo name>:<tag name>
 ```
 
