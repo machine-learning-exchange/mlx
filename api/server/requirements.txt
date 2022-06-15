@@ -605,7 +605,7 @@ urllib3==1.26.8
     #   kubernetes
     #   minio
     #   requests
-waitress==2.1.1
+waitress==2.1.2
     # via -r requirements.in
 watchdog==2.1.6
     # via elyra-server
