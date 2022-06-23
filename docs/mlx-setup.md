@@ -3,8 +3,8 @@
 ## Prerequisites
 
 * An existing Kubernetes cluster:
-   - **Min version: 1.17**
-   - **Max version: 1.23** 
+   - **Min version: 1.21**
+   - **Max version: 1.21** 
 * The recommended minimum capacity requirement for MLX are: 
    - **CPUs**: 8 Cores
    - **Memory**: 16 GB RAM
