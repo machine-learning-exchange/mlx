@@ -42,7 +42,12 @@ lint_python: venv ## Check Python code style compliance
 	@which flake8 > /dev/null || pip install flake8 || pip3 install flake8
 	@flake8 . --show-source --statistics \
 		--select=E9,E2,E3,E5,F63,F7,F82,F4,F841,W291,W292 \
-		--per-file-ignores sdk/python/tests/compiler/testdata/*:F841,F821 \
+		--per-file-ignores ./*:F841,F821 \
 		--exclude .git,__pycache__,docs/source/conf.py,old,build,dist,venv \
 		--max-line-length=140
+    @echo "$@: OK"
+
+.PHONY: lint_javascript
+lint_javascript: ## Check Javascript code style compliance
+	@cd dashboard/origin-mlx && npm run lint -- --fix
     @echo "$@: OK"

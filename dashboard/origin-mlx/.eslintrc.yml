@@ -1,0 +1,33 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - plugin:react/recommended
+  - plugin:react/jsx-runtime
+  - airbnb
+  - airbnb-typescript
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: './tsconfig.json'
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: latest
+  sourceType: module
+plugins:
+  - react
+  - '@typescript-eslint'
+rules:
+  #===
+  # Disabled, based on docs
+  # https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
+  react/jsx-uses-react: 'off'
+  react/react-in-jsx-scope: 'off'
+  #===
+  # Allow only char '_' for unused-variable convention
+  no-unused-vars: 'off'
+  '@typescript-eslint/no-unused-vars':
+    - warn
+    - argsIgnorePattern: '^_'
+      varsIgnorePattern: '^_'
+      caughtErrorsIgnorePattern: '^_'
+  #===
