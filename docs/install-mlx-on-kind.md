@@ -63,7 +63,7 @@ kubectl get pods --all-namespaces
 ## Deploy MLX (Single-User)
 
 ```Bash
-git clone https://github.com/IBM/manifests -b v1.4.0-mlx
+git clone https://github.com/IBM/manifests -b v1.5-branch
 cd manifests
 
 # run the below command two times if the CRDs take too long to provision
@@ -80,7 +80,8 @@ done
 kubectl get pods --all-namespaces
 
 # make the MLX UI available to your local browser on http://localhost:3000/
-kubectl port-forward -n istio-system svc/istio-ingressgateway 3000:80 &
+kubectl wait -n kubeflow --for=condition=ready pod -l service=mlx-ui && \
+  kubectl port-forward -n istio-system svc/istio-ingressgateway 3000:80 &
 ```
 
 Now paste the URL http://localhost:3000/login into your browser and proceed to
