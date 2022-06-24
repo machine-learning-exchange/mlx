@@ -202,7 +202,8 @@ For MLX on KIND we need to make the port available on localhost by running the
 following command:
 
 ```Bash
-kubectl port-forward svc/codenet-language-classification 5000:5000
+kubectl wait --for=condition=ready pod -l app=codenet-language-classification && \
+  kubectl port-forward svc/codenet-language-classification 5000:5000
 ```
 
 Now we should be able to access the UI page for the deployed model by pasting
