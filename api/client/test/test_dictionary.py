@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -18,9 +18,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.dictionary import Dictionary  # noqa: E501
-from swagger_client.rest import ApiException
+import swagger_client  # noqa: F401
+from swagger_client.models.dictionary import Dictionary  # noqa: F401, E501
+from swagger_client.rest import ApiException  # noqa: F401
 
 
 class TestDictionary(unittest.TestCase):
@@ -35,9 +35,9 @@ class TestDictionary(unittest.TestCase):
     def testDictionary(self):
         """Test Dictionary"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.dictionary.Dictionary()  # noqa: E501
+        # model = swagger_client.models.dictionary.Dictionary()
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

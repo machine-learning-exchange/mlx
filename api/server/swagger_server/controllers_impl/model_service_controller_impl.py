@@ -1,11 +1,11 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion
+import connexion  # noqa: F401
 import json
 import tarfile
-import yaml
+import yaml  # noqa: F401
 
 from datetime import datetime
 from io import BytesIO
@@ -14,18 +14,39 @@ from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, validate_id
 from swagger_server.controllers_impl import get_yaml_file_content_from_uploadfile
-from swagger_server.data_access.minio_client import store_file, delete_objects, \
-    get_file_content_and_url, enable_anonymous_read_access, create_tarfile, NoSuchKey
-from swagger_server.data_access.mysql_client import store_data, generate_id, \
-    load_data, delete_data, num_rows, update_multiple
-from swagger_server.gateways.kubeflow_pipeline_service import generate_model_run_script,\
-    run_model_in_experiment, _host as KFP_HOST
-from swagger_server.models.api_generate_model_code_response import ApiGenerateModelCodeResponse  # noqa: E501
-from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
-from swagger_server.models.api_list_models_response import ApiListModelsResponse  # noqa: E501
+from swagger_server.data_access.minio_client import (
+    store_file,
+    delete_objects,
+    get_file_content_and_url,
+    enable_anonymous_read_access,
+    create_tarfile,
+    NoSuchKey,
+)
+from swagger_server.data_access.mysql_client import (
+    store_data,
+    generate_id,
+    load_data,
+    delete_data,
+    num_rows,
+    update_multiple,
+)
+from swagger_server.gateways.kubeflow_pipeline_service import (
+    generate_model_run_script,
+    run_model_in_experiment,
+    _host as KFP_HOST,
+)
+from swagger_server.models.api_generate_model_code_response import (  # noqa: F401
+    ApiGenerateModelCodeResponse,
+)
+from swagger_server.models.api_get_template_response import (  # noqa: F401
+    ApiGetTemplateResponse,
+)
+from swagger_server.models.api_list_models_response import (  # noqa: F401
+    ApiListModelsResponse,
+)
 from swagger_server.models.api_model import ApiModel  # noqa: E501
 from swagger_server.models.api_model_script import ApiModelScript  # noqa: E501
-from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: E501
+from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: F401, E501
 
 
 def approve_models_for_publishing(model_ids):  # noqa: E501
@@ -48,13 +69,13 @@ def approve_models_for_publishing(model_ids):  # noqa: E501
 def create_model(body):  # noqa: E501
     """create_model
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: ApiModel
     """
     if connexion.request.is_json:
-        body = ApiModel.from_dict(connexion.request.get_json())  # noqa: E501
+        body = ApiModel.from_dict(connexion.request.get_json())
 
     api_model = body
 
@@ -69,7 +90,7 @@ def create_model(body):  # noqa: E501
 def delete_model(id):  # noqa: E501
     """delete_model
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -93,15 +114,20 @@ def download_model_files(id, include_generated_code=None):  # noqa: E501
     :rtype: file | binary
     """
 
-    tar, bytes_io = create_tarfile(bucket_name="mlpipeline", prefix=f"models/{id}/",
-                                   file_extensions=[".yaml", ".yml", ".py", ".md"],
-                                   keep_open=include_generated_code)
+    tar, bytes_io = create_tarfile(
+        bucket_name="mlpipeline",
+        prefix=f"models/{id}/",
+        file_extensions=[".yaml", ".yml", ".py", ".md"],
+        keep_open=include_generated_code,
+    )
 
     if len(tar.members) == 0:
         return f"Could not find model with id '{id}'", 404
 
     if include_generated_code:
-        generate_code_response: ApiGenerateModelCodeResponse = generate_model_code(id)[0]
+        generate_code_response: ApiGenerateModelCodeResponse = generate_model_code(id)[
+            0
+        ]
 
         for s in generate_code_response.scripts:
             file_name = f"run_{s.pipeline_stage}_{s.execution_platform}.py"
@@ -111,7 +137,7 @@ def download_model_files(id, include_generated_code=None):  # noqa: E501
 
             file_content = s.script_code
             file_size = len(file_content)
-            file_obj = BytesIO(file_content.encode('utf-8'))
+            file_obj = BytesIO(file_content.encode("utf-8"))
             tarinfo = tarfile.TarInfo(name=file_name)
             tarinfo.size = file_size
 
@@ -119,7 +145,11 @@ def download_model_files(id, include_generated_code=None):  # noqa: E501
 
         tar.close()
 
-    return bytes_io.getvalue(), 200, {"Content-Disposition": f"attachment; filename={id}.tgz"}
+    return (
+        bytes_io.getvalue(),
+        200,
+        {"Content-Disposition": f"attachment; filename={id}.tgz"},
+    )
 
 
 def generate_model_code(id):  # noqa: E501
@@ -127,7 +157,7 @@ def generate_model_code(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGenerateModelCodeResponse
@@ -144,10 +174,14 @@ def generate_model_code(id):  # noqa: E501
     source_combinations = []
 
     if api_model.trainable:
-        source_combinations.extend([("train", p) for p in api_model.trainable_tested_platforms])
+        source_combinations.extend(
+            [("train", p) for p in api_model.trainable_tested_platforms]
+        )
 
     if api_model.servable:
-        source_combinations.extend([("serve", p) for p in api_model.servable_tested_platforms])
+        source_combinations.extend(
+            [("serve", p) for p in api_model.servable_tested_platforms]
+        )
 
     for stage, platform in source_combinations:
         # TODO: re-enable check for uploaded script, until then save time by not doing Minio lookup
@@ -159,9 +193,9 @@ def generate_model_code(id):  # noqa: E501
         if not source_code:
             source_code = generate_model_run_script(api_model, stage, platform)
 
-        api_model_script = ApiModelScript(pipeline_stage=stage,
-                                          execution_platform=platform,
-                                          script_code=source_code)
+        api_model_script = ApiModelScript(
+            pipeline_stage=stage, execution_platform=platform, script_code=source_code
+        )
 
         generate_code_response.scripts.append(api_model_script)
 
@@ -171,7 +205,7 @@ def generate_model_code(id):  # noqa: E501
 def get_model(id):  # noqa: E501
     """get_model
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiModel
@@ -187,16 +221,16 @@ def get_model(id):  # noqa: E501
 def get_model_template(id):  # noqa: E501
     """get_model_template
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGetTemplateResponse
     """
 
     try:
-        template_yaml, url = get_file_content_and_url(bucket_name="mlpipeline",
-                                                      prefix=f"models/{id}/",
-                                                      file_name="template.yaml")
+        template_yaml, url = get_file_content_and_url(
+            bucket_name="mlpipeline", prefix=f"models/{id}/", file_name="template.yaml"
+        )
         template_response = ApiGetTemplateResponse(template=template_yaml)
 
         return template_response, 200
@@ -210,16 +244,18 @@ def get_model_template(id):  # noqa: E501
         return str(e), 500
 
 
-def list_models(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
+def list_models(
+    page_token=None, page_size=None, sort_by=None, filter=None
+):  # noqa: E501
     """list_models
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
-    :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.
+    :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.  # noqa: E501
     :type sort_by: str
-    :param filter: A string-serialized JSON dictionary containing key-value pairs with name of the object property to apply filter on and the value of the respective property.
+    :param filter: A string-serialized JSON dictionary containing key-value pairs with name of the object property to apply filter on and the value of the respective property.  # noqa: E501
     :type filter: str
 
     :rtype: ApiListModelsResponse
@@ -233,11 +269,13 @@ def list_models(page_token=None, page_size=None, sort_by=None, filter=None):  # 
 
     filter_dict = json.loads(filter) if filter else None
 
-    api_models: [ApiModel] = load_data(ApiModel,
-                                       filter_dict=filter_dict,
-                                       sort_by=sort_by,
-                                       count=page_size,
-                                       offset=offset)
+    api_models: [ApiModel] = load_data(
+        ApiModel,
+        filter_dict=filter_dict,
+        sort_by=sort_by,
+        count=page_size,
+        offset=offset,
+    )
 
     next_page_token = offset + page_size if len(api_models) == page_size else None
 
@@ -246,15 +284,19 @@ def list_models(page_token=None, page_size=None, sort_by=None, filter=None):  # 
     if total_size == next_page_token:
         next_page_token = None
 
-    model_list = ApiListModelsResponse(models=api_models, total_size=total_size, next_page_token=next_page_token)
+    model_list = ApiListModelsResponse(
+        models=api_models, total_size=total_size, next_page_token=next_page_token
+    )
 
     return model_list, 200
 
 
-def run_model(id, pipeline_stage, execution_platform, run_name=None, parameters: dict = None):  # noqa: E501
+def run_model(
+    id, pipeline_stage, execution_platform, run_name=None, parameters: dict = None
+):  # noqa: E501
     """run_model
 
-    :param id: 
+    :param id:
     :type id: str
     :param pipeline_stage: pipeline stage, either 'train' or 'serve'
     :type pipeline_stage: str
@@ -275,13 +317,17 @@ def run_model(id, pipeline_stage, execution_platform, run_name=None, parameters:
     if status_code > 200:
         return f"Model with id '{id}' does not exist", 404
 
-    parameter_errors, status_code = _validate_run_parameters(api_model, pipeline_stage, execution_platform, parameters)
+    parameter_errors, status_code = _validate_run_parameters(
+        api_model, pipeline_stage, execution_platform, parameters
+    )
 
     if parameter_errors:
         return parameter_errors, status_code
 
     try:
-        run_id = run_model_in_experiment(api_model, pipeline_stage, execution_platform, run_name, parameters)
+        run_id = run_model_in_experiment(
+            api_model, pipeline_stage, execution_platform, run_name, parameters
+        )
         return ApiRunCodeResponse(run_url=f"/runs/details/{run_id}"), 200
 
     except Exception as e:
@@ -310,7 +356,7 @@ def upload_model(uploadfile: FileStorage, name=None, existing_id=None):  # noqa:
 
     :param uploadfile: The model to upload. Maximum size of 32MB is supported.
     :type uploadfile: werkzeug.datastructures.FileStorage
-    :param name: 
+    :param name:
     :type name: str
     :param existing_id: The model identifier of the model to be replaced, INTERNAL USE ONLY
     :type existing_id: str
@@ -327,7 +373,7 @@ def upload_model_file(id, uploadfile):  # noqa: E501
 
     :param id: The model identifier.
     :type id: str
-    :param uploadfile: The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)
+    :param uploadfile: The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)  # noqa: E501
     :type uploadfile: werkzeug.datastructures.FileStorage
 
     :rtype: ApiModel
@@ -336,13 +382,19 @@ def upload_model_file(id, uploadfile):  # noqa: E501
     file_ext = file_name.split(".")[-1]
 
     if file_ext not in ["tgz", "gz", "yaml", "yml", "py", "md"]:
-        return f"File extension not supported: '{file_ext}', uploadfile: '{file_name}'.", 501
+        return (
+            f"File extension not supported: '{file_ext}', uploadfile: '{file_name}'.",
+            501,
+        )
 
     if file_ext in ["tgz", "gz", "yaml", "yml"]:
         delete_model(id)
         return upload_model(uploadfile, existing_id=id)
     else:
-        return f"The API method 'upload_model_file' is not implemented for file type '{file_ext}'.", 501
+        return (
+            f"The API method 'upload_model_file' is not implemented for file type '{file_ext}'.",
+            501,
+        )
 
     return "Something went wrong?", 500
 
@@ -368,6 +420,7 @@ def upload_model_from_url(url, name=None, access_token=None):  # noqa: E501
 #   private helper methods, not swagger-generated
 ###############################################################################
 
+
 def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
     model_def = yaml.load(yaml_file_content, Loader=yaml.FullLoader)
@@ -378,7 +431,9 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
         return errors, status
 
     api_model = ApiModel(
-        id=existing_id or model_def.get("model_identifier") or generate_id(name=name or model_def["name"]),
+        id=existing_id
+        or model_def.get("model_identifier")
+        or generate_id(name=name or model_def["name"]),
         created_at=datetime.now(),
         name=name or model_def["name"],
         description=model_def["description"].strip(),
@@ -387,59 +442,99 @@ def _upload_model_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
         framework=model_def["framework"],
         filter_categories=model_def.get("filter_categories") or dict(),
         trainable=model_def.get("train", {}).get("trainable") or False,
-        trainable_tested_platforms=model_def.get("train", {}).get("tested_platforms") or [],
-        trainable_credentials_required=model_def.get("train", {}).get("credentials_required") or False,
+        trainable_tested_platforms=model_def.get("train", {}).get("tested_platforms")
+        or [],
+        trainable_credentials_required=model_def.get("train", {}).get(
+            "credentials_required"
+        )
+        or False,
         trainable_parameters=model_def.get("train", {}).get("input_params") or [],
         servable=model_def.get("serve", {}).get("servable") or False,
-        servable_tested_platforms=model_def.get("serve", {}).get("tested_platforms") or [],
-        servable_credentials_required=model_def.get("serve", {}).get("credentials_required") or False,
-        servable_parameters=model_def.get("serve", {}).get("input_params") or [])
+        servable_tested_platforms=model_def.get("serve", {}).get("tested_platforms")
+        or [],
+        servable_credentials_required=model_def.get("serve", {}).get(
+            "credentials_required"
+        )
+        or False,
+        servable_parameters=model_def.get("serve", {}).get("input_params") or [],
+    )
 
     # convert comma-separate strings to lists
     if type(api_model.trainable_tested_platforms) == str:
-        api_model.trainable_tested_platforms = api_model.trainable_tested_platforms.replace(", ", ",").split(",")
+        api_model.trainable_tested_platforms = (
+            api_model.trainable_tested_platforms.replace(", ", ",").split(",")
+        )
 
     if type(api_model.servable_tested_platforms) == str:
-        api_model.servable_tested_platforms = api_model.servable_tested_platforms.replace(", ", ",").split(",")
+        api_model.servable_tested_platforms = (
+            api_model.servable_tested_platforms.replace(", ", ",").split(",")
+        )
 
     uuid = store_data(api_model)
 
     api_model.id = uuid
 
-    store_file(bucket_name="mlpipeline", prefix=f"models/{api_model.id}/",
-               file_name="template.yaml", file_content=yaml_file_content,
-               content_type="text/yaml")
+    store_file(
+        bucket_name="mlpipeline",
+        prefix=f"models/{api_model.id}/",
+        file_name="template.yaml",
+        file_content=yaml_file_content,
+        content_type="text/yaml",
+    )
 
     enable_anonymous_read_access(bucket_name="mlpipeline", prefix="models/*")
 
     return api_model, 201
 
 
-def _validate_run_parameters(api_model: ApiModel, pipeline_stage: str, execution_platform: str, parameters=dict()):
+def _validate_run_parameters(
+    api_model: ApiModel, pipeline_stage: str, execution_platform: str, parameters=dict()
+):
 
     if pipeline_stage == "train":
         if not api_model.trainable:
             return f"Model '{api_model.id}' is not trainable", 422
 
         if execution_platform not in api_model.trainable_tested_platforms:
-            return f"'{execution_platform}' is not a tested platform to {pipeline_stage} model '{api_model.id}'. " \
-                       f"Tested platforms: {api_model.trainable_tested_platforms}", 422
+            return (
+                f"'{execution_platform}' is not a tested platform to {pipeline_stage} model '{api_model.id}'. "
+                f"Tested platforms: {api_model.trainable_tested_platforms}",
+                422,
+            )
 
-        if api_model.trainable_credentials_required and not {"github_url", "github_token"} <= parameters.keys():
-            return f"'github_url' and 'github_token' are required to {pipeline_stage} model '{api_model.id}'", 422
+        if (
+            api_model.trainable_credentials_required
+            and not {"github_url", "github_token"} <= parameters.keys()
+        ):
+            return (
+                f"'github_url' and 'github_token' are required to {pipeline_stage} model '{api_model.id}'",
+                422,
+            )
 
     elif pipeline_stage == "serve":
         if not api_model.servable:
             return f"Model '{api_model.id}' is not servable", 422
 
         if execution_platform not in api_model.servable_tested_platforms:
-            return f"'{execution_platform}' is not a tested platform to {pipeline_stage} model '{api_model.id}'. " \
-                       f"Tested platforms: {api_model.servable_tested_platforms}", 422
+            return (
+                f"'{execution_platform}' is not a tested platform to {pipeline_stage} model '{api_model.id}'. "
+                f"Tested platforms: {api_model.servable_tested_platforms}",
+                422,
+            )
 
-        if api_model.servable_credentials_required and not {"github_url", "github_token"} <= parameters.keys():
-            return f"'github_url' and 'github_token' are required to {pipeline_stage} model '{api_model.id}'", 422
+        if (
+            api_model.servable_credentials_required
+            and not {"github_url", "github_token"} <= parameters.keys()
+        ):
+            return (
+                f"'github_url' and 'github_token' are required to {pipeline_stage} model '{api_model.id}'",
+                422,
+            )
 
     else:
-        return f"Invalid pipeline_stage: '{pipeline_stage}'. Must be one of ['train', 'serve']", 422
+        return (
+            f"Invalid pipeline_stage: '{pipeline_stage}'. Must be one of ['train', 'serve']",
+            422,
+        )
 
     return None, 200

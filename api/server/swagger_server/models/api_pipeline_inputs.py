@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineInputs(Model):
@@ -19,24 +19,20 @@ class ApiPipelineInputs(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, parameters: List[ApiParameter]=None):  # noqa: E501
+    def __init__(self, parameters: List[ApiParameter] = None):  # noqa: E501
         """ApiPipelineInputs - a model defined in Swagger
 
         :param parameters: The parameters of this ApiPipelineInputs.  # noqa: E501
         :type parameters: List[ApiParameter]
         """
-        self.swagger_types = {
-            'parameters': List[ApiParameter]
-        }
+        self.swagger_types = {"parameters": List[ApiParameter]}
 
-        self.attribute_map = {
-            'parameters': 'parameters'
-        }
+        self.attribute_map = {"parameters": "parameters"}
 
         self._parameters = parameters
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineInputs':
+    def from_dict(cls, dikt) -> "ApiPipelineInputs":
         """Returns the dict as a model
 
         :param dikt: A dict.

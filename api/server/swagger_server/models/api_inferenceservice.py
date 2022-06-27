@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.any_value import AnyValue  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiInferenceservice(Model):
@@ -19,7 +19,13 @@ class ApiInferenceservice(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, api_version: str=None, kind: str=None, metadata: AnyValue=None, spec: AnyValue=None):  # noqa: E501
+    def __init__(
+        self,
+        api_version: str = None,
+        kind: str = None,
+        metadata: AnyValue = None,
+        spec: AnyValue = None,
+    ):  # noqa: E501
         """ApiInferenceservice - a model defined in Swagger
 
         :param api_version: The api_version of this ApiInferenceservice.  # noqa: E501
@@ -32,17 +38,17 @@ class ApiInferenceservice(Model):
         :type spec: AnyValue
         """
         self.swagger_types = {
-            'api_version': str,
-            'kind': str,
-            'metadata': AnyValue,
-            'spec': AnyValue
+            "api_version": str,
+            "kind": str,
+            "metadata": AnyValue,
+            "spec": AnyValue,
         }
 
         self.attribute_map = {
-            'api_version': 'apiVersion',
-            'kind': 'kind',
-            'metadata': 'metadata',
-            'spec': 'spec'
+            "api_version": "apiVersion",
+            "kind": "kind",
+            "metadata": "metadata",
+            "spec": "spec",
         }
 
         self._api_version = api_version
@@ -51,7 +57,7 @@ class ApiInferenceservice(Model):
         self._spec = spec
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiInferenceservice':
+    def from_dict(cls, dikt) -> "ApiInferenceservice":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -80,7 +86,9 @@ class ApiInferenceservice(Model):
         :type api_version: str
         """
         if api_version is None:
-            raise ValueError("Invalid value for `api_version`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `api_version`, must not be `None`"
+            )
 
         self._api_version = api_version
 
@@ -103,7 +111,9 @@ class ApiInferenceservice(Model):
         :type kind: str
         """
         if kind is None:
-            raise ValueError("Invalid value for `kind`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `kind`, must not be `None`"
+            )
 
         self._kind = kind
 

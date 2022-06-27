@@ -14,10 +14,10 @@
 """
 
 
-import pprint
+import pprint  # noqa: F401
 import re  # noqa: F401
 
-import six
+import six  # noqa: F401
 
 from swagger_client.models.any_value import AnyValue  # noqa: F401,E501
 
@@ -36,20 +36,22 @@ class ApiParameter(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str',
-        'default': 'AnyValue',
-        'value': 'AnyValue'
+        "name": "str",
+        "description": "str",
+        "default": "AnyValue",
+        "value": "AnyValue",
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description',
-        'default': 'default',
-        'value': 'value'
+        "name": "name",
+        "description": "description",
+        "default": "default",
+        "value": "value",
     }
 
-    def __init__(self, name=None, description=None, default=None, value=None):  # noqa: E501
+    def __init__(
+        self, name=None, description=None, default=None, value=None
+    ):  # noqa: E501
         """ApiParameter - a model defined in Swagger"""  # noqa: E501
 
         self._name = None
@@ -85,7 +87,9 @@ class ApiParameter(object):
         :type: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )
 
         self._name = name
 
@@ -159,18 +163,20 @@ class ApiParameter(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ApiParameter, dict):

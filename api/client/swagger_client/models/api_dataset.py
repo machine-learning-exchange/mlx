@@ -14,9 +14,9 @@
 """
 
 
-import pprint
+import pprint  # noqa: F401
 import re  # noqa: F401
-import six
+import six  # noqa: F401
 
 from swagger_client.models.api_asset import ApiAsset
 
@@ -35,40 +35,56 @@ class ApiDataset(ApiAsset):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'str',
-        'created_at': 'datetime',
-        'name': 'str',
-        'description': 'str',
-        'featured': 'bool',
-        'publish_approved': 'bool',
-        'related_assets': 'list[str]',
-        'filter_categories': 'dict(str, str)',
-        'domain': 'str',
-        'format': 'str',
-        'size': 'str',
-        'number_of_records': 'int',
-        'license': 'str',
-        'metadata': 'ApiMetadata'
+        "id": "str",
+        "created_at": "datetime",
+        "name": "str",
+        "description": "str",
+        "featured": "bool",
+        "publish_approved": "bool",
+        "related_assets": "list[str]",
+        "filter_categories": "dict(str, str)",
+        "domain": "str",
+        "format": "str",
+        "size": "str",
+        "number_of_records": "int",
+        "license": "str",
+        "metadata": "ApiMetadata",
     }
 
     attribute_map = {
-        'id': 'id',
-        'created_at': 'created_at',
-        'name': 'name',
-        'description': 'description',
-        'featured': 'featured',
-        'publish_approved': 'publish_approved',
-        'related_assets': 'related_assets',
-        'filter_categories': 'filter_categories',
-        'domain': 'domain',
-        'format': 'format',
-        'size': 'size',
-        'number_of_records': 'number_of_records',
-        'license': 'license',
-        'metadata': 'metadata'
+        "id": "id",
+        "created_at": "created_at",
+        "name": "name",
+        "description": "description",
+        "featured": "featured",
+        "publish_approved": "publish_approved",
+        "related_assets": "related_assets",
+        "filter_categories": "filter_categories",
+        "domain": "domain",
+        "format": "format",
+        "size": "size",
+        "number_of_records": "number_of_records",
+        "license": "license",
+        "metadata": "metadata",
     }
 
-    def __init__(self, id=None, created_at=None, name=None, description=None, featured=None, publish_approved=None, related_assets=None, filter_categories=None, domain=None, format=None, size=None, number_of_records=None, license=None, metadata=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        created_at=None,
+        name=None,
+        description=None,
+        featured=None,
+        publish_approved=None,
+        related_assets=None,
+        filter_categories=None,
+        domain=None,
+        format=None,
+        size=None,
+        number_of_records=None,
+        license=None,
+        metadata=None,
+    ):  # noqa: E501
         """ApiDataset - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
@@ -175,7 +191,9 @@ class ApiDataset(ApiAsset):
         :type: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )
 
         self._name = name
 
@@ -198,7 +216,9 @@ class ApiDataset(ApiAsset):
         :type: str
         """
         if description is None:
-            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `description`, must not be `None`"
+            )
 
         self._description = description
 
@@ -419,18 +439,20 @@ class ApiDataset(ApiAsset):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ApiDataset, dict):

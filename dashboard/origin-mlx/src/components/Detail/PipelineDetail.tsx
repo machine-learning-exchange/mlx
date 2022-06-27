@@ -13,7 +13,7 @@ import RunView from '../RunView'
 import SourceCodeDisplay from '../SourceCodeDisplay';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import yaml from 'js-yaml';
+import yaml  # noqa: F401 from 'js-yaml';
 import MetadataView from '../MetadataView';
 
 import Graph from '../Graph';

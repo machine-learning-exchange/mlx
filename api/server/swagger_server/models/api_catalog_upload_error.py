@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiCatalogUploadError(Model):
@@ -18,7 +18,13 @@ class ApiCatalogUploadError(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, url: str=None, error_message: str=None, status_code: int=None):  # noqa: E501
+    def __init__(
+        self,
+        name: str = None,
+        url: str = None,
+        error_message: str = None,
+        status_code: int = None,
+    ):  # noqa: E501
         """ApiCatalogUploadError - a model defined in Swagger
 
         :param name: The name of this ApiCatalogUploadError.  # noqa: E501
@@ -31,17 +37,17 @@ class ApiCatalogUploadError(Model):
         :type status_code: int
         """
         self.swagger_types = {
-            'name': str,
-            'url': str,
-            'error_message': str,
-            'status_code': int
+            "name": str,
+            "url": str,
+            "error_message": str,
+            "status_code": int,
         }
 
         self.attribute_map = {
-            'name': 'name',
-            'url': 'url',
-            'error_message': 'error_message',
-            'status_code': 'status_code'
+            "name": "name",
+            "url": "url",
+            "error_message": "error_message",
+            "status_code": "status_code",
         }
 
         self._name = name
@@ -50,7 +56,7 @@ class ApiCatalogUploadError(Model):
         self._status_code = status_code
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiCatalogUploadError':
+    def from_dict(cls, dikt) -> "ApiCatalogUploadError":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -102,7 +108,9 @@ class ApiCatalogUploadError(Model):
         :type url: str
         """
         if url is None:
-            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `url`, must not be `None`"
+            )
 
         self._url = url
 

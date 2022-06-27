@@ -19,7 +19,7 @@ from __future__ import absolute_import
 import re  # noqa: F401
 
 # python 2 and python 3 compatibility library
-import six
+import six  # noqa: F401
 
 from swagger_client.api_client import ApiClient
 
@@ -50,14 +50,20 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.approve_datasets_for_publishing_with_http_info(dataset_ids, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.approve_datasets_for_publishing_with_http_info(
+                dataset_ids, **kwargs
+            )
         else:
-            (data) = self.approve_datasets_for_publishing_with_http_info(dataset_ids, **kwargs)  # noqa: E501
+            (data) = self.approve_datasets_for_publishing_with_http_info(
+                dataset_ids, **kwargs
+            )
             return data
 
-    def approve_datasets_for_publishing_with_http_info(self, dataset_ids, **kwargs):  # noqa: E501
+    def approve_datasets_for_publishing_with_http_info(
+        self, dataset_ids, **kwargs
+    ):  # noqa: E501
         """approve_datasets_for_publishing  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -72,25 +78,26 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_ids']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_ids"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method approve_datasets_for_publishing" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_ids' is set
-        if ('dataset_ids' not in params or
-                params['dataset_ids'] is None):
-            raise ValueError("Missing the required parameter `dataset_ids` when calling `approve_datasets_for_publishing`")  # noqa: E501
+        if "dataset_ids" not in params or params["dataset_ids"] is None:
+            raise ValueError(
+                "Missing the required parameter `dataset_ids` when calling `approve_datasets_for_publishing`"
+            )
 
         collection_formats = {}
 
@@ -104,13 +111,14 @@ class DatasetServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'dataset_ids' in params:
-            body_params = params['dataset_ids']
+        if "dataset_ids" in params:
+            body_params = params["dataset_ids"]
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/publish_approved', 'POST',
+            "/datasets/publish_approved",
+            "POST",
             path_params,
             query_params,
             header_params,
@@ -119,11 +127,12 @@ class DatasetServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def create_dataset(self, body, **kwargs):  # noqa: E501
         """create_dataset  # noqa: E501
@@ -139,11 +148,11 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.create_dataset_with_http_info(body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.create_dataset_with_http_info(body, **kwargs)
         else:
-            (data) = self.create_dataset_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.create_dataset_with_http_info(body, **kwargs)
             return data
 
     def create_dataset_with_http_info(self, body, **kwargs):  # noqa: E501
@@ -161,25 +170,26 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_dataset" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `create_dataset`")  # noqa: E501
+        if "body" not in params or params["body"] is None:
+            raise ValueError(
+                "Missing the required parameter `body` when calling `create_dataset`"
+            )
 
         collection_formats = {}
 
@@ -193,26 +203,28 @@ class DatasetServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets', 'POST',
+            "/datasets",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiDataset',  # noqa: E501
+            response_type="ApiDataset",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_dataset(self, id, **kwargs):  # noqa: E501
         """delete_dataset  # noqa: E501
@@ -228,11 +240,11 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.delete_dataset_with_http_info(id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.delete_dataset_with_http_info(id, **kwargs)
         else:
-            (data) = self.delete_dataset_with_http_info(id, **kwargs)  # noqa: E501
+            (data) = self.delete_dataset_with_http_info(id, **kwargs)
             return data
 
     def delete_dataset_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -250,31 +262,32 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_dataset" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `delete_dataset`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `delete_dataset`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
 
@@ -288,7 +301,8 @@ class DatasetServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}', 'DELETE',
+            "/datasets/{id}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -297,11 +311,12 @@ class DatasetServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def download_dataset_files(self, id, **kwargs):  # noqa: E501
         """Returns the dataset artifacts compressed into a .tgz (.tar.gz) file.  # noqa: E501
@@ -318,11 +333,15 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.download_dataset_files_with_http_info(id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.download_dataset_files_with_http_info(
+                id, **kwargs
+            )
         else:
-            (data) = self.download_dataset_files_with_http_info(id, **kwargs)  # noqa: E501
+            (data) = self.download_dataset_files_with_http_info(
+                id, **kwargs
+            )
             return data
 
     def download_dataset_files_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -341,35 +360,38 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id', 'include_generated_code']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id", "include_generated_code"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method download_dataset_files" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `download_dataset_files`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `download_dataset_files`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
-        if 'include_generated_code' in params:
-            query_params.append(('include_generated_code', params['include_generated_code']))  # noqa: E501
+        if "include_generated_code" in params:
+            query_params.append(
+                ("include_generated_code", params["include_generated_code"])
+            )
 
         header_params = {}
 
@@ -378,27 +400,30 @@ class DatasetServiceApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/gzip'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/gzip"]
+        )
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}/download', 'GET',
+            "/datasets/{id}/download",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='file',  # noqa: E501
+            response_type="file",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', False),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", False),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def generate_dataset_code(self, id, **kwargs):  # noqa: E501
         """generate_dataset_code  # noqa: E501
@@ -415,11 +440,13 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.generate_dataset_code_with_http_info(id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.generate_dataset_code_with_http_info(id, **kwargs)
         else:
-            (data) = self.generate_dataset_code_with_http_info(id, **kwargs)  # noqa: E501
+            (data) = self.generate_dataset_code_with_http_info(
+                id, **kwargs
+            )
             return data
 
     def generate_dataset_code_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -438,31 +465,32 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method generate_dataset_code" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `generate_dataset_code`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `generate_dataset_code`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
 
@@ -476,20 +504,22 @@ class DatasetServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}/generate_code', 'GET',
+            "/datasets/{id}/generate_code",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiGenerateCodeResponse',  # noqa: E501
+            response_type="ApiGenerateCodeResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_dataset(self, id, **kwargs):  # noqa: E501
         """get_dataset  # noqa: E501
@@ -505,11 +535,11 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_dataset_with_http_info(id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_dataset_with_http_info(id, **kwargs)
         else:
-            (data) = self.get_dataset_with_http_info(id, **kwargs)  # noqa: E501
+            (data) = self.get_dataset_with_http_info(id, **kwargs)
             return data
 
     def get_dataset_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -527,31 +557,32 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_dataset" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `get_dataset`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `get_dataset`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
 
@@ -565,20 +596,22 @@ class DatasetServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}', 'GET',
+            "/datasets/{id}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiDataset',  # noqa: E501
+            response_type="ApiDataset",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_dataset_template(self, id, **kwargs):  # noqa: E501
         """get_dataset_template  # noqa: E501
@@ -594,11 +627,13 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_dataset_template_with_http_info(id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_dataset_template_with_http_info(id, **kwargs)
         else:
-            (data) = self.get_dataset_template_with_http_info(id, **kwargs)  # noqa: E501
+            (data) = self.get_dataset_template_with_http_info(
+                id, **kwargs
+            )
             return data
 
     def get_dataset_template_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -616,31 +651,32 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_dataset_template" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `get_dataset_template`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `get_dataset_template`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
 
@@ -654,20 +690,22 @@ class DatasetServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}/templates', 'GET',
+            "/datasets/{id}/templates",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiGetTemplateResponse',  # noqa: E501
+            response_type="ApiGetTemplateResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_datasets(self, **kwargs):  # noqa: E501
         """list_datasets  # noqa: E501
@@ -686,11 +724,11 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.list_datasets_with_http_info(**kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.list_datasets_with_http_info(**kwargs)
         else:
-            (data) = self.list_datasets_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.list_datasets_with_http_info(**kwargs)
             return data
 
     def list_datasets_with_http_info(self, **kwargs):  # noqa: E501
@@ -711,35 +749,35 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['page_token', 'page_size', 'sort_by', 'filter']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["page_token", "page_size", "sort_by", "filter"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_datasets" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page_token' in params:
-            query_params.append(('page_token', params['page_token']))  # noqa: E501
-        if 'page_size' in params:
-            query_params.append(('page_size', params['page_size']))  # noqa: E501
-        if 'sort_by' in params:
-            query_params.append(('sort_by', params['sort_by']))  # noqa: E501
-        if 'filter' in params:
-            query_params.append(('filter', params['filter']))  # noqa: E501
+        if "page_token" in params:
+            query_params.append(("page_token", params["page_token"]))
+        if "page_size" in params:
+            query_params.append(("page_size", params["page_size"]))
+        if "sort_by" in params:
+            query_params.append(("sort_by", params["sort_by"]))
+        if "filter" in params:
+            query_params.append(("filter", params["filter"]))
 
         header_params = {}
 
@@ -751,20 +789,22 @@ class DatasetServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets', 'GET',
+            "/datasets",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiListDatasetsResponse',  # noqa: E501
+            response_type="ApiListDatasetsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def run_dataset(self, id, **kwargs):  # noqa: E501
         """run_dataset  # noqa: E501
@@ -782,11 +822,11 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.run_dataset_with_http_info(id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.run_dataset_with_http_info(id, **kwargs)
         else:
-            (data) = self.run_dataset_with_http_info(id, **kwargs)  # noqa: E501
+            (data) = self.run_dataset_with_http_info(id, **kwargs)
             return data
 
     def run_dataset_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -806,35 +846,36 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id', 'parameters', 'run_name']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id", "parameters", "run_name"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method run_dataset" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `run_dataset`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `run_dataset`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
-        if 'run_name' in params:
-            query_params.append(('run_name', params['run_name']))  # noqa: E501
+        if "run_name" in params:
+            query_params.append(("run_name", params["run_name"]))
 
         header_params = {}
 
@@ -842,26 +883,28 @@ class DatasetServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'parameters' in params:
-            body_params = params['parameters']
+        if "parameters" in params:
+            body_params = params["parameters"]
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}/run', 'POST',
+            "/datasets/{id}/run",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiRunCodeResponse',  # noqa: E501
+            response_type="ApiRunCodeResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def set_featured_datasets(self, dataset_ids, **kwargs):  # noqa: E501
         """set_featured_datasets  # noqa: E501
@@ -877,11 +920,15 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.set_featured_datasets_with_http_info(dataset_ids, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.set_featured_datasets_with_http_info(
+                dataset_ids, **kwargs
+            )
         else:
-            (data) = self.set_featured_datasets_with_http_info(dataset_ids, **kwargs)  # noqa: E501
+            (data) = self.set_featured_datasets_with_http_info(
+                dataset_ids, **kwargs
+            )
             return data
 
     def set_featured_datasets_with_http_info(self, dataset_ids, **kwargs):  # noqa: E501
@@ -899,25 +946,26 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_ids']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_ids"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method set_featured_datasets" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_ids' is set
-        if ('dataset_ids' not in params or
-                params['dataset_ids'] is None):
-            raise ValueError("Missing the required parameter `dataset_ids` when calling `set_featured_datasets`")  # noqa: E501
+        if "dataset_ids" not in params or params["dataset_ids"] is None:
+            raise ValueError(
+                "Missing the required parameter `dataset_ids` when calling `set_featured_datasets`"
+            )
 
         collection_formats = {}
 
@@ -931,13 +979,14 @@ class DatasetServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'dataset_ids' in params:
-            body_params = params['dataset_ids']
+        if "dataset_ids" in params:
+            body_params = params["dataset_ids"]
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/featured', 'POST',
+            "/datasets/featured",
+            "POST",
             path_params,
             query_params,
             header_params,
@@ -946,11 +995,12 @@ class DatasetServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upload_dataset(self, uploadfile, **kwargs):  # noqa: E501
         """upload_dataset  # noqa: E501
@@ -967,11 +1017,15 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upload_dataset_with_http_info(uploadfile, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upload_dataset_with_http_info(
+                uploadfile, **kwargs
+            )
         else:
-            (data) = self.upload_dataset_with_http_info(uploadfile, **kwargs)  # noqa: E501
+            (data) = self.upload_dataset_with_http_info(
+                uploadfile, **kwargs
+            )
             return data
 
     def upload_dataset_with_http_info(self, uploadfile, **kwargs):  # noqa: E501
@@ -990,68 +1044,75 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['uploadfile', 'name']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["uploadfile", "name"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_dataset" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'uploadfile' is set
-        if ('uploadfile' not in params or
-                params['uploadfile'] is None):
-            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_dataset`")  # noqa: E501
+        if "uploadfile" not in params or params["uploadfile"] is None:
+            raise ValueError(
+                "Missing the required parameter `uploadfile` when calling `upload_dataset`"
+            )
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
+        if "name" in params:
+            query_params.append(("name", params["name"]))
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if 'uploadfile' in params:
-            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
+        if "uploadfile" in params:
+            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['multipart/form-data'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["multipart/form-data"]
+        )
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/upload', 'POST',
+            "/datasets/upload",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiDataset',  # noqa: E501
+            response_type="ApiDataset",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upload_dataset_file(self, id, uploadfile, **kwargs):  # noqa: E501
         """upload_dataset_file  # noqa: E501
@@ -1068,14 +1129,20 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upload_dataset_file_with_http_info(id, uploadfile, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upload_dataset_file_with_http_info(
+                id, uploadfile, **kwargs
+            )
         else:
-            (data) = self.upload_dataset_file_with_http_info(id, uploadfile, **kwargs)  # noqa: E501
+            (data) = self.upload_dataset_file_with_http_info(
+                id, uploadfile, **kwargs
+            )
             return data
 
-    def upload_dataset_file_with_http_info(self, id, uploadfile, **kwargs):  # noqa: E501
+    def upload_dataset_file_with_http_info(
+        self, id, uploadfile, **kwargs
+    ):  # noqa: E501
         """upload_dataset_file  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1091,35 +1158,37 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['id', 'uploadfile']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["id", "uploadfile"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_dataset_file" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `upload_dataset_file`")  # noqa: E501
+        if "id" not in params or params["id"] is None:
+            raise ValueError(
+                "Missing the required parameter `id` when calling `upload_dataset_file`"
+            )
         # verify the required parameter 'uploadfile' is set
-        if ('uploadfile' not in params or
-                params['uploadfile'] is None):
-            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_dataset_file`")  # noqa: E501
+        if "uploadfile" not in params or params["uploadfile"] is None:
+            raise ValueError(
+                "Missing the required parameter `uploadfile` when calling `upload_dataset_file`"
+            )
 
         collection_formats = {}
 
         path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if "id" in params:
+            path_params["id"] = params["id"]  # noqa: E501
 
         query_params = []
 
@@ -1127,36 +1196,42 @@ class DatasetServiceApi(object):
 
         form_params = []
         local_var_files = {}
-        if 'uploadfile' in params:
-            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
+        if "uploadfile" in params:
+            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['multipart/form-data'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["multipart/form-data"]
+        )
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/{id}/upload', 'POST',
+            "/datasets/{id}/upload",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiDataset',  # noqa: E501
+            response_type="ApiDataset",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upload_dataset_from_url(self, url, **kwargs):  # noqa: E501
         """upload_dataset_from_url  # noqa: E501
@@ -1174,11 +1249,15 @@ class DatasetServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upload_dataset_from_url_with_http_info(url, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upload_dataset_from_url_with_http_info(
+                url, **kwargs
+            )
         else:
-            (data) = self.upload_dataset_from_url_with_http_info(url, **kwargs)  # noqa: E501
+            (data) = self.upload_dataset_from_url_with_http_info(
+                url, **kwargs
+            )
             return data
 
     def upload_dataset_from_url_with_http_info(self, url, **kwargs):  # noqa: E501
@@ -1198,67 +1277,74 @@ class DatasetServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['url', 'name', 'access_token']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["url", "name", "access_token"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_dataset_from_url" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'url' is set
-        if ('url' not in params or
-                params['url'] is None):
-            raise ValueError("Missing the required parameter `url` when calling `upload_dataset_from_url`")  # noqa: E501
+        if "url" not in params or params["url"] is None:
+            raise ValueError(
+                "Missing the required parameter `url` when calling `upload_dataset_from_url`"
+            )
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
+        if "name" in params:
+            query_params.append(("name", params["name"]))
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if 'url' in params:
-            form_params.append(('url', params['url']))  # noqa: E501
-        if 'access_token' in params:
-            form_params.append(('access_token', params['access_token']))  # noqa: E501
+        if "url" in params:
+            form_params.append(("url", params["url"]))
+        if "access_token" in params:
+            form_params.append(("access_token", params["access_token"]))
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['multipart/form-data'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["multipart/form-data"]
+        )
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/datasets/upload_from_url', 'POST',
+            "/datasets/upload_from_url",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiDataset',  # noqa: E501
+            response_type="ApiDataset",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

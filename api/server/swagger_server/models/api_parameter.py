@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.any_value import AnyValue  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiParameter(Model):
@@ -19,7 +19,13 @@ class ApiParameter(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, description: str=None, default: AnyValue=None, value: AnyValue=None):  # noqa: E501
+    def __init__(
+        self,
+        name: str = None,
+        description: str = None,
+        default: AnyValue = None,
+        value: AnyValue = None,
+    ):  # noqa: E501
         """ApiParameter - a model defined in Swagger
 
         :param name: The name of this ApiParameter.  # noqa: E501
@@ -32,17 +38,17 @@ class ApiParameter(Model):
         :type value: AnyValue
         """
         self.swagger_types = {
-            'name': str,
-            'description': str,
-            'default': AnyValue,
-            'value': AnyValue
+            "name": str,
+            "description": str,
+            "default": AnyValue,
+            "value": AnyValue,
         }
 
         self.attribute_map = {
-            'name': 'name',
-            'description': 'description',
-            'default': 'default',
-            'value': 'value'
+            "name": "name",
+            "description": "description",
+            "default": "default",
+            "value": "value",
         }
 
         self._name = name
@@ -51,7 +57,7 @@ class ApiParameter(Model):
         self._value = value
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiParameter':
+    def from_dict(cls, dikt) -> "ApiParameter":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -80,7 +86,9 @@ class ApiParameter(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )
 
         self._name = name
 

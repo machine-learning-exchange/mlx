@@ -19,7 +19,7 @@ import indicatorGif from '../images/indicator-gif.gif'
 import { UPDATE_ARTIFACT_ASSET } from '../lib/stores/artifacts'
 import { Artifact } from '../lib/stores/artifacts'
 import { setFeaturedArtifacts, setPublishApprovedArtifacts } from '../lib/api/artifacts';
-import yaml from 'js-yaml';
+import yaml  # noqa: F401 from 'js-yaml';
 import fs from 'fs';
 interface MatchProps {
   type: string

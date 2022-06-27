@@ -18,36 +18,32 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.api.dataset_service_api import DatasetServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
+import swagger_client  # noqa: F401
+from swagger_client.api.dataset_service_api import DatasetServiceApi  # noqa: F401, E501
+from swagger_client.rest import ApiException  # noqa: F401
 
 
 class TestDatasetServiceApi(unittest.TestCase):
     """DatasetServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = swagger_client.api.dataset_service_api.DatasetServiceApi()  # noqa: E501
+        self.api = (
+            swagger_client.api.dataset_service_api.DatasetServiceApi()
+        )
 
     def tearDown(self):
         pass
 
     def test_approve_datasets_for_publishing(self):
-        """Test case for approve_datasets_for_publishing
-
-        """
+        """Test case for approve_datasets_for_publishing"""
         pass
 
     def test_create_dataset(self):
-        """Test case for create_dataset
-
-        """
+        """Test case for create_dataset"""
         pass
 
     def test_delete_dataset(self):
-        """Test case for delete_dataset
-
-        """
+        """Test case for delete_dataset"""
         pass
 
     def test_download_dataset_files(self):
@@ -58,47 +54,33 @@ class TestDatasetServiceApi(unittest.TestCase):
         pass
 
     def test_generate_dataset_code(self):
-        """Test case for generate_dataset_code
-
-        """
+        """Test case for generate_dataset_code"""
         pass
 
     def test_get_dataset(self):
-        """Test case for get_dataset
-
-        """
+        """Test case for get_dataset"""
         pass
 
     def test_get_dataset_template(self):
-        """Test case for get_dataset_template
-
-        """
+        """Test case for get_dataset_template"""
         pass
 
     def test_list_datasets(self):
-        """Test case for list_datasets
-
-        """
+        """Test case for list_datasets"""
         pass
 
     def test_set_featured_datasets(self):
-        """Test case for set_featured_datasets
-
-        """
+        """Test case for set_featured_datasets"""
         pass
 
     def test_upload_dataset(self):
-        """Test case for upload_dataset
-
-        """
+        """Test case for upload_dataset"""
         pass
 
     def test_upload_dataset_file(self):
-        """Test case for upload_dataset_file
-
-        """
+        """Test case for upload_dataset_file"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

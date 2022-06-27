@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.protobuf_any import ProtobufAny  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiStatus(Model):
@@ -19,7 +19,9 @@ class ApiStatus(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, error: str=None, code: int=None, details: List[ProtobufAny]=None):  # noqa: E501
+    def __init__(
+        self, error: str = None, code: int = None, details: List[ProtobufAny] = None
+    ):  # noqa: E501
         """ApiStatus - a model defined in Swagger
 
         :param error: The error of this ApiStatus.  # noqa: E501
@@ -29,24 +31,16 @@ class ApiStatus(Model):
         :param details: The details of this ApiStatus.  # noqa: E501
         :type details: List[ProtobufAny]
         """
-        self.swagger_types = {
-            'error': str,
-            'code': int,
-            'details': List[ProtobufAny]
-        }
+        self.swagger_types = {"error": str, "code": int, "details": List[ProtobufAny]}
 
-        self.attribute_map = {
-            'error': 'error',
-            'code': 'code',
-            'details': 'details'
-        }
+        self.attribute_map = {"error": "error", "code": "code", "details": "details"}
 
         self._error = error
         self._code = code
         self._details = details
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiStatus':
+    def from_dict(cls, dikt) -> "ApiStatus":
         """Returns the dict as a model
 
         :param dikt: A dict.

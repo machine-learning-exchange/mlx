@@ -1,27 +1,32 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
 
 import json
-import swagger_client
+import swagger_client  # noqa: F401
 
-from os import environ as env
-from pprint import pprint
+from os import environ as env  # noqa: F401
+from pprint import pprint  # noqa: F401
 from swagger_client.api_client import ApiClient, Configuration
-from swagger_client.models import ApiListCatalogItemsResponse, ApiCatalogUpload,\
-    ApiCatalogUploadItem, ApiCatalogUploadResponse, ApiAccessToken
-from swagger_client.rest import ApiException
+from swagger_client.models import (  # noqa: F401
+    ApiListCatalogItemsResponse,
+    ApiCatalogUpload,
+    ApiCatalogUploadItem,
+    ApiCatalogUploadResponse,
+    ApiAccessToken,
+)
+from swagger_client.rest import ApiException  # noqa: F401
 from sys import stderr
 
 
-host = '127.0.0.1'
-port = '8080'
+host = "127.0.0.1"
+port = "8080"
 # host = env.get("MLX_API_SERVICE_HOST")
 # port = env.get("MLX_API_SERVICE_PORT")
 
-api_base_path = 'apis/v1alpha1'
+api_base_path = "apis/v1alpha1"
 
 catalog_upload_file = "./../../bootstrapper/catalog_upload.json"
 
@@ -31,14 +36,13 @@ IBM_GHE_API_TOKEN = env.get("IBM_GHE_API_TOKEN")
 def get_swagger_client():
 
     config = Configuration()
-    config.host = f'http://{host}:{port}/{api_base_path}'
+    config.host = f"http://{host}:{port}/{api_base_path}"
     api_client = ApiClient(configuration=config)
 
     return api_client
 
 
 def print_function_name_decorator(func):
-
     def wrapper(*args, **kwargs):
         print()
         print(f"---[ {func.__name__} ]---")
@@ -59,30 +63,38 @@ def upload_catalog_assets(upload_file=catalog_upload_file) -> ApiCatalogUploadRe
             upload_items = json.load(f)
 
         upload_body = ApiCatalogUpload(
-            api_access_tokens=[ApiAccessToken(api_token=IBM_GHE_API_TOKEN, url_host="github.ibm.com")],
+            api_access_tokens=[
+                ApiAccessToken(api_token=IBM_GHE_API_TOKEN, url_host="github.ibm.com")
+            ],
             components=upload_items.get("components"),
             datasets=upload_items.get("datasets"),
             models=upload_items.get("models"),
             notebooks=upload_items.get("notebooks"),
-            pipelines=upload_items.get("pipelines"))
+            pipelines=upload_items.get("pipelines"),
+        )
 
-        upload_response: ApiCatalogUploadResponse = api_instance.upload_multiple_assets(upload_body)
+        upload_response: ApiCatalogUploadResponse = api_instance.upload_multiple_assets(
+            upload_body
+        )
 
-        print(f"Uploaded '{upload_response.total_created}' assets, {upload_response.total_errors} errors")
+        print(
+            f"Uploaded '{upload_response.total_created}' assets, {upload_response.total_errors} errors"
+        )
 
         # print a short-ish table instead of the full JSON response
-        asset_types = [
-            "components",
-            "datasets",
-            "models",
-            "notebooks",
-            "pipelines"
-        ]
+        asset_types = ["components", "datasets", "models", "notebooks", "pipelines"]
         for asset_type in asset_types:
             asset_list = upload_response.__getattribute__(asset_type)
             print(f"\n{asset_type.upper()}:\n")
             for asset in asset_list:
-                print("%s  %s  %s" % (asset.id, asset.created_at.strftime("%Y-%m-%d %H:%M:%S"), asset.name))
+                print(
+                    "%s  %s  %s"
+                    % (
+                        asset.id,
+                        asset.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                        asset.name,
+                    )
+                )
 
         if upload_response.total_errors > 0:
             print(f"\nERRORS:\n")
@@ -92,7 +104,11 @@ def upload_catalog_assets(upload_file=catalog_upload_file) -> ApiCatalogUploadRe
         return upload_response
 
     except ApiException as e:
-        print("Exception when calling CatalogServiceApi -> upload_multiple_assets: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling CatalogServiceApi -> upload_multiple_assets: %s\n"
+            % e,
+            file=stderr,
+        )
         raise e
 
     return None
@@ -108,7 +124,7 @@ def delete_assets(upload_assets_response: ApiCatalogUploadResponse = None):
         "datasets": swagger_client.DatasetServiceApi(api_client).delete_dataset,
         "models": swagger_client.ModelServiceApi(api_client).delete_model,
         "notebooks": swagger_client.NotebookServiceApi(api_client).delete_notebook,
-        "pipelines": swagger_client.PipelineServiceApi(api_client).delete_pipeline
+        "pipelines": swagger_client.PipelineServiceApi(api_client).delete_pipeline,
     }
 
     try:
@@ -125,7 +141,9 @@ def delete_assets(upload_assets_response: ApiCatalogUploadResponse = None):
 
 
 @print_function_name_decorator
-def list_assets(filter_dict: dict = {}, sort_by: str = None) -> ApiListCatalogItemsResponse:
+def list_assets(
+    filter_dict: dict = {}, sort_by: str = None
+) -> ApiListCatalogItemsResponse:
 
     api_client = get_swagger_client()
     api_instance = swagger_client.CatalogServiceApi(api_client=api_client)
@@ -133,27 +151,32 @@ def list_assets(filter_dict: dict = {}, sort_by: str = None) -> ApiListCatalogIt
     try:
         filter_str = json.dumps(filter_dict) if filter_dict else None
 
-        api_response: ApiListCatalogItemsResponse = \
-            api_instance.list_all_assets(filter=filter_str, sort_by=sort_by)
+        api_response: ApiListCatalogItemsResponse = api_instance.list_all_assets(
+            filter=filter_str, sort_by=sort_by
+        )
 
-        asset_types = [
-            "components",
-            "datasets",
-            "models",
-            "notebooks",
-            "pipelines"
-        ]
+        asset_types = ["components", "datasets", "models", "notebooks", "pipelines"]
 
         # print a short-ish table instead of the full JSON response
         for asset_type in asset_types:
             asset_list = api_response.__getattribute__(asset_type)
             for asset in asset_list:
-                print("%s  %s  %s" % (asset.id, asset.created_at.strftime("%Y-%m-%d %H:%M:%S"), asset.name))
+                print(
+                    "%s  %s  %s"
+                    % (
+                        asset.id,
+                        asset.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                        asset.name,
+                    )
+                )
 
         return api_response
 
     except ApiException as e:
-        print("Exception when calling CatalogServiceApi -> list_all_assets: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling CatalogServiceApi -> list_all_assets: %s\n" % e,
+            file=stderr,
+        )
 
     return []
 
@@ -173,5 +196,5 @@ def main():
     list_assets()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

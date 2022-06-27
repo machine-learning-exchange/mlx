@@ -15,9 +15,7 @@ import re
 from glob import glob
 from os.path import abspath, dirname, split
 
-md_file_path_expressions = [
-    "/docs/*.md"
-]
+md_file_path_expressions = ["/docs/*.md"]
 
 script_folder = abspath(dirname(__file__))
 project_root_dir = abspath(dirname(dirname(script_folder)))
@@ -30,8 +28,10 @@ def find_md_files() -> [str]:
         print("  " + path_expr.lstrip("/"))
     print("")
 
-    md_files_list_of_lists = [glob(project_root_dir + path_expr, recursive=True)
-                              for path_expr in md_file_path_expressions]
+    md_files_list_of_lists = [
+        glob(project_root_dir + path_expr, recursive=True)
+        for path_expr in md_file_path_expressions
+    ]
 
     return sorted(list(itertools.chain(*md_files_list_of_lists)))
 
@@ -54,14 +54,12 @@ def update_doc_table() -> [str]:
     md_file_paths = find_md_files()
 
     # 2. extract all descriptions using headers (first line) from files
-    descriptions = [
-        get_header_from_md_file(file)
-        for file in md_file_paths
-    ]
+    descriptions = [get_header_from_md_file(file) for file in md_file_paths]
 
     # 3. format filenames as Markdown hyperlinks: [name](url)
-    md_filenames = ["[" + split(file)[1] + "](./" + split(file)[1] + ")"
-                    for file in md_file_paths]
+    md_filenames = [
+        "[" + split(file)[1] + "](./" + split(file)[1] + ")" for file in md_file_paths
+    ]
 
     table = []
     table.append(
@@ -72,16 +70,14 @@ def update_doc_table() -> [str]:
     )
 
     for i in range(len(md_filenames)):
-        if("README.md" in md_filenames[i]):
+        if "README.md" in md_filenames[i]:
             continue
-        table.append(
-            f"| {md_filenames[i]} | {descriptions[i]} |"
-        )
+        table.append(f"| {md_filenames[i]} | {descriptions[i]} |")
 
     f = open("./docs/README.md", "w")
     f.write("\n".join(table))
     f.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     update_doc_table()

@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
@@ -8,36 +8,45 @@ import json
 import os
 import random
 import re
-import swagger_client
+import swagger_client  # noqa: F401
 import tarfile
 import tempfile
 
 from glob import glob
 from io import BytesIO
-from os import environ as env
-from pprint import pprint
+from os import environ as env  # noqa: F401
+from pprint import pprint  # noqa: F401
 from swagger_client.api_client import ApiClient, Configuration
-from swagger_client.models import ApiModel, ApiGetTemplateResponse, ApiListModelsResponse, \
-    ApiGenerateModelCodeResponse, ApiRunCodeResponse
-from swagger_client.rest import ApiException
+from swagger_client.models import (
+    ApiModel,
+    ApiGetTemplateResponse,
+    ApiListModelsResponse,
+    ApiGenerateModelCodeResponse,
+    ApiRunCodeResponse,
+)
+from swagger_client.rest import ApiException  # noqa: F401
 from sys import stderr
-from urllib3.response import HTTPResponse
+from urllib3.response import HTTPResponse  # noqa: F401
 
 
-host = '127.0.0.1'
-port = '8080'
+host = "127.0.0.1"
+port = "8080"
 # host = env.get("MLX_API_SERVICE_HOST")
 # port = env.get("MLX_API_SERVICE_PORT")
 
-api_base_path = 'apis/v1alpha1'
+api_base_path = "apis/v1alpha1"
 
-yaml_files = sorted(filter(lambda f: "template" not in f,
-                           glob("./../../../katalog/model-samples/**/*.yaml", recursive=True)))
+yaml_files = sorted(
+    filter(
+        lambda f: "template" not in f,
+        glob("./../../../katalog/model-samples/**/*.yaml", recursive=True),
+    )
+)
 
 
 def get_swagger_client():
     config = Configuration()
-    config.host = f'http://{host}:{port}/{api_base_path}'
+    config.host = f"http://{host}:{port}/{api_base_path}"
     api_client = ApiClient(configuration=config)
     return api_client
 
@@ -48,6 +57,7 @@ def print_function_name_decorator(func):
         print(f"---[ {func.__name__}{args}{kwargs} ]---")
         print()
         return func(*args, **kwargs)
+
     return wrapper
 
 
@@ -65,12 +75,17 @@ def upload_model_template(uploadfile_name, name=None) -> str:
     api_client = get_swagger_client()
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
     try:
-        print(f"Uploading '{uploadfile_name}' ... ", end='')
-        model: ApiModel = api_instance.upload_model(uploadfile=uploadfile_name, name=name)
+        print(f"Uploading '{uploadfile_name}' ... ", end="")
+        model: ApiModel = api_instance.upload_model(
+            uploadfile=uploadfile_name, name=name
+        )
         print(f"{model.id} '{model.name}'")
         return model.id
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> upload_model: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> upload_model: %s\n" % e,
+            file=stderr,
+        )
         raise e
     return None
 
@@ -83,7 +98,10 @@ def upload_model_file(model_id, file_path):
         response = api_instance.upload_model_file(id=model_id, uploadfile=file_path)
         print(f"Upload file '{file_path}' to model '{model_id}'")
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> upload_model_file: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> upload_model_file: %s\n" % e,
+            file=stderr,
+        )
         raise e
 
 
@@ -105,21 +123,23 @@ def download_model_tgz(model_id, download_dir: str = None) -> str:
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        response: HTTPResponse = \
-            api_instance.download_model_files(model_id,
-                                              include_generated_code=True,
-                                              _preload_content=False)
+        response: HTTPResponse = api_instance.download_model_files(
+            model_id, include_generated_code=True, _preload_content=False
+        )
 
-        attachment_header = response.info().get("Content-Disposition",
-                                                f"attachment; filename={model_id}.tgz")
+        attachment_header = response.info().get(
+            "Content-Disposition", f"attachment; filename={model_id}.tgz"
+        )
 
         download_filename = re.sub("attachment; filename=", "", attachment_header)
 
-        download_dir = download_dir or os.path.join(tempfile.gettempdir(), "download", "models")
+        download_dir = download_dir or os.path.join(
+            tempfile.gettempdir(), "download", "models"
+        )
         os.makedirs(download_dir, exist_ok=True)
         tarfile_path = os.path.join(download_dir, download_filename)
 
-        with open(tarfile_path, 'wb') as f:
+        with open(tarfile_path, "wb") as f:
             f.write(response.read())
 
         print(tarfile_path)
@@ -127,7 +147,10 @@ def download_model_tgz(model_id, download_dir: str = None) -> str:
         return tarfile_path
 
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> download_model_files: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> download_model_files: %s\n" % e,
+            file=stderr,
+        )
 
     return "Download failed?"
 
@@ -139,37 +162,46 @@ def verify_model_download(model_id: str) -> bool:
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        response: HTTPResponse = \
-            api_instance.download_model_files(model_id,
-                                              include_generated_code=True,
-                                              _preload_content=False)
+        response: HTTPResponse = api_instance.download_model_files(
+            model_id, include_generated_code=True, _preload_content=False
+        )
         tgz_file = BytesIO(response.read())
         tar = tarfile.open(fileobj=tgz_file)
 
-        file_contents = {m.name: tar.extractfile(m).read().decode("utf-8")
-                         for m in tar.getmembers()}
+        file_contents = {
+            m.name: tar.extractfile(m).read().decode("utf-8") for m in tar.getmembers()
+        }
 
         # verify template text matches
 
-        template_response: ApiGetTemplateResponse = api_instance.get_model_template(model_id)
+        template_response: ApiGetTemplateResponse = api_instance.get_model_template(
+            model_id
+        )
         template_from_api = template_response.template
-        template_from_tgz = [content for filename, content in file_contents.items()
-                             if filename.endswith(".yaml") or filename.endswith(".yml")][0]
+        template_from_tgz = [
+            content
+            for filename, content in file_contents.items()
+            if filename.endswith(".yaml") or filename.endswith(".yml")
+        ][0]
 
         assert template_from_api == template_from_tgz
 
         # verify generated code matches
 
-        generate_code_response: ApiGenerateModelCodeResponse = \
+        generate_code_response: ApiGenerateModelCodeResponse = (
             api_instance.generate_model_code(model_id)
+        )
 
         for model_script in generate_code_response.scripts:
             stage = model_script.pipeline_stage
             platform = model_script.execution_platform
             script_from_api = model_script.script_code
 
-            downloaded_script = [content for filename, content in file_contents.items()
-                                 if f"run_{stage}_{platform}" in filename][0]
+            downloaded_script = [
+                content
+                for filename, content in file_contents.items()
+                if f"run_{stage}_{platform}" in filename
+            ][0]
 
             assert script_from_api == downloaded_script
 
@@ -178,7 +210,10 @@ def verify_model_download(model_id: str) -> bool:
         return True
 
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> download_model_files: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> download_model_files: %s\n" % e,
+            file=stderr,
+        )
 
     return False
 
@@ -193,7 +228,11 @@ def approve_models_for_publishing(model_ids: [str]):
         api_response = api_instance.approve_models_for_publishing(model_ids)
 
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> approve_models_for_publishing: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> approve_models_for_publishing: %s\n"
+            % e,
+            file=stderr,
+        )
 
     return None
 
@@ -208,7 +247,10 @@ def set_featured_models(model_ids: [str]):
         api_response = api_instance.set_featured_models(model_ids)
 
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> set_featured_models: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> set_featured_models: %s\n" % e,
+            file=stderr,
+        )
 
     return None
 
@@ -222,7 +264,9 @@ def get_model(model_id: str) -> ApiModel:
         pprint(model_meta, indent=2)
         return model_meta
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> get_model: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> get_model: %s\n" % e, file=stderr
+        )
     return None
 
 
@@ -233,7 +277,10 @@ def delete_model(model_id: str):
     try:
         api_instance.delete_model(model_id)
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> delete_model: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> delete_model: %s\n" % e,
+            file=stderr,
+        )
 
 
 @print_function_name_decorator
@@ -243,7 +290,9 @@ def get_template(template_id: str) -> str:
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        template_response: ApiGetTemplateResponse = api_instance.get_model_template(template_id)
+        template_response: ApiGetTemplateResponse = api_instance.get_model_template(
+            template_id
+        )
         print(template_response.template)
 
         # yaml_dict = yaml.load(template_response.template, Loader=yaml.FullLoader)
@@ -256,7 +305,10 @@ def get_template(template_id: str) -> str:
         return template_response.template
 
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> get_model_template: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> get_model_template: %s\n" % e,
+            file=stderr,
+        )
 
     return None
 
@@ -268,7 +320,9 @@ def generate_code(model_id: str) -> str:
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        generate_code_response: ApiGenerateModelCodeResponse = api_instance.generate_model_code(model_id)
+        generate_code_response: ApiGenerateModelCodeResponse = (
+            api_instance.generate_model_code(model_id)
+        )
 
         for model_script in generate_code_response.scripts:
             print(f"#######################################################")
@@ -282,26 +336,42 @@ def generate_code(model_id: str) -> str:
         return generate_code_response.scripts
 
     except ApiException as e:
-        print("Exception while calling ModelServiceApi -> generate_code: %s\n" % e, file=stderr)
+        print(
+            "Exception while calling ModelServiceApi -> generate_code: %s\n" % e,
+            file=stderr,
+        )
 
     return None
 
 
 @print_function_name_decorator
-def run_code(model_id: str, pipeline_stage: str, execution_platform: str, run_name: str = None, parameters=dict()) -> str:
+def run_code(
+    model_id: str,
+    pipeline_stage: str,
+    execution_platform: str,
+    run_name: str = None,
+    parameters=dict(),
+) -> str:
 
     api_client = get_swagger_client()
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        run_code_response: ApiRunCodeResponse = api_instance.run_model(model_id, pipeline_stage, execution_platform,
-                                                                       run_name=run_name, parameters=parameters)
+        run_code_response: ApiRunCodeResponse = api_instance.run_model(
+            model_id,
+            pipeline_stage,
+            execution_platform,
+            run_name=run_name,
+            parameters=parameters,
+        )
         print(run_code_response.run_url)
 
         return run_code_response.run_url
 
     except ApiException as e:
-        print("Exception while calling ModelServiceApi -> run_code: %s\n" % e, file=stderr)
+        print(
+            "Exception while calling ModelServiceApi -> run_code: %s\n" % e, file=stderr
+        )
 
     return None
 
@@ -315,15 +385,23 @@ def list_models(filter_dict: dict = {}, sort_by: str = None) -> [ApiModel]:
     try:
         filter_str = json.dumps(filter_dict) if filter_dict else None
 
-        api_response: ApiListModelsResponse = api_instance.list_models(filter=filter_str, sort_by=sort_by)
+        api_response: ApiListModelsResponse = api_instance.list_models(
+            filter=filter_str, sort_by=sort_by
+        )
 
         for c in api_response.models:
-            print("%s  %s  %s" % (c.id, c.created_at.strftime("%Y-%m-%d %H:%M:%S"), c.name))
+            print(
+                "%s  %s  %s"
+                % (c.id, c.created_at.strftime("%Y-%m-%d %H:%M:%S"), c.name)
+            )
 
         return api_response.models
 
     except ApiException as e:
-        print("Exception when calling ModelServiceApi -> list_models: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling ModelServiceApi -> list_models: %s\n" % e,
+            file=stderr,
+        )
 
     return []
 
@@ -346,7 +424,7 @@ def main():
     approve_models_for_publishing(model_ids)
 
     # randomly selected a model
-    i = random.randint(0, len(model_ids)-1)
+    i = random.randint(0, len(model_ids) - 1)
     model_id = model_ids[i]
 
     # show one randomly selected model, gen code, download, update
@@ -374,6 +452,6 @@ def main():
     # upload_model_file(model.id, "temp/files/max-audio-classifier.yaml")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pprint(yaml_files)
     main()

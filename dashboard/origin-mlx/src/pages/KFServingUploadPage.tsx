@@ -13,7 +13,7 @@ import Hero from '../components/Hero'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import indicatorGif from '../images/indicator-gif.gif'
-import yaml from 'js-yaml';
+import yaml  # noqa: F401 from 'js-yaml';
 
   
 function UploadPage() {

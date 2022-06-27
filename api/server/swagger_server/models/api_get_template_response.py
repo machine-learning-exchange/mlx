@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiGetTemplateResponse(Model):
@@ -18,7 +18,7 @@ class ApiGetTemplateResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, template: str=None, url: str=None):  # noqa: E501
+    def __init__(self, template: str = None, url: str = None):  # noqa: E501
         """ApiGetTemplateResponse - a model defined in Swagger
 
         :param template: The template of this ApiGetTemplateResponse.  # noqa: E501
@@ -26,21 +26,15 @@ class ApiGetTemplateResponse(Model):
         :param url: The url of this ApiGetTemplateResponse.  # noqa: E501
         :type url: str
         """
-        self.swagger_types = {
-            'template': str,
-            'url': str
-        }
+        self.swagger_types = {"template": str, "url": str}
 
-        self.attribute_map = {
-            'template': 'template',
-            'url': 'url'
-        }
+        self.attribute_map = {"template": "template", "url": "url"}
 
         self._template = template
         self._url = url
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiGetTemplateResponse':
+    def from_dict(cls, dikt) -> "ApiGetTemplateResponse":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -77,7 +71,7 @@ class ApiGetTemplateResponse(Model):
     def url(self) -> str:
         """Gets the url of this ApiGetTemplateResponse.
 
-        The URL to download the template text from S3 storage (Minio)  # noqa: E501
+        The URL to download the template text from S3 storage (Minio)
 
         :return: The url of this ApiGetTemplateResponse.
         :rtype: str
@@ -88,7 +82,7 @@ class ApiGetTemplateResponse(Model):
     def url(self, url: str):
         """Sets the url of this ApiGetTemplateResponse.
 
-        The URL to download the template text from S3 storage (Minio)  # noqa: E501
+        The URL to download the template text from S3 storage (Minio)
 
         :param url: The url of this ApiGetTemplateResponse.
         :type url: str

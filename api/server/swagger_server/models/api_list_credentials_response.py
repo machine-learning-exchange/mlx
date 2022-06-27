@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_credential import ApiCredential  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiListCredentialsResponse(Model):
@@ -19,7 +19,12 @@ class ApiListCredentialsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, credentials: List[ApiCredential]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(
+        self,
+        credentials: List[ApiCredential] = None,
+        total_size: int = None,
+        next_page_token: str = None,
+    ):  # noqa: E501
         """ApiListCredentialsResponse - a model defined in Swagger
 
         :param credentials: The credentials of this ApiListCredentialsResponse.  # noqa: E501
@@ -30,15 +35,15 @@ class ApiListCredentialsResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            'credentials': List[ApiCredential],
-            'total_size': int,
-            'next_page_token': str
+            "credentials": List[ApiCredential],
+            "total_size": int,
+            "next_page_token": str,
         }
 
         self.attribute_map = {
-            'credentials': 'credentials',
-            'total_size': 'total_size',
-            'next_page_token': 'next_page_token'
+            "credentials": "credentials",
+            "total_size": "total_size",
+            "next_page_token": "next_page_token",
         }
 
         self._credentials = credentials
@@ -46,7 +51,7 @@ class ApiListCredentialsResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiListCredentialsResponse':
+    def from_dict(cls, dikt) -> "ApiListCredentialsResponse":
         """Returns the dict as a model
 
         :param dikt: A dict.

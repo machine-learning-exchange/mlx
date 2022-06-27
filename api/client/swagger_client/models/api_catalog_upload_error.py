@@ -14,10 +14,10 @@
 """
 
 
-import pprint
+import pprint  # noqa: F401
 import re  # noqa: F401
 
-import six
+import six  # noqa: F401
 
 
 class ApiCatalogUploadError(object):
@@ -34,20 +34,22 @@ class ApiCatalogUploadError(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'url': 'str',
-        'error_message': 'str',
-        'status_code': 'int'
+        "name": "str",
+        "url": "str",
+        "error_message": "str",
+        "status_code": "int",
     }
 
     attribute_map = {
-        'name': 'name',
-        'url': 'url',
-        'error_message': 'error_message',
-        'status_code': 'status_code'
+        "name": "name",
+        "url": "url",
+        "error_message": "error_message",
+        "status_code": "status_code",
     }
 
-    def __init__(self, name=None, url=None, error_message=None, status_code=None):  # noqa: E501
+    def __init__(
+        self, name=None, url=None, error_message=None, status_code=None
+    ):  # noqa: E501
         """ApiCatalogUploadError - a model defined in Swagger"""  # noqa: E501
 
         self._name = None
@@ -106,7 +108,9 @@ class ApiCatalogUploadError(object):
         :type: str
         """
         if url is None:
-            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `url`, must not be `None`"
+            )
 
         self._url = url
 
@@ -159,18 +163,20 @@ class ApiCatalogUploadError(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ApiCatalogUploadError, dict):

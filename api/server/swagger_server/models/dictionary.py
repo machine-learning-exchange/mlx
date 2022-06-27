@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.any_value import AnyValue  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class Dictionary(Model):
@@ -20,17 +20,13 @@ class Dictionary(Model):
     """
 
     def __init__(self):  # noqa: E501
-        """Dictionary - a model defined in Swagger
+        """Dictionary - a model defined in Swagger"""
+        self.swagger_types = {}
 
-        """
-        self.swagger_types = {
-        }
-
-        self.attribute_map = {
-        }
+        self.attribute_map = {}
 
     @classmethod
-    def from_dict(cls, dikt) -> 'Dictionary':
+    def from_dict(cls, dikt) -> "Dictionary":
         """Returns the dict as a model
 
         :param dikt: A dict.

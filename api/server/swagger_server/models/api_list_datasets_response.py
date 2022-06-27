@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_dataset import ApiDataset  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiListDatasetsResponse(Model):
@@ -19,7 +19,12 @@ class ApiListDatasetsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, datasets: List[ApiDataset]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(
+        self,
+        datasets: List[ApiDataset] = None,
+        total_size: int = None,
+        next_page_token: str = None,
+    ):  # noqa: E501
         """ApiListDatasetsResponse - a model defined in Swagger
 
         :param datasets: The datasets of this ApiListDatasetsResponse.  # noqa: E501
@@ -30,15 +35,15 @@ class ApiListDatasetsResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            'datasets': List[ApiDataset],
-            'total_size': int,
-            'next_page_token': str
+            "datasets": List[ApiDataset],
+            "total_size": int,
+            "next_page_token": str,
         }
 
         self.attribute_map = {
-            'datasets': 'datasets',
-            'total_size': 'total_size',
-            'next_page_token': 'next_page_token'
+            "datasets": "datasets",
+            "total_size": "total_size",
+            "next_page_token": "next_page_token",
         }
 
         self._datasets = datasets
@@ -46,7 +51,7 @@ class ApiListDatasetsResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiListDatasetsResponse':
+    def from_dict(cls, dikt) -> "ApiListDatasetsResponse":
         """Returns the dict as a model
 
         :param dikt: A dict.

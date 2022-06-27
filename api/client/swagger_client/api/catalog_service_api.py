@@ -19,7 +19,7 @@ from __future__ import absolute_import
 import re  # noqa: F401
 
 # python 2 and python 3 compatibility library
-import six
+import six  # noqa: F401
 
 from swagger_client.api_client import ApiClient
 
@@ -53,11 +53,11 @@ class CatalogServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.list_all_assets_with_http_info(**kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.list_all_assets_with_http_info(**kwargs)
         else:
-            (data) = self.list_all_assets_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.list_all_assets_with_http_info(**kwargs)
             return data
 
     def list_all_assets_with_http_info(self, **kwargs):  # noqa: E501
@@ -78,35 +78,35 @@ class CatalogServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['page_token', 'page_size', 'sort_by', 'filter']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["page_token", "page_size", "sort_by", "filter"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_all_assets" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page_token' in params:
-            query_params.append(('page_token', params['page_token']))  # noqa: E501
-        if 'page_size' in params:
-            query_params.append(('page_size', params['page_size']))  # noqa: E501
-        if 'sort_by' in params:
-            query_params.append(('sort_by', params['sort_by']))  # noqa: E501
-        if 'filter' in params:
-            query_params.append(('filter', params['filter']))  # noqa: E501
+        if "page_token" in params:
+            query_params.append(("page_token", params["page_token"]))
+        if "page_size" in params:
+            query_params.append(("page_size", params["page_size"]))
+        if "sort_by" in params:
+            query_params.append(("sort_by", params["sort_by"]))
+        if "filter" in params:
+            query_params.append(("filter", params["filter"]))
 
         header_params = {}
 
@@ -118,20 +118,22 @@ class CatalogServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/catalog', 'GET',
+            "/catalog",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiListCatalogItemsResponse',  # noqa: E501
+            response_type="ApiListCatalogItemsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upload_catalog_from_url(self, url, **kwargs):  # noqa: E501
         """upload_catalog_from_url  # noqa: E501
@@ -148,11 +150,15 @@ class CatalogServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upload_catalog_from_url_with_http_info(url, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upload_catalog_from_url_with_http_info(
+                url, **kwargs
+            )
         else:
-            (data) = self.upload_catalog_from_url_with_http_info(url, **kwargs)  # noqa: E501
+            (data) = self.upload_catalog_from_url_with_http_info(
+                url, **kwargs
+            )
             return data
 
     def upload_catalog_from_url_with_http_info(self, url, **kwargs):  # noqa: E501
@@ -171,25 +177,26 @@ class CatalogServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['url', 'access_token']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["url", "access_token"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_catalog_from_url" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'url' is set
-        if ('url' not in params or
-                params['url'] is None):
-            raise ValueError("Missing the required parameter `url` when calling `upload_catalog_from_url`")  # noqa: E501
+        if "url" not in params or params["url"] is None:
+            raise ValueError(
+                "Missing the required parameter `url` when calling `upload_catalog_from_url`"
+            )
 
         collection_formats = {}
 
@@ -201,38 +208,44 @@ class CatalogServiceApi(object):
 
         form_params = []
         local_var_files = {}
-        if 'url' in params:
-            form_params.append(('url', params['url']))  # noqa: E501
-        if 'access_token' in params:
-            form_params.append(('access_token', params['access_token']))  # noqa: E501
+        if "url" in params:
+            form_params.append(("url", params["url"]))
+        if "access_token" in params:
+            form_params.append(("access_token", params["access_token"]))
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['multipart/form-data'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["multipart/form-data"]
+        )
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/catalog/upload_from_url', 'POST',
+            "/catalog/upload_from_url",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiCatalogUploadResponse',  # noqa: E501
+            response_type="ApiCatalogUploadResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upload_multiple_assets(self, body, **kwargs):  # noqa: E501
         """upload_multiple_assets  # noqa: E501
@@ -248,11 +261,15 @@ class CatalogServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upload_multiple_assets_with_http_info(body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upload_multiple_assets_with_http_info(
+                body, **kwargs
+            )
         else:
-            (data) = self.upload_multiple_assets_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.upload_multiple_assets_with_http_info(
+                body, **kwargs
+            )
             return data
 
     def upload_multiple_assets_with_http_info(self, body, **kwargs):  # noqa: E501
@@ -270,25 +287,26 @@ class CatalogServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_multiple_assets" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `upload_multiple_assets`")  # noqa: E501
+        if "body" not in params or params["body"] is None:
+            raise ValueError(
+                "Missing the required parameter `body` when calling `upload_multiple_assets`"
+            )
 
         collection_formats = {}
 
@@ -302,23 +320,25 @@ class CatalogServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/catalog', 'POST',
+            "/catalog",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ApiCatalogUploadResponse',  # noqa: E501
+            response_type="ApiCatalogUploadResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

@@ -1,41 +1,40 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 
 import json
 import random
-import swagger_client
+import swagger_client  # noqa: F401
 
-from os import environ as env
-from pprint import pprint
+from os import environ as env  # noqa: F401
+from pprint import pprint  # noqa: F401
 from pipelines_api import list_pipelines
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiCredential, ApiListCredentialsResponse
-from swagger_client.rest import ApiException
+from swagger_client.rest import ApiException  # noqa: F401
 from sys import stderr
-from urllib3.response import HTTPResponse
+from urllib3.response import HTTPResponse  # noqa: F401
 
 
-host = '127.0.0.1'
-port = '8080'
+host = "127.0.0.1"
+port = "8080"
 # host = env.get("MLX_API_SERVICE_HOST")
 # port = env.get("MLX_API_SERVICE_PORT")
 
-api_base_path = 'apis/v1alpha1'
+api_base_path = "apis/v1alpha1"
 
 
 def get_swagger_client():
 
     config = Configuration()
-    config.host = f'http://{host}:{port}/{api_base_path}'
+    config.host = f"http://{host}:{port}/{api_base_path}"
     api_client = ApiClient(configuration=config)
 
     return api_client
 
 
 def print_function_name_decorator(func):
-
     def wrapper(*args, **kwargs):
         print()
         print(f"---[ {func.__name__}{args}{kwargs} ]---")
@@ -46,20 +45,28 @@ def print_function_name_decorator(func):
 
 
 @print_function_name_decorator
-def create_credential(pipeline_id: str, project_id: str, data_assets: [str] = []) -> ApiCredential:
+def create_credential(
+    pipeline_id: str, project_id: str, data_assets: [str] = []
+) -> ApiCredential:
 
     api_client = get_swagger_client()
     api_instance = swagger_client.CredentialServiceApi(api_client=api_client)
 
     try:
-        api_credential = ApiCredential(pipeline_id=pipeline_id, project_id=project_id, data_assets=data_assets)
+        api_credential = ApiCredential(
+            pipeline_id=pipeline_id, project_id=project_id, data_assets=data_assets
+        )
 
         api_response: ApiCredential = api_instance.create_credential(api_credential)
 
         return api_response
 
     except ApiException as e:
-        print("Exception when calling CredentialServiceApi -> create_credential: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling CredentialServiceApi -> create_credential: %s\n"
+            % e,
+            file=stderr,
+        )
 
     return []
 
@@ -76,7 +83,10 @@ def get_credential(credential_id: str) -> ApiCredential:
         return api_credential
 
     except ApiException as e:
-        print("Exception when calling CredentialServiceApi -> get_credential: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling CredentialServiceApi -> get_credential: %s\n" % e,
+            file=stderr,
+        )
 
     return None
 
@@ -90,7 +100,11 @@ def delete_credential(credential_id: str):
     try:
         api_instance.delete_credential(credential_id)
     except ApiException as e:
-        print("Exception when calling CredentialServiceApi -> delete_credential: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling CredentialServiceApi -> delete_credential: %s\n"
+            % e,
+            file=stderr,
+        )
 
 
 @print_function_name_decorator
@@ -102,15 +116,28 @@ def list_credentials(filter_dict: dict = {}, sort_by: str = None) -> [ApiCredent
     try:
         filter_str = json.dumps(filter_dict) if filter_dict else None
 
-        api_response: ApiListCredentialsResponse = api_instance.list_credentials(filter=filter_str, sort_by=sort_by)
+        api_response: ApiListCredentialsResponse = api_instance.list_credentials(
+            filter=filter_str, sort_by=sort_by
+        )
 
         for c in api_response.credentials:
-            print("%s  %s  pl:%s  pr:%s" % (c.id, c.created_at.strftime("%Y-%m-%d %H:%M:%S"), c.pipeline_id, c.project_id))
+            print(
+                "%s  %s  pl:%s  pr:%s"
+                % (
+                    c.id,
+                    c.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    c.pipeline_id,
+                    c.project_id,
+                )
+            )
 
         return api_response.credentials
 
     except ApiException as e:
-        print("Exception when calling CredentialServiceApi -> list_credentials: %s\n" % e, file=stderr)
+        print(
+            "Exception when calling CredentialServiceApi -> list_credentials: %s\n" % e,
+            file=stderr,
+        )
 
     return []
 
@@ -118,10 +145,12 @@ def list_credentials(filter_dict: dict = {}, sort_by: str = None) -> [ApiCredent
 def main():
     # select a random pipeline
     pipelines = list_pipelines()
-    i = random.randint(0, len(pipelines)-1)
+    i = random.randint(0, len(pipelines) - 1)
 
     # create a new credential
-    credential = create_credential(pipeline_id=pipelines[i].id, project_id="xyz", data_assets=["data1", "data2"])
+    credential = create_credential(
+        pipeline_id=pipelines[i].id, project_id="xyz", data_assets=["data1", "data2"]
+    )
     pprint(credential)
 
     # list credentials
@@ -138,6 +167,6 @@ def main():
     delete_credential(credential.id)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # delete_credential("*")
     main()

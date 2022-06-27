@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiModelFrameworkRuntimes(Model):
@@ -18,7 +18,7 @@ class ApiModelFrameworkRuntimes(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, version: str=None):  # noqa: E501
+    def __init__(self, name: str = None, version: str = None):  # noqa: E501
         """ApiModelFrameworkRuntimes - a model defined in Swagger
 
         :param name: The name of this ApiModelFrameworkRuntimes.  # noqa: E501
@@ -26,21 +26,15 @@ class ApiModelFrameworkRuntimes(Model):
         :param version: The version of this ApiModelFrameworkRuntimes.  # noqa: E501
         :type version: str
         """
-        self.swagger_types = {
-            'name': str,
-            'version': str
-        }
+        self.swagger_types = {"name": str, "version": str}
 
-        self.attribute_map = {
-            'name': 'name',
-            'version': 'version'
-        }
+        self.attribute_map = {"name": "name", "version": "version"}
 
         self._name = name
         self._version = version
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiModelFrameworkRuntimes':
+    def from_dict(cls, dikt) -> "ApiModelFrameworkRuntimes":
         """Returns the dict as a model
 
         :param dikt: A dict.

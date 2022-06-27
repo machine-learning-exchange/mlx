@@ -9,8 +9,10 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.api_inferenceservice import ApiInferenceservice  # noqa: F401,E501
-from swagger_server import util
+from swagger_server.models.api_inferenceservice import (
+    ApiInferenceservice,
+)
+from swagger_server import util  # noqa: F401
 
 
 class ApiListInferenceservicesResponse(Model):
@@ -19,7 +21,12 @@ class ApiListInferenceservicesResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, inferenceservices: List[ApiInferenceservice]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(
+        self,
+        inferenceservices: List[ApiInferenceservice] = None,
+        total_size: int = None,
+        next_page_token: str = None,
+    ):  # noqa: E501
         """ApiListInferenceservicesResponse - a model defined in Swagger
 
         :param inferenceservices: The inferenceservices of this ApiListInferenceservicesResponse.  # noqa: E501
@@ -30,15 +37,15 @@ class ApiListInferenceservicesResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            'inferenceservices': List[ApiInferenceservice],
-            'total_size': int,
-            'next_page_token': str
+            "inferenceservices": List[ApiInferenceservice],
+            "total_size": int,
+            "next_page_token": str,
         }
 
         self.attribute_map = {
-            'inferenceservices': 'Inferenceservices',
-            'total_size': 'total_size',
-            'next_page_token': 'next_page_token'
+            "inferenceservices": "Inferenceservices",
+            "total_size": "total_size",
+            "next_page_token": "next_page_token",
         }
 
         self._inferenceservices = inferenceservices
@@ -46,7 +53,7 @@ class ApiListInferenceservicesResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiListInferenceservicesResponse':
+    def from_dict(cls, dikt) -> "ApiListInferenceservicesResponse":
         """Returns the dict as a model
 
         :param dikt: A dict.

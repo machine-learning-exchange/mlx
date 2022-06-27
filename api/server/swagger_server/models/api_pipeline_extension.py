@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineExtension(Model):
@@ -18,7 +18,13 @@ class ApiPipelineExtension(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, annotations: Dict[str, str]=None, featured: bool=None, publish_approved: bool=None):  # noqa: E501
+    def __init__(
+        self,
+        id: str = None,
+        annotations: Dict[str, str] = None,
+        featured: bool = None,
+        publish_approved: bool = None,
+    ):  # noqa: E501
         """ApiPipelineExtension - a model defined in Swagger
 
         :param id: The id of this ApiPipelineExtension.  # noqa: E501
@@ -31,17 +37,17 @@ class ApiPipelineExtension(Model):
         :type publish_approved: bool
         """
         self.swagger_types = {
-            'id': str,
-            'annotations': Dict[str, str],
-            'featured': bool,
-            'publish_approved': bool
+            "id": str,
+            "annotations": Dict[str, str],
+            "featured": bool,
+            "publish_approved": bool,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'annotations': 'annotations',
-            'featured': 'featured',
-            'publish_approved': 'publish_approved'
+            "id": "id",
+            "annotations": "annotations",
+            "featured": "featured",
+            "publish_approved": "publish_approved",
         }
 
         self._id = id
@@ -50,7 +56,7 @@ class ApiPipelineExtension(Model):
         self._publish_approved = publish_approved
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineExtension':
+    def from_dict(cls, dikt) -> "ApiPipelineExtension":
         """Returns the dict as a model
 
         :param dikt: A dict.

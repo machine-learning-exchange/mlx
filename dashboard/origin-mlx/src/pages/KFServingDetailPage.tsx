@@ -6,7 +6,7 @@
 import React, { useContext, useEffect, useState, Children, ReactNode, ReactElement } from 'react'
 import { capitalize, formatTitle } from '../lib/util';
 import StoreContext from '../lib/stores/context'
-import yaml from 'js-yaml'
+import yaml  # noqa: F401 from 'js-yaml'
 
 import Button from '../components/Button/Button';
 import Icon from '@material-ui/core/Icon'

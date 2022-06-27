@@ -9,9 +9,11 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.api_pipeline_custom import ApiPipelineCustom  # noqa: F401,E501
+from swagger_server.models.api_pipeline_custom import (
+    ApiPipelineCustom,
+)
 from swagger_server.models.dictionary import Dictionary  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineCustomRunPayload(Model):
@@ -20,7 +22,11 @@ class ApiPipelineCustomRunPayload(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, custom_pipeline: ApiPipelineCustom=None, run_parameters: Dictionary=None):  # noqa: E501
+    def __init__(
+        self,
+        custom_pipeline: ApiPipelineCustom = None,
+        run_parameters: Dictionary = None,
+    ):  # noqa: E501
         """ApiPipelineCustomRunPayload - a model defined in Swagger
 
         :param custom_pipeline: The custom_pipeline of this ApiPipelineCustomRunPayload.  # noqa: E501
@@ -29,20 +35,20 @@ class ApiPipelineCustomRunPayload(Model):
         :type run_parameters: Dictionary
         """
         self.swagger_types = {
-            'custom_pipeline': ApiPipelineCustom,
-            'run_parameters': Dictionary
+            "custom_pipeline": ApiPipelineCustom,
+            "run_parameters": Dictionary,
         }
 
         self.attribute_map = {
-            'custom_pipeline': 'custom_pipeline',
-            'run_parameters': 'run_parameters'
+            "custom_pipeline": "custom_pipeline",
+            "run_parameters": "run_parameters",
         }
 
         self._custom_pipeline = custom_pipeline
         self._run_parameters = run_parameters
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineCustomRunPayload':
+    def from_dict(cls, dikt) -> "ApiPipelineCustomRunPayload":
         """Returns the dict as a model
 
         :param dikt: A dict.

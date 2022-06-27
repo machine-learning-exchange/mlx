@@ -17,7 +17,7 @@ from tempfile import gettempdir
     name='${name}',
     description='${description}'
 )
-def kfp_component_pipeline(${pipeline_method_args}):
+def kfp_component_pipeline(${pipeline_method_args}):  # noqa: E999
 
     from kfp import components
 
@@ -45,7 +45,7 @@ TektonCompiler().compile(pipeline_function, pipeline_filename)
 # TODO: specify pipeline argument values
 arguments = ${parameter_dict}
 
-client = TektonClient(${pipeline_server})
+client = TektonClient(${pipeline_server})  # noqa: E999
 
 # Get or create an experiment and submit a pipeline run
 experiment = client.create_experiment('COMPONENT_RUNS')

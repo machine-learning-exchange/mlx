@@ -6,7 +6,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Hero from '../components/Hero';
-import yaml from 'js-yaml';
+import yaml  # noqa: F401 from 'js-yaml';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';

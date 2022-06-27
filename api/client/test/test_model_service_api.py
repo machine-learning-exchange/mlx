@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -18,36 +18,30 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.api.model_service_api import ModelServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
+import swagger_client  # noqa: F401
+from swagger_client.api.model_service_api import ModelServiceApi  # noqa: F401, E501
+from swagger_client.rest import ApiException  # noqa: F401
 
 
 class TestModelServiceApi(unittest.TestCase):
     """ModelServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = swagger_client.api.model_service_api.ModelServiceApi()  # noqa: E501
+        self.api = swagger_client.api.model_service_api.ModelServiceApi()
 
     def tearDown(self):
         pass
 
     def test_approve_models_for_publishing(self):
-        """Test case for approve_models_for_publishing
-
-        """
+        """Test case for approve_models_for_publishing"""
         pass
 
     def test_create_model(self):
-        """Test case for create_model
-
-        """
+        """Test case for create_model"""
         pass
 
     def test_delete_model(self):
-        """Test case for delete_model
-
-        """
+        """Test case for delete_model"""
         pass
 
     def test_download_model_files(self):
@@ -58,53 +52,37 @@ class TestModelServiceApi(unittest.TestCase):
         pass
 
     def test_generate_model_code(self):
-        """Test case for generate_model_code
-
-        """
+        """Test case for generate_model_code"""
         pass
 
     def test_get_model(self):
-        """Test case for get_model
-
-        """
+        """Test case for get_model"""
         pass
 
     def test_get_model_template(self):
-        """Test case for get_model_template
-
-        """
+        """Test case for get_model_template"""
         pass
 
     def test_list_models(self):
-        """Test case for list_models
-
-        """
+        """Test case for list_models"""
         pass
 
     def test_run_model(self):
-        """Test case for run_model
-
-        """
+        """Test case for run_model"""
         pass
 
     def test_set_featured_models(self):
-        """Test case for set_featured_models
-
-        """
+        """Test case for set_featured_models"""
         pass
 
     def test_upload_model(self):
-        """Test case for upload_model
-
-        """
+        """Test case for upload_model"""
         pass
 
     def test_upload_model_file(self):
-        """Test case for upload_model_file
-
-        """
+        """Test case for upload_model_file"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

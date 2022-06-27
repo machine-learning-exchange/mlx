@@ -1,11 +1,11 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 
 import datetime
 import logging
 
-import six
+import six  # noqa: F401
 import typing
 
 from flask import request
@@ -37,11 +37,11 @@ def _deserialize(data, klass):
     # AttributeError: module 'typing' has no attribute 'GenericMeta': https://github.com/zalando/connexion/issues/739#issuecomment-437398835
     # elif type(klass) == typing.GenericMeta:
     elif type(klass) == typing._GenericAlias:  # Python >= 3.7
-        if klass._name == 'List':
+        if klass._name == "List":
             return _deserialize_list(data, klass.__args__[0])
-        if klass._name == 'Dict':
+        if klass._name == "Dict":
             return _deserialize_dict(data, klass.__args__[1])
-    elif hasattr(klass, '__origin__') and hasattr(klass, '__extra__'):  # Python <= 3.6
+    elif hasattr(klass, "__origin__") and hasattr(klass, "__extra__"):  # Python <= 3.6
         if klass.__extra__ == list:
             return _deserialize_list(data, klass.__args__[0])
         if klass.__extra__ == dict:
@@ -86,6 +86,7 @@ def deserialize_date(string):
     """
     try:
         from dateutil.parser import parse
+
         return parse(string).date()
     except ImportError:
         return string
@@ -103,6 +104,7 @@ def deserialize_datetime(string):
     """
     try:
         from dateutil.parser import parse
+
         return parse(string)
     except ImportError:
         return string
@@ -122,9 +124,11 @@ def deserialize_model(data, klass):
         return data
 
     for attr, attr_type in six.iteritems(instance.swagger_types):
-        if data is not None \
-                and instance.attribute_map[attr] in data \
-                and isinstance(data, (list, dict)):
+        if (
+            data is not None
+            and instance.attribute_map[attr] in data
+            and isinstance(data, (list, dict))
+        ):
             value = data[instance.attribute_map[attr]]
             setattr(instance, attr, _deserialize(value, attr_type))
 
@@ -141,8 +145,7 @@ def _deserialize_list(data, boxed_type):
     :return: deserialized list.
     :rtype: list
     """
-    return [_deserialize(sub_data, boxed_type)
-            for sub_data in data]
+    return [_deserialize(sub_data, boxed_type) for sub_data in data]
 
 
 def _deserialize_dict(data, boxed_type):
@@ -155,16 +158,15 @@ def _deserialize_dict(data, boxed_type):
     :return: deserialized dict.
     :rtype: dict
     """
-    return {k: _deserialize(v, boxed_type)
-            for k, v in six.iteritems(data)}
+    return {k: _deserialize(v, boxed_type) for k, v in six.iteritems(data)}
 
 
 #######################################################################
 #   non-generated methods                                             #
 #######################################################################
 
-class ApiError(Exception):
 
+class ApiError(Exception):
     def __init__(self, message, http_status_code=500):
         self.message = message
         self.http_status_code = http_status_code
@@ -182,9 +184,11 @@ response_cache = dict()
 
 
 def should_cache(controller_name, method_name):
-    return request.method == "GET" \
-           and method_name != "health_check" \
-           and "inference_service" not in controller_name
+    return (
+        request.method == "GET"
+        and method_name != "health_check"
+        and "inference_service" not in controller_name
+    )
 
 
 def invoke_controller_impl(controller_name=None, parameters=None, method_name=None):
@@ -231,7 +235,7 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
 
     # replace 'None' values with None, happens when client sets a parameter to None (a JSON serialization quirk)
     for k, v in parameters.items():
-        if type(v) == str and v == 'None':
+        if type(v) == str and v == "None":
             parameters[k] = None
 
     # remove parameters with None values, otherwise the default values of method signature will not take effect
@@ -239,13 +243,13 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
         if v is None:
             del parameters[k]
 
-    module_name_parts = controller_name.split('.')
+    module_name_parts = controller_name.split(".")
 
-    if module_name_parts[1] == 'controllers':
-        module_name_parts[1] = 'controllers_impl'
-        module_name_parts[2] = module_name_parts[2] + '_impl'
+    if module_name_parts[1] == "controllers":
+        module_name_parts[1] = "controllers_impl"
+        module_name_parts[2] = module_name_parts[2] + "_impl"
 
-    module_name = '.'.join(module_name_parts)
+    module_name = ".".join(module_name_parts)
 
     try:
         controller_impl_module = importlib.import_module(module_name)
@@ -257,7 +261,10 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
 
     except AttributeError:
         traceback.print_exc()
-        return f"The method '{method_name}' does not exist in module '{module_name}'", 501
+        return (
+            f"The method '{method_name}' does not exist in module '{module_name}'",
+            501,
+        )
 
     if impl_func:
         try:
@@ -275,7 +282,12 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
                     log_msg = get_request_log_msg()
                     logging.getLogger("GETcache").info(f"{log_msg} added to cache")
 
-                if request.method in ("DELETE", "POST", "PATCH", "PUT") and not method_name.startswith("run_"):
+                if request.method in (
+                    "DELETE",
+                    "POST",
+                    "PATCH",
+                    "PUT",
+                ) and not method_name.startswith("run_"):
                     # any modifying method clears all cached entries, to avoid loopholes like delete '*',
                     # upload has no 'id', catalog modifies other asset types (represented by controller class), ...
                     response_cache.clear()
@@ -298,4 +310,4 @@ def invoke_controller_impl(controller_name=None, parameters=None, method_name=No
             return f"{e.__class__.__name__}: {str(e)}", 500
 
     else:
-        return f'Method not found: {module_name}.{method_name}()', 501
+        return f"Method not found: {module_name}.{method_name}()", 501

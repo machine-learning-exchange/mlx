@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import SourceCodeDisplay from '../SourceCodeDisplay';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import yaml from 'js-yaml';
+import yaml  # noqa: F401 from 'js-yaml';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 //import errorIcon from '../../images/error.png'

@@ -9,8 +9,10 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.api_pipeline_task_arguments import ApiPipelineTaskArguments  # noqa: F401,E501
-from swagger_server import util
+from swagger_server.models.api_pipeline_task_arguments import (
+    ApiPipelineTaskArguments,
+)
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineTask(Model):
@@ -19,7 +21,14 @@ class ApiPipelineTask(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, artifact_type: str=None, artifact_id: str=None, arguments: ApiPipelineTaskArguments=None, dependencies: List[str]=None):  # noqa: E501
+    def __init__(
+        self,
+        name: str = None,
+        artifact_type: str = None,
+        artifact_id: str = None,
+        arguments: ApiPipelineTaskArguments = None,
+        dependencies: List[str] = None,
+    ):  # noqa: E501
         """ApiPipelineTask - a model defined in Swagger
 
         :param name: The name of this ApiPipelineTask.  # noqa: E501
@@ -34,19 +43,19 @@ class ApiPipelineTask(Model):
         :type dependencies: List[str]
         """
         self.swagger_types = {
-            'name': str,
-            'artifact_type': str,
-            'artifact_id': str,
-            'arguments': ApiPipelineTaskArguments,
-            'dependencies': List[str]
+            "name": str,
+            "artifact_type": str,
+            "artifact_id": str,
+            "arguments": ApiPipelineTaskArguments,
+            "dependencies": List[str],
         }
 
         self.attribute_map = {
-            'name': 'name',
-            'artifact_type': 'artifact_type',
-            'artifact_id': 'artifact_id',
-            'arguments': 'arguments',
-            'dependencies': 'dependencies'
+            "name": "name",
+            "artifact_type": "artifact_type",
+            "artifact_id": "artifact_id",
+            "arguments": "arguments",
+            "dependencies": "dependencies",
         }
 
         self._name = name
@@ -56,7 +65,7 @@ class ApiPipelineTask(Model):
         self._dependencies = dependencies
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineTask':
+    def from_dict(cls, dikt) -> "ApiPipelineTask":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -108,7 +117,9 @@ class ApiPipelineTask(Model):
         :type artifact_type: str
         """
         if artifact_type is None:
-            raise ValueError("Invalid value for `artifact_type`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `artifact_type`, must not be `None`"
+            )
 
         self._artifact_type = artifact_type
 
@@ -133,7 +144,9 @@ class ApiPipelineTask(Model):
         :type artifact_id: str
         """
         if artifact_id is None:
-            raise ValueError("Invalid value for `artifact_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `artifact_id`, must not be `None`"
+            )
 
         self._artifact_id = artifact_id
 

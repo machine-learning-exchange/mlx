@@ -14,10 +14,10 @@
 """
 
 
-import pprint
+import pprint  # noqa: F401
 import re  # noqa: F401
 
-import six
+import six  # noqa: F401
 
 
 class ApiCatalogUploadResponse(object):
@@ -34,32 +34,44 @@ class ApiCatalogUploadResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'components': 'list[ApiComponent]',
-        'datasets': 'list[ApiDataset]',
-        'models': 'list[ApiModel]',
-        'notebooks': 'list[ApiNotebook]',
-        'pipelines': 'list[ApiPipeline]',
-        'total_size': 'int',
-        'next_page_token': 'str',
-        'errors': 'list[ApiCatalogUploadError]',
-        'total_errors': 'int',
-        'total_created': 'int'
+        "components": "list[ApiComponent]",
+        "datasets": "list[ApiDataset]",
+        "models": "list[ApiModel]",
+        "notebooks": "list[ApiNotebook]",
+        "pipelines": "list[ApiPipeline]",
+        "total_size": "int",
+        "next_page_token": "str",
+        "errors": "list[ApiCatalogUploadError]",
+        "total_errors": "int",
+        "total_created": "int",
     }
 
     attribute_map = {
-        'components': 'components',
-        'datasets': 'datasets',
-        'models': 'models',
-        'notebooks': 'notebooks',
-        'pipelines': 'pipelines',
-        'total_size': 'total_size',
-        'next_page_token': 'next_page_token',
-        'errors': 'errors',
-        'total_errors': 'total_errors',
-        'total_created': 'total_created'
+        "components": "components",
+        "datasets": "datasets",
+        "models": "models",
+        "notebooks": "notebooks",
+        "pipelines": "pipelines",
+        "total_size": "total_size",
+        "next_page_token": "next_page_token",
+        "errors": "errors",
+        "total_errors": "total_errors",
+        "total_created": "total_created",
     }
 
-    def __init__(self, components=None, datasets=None, models=None, notebooks=None, pipelines=None, total_size=None, next_page_token=None, errors=None, total_errors=None, total_created=None):  # noqa: E501
+    def __init__(
+        self,
+        components=None,
+        datasets=None,
+        models=None,
+        notebooks=None,
+        pipelines=None,
+        total_size=None,
+        next_page_token=None,
+        errors=None,
+        total_errors=None,
+        total_created=None,
+    ):  # noqa: E501
         """ApiCatalogUploadResponse - a model defined in Swagger"""  # noqa: E501
 
         self._components = None
@@ -312,18 +324,20 @@ class ApiCatalogUploadResponse(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ApiCatalogUploadResponse, dict):

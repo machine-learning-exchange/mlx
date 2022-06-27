@@ -14,12 +14,14 @@
 """
 
 
-import pprint
+import pprint  # noqa: F401
 import re  # noqa: F401
-import six
+import six  # noqa: F401
 
 from swagger_client.models.api_asset import ApiAsset
-from swagger_client.models.api_model_framework import ApiModelFramework  # noqa: F401,E501
+from swagger_client.models.api_model_framework import (  # noqa: F401
+    ApiModelFramework,
+)
 from swagger_client.models.api_parameter import ApiParameter  # noqa: F401,E501
 
 
@@ -37,50 +39,71 @@ class ApiModel(ApiAsset):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'str',
-        'created_at': 'datetime',
-        'name': 'str',
-        'description': 'str',
-        'featured': 'bool',
-        'publish_approved': 'bool',
-        'related_assets': 'list[str]',
-        'filter_categories': 'dict(str, str)',
-        'domain': 'str',
-        'labels': 'dict(str, str)',
-        'framework': 'ApiModelFramework',
-        'trainable': 'bool',
-        'trainable_tested_platforms': 'list[str]',
-        'trainable_credentials_required': 'bool',
-        'trainable_parameters': 'list[ApiParameter]',
-        'servable': 'bool',
-        'servable_tested_platforms': 'list[str]',
-        'servable_credentials_required': 'bool',
-        'servable_parameters': 'list[ApiParameter]'
+        "id": "str",
+        "created_at": "datetime",
+        "name": "str",
+        "description": "str",
+        "featured": "bool",
+        "publish_approved": "bool",
+        "related_assets": "list[str]",
+        "filter_categories": "dict(str, str)",
+        "domain": "str",
+        "labels": "dict(str, str)",
+        "framework": "ApiModelFramework",
+        "trainable": "bool",
+        "trainable_tested_platforms": "list[str]",
+        "trainable_credentials_required": "bool",
+        "trainable_parameters": "list[ApiParameter]",
+        "servable": "bool",
+        "servable_tested_platforms": "list[str]",
+        "servable_credentials_required": "bool",
+        "servable_parameters": "list[ApiParameter]",
     }
 
     attribute_map = {
-        'id': 'id',
-        'created_at': 'created_at',
-        'name': 'name',
-        'description': 'description',
-        'featured': 'featured',
-        'publish_approved': 'publish_approved',
-        'related_assets': 'related_assets',
-        'filter_categories': 'filter_categories',
-        'domain': 'domain',
-        'labels': 'labels',
-        'framework': 'framework',
-        'trainable': 'trainable',
-        'trainable_tested_platforms': 'trainable_tested_platforms',
-        'trainable_credentials_required': 'trainable_credentials_required',
-        'trainable_parameters': 'trainable_parameters',
-        'servable': 'servable',
-        'servable_tested_platforms': 'servable_tested_platforms',
-        'servable_credentials_required': 'servable_credentials_required',
-        'servable_parameters': 'servable_parameters'
+        "id": "id",
+        "created_at": "created_at",
+        "name": "name",
+        "description": "description",
+        "featured": "featured",
+        "publish_approved": "publish_approved",
+        "related_assets": "related_assets",
+        "filter_categories": "filter_categories",
+        "domain": "domain",
+        "labels": "labels",
+        "framework": "framework",
+        "trainable": "trainable",
+        "trainable_tested_platforms": "trainable_tested_platforms",
+        "trainable_credentials_required": "trainable_credentials_required",
+        "trainable_parameters": "trainable_parameters",
+        "servable": "servable",
+        "servable_tested_platforms": "servable_tested_platforms",
+        "servable_credentials_required": "servable_credentials_required",
+        "servable_parameters": "servable_parameters",
     }
 
-    def __init__(self, id=None, created_at=None, name=None, description=None, featured=None, publish_approved=None, related_assets=None, filter_categories=None, domain=None, labels=None, framework=None, trainable=None, trainable_tested_platforms=None, trainable_credentials_required=None, trainable_parameters=None, servable=None, servable_tested_platforms=None, servable_credentials_required=None, servable_parameters=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        created_at=None,
+        name=None,
+        description=None,
+        featured=None,
+        publish_approved=None,
+        related_assets=None,
+        filter_categories=None,
+        domain=None,
+        labels=None,
+        framework=None,
+        trainable=None,
+        trainable_tested_platforms=None,
+        trainable_credentials_required=None,
+        trainable_parameters=None,
+        servable=None,
+        servable_tested_platforms=None,
+        servable_credentials_required=None,
+        servable_parameters=None,
+    ):  # noqa: E501
         """ApiModel - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
@@ -201,7 +224,9 @@ class ApiModel(ApiAsset):
         :type: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )
 
         self._name = name
 
@@ -224,7 +249,9 @@ class ApiModel(ApiAsset):
         :type: str
         """
         if description is None:
-            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `description`, must not be `None`"
+            )
 
         self._description = description
 
@@ -373,7 +400,9 @@ class ApiModel(ApiAsset):
         :type: ApiModelFramework
         """
         if framework is None:
-            raise ValueError("Invalid value for `framework`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `framework`, must not be `None`"
+            )
 
         self._framework = framework
 
@@ -552,18 +581,20 @@ class ApiModel(ApiAsset):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ApiModel, dict):

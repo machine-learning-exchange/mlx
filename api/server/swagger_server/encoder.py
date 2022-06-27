@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from connexion.apps.flask_app import FlaskJSONEncoder
-import six
+import six  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 

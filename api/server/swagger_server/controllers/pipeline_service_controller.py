@@ -2,18 +2,26 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion
-import six
+import connexion  # noqa: F401
+import six  # noqa: F401
 
-from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
-from swagger_server.models.api_list_pipelines_response import ApiListPipelinesResponse  # noqa: E501
+from swagger_server.models.api_get_template_response import (  # noqa: F401
+    ApiGetTemplateResponse,
+)
+from swagger_server.models.api_list_pipelines_response import (  # noqa: F401
+    ApiListPipelinesResponse,
+)
 from swagger_server.models.api_pipeline import ApiPipeline  # noqa: E501
-from swagger_server.models.api_pipeline_custom_run_payload import ApiPipelineCustomRunPayload  # noqa: E501
-from swagger_server.models.api_pipeline_extended import ApiPipelineExtended  # noqa: E501
-from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: E501
-from swagger_server.models.api_status import ApiStatus  # noqa: E501
+from swagger_server.models.api_pipeline_custom_run_payload import (
+    ApiPipelineCustomRunPayload,
+)
+from swagger_server.models.api_pipeline_extended import (  # noqa: F401
+    ApiPipelineExtended,
+)
+from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: F401, E501
+from swagger_server.models.api_status import ApiStatus  # noqa: F401, E501
 from swagger_server.models.dictionary import Dictionary  # noqa: E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 def approve_pipelines_for_publishing(pipeline_ids):  # noqa: E501
@@ -34,13 +42,13 @@ def create_pipeline(body):  # noqa: E501
 
      # noqa: E501
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: ApiPipeline
     """
     if connexion.request.is_json:
-        body = ApiPipeline.from_dict(connexion.request.get_json())  # noqa: E501
+        body = ApiPipeline.from_dict(connexion.request.get_json())
     return util.invoke_controller_impl()
 
 
@@ -49,7 +57,7 @@ def delete_pipeline(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -62,7 +70,7 @@ def download_pipeline_files(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: file | binary
@@ -75,7 +83,7 @@ def get_pipeline(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiPipelineExtended
@@ -88,7 +96,7 @@ def get_template(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGetTemplateResponse
@@ -96,14 +104,16 @@ def get_template(id):  # noqa: E501
     return util.invoke_controller_impl()
 
 
-def list_pipelines(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
+def list_pipelines(
+    page_token=None, page_size=None, sort_by=None, filter=None
+):  # noqa: E501
     """list_pipelines
 
      # noqa: E501
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
     :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name desc\&quot; Ascending by default.
     :type sort_by: str
@@ -128,7 +138,9 @@ def run_custom_pipeline(run_custom_pipeline_payload, run_name=None):  # noqa: E5
     :rtype: ApiRunCodeResponse
     """
     if connexion.request.is_json:
-        run_custom_pipeline_payload = ApiPipelineCustomRunPayload.from_dict(connexion.request.get_json())  # noqa: E501
+        run_custom_pipeline_payload = ApiPipelineCustomRunPayload.from_dict(
+            connexion.request.get_json()
+        )
     return util.invoke_controller_impl()
 
 
@@ -137,7 +149,7 @@ def run_pipeline(id, run_name=None, parameters=None):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
     :param run_name: name to identify the run on the Kubeflow Pipelines UI, defaults to pipeline name
     :type run_name: str
@@ -147,7 +159,7 @@ def run_pipeline(id, run_name=None, parameters=None):  # noqa: E501
     :rtype: ApiRunCodeResponse
     """
     if connexion.request.is_json:
-        parameters = Dictionary.from_dict(connexion.request.get_json())  # noqa: E501
+        parameters = Dictionary.from_dict(connexion.request.get_json())
     return util.invoke_controller_impl()
 
 
@@ -164,7 +176,9 @@ def set_featured_pipelines(pipeline_ids):  # noqa: E501
     return util.invoke_controller_impl()
 
 
-def upload_pipeline(uploadfile, name=None, description=None, annotations=None):  # noqa: E501
+def upload_pipeline(
+    uploadfile, name=None, description=None, annotations=None
+):  # noqa: E501
     """upload_pipeline
 
      # noqa: E501

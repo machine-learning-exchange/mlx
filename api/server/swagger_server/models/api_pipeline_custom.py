@@ -10,8 +10,10 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_pipeline_dag import ApiPipelineDAG  # noqa: F401,E501
-from swagger_server.models.api_pipeline_inputs import ApiPipelineInputs  # noqa: F401,E501
-from swagger_server import util
+from swagger_server.models.api_pipeline_inputs import (
+    ApiPipelineInputs,
+)
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineCustom(Model):
@@ -20,7 +22,13 @@ class ApiPipelineCustom(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, dag: ApiPipelineDAG=None, inputs: ApiPipelineInputs=None, name: str=None, description: str=None):  # noqa: E501
+    def __init__(
+        self,
+        dag: ApiPipelineDAG = None,
+        inputs: ApiPipelineInputs = None,
+        name: str = None,
+        description: str = None,
+    ):  # noqa: E501
         """ApiPipelineCustom - a model defined in Swagger
 
         :param dag: The dag of this ApiPipelineCustom.  # noqa: E501
@@ -33,17 +41,17 @@ class ApiPipelineCustom(Model):
         :type description: str
         """
         self.swagger_types = {
-            'dag': ApiPipelineDAG,
-            'inputs': ApiPipelineInputs,
-            'name': str,
-            'description': str
+            "dag": ApiPipelineDAG,
+            "inputs": ApiPipelineInputs,
+            "name": str,
+            "description": str,
         }
 
         self.attribute_map = {
-            'dag': 'dag',
-            'inputs': 'inputs',
-            'name': 'name',
-            'description': 'description'
+            "dag": "dag",
+            "inputs": "inputs",
+            "name": "name",
+            "description": "description",
         }
 
         self._dag = dag
@@ -52,7 +60,7 @@ class ApiPipelineCustom(Model):
         self._description = description
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineCustom':
+    def from_dict(cls, dikt) -> "ApiPipelineCustom":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -81,7 +89,9 @@ class ApiPipelineCustom(Model):
         :type dag: ApiPipelineDAG
         """
         if dag is None:
-            raise ValueError("Invalid value for `dag`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `dag`, must not be `None`"
+            )
 
         self._dag = dag
 
@@ -127,7 +137,9 @@ class ApiPipelineCustom(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )
 
         self._name = name
 

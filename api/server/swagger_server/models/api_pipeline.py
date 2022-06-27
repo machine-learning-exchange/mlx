@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipeline(Model):
@@ -19,7 +19,17 @@ class ApiPipeline(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, namespace: str=None):  # noqa: E501
+    def __init__(
+        self,
+        id: str = None,
+        created_at: datetime = None,
+        name: str = None,
+        description: str = None,
+        parameters: List[ApiParameter] = None,
+        status: str = None,
+        default_version_id: str = None,
+        namespace: str = None,
+    ):  # noqa: E501
         """ApiPipeline - a model defined in Swagger
 
         :param id: The id of this ApiPipeline.  # noqa: E501
@@ -40,25 +50,25 @@ class ApiPipeline(Model):
         :type namespace: str
         """
         self.swagger_types = {
-            'id': str,
-            'created_at': datetime,
-            'name': str,
-            'description': str,
-            'parameters': List[ApiParameter],
-            'status': str,
-            'default_version_id': str,
-            'namespace': str
+            "id": str,
+            "created_at": datetime,
+            "name": str,
+            "description": str,
+            "parameters": List[ApiParameter],
+            "status": str,
+            "default_version_id": str,
+            "namespace": str,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'created_at': 'created_at',
-            'name': 'name',
-            'description': 'description',
-            'parameters': 'parameters',
-            'status': 'status',
-            'default_version_id': 'default_version_id',
-            'namespace': 'namespace'
+            "id": "id",
+            "created_at": "created_at",
+            "name": "name",
+            "description": "description",
+            "parameters": "parameters",
+            "status": "status",
+            "default_version_id": "default_version_id",
+            "namespace": "namespace",
         }
 
         self._id = id
@@ -71,7 +81,7 @@ class ApiPipeline(Model):
         self._namespace = namespace
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipeline':
+    def from_dict(cls, dikt) -> "ApiPipeline":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -213,7 +223,8 @@ class ApiPipeline(Model):
     def default_version_id(self) -> str:
         """Gets the default_version_id of this ApiPipeline.
 
-        The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
+        The default version of the pipeline. As of now, the latest version is used as default.  # noqa: E501
+        (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
 
         :return: The default_version_id of this ApiPipeline.
         :rtype: str
@@ -224,7 +235,8 @@ class ApiPipeline(Model):
     def default_version_id(self, default_version_id: str):
         """Sets the default_version_id of this ApiPipeline.
 
-        The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
+        The default version of the pipeline. As of now, the latest version is used as default.  # noqa: E501
+        (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
 
         :param default_version_id: The default_version_id of this ApiPipeline.
         :type default_version_id: str

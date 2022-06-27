@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -18,36 +18,32 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.api.component_service_api import ComponentServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
+import swagger_client  # noqa: F401
+from swagger_client.api.component_service_api import ComponentServiceApi  # noqa: F401, E501
+from swagger_client.rest import ApiException  # noqa: F401
 
 
 class TestComponentServiceApi(unittest.TestCase):
     """ComponentServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = swagger_client.api.component_service_api.ComponentServiceApi()  # noqa: E501
+        self.api = (
+            swagger_client.api.component_service_api.ComponentServiceApi()
+        )
 
     def tearDown(self):
         pass
 
     def test_approve_components_for_publishing(self):
-        """Test case for approve_components_for_publishing
-
-        """
+        """Test case for approve_components_for_publishing"""
         pass
 
     def test_create_component(self):
-        """Test case for create_component
-
-        """
+        """Test case for create_component"""
         pass
 
     def test_delete_component(self):
-        """Test case for delete_component
-
-        """
+        """Test case for delete_component"""
         pass
 
     def test_download_component_files(self):
@@ -58,53 +54,37 @@ class TestComponentServiceApi(unittest.TestCase):
         pass
 
     def test_generate_component_code(self):
-        """Test case for generate_component_code
-
-        """
+        """Test case for generate_component_code"""
         pass
 
     def test_get_component(self):
-        """Test case for get_component
-
-        """
+        """Test case for get_component"""
         pass
 
     def test_get_component_template(self):
-        """Test case for get_component_template
-
-        """
+        """Test case for get_component_template"""
         pass
 
     def test_list_components(self):
-        """Test case for list_components
-
-        """
+        """Test case for list_components"""
         pass
 
     def test_run_component(self):
-        """Test case for run_component
-
-        """
+        """Test case for run_component"""
         pass
 
     def test_set_featured_components(self):
-        """Test case for set_featured_components
-
-        """
+        """Test case for set_featured_components"""
         pass
 
     def test_upload_component(self):
-        """Test case for upload_component
-
-        """
+        """Test case for upload_component"""
         pass
 
     def test_upload_component_file(self):
-        """Test case for upload_component_file
-
-        """
+        """Test case for upload_component_file"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

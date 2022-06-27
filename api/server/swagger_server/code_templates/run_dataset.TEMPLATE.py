@@ -17,7 +17,7 @@ from tempfile import gettempdir
     name='${name}',
     description='${description}'
 )
-def dataset_pipeline(${pipeline_method_args}):
+def dataset_pipeline(${pipeline_method_args}):  # noqa: E999
 
     from kfp.components import load_component_from_url
 
@@ -55,7 +55,7 @@ TektonCompiler().compile(pipeline_function, pipeline_filename)
 # TODO: specify pipeline argument values
 arguments = ${parameter_dict}
 
-client = TektonClient(${pipeline_server})
+client = TektonClient(${pipeline_server})  # noqa: E999
 
 # Get or create an experiment and submit a pipeline run
 experiment = client.create_experiment('DATASET_RUNS')

@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -18,38 +18,34 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.api.credential_service_api import CredentialServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
+import swagger_client  # noqa: F401
+from swagger_client.api.credential_service_api import CredentialServiceApi  # noqa: F401, E501
+from swagger_client.rest import ApiException  # noqa: F401
 
 
 class TestCredentialServiceApi(unittest.TestCase):
     """CredentialServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = swagger_client.api.credential_service_api.CredentialServiceApi()  # noqa: E501
+        self.api = (
+            swagger_client.api.credential_service_api.CredentialServiceApi()
+        )
 
     def tearDown(self):
         pass
 
     def test_create_credentials(self):
-        """Test case for create_credentials
-
-        """
+        """Test case for create_credentials"""
         pass
 
     def test_delete_credential(self):
-        """Test case for delete_credential
-
-        """
+        """Test case for delete_credential"""
         pass
 
     def test_get_credential(self):
-        """Test case for get_credential
-
-        """
+        """Test case for get_credential"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -2,17 +2,23 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion
-import six
+import connexion  # noqa: F401
+import six  # noqa: F401
 
 from swagger_server.models.api_dataset import ApiDataset  # noqa: E501
-from swagger_server.models.api_generate_code_response import ApiGenerateCodeResponse  # noqa: E501
-from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
-from swagger_server.models.api_list_datasets_response import ApiListDatasetsResponse  # noqa: E501
-from swagger_server.models.api_parameter import ApiParameter  # noqa: E501
-from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: E501
-from swagger_server.models.api_status import ApiStatus  # noqa: E501
-from swagger_server import util
+from swagger_server.models.api_generate_code_response import (  # noqa: F401
+    ApiGenerateCodeResponse,
+)
+from swagger_server.models.api_get_template_response import (  # noqa: F401
+    ApiGetTemplateResponse,
+)
+from swagger_server.models.api_list_datasets_response import (  # noqa: F401
+    ApiListDatasetsResponse,
+)
+from swagger_server.models.api_parameter import ApiParameter  # noqa: F401, E501
+from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: F401, E501
+from swagger_server.models.api_status import ApiStatus  # noqa: F401, E501
+from swagger_server import util  # noqa: F401
 
 
 def approve_datasets_for_publishing(dataset_ids):  # noqa: E501
@@ -33,13 +39,13 @@ def create_dataset(body):  # noqa: E501
 
      # noqa: E501
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: ApiDataset
     """
     if connexion.request.is_json:
-        body = ApiDataset.from_dict(connexion.request.get_json())  # noqa: E501
+        body = ApiDataset.from_dict(connexion.request.get_json())
     return util.invoke_controller_impl()
 
 
@@ -48,7 +54,7 @@ def delete_dataset(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -61,7 +67,7 @@ def download_dataset_files(id, include_generated_code=None):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
     :param include_generated_code: Include generated run script in download
     :type include_generated_code: bool
@@ -76,7 +82,7 @@ def generate_dataset_code(id):  # noqa: E501
 
     Generate sample code to use dataset in a pipeline # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGenerateCodeResponse
@@ -89,7 +95,7 @@ def get_dataset(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiDataset
@@ -102,7 +108,7 @@ def get_dataset_template(id):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGetTemplateResponse
@@ -110,14 +116,16 @@ def get_dataset_template(id):  # noqa: E501
     return util.invoke_controller_impl()
 
 
-def list_datasets(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
+def list_datasets(
+    page_token=None, page_size=None, sort_by=None, filter=None
+):  # noqa: E501
     """list_datasets
 
      # noqa: E501
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
     :param sort_by: Can be format of &#39;field_name&#39;, &#39;field_name asc&#39; or &#39;field_name desc&#39;. Ascending by default.
     :type sort_by: str
@@ -134,9 +142,9 @@ def run_dataset(id, parameters=None, run_name=None):  # noqa: E501
 
      # noqa: E501
 
-    :param id: 
+    :param id:
     :type id: str
-    :param parameters: 
+    :param parameters:
     :type parameters: list | bytes
     :param run_name: name to identify the run on the Kubeflow Pipelines UI, defaults to component name
     :type run_name: str
@@ -144,7 +152,9 @@ def run_dataset(id, parameters=None, run_name=None):  # noqa: E501
     :rtype: ApiRunCodeResponse
     """
     if connexion.request.is_json:
-        parameters = [ApiParameter.from_dict(d) for d in connexion.request.get_json()]  # noqa: E501
+        parameters = [
+            ApiParameter.from_dict(d) for d in connexion.request.get_json()
+        ]  # noqa: E501
     return util.invoke_controller_impl()
 
 
@@ -168,7 +178,7 @@ def upload_dataset(uploadfile, name=None):  # noqa: E501
 
     :param uploadfile: The dataset YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB.
     :type uploadfile: werkzeug.datastructures.FileStorage
-    :param name: 
+    :param name:
     :type name: str
 
     :rtype: ApiDataset

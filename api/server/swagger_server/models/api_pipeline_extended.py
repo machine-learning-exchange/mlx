@@ -8,11 +8,13 @@ from datetime import date, datetime  # noqa: F401
 
 from typing import List, Dict  # noqa: F401
 
-from swagger_server.models.base_model_ import Model
+from swagger_server.models.base_model_ import Model  # noqa: F401
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
 from swagger_server.models.api_pipeline import ApiPipeline  # noqa: F401,E501
-from swagger_server.models.api_pipeline_extension import ApiPipelineExtension  # noqa: F401,E501
-from swagger_server import util
+from swagger_server.models.api_pipeline_extension import (
+    ApiPipelineExtension,
+)
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
@@ -21,7 +23,20 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, namespace: str=None, annotations: Dict[str, str]=None, featured: bool=None, publish_approved: bool=None):  # noqa: E501
+    def __init__(
+        self,
+        id: str = None,
+        created_at: datetime = None,
+        name: str = None,
+        description: str = None,
+        parameters: List[ApiParameter] = None,
+        status: str = None,
+        default_version_id: str = None,
+        namespace: str = None,
+        annotations: Dict[str, str] = None,
+        featured: bool = None,
+        publish_approved: bool = None,
+    ):  # noqa: E501
         """ApiPipelineExtended - a model defined in Swagger
 
         :param id: The id of this ApiPipelineExtended.  # noqa: E501
@@ -48,31 +63,31 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         :type publish_approved: bool
         """
         self.swagger_types = {
-            'id': str,
-            'created_at': datetime,
-            'name': str,
-            'description': str,
-            'parameters': List[ApiParameter],
-            'status': str,
-            'default_version_id': str,
-            'namespace': str,
-            'annotations': Dict[str, str],
-            'featured': bool,
-            'publish_approved': bool
+            "id": str,
+            "created_at": datetime,
+            "name": str,
+            "description": str,
+            "parameters": List[ApiParameter],
+            "status": str,
+            "default_version_id": str,
+            "namespace": str,
+            "annotations": Dict[str, str],
+            "featured": bool,
+            "publish_approved": bool,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'created_at': 'created_at',
-            'name': 'name',
-            'description': 'description',
-            'parameters': 'parameters',
-            'status': 'status',
-            'default_version_id': 'default_version_id',
-            'namespace': 'namespace',
-            'annotations': 'annotations',
-            'featured': 'featured',
-            'publish_approved': 'publish_approved'
+            "id": "id",
+            "created_at": "created_at",
+            "name": "name",
+            "description": "description",
+            "parameters": "parameters",
+            "status": "status",
+            "default_version_id": "default_version_id",
+            "namespace": "namespace",
+            "annotations": "annotations",
+            "featured": "featured",
+            "publish_approved": "publish_approved",
         }
 
         self._id = id
@@ -88,7 +103,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
         self._publish_approved = publish_approved
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineExtended':
+    def from_dict(cls, dikt) -> "ApiPipelineExtended":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -230,7 +245,8 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     # def default_version_id(self) -> str:
     #     """Gets the default_version_id of this ApiPipelineExtended.
     #
-    #     The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
+    #     The default version of the pipeline. As of now, the latest version is used as default.  # noqa: E501
+    #     (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
     #
     #     :return: The default_version_id of this ApiPipelineExtended.
     #     :rtype: str
@@ -241,7 +257,8 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     # def default_version_id(self, default_version_id: str):
     #     """Sets the default_version_id of this ApiPipelineExtended.
     #
-    #     The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
+    #     The default version of the pipeline. As of now, the latest version is used as default.  # noqa: E501
+    #     (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
     #
     #     :param default_version_id: The default_version_id of this ApiPipelineExtended.
     #     :type default_version_id: str

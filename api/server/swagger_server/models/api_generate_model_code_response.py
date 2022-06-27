@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_model_script import ApiModelScript  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiGenerateModelCodeResponse(Model):
@@ -19,24 +19,20 @@ class ApiGenerateModelCodeResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, scripts: List[ApiModelScript]=None):  # noqa: E501
+    def __init__(self, scripts: List[ApiModelScript] = None):  # noqa: E501
         """ApiGenerateModelCodeResponse - a model defined in Swagger
 
         :param scripts: The scripts of this ApiGenerateModelCodeResponse.  # noqa: E501
         :type scripts: List[ApiModelScript]
         """
-        self.swagger_types = {
-            'scripts': List[ApiModelScript]
-        }
+        self.swagger_types = {"scripts": List[ApiModelScript]}
 
-        self.attribute_map = {
-            'scripts': 'scripts'
-        }
+        self.attribute_map = {"scripts": "scripts"}
 
         self._scripts = scripts
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiGenerateModelCodeResponse':
+    def from_dict(cls, dikt) -> "ApiGenerateModelCodeResponse":
         """Returns the dict as a model
 
         :param dikt: A dict.

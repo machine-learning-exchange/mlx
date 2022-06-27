@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion
-import six
+import connexion  # noqa: F401
+import six  # noqa: F401
 
-from swagger_server.models.api_status import ApiStatus  # noqa: E501
-from swagger_server import util
+from swagger_server.models.api_status import ApiStatus  # noqa: F401, E501
+from swagger_server import util  # noqa: F401
 
 
 def health_check(check_database=None, check_object_store=None):  # noqa: E501

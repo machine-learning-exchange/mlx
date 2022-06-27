@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 
 import json
@@ -9,8 +9,8 @@ import kfp
 from kfp_server_api import ApiListExperimentsResponse
 from kfp_server_api import ApiListRunsResponse, ApiResourceType, ApiRunDetail
 from kfp_server_api.rest import ApiException
-from os import environ as env
-from pprint import pprint
+from os import environ as env  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 
 # export AMBASSADOR_SERVICE_HOST=$(kubectl get nodes -o jsonpath='{.items[0]..addresses[?(@.type=="ExternalIP")].address}')
@@ -32,6 +32,7 @@ def print_function_name_decorator(func):
         print(f"---[ {func.__name__}{args}{kwargs} ]---")
         print()
         return func(*args, **kwargs)
+
     return wrapper
 
 
@@ -46,20 +47,27 @@ def list_runs(experiment_name: str = None):
 
         # https://github.com/kubeflow/pipelines/blob/3e7a89e044d0ce448ce0b7b2c894a483487694a1/backend/api/filter.proto#L24-L63
         experiment_filter_dict = {
-            "predicates": [{
-                "key": "name",
-                "op": "IS_SUBSTRING",  # "EQUALS",
-                "string_value": experiment_name
-            }]
+            "predicates": [
+                {
+                    "key": "name",
+                    "op": "IS_SUBSTRING",  # "EQUALS",
+                    "string_value": experiment_name,
+                }
+            ]
         }
 
-        experiment_response: ApiListExperimentsResponse = kfp_client._experiment_api.\
-            list_experiment(page_size=100,
-                            sort_by="created_at desc",
-                            filter=json.dumps(experiment_filter_dict))
+        experiment_response: ApiListExperimentsResponse = (
+            kfp_client._experiment_api.list_experiment(
+                page_size=100,
+                sort_by="created_at desc",
+                filter=json.dumps(experiment_filter_dict),
+            )
+        )
 
         if experiment_response.experiments:
-            experiments = [e for e in experiment_response.experiments if experiment_name in e.name]
+            experiments = [
+                e for e in experiment_response.experiments if experiment_name in e.name
+            ]
         else:
             print(f"Experiment(s) with name '{experiment_name}' do(es) not exist.")
 
@@ -67,24 +75,35 @@ def list_runs(experiment_name: str = None):
 
     if experiments:
         for experiment in experiments:
-            run_response: ApiListRunsResponse = \
-                kfp_client._run_api.list_runs(page_size=100,
-                                              sort_by="created_at desc",
-                                              resource_reference_key_type=ApiResourceType.EXPERIMENT,
-                                              resource_reference_key_id=experiment.id)
+            run_response: ApiListRunsResponse = kfp_client._run_api.list_runs(
+                page_size=100,
+                sort_by="created_at desc",
+                resource_reference_key_type=ApiResourceType.EXPERIMENT,
+                resource_reference_key_id=experiment.id,
+            )
 
             runs.extend(run_response.runs or [])
 
     else:
-        run_response: ApiListRunsResponse = \
-            kfp_client._run_api.list_runs(page_size=100, sort_by="created_at desc")
+        run_response: ApiListRunsResponse = kfp_client._run_api.list_runs(
+            page_size=100, sort_by="created_at desc"
+        )
 
         runs.extend(run_response.runs or [])
 
     runs = sorted(runs, key=lambda r: r.created_at, reverse=True)
     for i, r in enumerate(runs):
         # pprint(r)
-        print("%2i: %s  %s  %s  (%s)" % (i+1, r.id, r.created_at.strftime("%Y-%m-%d %H:%M:%S"), r.name, r.status))
+        print(
+            "%2i: %s  %s  %s  (%s)"
+            % (
+                i + 1,
+                r.id,
+                r.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                r.name,
+                r.status,
+            )
+        )
 
     return runs
 
@@ -105,13 +124,21 @@ def stop_run(run_id):
             run_detail: ApiRunDetail = kfp_client._run_api.get_run(run_id=run_id)
 
             if run_detail:  # and run_detail.run.status in ["Failed", "Error"]:
-                workflow_manifest = json.loads(run_detail.pipeline_runtime.workflow_manifest)
+                workflow_manifest = json.loads(
+                    run_detail.pipeline_runtime.workflow_manifest
+                )
                 # pods = filter(lambda d: d["type"] == 'Pod', list(workflow_manifest["status"]["nodes"].values()))
-                pods = [node for node in list(workflow_manifest["status"]["nodes"].values()) if node["type"] == "Pod"]
+                pods = [
+                    node
+                    for node in list(workflow_manifest["status"]["nodes"].values())
+                    if node["type"] == "Pod"
+                ]
                 if pods:
                     print(f"{e.status}, {e.reason}: {pods[0]['message']}")
                 else:
-                    print(f"Run with id '{run_id}' could not be terminated. No pods in 'Running' state?")
+                    print(
+                        f"Run with id '{run_id}' could not be terminated. No pods in 'Running' state?"
+                    )
         else:
             print(e)
 
@@ -137,18 +164,26 @@ def delete_run(run_id):
             run_detail: ApiRunDetail = kfp_client._run_api.get_run(run_id=run_id)
 
             if run_detail:  # and run_detail.run.status in ["Failed", "Error"]:
-                workflow_manifest = json.loads(run_detail.pipeline_runtime.workflow_manifest)
+                workflow_manifest = json.loads(
+                    run_detail.pipeline_runtime.workflow_manifest
+                )
                 # pods = filter(lambda d: d["type"] == 'Pod', list(workflow_manifest["status"]["nodes"].values()))
-                pods = [node for node in list(workflow_manifest["status"]["nodes"].values()) if node["type"] == "Pod"]
+                pods = [
+                    node
+                    for node in list(workflow_manifest["status"]["nodes"].values())
+                    if node["type"] == "Pod"
+                ]
                 if pods:
                     print(pods[0]["message"])
                 else:
-                    print(f"Run with id '{run_id}' could not be deleted. No corresponding pods.")
+                    print(
+                        f"Run with id '{run_id}' could not be deleted. No corresponding pods."
+                    )
         else:
             print(e)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # runs = list_runs()
     # runs = list_runs(experiment_name="COMPONENT_RUNS")

@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import inflection
@@ -11,11 +11,11 @@ from datetime import datetime
 from kfp_tekton.compiler._k8s_helper import sanitize_k8s_name
 from mysql.connector import connect, errorcode, Error
 from mysql.connector.errors import IntegrityError
-from os import environ as env
+from os import environ as env  # noqa: F401
 from random import choice
-from string import ascii_letters, digits, hexdigits
+from string import ascii_letters, digits, hexdigits  # noqa: F401
 from swagger_server.models.base_model_ import Model
-from swagger_server.models import *  # required for dynamic Api ...Extension class loading during View-table creation
+from swagger_server.models import *  # noqa: F403 required for dynamic Api ...Extension class loading during View-table creation
 from swagger_server.util import _deserialize, ApiError
 from typing import List
 
@@ -23,20 +23,20 @@ from typing import List
 _namespace = env.get("POD_NAMESPACE", "kubeflow")
 _host = env.get("MYSQL_SERVICE_HOST", "mysql.%s.svc.cluster.local" % _namespace)
 _port = env.get("MYSQL_SERVICE_PORT", "3306")
-_database = 'mlpipeline'
-_user = 'root'
+_database = "mlpipeline"
+_user = "root"
 
 existing_tables = dict()
 
 # map Python data types of the Swagger model object's attributes to MySQL column types
 type_map = {
-    str: 'varchar(255)',
-    int: 'int(11)',
-    bool: 'tinyint(1)',
-    list: 'longtext',
-    dict: 'longtext',
-    Model: 'longtext',
-    datetime: 'bigint(20)'
+    str: "varchar(255)",
+    int: "int(11)",
+    bool: "tinyint(1)",
+    list: "longtext",
+    dict: "longtext",
+    Model: "longtext",
+    datetime: "bigint(20)",
 }
 # some attributes do not comply to the defaults in the type_map (KFP idiosyncrasy)
 custom_col_types = {
@@ -49,35 +49,42 @@ custom_col_types = {
     },
 }
 # add custom column types for sub-classes of ApiAsset
-for asset_type in ApiAsset.__subclasses__():
+for asset_type in ApiAsset.__subclasses__():  # noqa: F405
     custom_col_types[asset_type.__name__] = custom_col_types["ApiAsset"]
 # add custom column types for sub-class(es) of ApiPipeline
 custom_col_types["ApiPipelineExtended"] = custom_col_types["ApiPipeline"]
 
 
 # some Swagger attributes names have special MySQL column names (KFP idiosyncrasy)
-attribute_name_to_column_name = {
-    'id': 'UUID',
-    'created_at': 'CreatedAtInSec'
-}
-column_name_to_attribute_name = {v: k for (k, v) in attribute_name_to_column_name.items()}  # Note: overrides duplicates
+attribute_name_to_column_name = {"id": "UUID", "created_at": "CreatedAtInSec"}
+column_name_to_attribute_name = {
+    v: k for (k, v) in attribute_name_to_column_name.items()
+}  # Note: overrides duplicates
 
 
 ##############################################################################
 #         methods to convert between Swagger and MySQL
 ##############################################################################
 
-def _convert_value_to_mysql(value, python_type: type, mysql_type_override: str = None, quote_str=False):
+
+def _convert_value_to_mysql(
+    value, python_type: type, mysql_type_override: str = None, quote_str=False
+):
 
     # turn child attributes of type swagger._base_model.Model into dicts
     def to_dict(v):
         return v.to_dict() if hasattr(v, "to_dict") else v
 
-    if type(python_type) == typing._GenericAlias:  # or str(python_type).startswith("typing."):
+    if (
+        type(python_type) == typing._GenericAlias
+    ):  # or str(python_type).startswith("typing."):
         python_type = eval(python_type._name.lower())
 
-    if value and not issubclass(type(value), python_type) \
-            and not (isinstance(value, dict) and issubclass(python_type, Model)):
+    if (
+        value
+        and not issubclass(type(value), python_type)
+        and not (isinstance(value, dict) and issubclass(python_type, Model))
+    ):
         err_msg = f"The type '{type(value)}' does not match expected target type '{python_type}' for value '{value}'"
         raise ApiError(err_msg, 422)
 
@@ -99,8 +106,14 @@ def _convert_value_to_mysql(value, python_type: type, mysql_type_override: str =
     elif python_type == list:  # or isinstance(value, list):
         mysql_value = json.dumps(list(map(to_dict, value)))
 
-    elif python_type == dict or issubclass(python_type, Model) and isinstance(value, dict):
-        mysql_value = json.dumps(dict(map(lambda item: (item[0], to_dict(item[1])), value.items())))
+    elif (
+        python_type == dict
+        or issubclass(python_type, Model)
+        and isinstance(value, dict)
+    ):
+        mysql_value = json.dumps(
+            dict(map(lambda item: (item[0], to_dict(item[1])), value.items()))
+        )
 
     elif python_type == datetime:  # or isinstance(value, datetime):
         mysql_value = int(value.timestamp())
@@ -122,9 +135,10 @@ def _convert_value_to_python(value, target_type: type):
         return datetime.fromtimestamp(value)
 
     elif isinstance(value, str) and (
-            type(target_type) == typing._GenericAlias or issubclass(target_type, Model)):
+        type(target_type) == typing._GenericAlias or issubclass(target_type, Model)
+    ):
 
-        json_dict = json.loads(value or '{}')
+        json_dict = json.loads(value or "{}")
         swaggered_value = _deserialize(json_dict, target_type)
         return swaggered_value
 
@@ -134,14 +148,16 @@ def _convert_value_to_python(value, target_type: type):
 
 def _convert_attr_name_to_col_name(swagger_attr_name: str):
 
-    return attribute_name_to_column_name.get(swagger_attr_name) \
-           or inflection.camelize(swagger_attr_name)
+    return attribute_name_to_column_name.get(swagger_attr_name) or inflection.camelize(
+        swagger_attr_name
+    )
 
 
 def _convert_col_name_to_attr_name(mysql_column_name: str):
 
-    return column_name_to_attribute_name.get(mysql_column_name) \
-           or inflection.underscore(mysql_column_name)
+    return column_name_to_attribute_name.get(
+        mysql_column_name
+    ) or inflection.underscore(mysql_column_name)
 
 
 def _get_table_name(swagger_object_or_class) -> str:
@@ -163,22 +179,25 @@ def _get_table_name(swagger_object_or_class) -> str:
 #              general helper methods
 ##############################################################################
 
+
 def generate_id(name: str = None, length: int = 36) -> str:
     if name:
         # return name.lower().replace(" ", "-").replace("---", "-").replace("-–-", "–")
         return sanitize_k8s_name(name)
     else:
         # return ''.join([choice(ascii_letters + digits + '-') for n in range(length)])
-        return ''.join([choice(hexdigits) for n in range(length)]).lower()
+        return "".join([choice(hexdigits) for n in range(length)]).lower()
 
 
 ##############################################################################
 #         helper methods to create MySQL tables
 ##############################################################################
 
+
 def _get_column_type(swagger_field_name, swagger_field_type, swagger_class) -> str:
-    return custom_col_types.get(swagger_class.__name__, {}).get(swagger_field_name) or \
-           _get_mysql_type_declaration(swagger_field_type)
+    return custom_col_types.get(swagger_class.__name__, {}).get(
+        swagger_field_name
+    ) or _get_mysql_type_declaration(swagger_field_type)
 
 
 def _get_mysql_type_declaration(python_class_or_type) -> str:
@@ -193,19 +212,25 @@ def _get_mysql_type_declaration(python_class_or_type) -> str:
         if clazz in type_map:
             return type_map[clazz]
 
-    elif isinstance(python_class_or_type, Model) or issubclass(python_class_or_type, Model):
+    elif isinstance(python_class_or_type, Model) or issubclass(
+        python_class_or_type, Model
+    ):
         clazz = Model
         if clazz in type_map:
             return type_map[clazz]
 
-    raise ValueError(f"Cannot find MySQL data type for Python type {python_class_or_type}")
+    raise ValueError(
+        f"Cannot find MySQL data type for Python type {python_class_or_type}"
+    )
 
 
 def _get_mysql_default_value_declaration(default_value):
 
     if default_value:
-        raise ValueError("DEFAULT value not implemented for MySQL CREATE TABLE statement,"
-                         f" default: '{default_value}'")
+        raise ValueError(
+            "DEFAULT value not implemented for MySQL CREATE TABLE statement,"
+            f" default: '{default_value}'"
+        )
 
     # TODO: generate MySQL default value declaration
     return default_value or "NOT NULL"
@@ -240,7 +265,9 @@ def _get_create_table_statement(swagger_class) -> str:
         create_table_stmt.append(f"  PRIMARY KEY (`{id_field_name}`)")
 
     else:
-        raise ValueError("CREATE TABLE statement requires PRIMARY KEY field. Expected 'id'")
+        raise ValueError(
+            "CREATE TABLE statement requires PRIMARY KEY field. Expected 'id'"
+        )
 
     if "name" in sig.parameters.keys():
         name_field = _convert_attr_name_to_col_name("name")
@@ -262,24 +289,28 @@ def _get_create_view_statement(swagger_class) -> str:
     base_table_name = view_name.replace("_extended", "")
     extension_table_name = view_name.replace("s_extended", "_extensions")
 
-    extension_swagger_class = eval(swagger_class.__name__.replace("Extended", "Extension"))
+    extension_swagger_class = eval(
+        swagger_class.__name__.replace("Extended", "Extension")
+    )
 
     ext_sig = inspect.signature(extension_swagger_class.__init__)
 
     b_id_col_name = _convert_attr_name_to_col_name("id")
     e_id_col_name = _convert_attr_name_to_col_name("id")
 
-    e_non_id_col_names = [_convert_attr_name_to_col_name(p.name)
-                          for _, p in ext_sig.parameters.items()
-                          if p.name not in ["id", "self"]]
+    e_non_id_col_names = [
+        _convert_attr_name_to_col_name(p.name)
+        for _, p in ext_sig.parameters.items()
+        if p.name not in ["id", "self"]
+    ]
 
     e_non_id_col_list = ", ".join([f"e.`{cn}`" for cn in e_non_id_col_names])
 
     create_view_stmt = f"""
-        CREATE VIEW `{view_name}` AS 
+        CREATE VIEW `{view_name}` AS
         SELECT b.*, {e_non_id_col_list}
         FROM `{base_table_name}` AS b
-        LEFT OUTER JOIN `{extension_table_name}` AS e 
+        LEFT OUTER JOIN `{extension_table_name}` AS e
         ON b.`{b_id_col_name}`=e.`{e_id_col_name}`
     """
 
@@ -291,6 +322,7 @@ def _get_create_view_statement(swagger_class) -> str:
 ##############################################################################
 #         helper methods to create SQL (query) statement
 ##############################################################################
+
 
 def _get_where_clause(swagger_class, filter_dict=dict()) -> str:
 
@@ -304,7 +336,9 @@ def _get_where_clause(swagger_class, filter_dict=dict()) -> str:
     for attribute_name, attribute_value in filter_dict.items():
 
         if attribute_name not in sig.parameters.keys():
-            raise ValueError(f"{swagger_class} does not have an '{attribute_name}' attribute.")
+            raise ValueError(
+                f"{swagger_class} does not have an '{attribute_name}' attribute."
+            )
 
         attribute_type = sig.parameters[attribute_name].annotation
         column_type = _get_column_type(attribute_name, attribute_type, swagger_class)
@@ -312,7 +346,9 @@ def _get_where_clause(swagger_class, filter_dict=dict()) -> str:
 
         if column_type == "json" and type(attribute_value) == dict:
             for key, value in attribute_value.items():
-                predicates.append(f"json_contains(json_extract({column_name}, '$.{key}'), '{json.dumps(value)}')")
+                predicates.append(
+                    f"json_contains(json_extract({column_name}, '$.{key}'), '{json.dumps(value)}')"
+                )
 
             # where json_contains(json_extract(FilterCategories, '$.platform'), '"kubernetes"')
             # where json_contains(json_extract(FilterCategories, '$.platform'), '["kubernetes", "kfserving"]')
@@ -343,7 +379,9 @@ def _get_where_clause(swagger_class, filter_dict=dict()) -> str:
 
         else:  # CAUTION: assuming everything else is string type
 
-            column_value = _convert_value_to_mysql(attribute_value, attribute_type, quote_str=True)
+            column_value = _convert_value_to_mysql(
+                attribute_value, attribute_type, quote_str=True
+            )
 
             # if type(column_value) == str:            # quote_str=True
             #     column_value = f"'{column_value}'"
@@ -390,12 +428,21 @@ def _get_limit_clause(count, offset):
 #         methods to connect to MySQL and execute db operations
 ##############################################################################
 
+
 def _get_connection(timeout: int = 10):
 
-    return connect(host=_host, port=_port, user=_user, database=_database, connection_timeout=timeout)
+    return connect(
+        host=_host,
+        port=_port,
+        user=_user,
+        database=_database,
+        connection_timeout=timeout,
+    )
 
 
-def _verify_or_create_table(table_name: str, swagger_class_or_object, validate_schema=True) -> bool:
+def _verify_or_create_table(
+    table_name: str, swagger_class_or_object, validate_schema=True
+) -> bool:
 
     if table_name not in existing_tables:
 
@@ -413,17 +460,25 @@ def _verify_or_create_table(table_name: str, swagger_class_or_object, validate_s
         if not table_exists:
             if swagger_class.__name__.endswith("Extended"):
                 # first, create the table that is being "extended" (only required if KFP did not create it)
-                base_swagger_class = eval(swagger_class.__name__.replace("Extended", ""))
+                base_swagger_class = eval(
+                    swagger_class.__name__.replace("Extended", "")
+                )
                 base_table_name = _get_table_name(base_swagger_class)
                 create_table_stmt = _get_create_table_statement(base_swagger_class)
-                base_table_created = _run_create_table_statement(base_table_name, create_table_stmt)
+                base_table_created = _run_create_table_statement(
+                    base_table_name, create_table_stmt
+                )
                 existing_tables[base_table_name] = base_table_created
 
                 # second, create the table with the additional columns
-                extension_swagger_class = eval(swagger_class.__name__.replace("Extended", "Extension"))
+                extension_swagger_class = eval(
+                    swagger_class.__name__.replace("Extended", "Extension")
+                )
                 extension_table_name = _get_table_name(extension_swagger_class)
                 create_table_stmt = _get_create_table_statement(extension_swagger_class)
-                ext_table_created = _run_create_table_statement(extension_table_name, create_table_stmt)
+                ext_table_created = _run_create_table_statement(
+                    extension_table_name, create_table_stmt
+                )
                 existing_tables[extension_table_name] = ext_table_created
 
                 # third, create the table-view that extends the base table with the additional columns from the ext table
@@ -432,7 +487,9 @@ def _verify_or_create_table(table_name: str, swagger_class_or_object, validate_s
                 existing_tables[table_name] = view_created
             else:
                 create_table_stmt = _get_create_table_statement(swagger_class)
-                table_created = _run_create_table_statement(table_name, create_table_stmt)
+                table_created = _run_create_table_statement(
+                    table_name, create_table_stmt
+                )
                 existing_tables[table_name] = table_created
 
     return True
@@ -454,9 +511,11 @@ def _validate_schema(table_name: str, swagger_class):
 
         swagger_columns_w_type.append((col_name, col_type))
 
-    query = f"SELECT COLUMN_NAME, SUBSTR(COLUMN_TYPE,1,64) as COLUMN_TYPE " \
-            f"  FROM INFORMATION_SCHEMA.COLUMNS " \
-            f"  WHERE TABLE_SCHEMA = '{_database}' AND TABLE_NAME = '{table_name}'"
+    query = (
+        f"SELECT COLUMN_NAME, SUBSTR(COLUMN_TYPE,1,64) as COLUMN_TYPE "
+        f"  FROM INFORMATION_SCHEMA.COLUMNS "
+        f"  WHERE TABLE_SCHEMA = '{_database}' AND TABLE_NAME = '{table_name}'"
+    )
 
     cnx = _get_connection()
     cursor = cnx.cursor(buffered=True)
@@ -476,7 +535,9 @@ def _validate_schema(table_name: str, swagger_class):
         cursor.close()
         cnx.close()
 
-    if table_columns_w_type and set(table_columns_w_type) != set(swagger_columns_w_type):
+    if table_columns_w_type and set(table_columns_w_type) != set(
+        swagger_columns_w_type
+    ):
 
         if isinstance(swagger_class, Model):
             swagger_class = type(swagger_class)
@@ -484,13 +545,15 @@ def _validate_schema(table_name: str, swagger_class):
         cols_found = "\n  - ".join([f"'{n}' {t}" for n, t in table_columns_w_type])
         cols_expect = "\n  - ".join([f"'{n}' {t}" for n, t in swagger_columns_w_type])
 
-        err_msg = f"The MySQL table '{_database}.{table_name}' does not match Swagger" \
-            f" class '{swagger_class.__name__}'.\n" \
-            f" Found table with columns:\n" \
-            f"  - {cols_found}.\n" \
-            f" Expected table with columns:\n" \
-            f"  - {cols_expect}.\n" \
+        err_msg = (
+            f"The MySQL table '{_database}.{table_name}' does not match Swagger"
+            f" class '{swagger_class.__name__}'.\n"
+            f" Found table with columns:\n"
+            f"  - {cols_found}.\n"
+            f" Expected table with columns:\n"
+            f"  - {cols_expect}.\n"
             f" Delete and recreate the table by calling the API endpoint 'DELETE /{table_name}/*'"
+        )
 
         raise ApiError(err_msg)
 
@@ -504,7 +567,7 @@ def _run_create_table_statement(table_name, table_description: tuple) -> bool:
     cursor = cnx.cursor(buffered=True)
 
     try:
-        print(f"Creating table '{table_name}': ", end='')
+        print(f"Creating table '{table_name}': ", end="")
         cursor.execute(table_description)
         cnx.commit()
         print("OK")
@@ -530,6 +593,7 @@ def _run_create_table_statement(table_name, table_description: tuple) -> bool:
 
 # _host = "123.34.13.12"
 
+
 def health_check():
     cnx = _get_connection(timeout=1)
     cnx.connect()
@@ -544,15 +608,17 @@ def num_rows(swagger_class: type) -> int:
 
     _verify_or_create_table(table_name, swagger_class)
 
-    query = f"SELECT TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES " \
-            f"WHERE TABLE_SCHEMA = '{_database}' AND TABLE_NAME = '{table_name}'"
+    query = (
+        f"SELECT TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES "
+        f"WHERE TABLE_SCHEMA = '{_database}' AND TABLE_NAME = '{table_name}'"
+    )
 
     cnx = _get_connection()
     cursor = cnx.cursor()
 
     try:
         cursor.execute(query)
-        num_records, = cursor.fetchone()
+        (num_records,) = cursor.fetchone()
 
     except Error as err:
         print(err.msg)
@@ -575,7 +641,9 @@ def store_data(swagger_object: Model) -> str:
 
     # TODO: remove generate_id() calls in controller_impl methods, do it here
     if "id" in swagger_fields and not swagger_object.id:
-        swagger_object.id = generate_id(swagger_object.name if "name" in swagger_fields else None)
+        swagger_object.id = generate_id(
+            swagger_object.name if "name" in swagger_fields else None
+        )
 
     # TODO: remove creating a new data in controller_impl methods, do it here
     if "created_at" in swagger_fields and not swagger_object.created_at:
@@ -594,11 +662,13 @@ def store_data(swagger_object: Model) -> str:
         column_values.append(col_value)
 
     column_names_str = ", ".join(column_names)
-    values_list_str = ('%s,' * len(column_values)).rstrip(',')
+    values_list_str = ("%s," * len(column_values)).rstrip(",")
 
-    insert_stmt = (f"INSERT INTO {table_name} "
-                   f"({column_names_str}) "
-                   f"VALUES ({values_list_str})")
+    insert_stmt = (
+        f"INSERT INTO {table_name} "
+        f"({column_names_str}) "
+        f"VALUES ({values_list_str})"
+    )
 
     cnx = _get_connection()
     cnx.autocommit = True
@@ -635,13 +705,17 @@ def update_multiple(swagger_class: type, ids: List[str], attribute_name: str, va
     sig = inspect.signature(swagger_class.__init__)
 
     if attribute_name not in sig.parameters.keys():
-        raise ValueError(f"{swagger_class} does not have an attribute with name '{attribute_name}'.")
+        raise ValueError(
+            f"{swagger_class} does not have an attribute with name '{attribute_name}'."
+        )
 
     if ids and "id" not in sig.parameters.keys():
         raise ValueError(f"{swagger_class} does not have an 'id' attribute.")
 
     update_column_name = _convert_attr_name_to_col_name(attribute_name)
-    update_column_value = _convert_value_to_mysql(value, sig.parameters.get(attribute_name).annotation, quote_str=False)
+    update_column_value = _convert_value_to_mysql(
+        value, sig.parameters.get(attribute_name).annotation, quote_str=False
+    )
 
     # if type(update_column_value) == str:
     #     update_column_value = f"'{update_column_value}'"
@@ -688,7 +762,9 @@ def delete_data(swagger_class: type, id: str) -> bool:
     sig = inspect.signature(swagger_class.__init__)
 
     if not id:
-        raise ValueError(f"Must specify 'id' column value to delete row from table '{table_name}'")
+        raise ValueError(
+            f"Must specify 'id' column value to delete row from table '{table_name}'"
+        )
 
     elif "id" not in sig.parameters.keys():
         raise ValueError(f"{swagger_class} does not have an 'id' attribute.")
@@ -733,7 +809,13 @@ def delete_data(swagger_class: type, id: str) -> bool:
     return True  # TODO: determine return value
 
 
-def load_data(swagger_class: type, filter_dict: dict = None, sort_by: str = None, count: int = 100, offset: int = 0) -> [Model]:
+def load_data(
+    swagger_class: type,
+    filter_dict: dict = None,
+    sort_by: str = None,
+    count: int = 100,
+    offset: int = 0,
+) -> [Model]:
 
     table_name = _get_table_name(swagger_class)
 
@@ -755,18 +837,25 @@ def load_data(swagger_class: type, filter_dict: dict = None, sort_by: str = None
     try:
         cursor.execute(query)
 
-        swagger_attr_names = [_convert_col_name_to_attr_name(c) for c in cursor.column_names]
+        swagger_attr_names = [
+            _convert_col_name_to_attr_name(c) for c in cursor.column_names
+        ]
 
-        assert set(swagger_attr_names) <= set(sig.parameters.keys()), \
-            f"Mismatch between database schema and API spec for {table_name}. " \
-            f"Expected columns: {[_convert_attr_name_to_col_name(k) for k in sig.parameters.keys() if k != 'self']}. " \
+        assert set(swagger_attr_names) <= set(sig.parameters.keys()), (
+            f"Mismatch between database schema and API spec for {table_name}. "
+            f"Expected columns: {[_convert_attr_name_to_col_name(k) for k in sig.parameters.keys() if k != 'self']}. "
             f"Database columns: {cursor.column_names}"
+        )
 
-        swagger_attr_types = [sig.parameters.get(a).annotation for a in swagger_attr_names]
+        swagger_attr_types = [
+            sig.parameters.get(a).annotation for a in swagger_attr_names
+        ]
 
         for row_values in cursor:
             value_type_tuples = zip(list(row_values), swagger_attr_types)
-            swagger_attr_values = [_convert_value_to_python(v, t) for v, t in value_type_tuples]
+            swagger_attr_values = [
+                _convert_value_to_python(v, t) for v, t in value_type_tuples
+            ]
             swagger_attr_dict = dict(zip(swagger_attr_names, swagger_attr_values))
             swagger_object = swagger_class(**swagger_attr_dict)
 

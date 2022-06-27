@@ -11,7 +11,7 @@ from typing import List, Dict  # noqa: F401
 from swagger_server.models.api_asset import ApiAsset
 from swagger_server.models.api_metadata import ApiMetadata  # noqa: F401,E501
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiDataset(ApiAsset):
@@ -20,7 +20,23 @@ class ApiDataset(ApiAsset):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, featured: bool=None, publish_approved: bool=None, related_assets: List[str]=None, filter_categories: Dict[str, str]=None, domain: str=None, format: str=None, size: str=None, number_of_records: int=None, license: str=None, metadata: ApiMetadata=None):  # noqa: E501
+    def __init__(
+        self,
+        id: str = None,
+        created_at: datetime = None,
+        name: str = None,
+        description: str = None,
+        featured: bool = None,
+        publish_approved: bool = None,
+        related_assets: List[str] = None,
+        filter_categories: Dict[str, str] = None,
+        domain: str = None,
+        format: str = None,
+        size: str = None,
+        number_of_records: int = None,
+        license: str = None,
+        metadata: ApiMetadata = None,
+    ):  # noqa: E501
         """ApiDataset - a model defined in Swagger
 
         :param id: The id of this ApiDataset.  # noqa: E501
@@ -53,37 +69,37 @@ class ApiDataset(ApiAsset):
         :type metadata: ApiMetadata
         """
         self.swagger_types = {
-            'id': str,
-            'created_at': datetime,
-            'name': str,
-            'description': str,
-            'featured': bool,
-            'publish_approved': bool,
-            'related_assets': List[str],
-            'filter_categories': Dict[str, str],
-            'domain': str,
-            'format': str,
-            'size': str,
-            'number_of_records': int,
-            'license': str,
-            'metadata': ApiMetadata
+            "id": str,
+            "created_at": datetime,
+            "name": str,
+            "description": str,
+            "featured": bool,
+            "publish_approved": bool,
+            "related_assets": List[str],
+            "filter_categories": Dict[str, str],
+            "domain": str,
+            "format": str,
+            "size": str,
+            "number_of_records": int,
+            "license": str,
+            "metadata": ApiMetadata,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'created_at': 'created_at',
-            'name': 'name',
-            'description': 'description',
-            'featured': 'featured',
-            'publish_approved': 'publish_approved',
-            'related_assets': 'related_assets',
-            'filter_categories': 'filter_categories',
-            'domain': 'domain',
-            'format': 'format',
-            'size': 'size',
-            'number_of_records': 'number_of_records',
-            'license': 'license',
-            'metadata': 'metadata'
+            "id": "id",
+            "created_at": "created_at",
+            "name": "name",
+            "description": "description",
+            "featured": "featured",
+            "publish_approved": "publish_approved",
+            "related_assets": "related_assets",
+            "filter_categories": "filter_categories",
+            "domain": "domain",
+            "format": "format",
+            "size": "size",
+            "number_of_records": "number_of_records",
+            "license": "license",
+            "metadata": "metadata",
         }
 
         self._id = id
@@ -102,7 +118,7 @@ class ApiDataset(ApiAsset):
         self._metadata = metadata
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiDataset':
+    def from_dict(cls, dikt) -> "ApiDataset":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -173,7 +189,9 @@ class ApiDataset(ApiAsset):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )
 
         self._name = name
 
@@ -196,7 +214,9 @@ class ApiDataset(ApiAsset):
         :type description: str
         """
         if description is None:
-            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `description`, must not be `None`"
+            )
 
         self._description = description
 

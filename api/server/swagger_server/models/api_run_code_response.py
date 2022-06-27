@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiRunCodeResponse(Model):
@@ -18,7 +18,9 @@ class ApiRunCodeResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, run_url: str=None, run_output_location: str=None):  # noqa: E501
+    def __init__(
+        self, run_url: str = None, run_output_location: str = None
+    ):  # noqa: E501
         """ApiRunCodeResponse - a model defined in Swagger
 
         :param run_url: The run_url of this ApiRunCodeResponse.  # noqa: E501
@@ -26,21 +28,18 @@ class ApiRunCodeResponse(Model):
         :param run_output_location: The run_output_location of this ApiRunCodeResponse.  # noqa: E501
         :type run_output_location: str
         """
-        self.swagger_types = {
-            'run_url': str,
-            'run_output_location': str
-        }
+        self.swagger_types = {"run_url": str, "run_output_location": str}
 
         self.attribute_map = {
-            'run_url': 'run_url',
-            'run_output_location': 'run_output_location'
+            "run_url": "run_url",
+            "run_output_location": "run_output_location",
         }
 
         self._run_url = run_url
         self._run_output_location = run_output_location
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiRunCodeResponse':
+    def from_dict(cls, dikt) -> "ApiRunCodeResponse":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -71,7 +70,9 @@ class ApiRunCodeResponse(Model):
         :type run_url: str
         """
         if run_url is None:
-            raise ValueError("Invalid value for `run_url`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `run_url`, must not be `None`"
+            )
 
         self._run_url = run_url
 

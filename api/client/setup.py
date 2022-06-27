@@ -26,13 +26,8 @@ VERSION = "0.1.30-upload-catalog-from-url"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = [
-    "certifi>=2017.4.17",
-    "python-dateutil>=2.1",
-    "six>=1.10",
-    "urllib3>=1.23"
-]
-    
+REQUIRES = ["certifi>=2017.4.17", "python-dateutil>=2.1", "six>=1.10", "urllib3>=1.23"]
+
 
 setup(
     name=NAME,
@@ -47,5 +42,5 @@ setup(
     include_package_data=True,
     long_description="""\
     Machine Learning Exchange API Client
-    """
+    """,
 )

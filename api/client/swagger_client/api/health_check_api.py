@@ -19,7 +19,7 @@ from __future__ import absolute_import
 import re  # noqa: F401
 
 # python 2 and python 3 compatibility library
-import six
+import six  # noqa: F401
 
 from swagger_client.api_client import ApiClient
 
@@ -51,11 +51,11 @@ class HealthCheckApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.health_check_with_http_info(**kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.health_check_with_http_info(**kwargs)
         else:
-            (data) = self.health_check_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.health_check_with_http_info(**kwargs)
             return data
 
     def health_check_with_http_info(self, **kwargs):  # noqa: E501
@@ -74,31 +74,35 @@ class HealthCheckApi(object):
                  returns the request thread.
         """
 
-        all_params = ['check_database', 'check_object_store']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["check_database", "check_object_store"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method health_check" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'check_database' in params:
-            query_params.append(('check_database', params['check_database']))  # noqa: E501
-        if 'check_object_store' in params:
-            query_params.append(('check_object_store', params['check_object_store']))  # noqa: E501
+        if "check_database" in params:
+            query_params.append(
+                ("check_database", params["check_database"])
+            )
+        if "check_object_store" in params:
+            query_params.append(
+                ("check_object_store", params["check_object_store"])
+            )
 
         header_params = {}
 
@@ -110,7 +114,8 @@ class HealthCheckApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/health_check', 'GET',
+            "/health_check",
+            "GET",
             path_params,
             query_params,
             header_params,
@@ -119,8 +124,9 @@ class HealthCheckApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

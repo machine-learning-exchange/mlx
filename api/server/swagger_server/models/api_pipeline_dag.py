@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_pipeline_task import ApiPipelineTask  # noqa: F401,E501
-from swagger_server import util
+from swagger_server import util  # noqa: F401
 
 
 class ApiPipelineDAG(Model):
@@ -19,24 +19,20 @@ class ApiPipelineDAG(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, tasks: List[ApiPipelineTask]=None):  # noqa: E501
+    def __init__(self, tasks: List[ApiPipelineTask] = None):  # noqa: E501
         """ApiPipelineDAG - a model defined in Swagger
 
         :param tasks: The tasks of this ApiPipelineDAG.  # noqa: E501
         :type tasks: List[ApiPipelineTask]
         """
-        self.swagger_types = {
-            'tasks': List[ApiPipelineTask]
-        }
+        self.swagger_types = {"tasks": List[ApiPipelineTask]}
 
-        self.attribute_map = {
-            'tasks': 'tasks'
-        }
+        self.attribute_map = {"tasks": "tasks"}
 
         self._tasks = tasks
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ApiPipelineDAG':
+    def from_dict(cls, dikt) -> "ApiPipelineDAG":
         """Returns the dict as a model
 
         :param dikt: A dict.

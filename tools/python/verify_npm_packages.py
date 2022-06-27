@@ -82,15 +82,22 @@ def verify_npm_packages():
     packages_outdated = f"\n\nFound outdated npm packages\n"
     packages_up_to_date = "All packages up to date"
 
-    check_vulnerabilities = run("npm audit", cwd="./dashboard/origin-mlx/", stdout=PIPE, shell=True
-    ).stdout.decode("utf-8").split('\n')
-    vulnerabilities = [word for word in check_vulnerabilities if 'vulnerabilities' in word]
-    packages_vulnerable = f'''\nFound vulnerable packages\n\n{colorText.RED}{vulnerabilities[0]}{colorText.END}\n
-                            \rRun {colorText.BLUE}make update_npm_packages{colorText.END} to secure/update\n'''
+    check_vulnerabilities = (
+        run("npm audit", cwd="./dashboard/origin-mlx/", stdout=PIPE, shell=True)
+        .stdout.decode("utf-8")
+        .split("\n")
+    )
+    vulnerabilities = [
+        word for word in check_vulnerabilities if "vulnerabilities" in word
+    ]
+    packages_vulnerable = f"""\nFound vulnerable packages\n\n{colorText.RED}{vulnerabilities[0]}{colorText.END}\n
+                            \rRun {colorText.BLUE}make update_npm_packages{colorText.END} to secure/update\n"""
     packages_safe = "\nNo vulnerabilities found"
 
-    print(packages_up_to_date) if check_outdated.returncode == 0 else print(packages_outdated)
-    print('-' * 40)
+    print(packages_up_to_date) if check_outdated.returncode == 0 else print(
+        packages_outdated
+    )
+    print("-" * 40)
 
     if "0 vulnerabilities" not in vulnerabilities[0]:
         print(packages_vulnerable)
