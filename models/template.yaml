@@ -33,6 +33,7 @@ framework:
 # license: (Optional) License for this model.
 # domain: (Optional) Domain metadata for this model.
 # website:  (Optional) Links that explain this model in more details
+# readme_url: (Optional) A Github-flavored markdown file to be rendered in the MLX UI
 
 license: "Apache 2.0"
 domain: "Facial Recognition"
@@ -40,6 +41,7 @@ website: "https://developer.ibm.com/exchanges/models/all/max-facial-age-estimato
 labels:
   - url:
   - pipeline_uuids: ["abcd1234"]
+readme_url: "https://raw.githubusercontent.com/IBM/MAX-Facial-Age-Estimator/master/README.md"
 
 # train: (optional)
 #   trainable: (optional) Indicate the model is trainable. Default: False
