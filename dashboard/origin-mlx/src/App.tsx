@@ -4,6 +4,10 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 import React, { Dispatch, useEffect } from 'react';
+import TagManager from 'react-gtm-module';
+import {
+  BrowserRouter as Router, Route, Switch, Redirect,
+} from 'react-router-dom';
 import reducer, { initial } from './lib/stores/reducer';
 import StoreContext, { Store } from './lib/stores/context';
 import { Action, State } from './lib/stores/types';
@@ -12,9 +16,6 @@ import { findInvalidCacheEntries } from './lib/api/artifacts';
 import { getSettings } from './lib/api/settings';
 import { getUserInfo, hasRole } from './lib/util';
 
-import TagManager from 'react-gtm-module';
-
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import PipelineDetail from './components/Detail/PipelineDetail';
 import DatasetDetail from './components/Detail/DatasetDetail';
@@ -25,8 +26,8 @@ import KFServingDetail from './components/Detail/KFServingDetail';
 import './App.css';
 
 import { SettingsPage } from './pages/SettingsPage';
-import LandingPage from './pages/LandingPage'
-import ExternalLinksPage from './pages/ExternalLinksPage'
+import LandingPage from './pages/LandingPage';
+import ExternalLinksPage from './pages/ExternalLinksPage';
 import MetaDeletePage from './pages/MetaDeletePage';
 import MetaFeaturedPage from './pages/MetaFeaturedPage';
 import KFServingFeaturedPage from './pages/KFServingFeaturedPage';
@@ -41,46 +42,44 @@ import Default404Page from './pages/Default404Page';
 
 // initialize Google Analytics (Google Tag Manager)
 if (process.env.REACT_APP_GTM_ID) {
-  console.log("Google Analytics is enabled.");
+  console.log('Google Analytics is enabled.');
   const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM_ID
-  }
+    gtmId: process.env.REACT_APP_GTM_ID,
+  };
   TagManager.initialize(tagManagerArgs);
 }
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function App() {
-
-  var prefix = process.env.REACT_APP_BASE_PATH || ""
-  var kfpStandalone = process.env.REACT_APP_KFP_STANDALONE === 'true'
+  const prefix = process.env.REACT_APP_BASE_PATH || '';
+  const kfpStandalone = process.env.REACT_APP_KFP_STANDALONE === 'true';
 
   // Removes the stored path if the user navigated away from the /experiments page
-  if (!window.location.pathname.substring(0, prefix.length+12).includes(prefix + "/experiments"))
-    localStorage.removeItem("experiments-iframe")
+  if (!window.location.pathname.substring(0, prefix.length + 12).includes(`${prefix}/experiments`)) localStorage.removeItem('experiments-iframe');
 
   // receive iframe message when iframe is loaded and send correct namespace back.
   window.addEventListener('message', (event: MessageEvent) => {
     const { data, origin } = event;
     switch (data.type) {
-    case 'iframe-connected':
-      if (!kfpStandalone) {
-        ['iframe', 'iframe-run'].forEach((id) => {
-          const element = document.getElementById(id) as HTMLIFrameElement;
-          if (element) {
+      case 'iframe-connected':
+        if (!kfpStandalone) {
+          ['iframe', 'iframe-run'].forEach((id) => {
+            const element = document.getElementById(id) as HTMLIFrameElement;
+            if (element) {
             // TODO: get namespace from user info, use fixed value: mlx for now
-            element.contentWindow.postMessage({type: 'namespace-selected', value: 'mlx'}, origin);
-          }
-        })
-      }
-      break;
+              element.contentWindow.postMessage({ type: 'namespace-selected', value: 'mlx' }, origin);
+            }
+          });
+        }
+        break;
     }
   });
 
   // Removes any invalid cache entries after enough time has passed since the last invalid check
   useEffect(() => {
-    findInvalidCacheEntries()
-  })
+    findInvalidCacheEntries();
+  });
 
   return (
     <div className="app-wrapper">
@@ -88,27 +87,27 @@ function App() {
         reducer={reducer}
         initial={initial}
         onLoaded={({ settings }: State, d: Dispatch<Action>) => {
-          const { api } = settings.endpoints
-          const API = api.value || api.default
+          const { api } = settings.endpoints;
+          const API = api.value || api.default;
           getSettings(`${API}/apis/v1alpha1`)
-            .then(settings => d({ type: GET_SETTINGS, settings }))
-            .catch(error => console.log("Failed to reach API: ", API))
+            .then((settings) => d({ type: GET_SETTINGS, settings }))
+            .catch((error) => console.log('Failed to reach API: ', API));
         }}
       >
         <StoreContext.Consumer>
           {({ store }) => {
-            const { settings } = store
+            const { settings } = store;
 
-            const { api, kfp } = settings.endpoints
-            const API = api.value || api.default
-            const KFP = kfp.value || kfp.default
+            const { api, kfp } = settings.endpoints;
+            const API = api.value || api.default;
+            const KFP = kfp.value || kfp.default;
 
-            const { execute } = settings.capabilities
-            const canRun = execute.value !== undefined ? execute.value : execute.default
+            const { execute } = settings.capabilities;
+            const canRun = execute.value !== undefined ? execute.value : execute.default;
 
             const switchProps : AppRouterSwitchProps = {
-              API, KFP, canRun
-            }
+              API, KFP, canRun,
+            };
 
             return (
               <Router basename={process.env.REACT_APP_BASE_PATH}>
@@ -116,12 +115,12 @@ function App() {
                   {AppRouterSwitch(switchProps)}
                 </Sidebar>
               </Router>
-            )
+            );
           }}
         </StoreContext.Consumer>
       </Store>
     </div>
-  )
+  );
 }
 
 interface AppRouterSwitchProps {
@@ -131,14 +130,16 @@ interface AppRouterSwitchProps {
 }
 
 function AppRouterSwitch(props: AppRouterSwitchProps) {
-  const {API, KFP, canRun} = props
+  const { API, KFP, canRun } = props;
 
   return (
     <Switch>
       <Route exact path="/" component={LandingPage} />
       <Route exact path="/external-links" component={ExternalLinksPage} />
-      <Route exact path="/pipelines"
-        render={routeProps =>
+      <Route
+        exact
+        path="/pipelines"
+        render={(routeProps) => (
           <MetaFeaturedPage
             assetType="pipelines"
             description="Pipelines for your machine learning workloads."
@@ -146,15 +147,17 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             alternateBG
             leftBtn="View all Pipelines"
             leftLink="/pipelines/all"
-            leftAdmin={true}
+            leftAdmin
             rightBtn="Register a Pipeline"
             rightLink="/upload/pipelines"
-            rightAdmin={true}
+            rightAdmin
           />
-        }
+        )}
       />
-      <Route exact path="/datasets"
-        render={routeProps =>
+      <Route
+        exact
+        path="/datasets"
+        render={(routeProps) => (
           <MetaFeaturedPage
             assetType="datasets"
             description="Datasets for your machine learning workloads."
@@ -162,33 +165,37 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             alternateBG
             leftBtn="View all Datasets"
             leftLink="/datasets/all"
-            leftAdmin={true}
+            leftAdmin
             rightBtn="Register a Dataset"
             rightLink="/upload/datasets"
-            rightAdmin={true}
+            rightAdmin
           />
-        }
+        )}
       />
-      <Route exact path="/components"
-        render={ routeProps =>
+      <Route
+        exact
+        path="/components"
+        render={(routeProps) => (
           <MetaFeaturedPage
-            { ...routeProps }
+            {...routeProps}
             assetType="components"
             description="Components that can be used to build your pipelines."
             hasAssets
             leftBtn="View all Components"
             leftLink="/components/all"
-            leftAdmin={true}
+            leftAdmin
             rightBtn="Register a Component"
             rightLink="/upload/components"
-            rightAdmin={true}
+            rightAdmin
           />
-        }
+        )}
       />
-      <Route exact path="/models"
-        render={ routeProps =>
+      <Route
+        exact
+        path="/models"
+        render={(routeProps) => (
           <MetaFeaturedPage
-            { ...routeProps }
+            {...routeProps}
             assetType="models"
             description="Machine learning models that can be used in your pipelines."
             runningStatus=""
@@ -197,54 +204,61 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             hasAssets
             leftBtn="View all Models"
             leftLink="/models/all"
-            leftAdmin={true}
+            leftAdmin
             rightBtn="Register a Model"
             rightLink="/upload/models"
-            rightAdmin={true}
+            rightAdmin
           />
-        }
+        )}
       />
-      <Route exact path="/inferenceservices"
-        render={ routeProps =>
+      <Route
+        exact
+        path="/inferenceservices"
+        render={(routeProps) => (
           <KFServingFeaturedPage
-            { ...routeProps }
+            {...routeProps}
             assetType="inferenceservices"
             description="KFServing inference services."
             alternateBG
             hasAssets
             leftBtn="View all Services"
             leftLink="/inferenceservices/all"
-            leftAdmin={true}
+            leftAdmin
             rightBtn="Deploy a Service"
             rightLink="/upload/inferenceservices"
-            rightAdmin={true}
+            rightAdmin
           />
-        }
+        )}
       />
-      <Route path="/workspace"
+      <Route
+        path="/workspace"
         render={(routeProps) => {
-          window.open(`${KFP}/hub/login`, '_blank')
-          routeProps.history.goBack()
-          return null
+          window.open(`${KFP}/hub/login`, '_blank');
+          routeProps.history.goBack();
+          return null;
         }}
       />
-      <Route exact path="/notebooks"
-        render={routeProps =>
+      <Route
+        exact
+        path="/notebooks"
+        render={(routeProps) => (
           <MetaFeaturedPage
-            { ...routeProps }
+            {...routeProps}
             assetType="notebooks"
             description="Notebooks for your data science tasks."
             leftBtn="View all Notebooks"
             leftLink="/notebooks/all"
-            leftAdmin={true}
+            leftAdmin
             rightBtn="Register a Notebook"
             rightLink="upload/notebooks"
-            rightAdmin={true}
+            rightAdmin
           />
-        }
+        )}
       />
-      <ProtectedRoute exact path="/pipelines/all"
-        render={ () =>
+      <ProtectedRoute
+        exact
+        path="/pipelines/all"
+        render={() => (
           <MetaAllPage
             type="pipelines"
             description="Pipelines for your machine learning workloads."
@@ -256,12 +270,14 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             leftIcon="arrow_back"
             rightBtn="Register a Pipeline"
             rightLink="/upload/pipelines"
-            canEdit={true}
+            canEdit
           />
-        }
+        )}
       />
-      <ProtectedRoute exact path="/datasets/all"
-        render={ () =>
+      <ProtectedRoute
+        exact
+        path="/datasets/all"
+        render={() => (
           <MetaAllPage
             type="datasets"
             description="Datasets for your machine learning workloads."
@@ -273,18 +289,19 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             leftIcon="arrow_back"
             rightBtn="Register a Dataset"
             rightLink="/upload/datasets"
-            canEdit={true}
+            canEdit
           />
-        }
+        )}
       />
-      <ProtectedRoute exact path="/components/all"
-        render={ () =>
+      <ProtectedRoute
+        exact
+        path="/components/all"
+        render={() => (
           <MetaAllPage
             type="components"
             description="Components that can be used to build your pipelines."
             tagName="Platform"
-            getTag={(asset: any) =>
-              asset.metadata?.annotations?.platform
+            getTag={(asset: any) => asset.metadata?.annotations?.platform
               || 'OpenSource'}
             alternateBG
             leftBtn="Featured"
@@ -292,12 +309,14 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             leftIcon="arrow_back"
             rightBtn="Register a Component"
             rightLink="/upload/components"
-            canEdit={true}
+            canEdit
           />
-        }
+        )}
       />
-      <ProtectedRoute exact path="/models/all"
-        render={ () =>
+      <ProtectedRoute
+        exact
+        path="/models/all"
+        render={() => (
           <MetaAllPage
             type="models"
             description="Machine learning models that can be used in your pipelines."
@@ -309,12 +328,14 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             leftIcon="arrow_back"
             rightBtn="Register a Model"
             rightLink="/upload/models"
-            canEdit={true}
+            canEdit
           />
-        }
+        )}
       />
-      <ProtectedRoute exact path="/inferenceservices/all"
-        render={ () =>
+      <ProtectedRoute
+        exact
+        path="/inferenceservices/all"
+        render={() => (
           <KFServingAllPage
             type="inferenceservices"
             description="KFServing inference services."
@@ -328,13 +349,15 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             leftIcon="arrow_back"
             rightBtn="Deploy a Service"
             rightLink="/upload/inferenceservices"
-            rightAdmin={true}
-            canEdit={true}
+            rightAdmin
+            canEdit
           />
-        }
+        )}
       />
-      <ProtectedRoute exact path="/notebooks/all"
-        render={ () =>
+      <ProtectedRoute
+        exact
+        path="/notebooks/all"
+        render={() => (
           <MetaAllPage
             type="notebooks"
             description="Notebooks for your data science tasks."
@@ -346,43 +369,45 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
             leftIcon="arrow_back"
             rightBtn="Register a Notebook"
             rightLink="/upload/notebooks"
-            canEdit={true}
+            canEdit
           />
-        }
-        />
+        )}
+      />
       <ProtectedRoute
         exact
         path="/experiments"
-        render={() =>
+        render={() => (
           <IframePage
             title="KFP Experiments"
-            path={KFP + "/pipeline/#/experiments" + window.location.pathname.substring(window.location.pathname.indexOf("/experiments")+12)}
+            path={`${KFP}/pipeline/#/experiments${window.location.pathname.substring(window.location.pathname.indexOf('/experiments') + 12)}`}
             storageKey="experiments-iframe"
           />
-        }
+        )}
       />
       <ProtectedRoute
-        exact path="/upload/inferenceservices"
-        render={() => <KFServingUploadPage/> }
+        exact
+        path="/upload/inferenceservices"
+        render={() => <KFServingUploadPage />}
       />
       <ProtectedRoute
         path="/upload/:type"
-        render={(routeProps: any) => <UploadPage {...routeProps} /> }
+        render={(routeProps: any) => <UploadPage {...routeProps} />}
       />
-      <ProtectedRoute path="/delete/:type"
-        render={(routeProps: any) =>
+      <ProtectedRoute
+        path="/delete/:type"
+        render={(routeProps: any) => (
           <MetaDeletePage
-            { ...routeProps }
-            API={ API }
-            canRun={ canRun }
+            {...routeProps}
+            API={API}
+            canRun={canRun}
             alternateBG
-          >
-          </MetaDeletePage>
-        }
+          />
+        )}
       />
       <ProtectedRoute path="/settings" render={(routeProps: any) => <SettingsPage alternateBG />} />
-      <Route path="/pipelines/:id"
-        render={({ match, location })=> (
+      <Route
+        path="/pipelines/:id"
+        render={({ match, location }) => (
           <MetaDetailPage
             type="pipelines"
             id={match.params.id}
@@ -392,8 +417,9 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/datasets/:id"
-        render={({ match, location })=> (
+      <Route
+        path="/datasets/:id"
+        render={({ match, location }) => (
           <MetaDetailPage
             type="datasets"
             id={match.params.id}
@@ -403,8 +429,9 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/components/:id"
-        render={({ match, location })=> (
+      <Route
+        path="/components/:id"
+        render={({ match, location }) => (
           <MetaDetailPage
             type="components"
             id={match.params.id}
@@ -414,8 +441,9 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/models/:id"
-        render={({ match, location })=> (
+      <Route
+        path="/models/:id"
+        render={({ match, location }) => (
           <MetaDetailPage
             type="models"
             id={match.params.id}
@@ -425,8 +453,9 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route path="/inferenceservices/:id"
-        render={({ match, location })=> (
+      <Route
+        path="/inferenceservices/:id"
+        render={({ match, location }) => (
           <KFServingDetailPage
             type="inferenceservices"
             id={match.params.id}
@@ -436,8 +465,9 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </KFServingDetailPage>
         )}
       />
-      <Route path="/notebooks/:id"
-        render={({ match, location })=> (
+      <Route
+        path="/notebooks/:id"
+        render={({ match, location }) => (
           <MetaDetailPage
             type="notebooks"
             id={match.params.id}
@@ -447,9 +477,9 @@ function AppRouterSwitch(props: AppRouterSwitchProps) {
           </MetaDetailPage>
         )}
       />
-      <Route render={()=><Default404Page/>}/>
+      <Route render={() => <Default404Page />} />
     </Switch>
-  )
+  );
 }
 
 interface ProtectedRouteProps {
@@ -458,16 +488,14 @@ interface ProtectedRouteProps {
   render: any
 }
 function ProtectedRoute(props: ProtectedRouteProps) {
-
   return (
-    <Route 
-      { ...props }
-      render={isAdmin 
-        ? props.render 
-        : () => <Redirect to='/login'></Redirect>
-      }
+    <Route
+      {...props}
+      render={isAdmin
+        ? props.render
+        : () => <Redirect to="/login" />}
     />
-  )
+  );
 }
 
 export default App;

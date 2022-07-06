@@ -1,22 +1,21 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React, { useContext, ComponentProps, useEffect } from 'react'
-import StoreContext from '../../lib/stores/context'
+*/
+import React, { useContext, ComponentProps, useEffect } from 'react';
+import Icon from '@material-ui/core/Icon';
+import StoreContext from '../../lib/stores/context';
 import { fetchArtifact } from '../../lib/api/artifacts';
-import { Artifact, FETCH_ARTIFACT_ASSETS } from '../../lib/stores/artifacts'
+import { Artifact, FETCH_ARTIFACT_ASSETS } from '../../lib/stores/artifacts';
 import { SET_ACTIVE_PAGE } from '../../lib/stores/pages';
-import { getUserInfo, hasRole, canShow  } from '../../lib/util';
+import { getUserInfo, hasRole, canShow } from '../../lib/util';
 
-import Button from '../../components/Button'
+import Button from '../../components/Button';
 import Hero from '../../components/Hero';
-import Icon from '@material-ui/core/Icon'
-import Link from '../../components/Link'
+import Link from '../../components/Link';
 import MetaFeatured from './KFServingFeatured';
 import '../../styles/Models.css';
-
 
 export interface KFServingFeaturedPageProps extends ComponentProps<any> {
   assetType: string;
@@ -35,48 +34,48 @@ export interface KFServingFeaturedPageProps extends ComponentProps<any> {
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
-  var {
+  const {
     assetType, description, alternateBG: alternate,
     children, numFeatured,
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
     rightAdmin = false, leftAdmin = false,
-  } = props
+  } = props;
 
-  const { store, dispatch } = useContext(StoreContext)
-  const { artifacts, settings } = store
-  const assets: Artifact[] = artifacts[assetType]
+  const { store, dispatch } = useContext(StoreContext);
+  const { artifacts, settings } = store;
+  const assets: Artifact[] = artifacts[assetType];
 
   // console.log(assets)
 
-  const API = settings.endpoints.api.value || settings.endpoints.api.default
-  const upload = settings.capabilities.upload
-  const canUpload = upload.value !== undefined ? upload.value : upload.default
-  const namespace = settings.kfserving.namespace.value || settings.kfserving.namespace.default
+  const API = settings.endpoints.api.value || settings.endpoints.api.default;
+  const { upload } = settings.capabilities;
+  const canUpload = upload.value !== undefined ? upload.value : upload.default;
+  const namespace = settings.kfserving.namespace.value || settings.kfserving.namespace.default;
 
   useEffect(() => {
     fetchArtifact(API, assetType, namespace)
-      .then(assets => dispatch({
+      .then((assets) => dispatch({
         type: FETCH_ARTIFACT_ASSETS,
         assetType,
-        assets
-      }))
+        assets,
+      }));
 
     dispatch({
       type: SET_ACTIVE_PAGE,
-      page: assetType
-    })
-  }, [API, namespace, assetType, dispatch])
+      page: assetType,
+    });
+  }, [API, namespace, assetType, dispatch]);
 
   return (
     <div className="page-wrapper">
       <Hero
-        title='KFServices'
+        title="KFServices"
         subtitle={description}
         alternate={alternate}
       >
-        { assetType === "pipelines" &&
-          <Link to='/experiments'>
+        { assetType === 'pipelines' && (
+          <Link to="/experiments">
             <Button
               className="hero-buttons"
               variant="contained"
@@ -85,8 +84,9 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
               View Experiments
             </Button>
           </Link>
-        }
-        {leftBtn && leftLink && canShow(leftAdmin, isAdmin) &&
+        )}
+        {leftBtn && leftLink && canShow(leftAdmin, isAdmin)
+          && (
           <Link to={leftLink}>
             <Button
               className="hero-buttons"
@@ -97,7 +97,7 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
               {leftBtn}
             </Button>
           </Link>
-        }
+          )}
         <Link to="https://github.com/machine-learning-exchange/mlx">
           <Button
             className="hero-buttons-outline"
@@ -107,7 +107,8 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
             Github
           </Button>
         </Link>
-        {rightBtn && rightLink && canUpload && canShow(rightAdmin, isAdmin) &&
+        {rightBtn && rightLink && canUpload && canShow(rightAdmin, isAdmin)
+          && (
           <Link to={rightLink}>
             <Button
               className="hero-buttons"
@@ -118,9 +119,10 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
               {rightBtn}
             </Button>
           </Link>
-        }
-        { (assetType === "components" || assetType === "notebooks") &&
-          <Link to='/pipelines/creator'>
+          )}
+        { (assetType === 'components' || assetType === 'notebooks')
+          && (
+          <Link to="/pipelines/creator">
             <Button
               className="hero-buttons-outline"
               variant="outlined"
@@ -130,18 +132,19 @@ function KFServingFeaturedPage(props: KFServingFeaturedPageProps) {
               Pipeline Creator
             </Button>
           </Link>
-        }
+          )}
       </Hero>
-        {children}
-        {assets && 
-          <MetaFeatured 
+      {children}
+      {assets
+          && (
+          <MetaFeatured
             numFeatured={numFeatured}
             assetType={assetType}
-            assets={assets} 
-          /> 
-        }
+            assets={assets}
+          />
+          )}
     </div>
   );
 }
 
-export default KFServingFeaturedPage
+export default KFServingFeaturedPage;

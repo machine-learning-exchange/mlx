@@ -45,9 +45,9 @@ lint_python: venv ## Check Python code style compliance
 		--per-file-ignores ./*:F841,F821 \
 		--exclude .git,__pycache__,docs/source/conf.py,old,build,dist,venv \
 		--max-line-length=140
-    @echo "$@: OK"
+	@echo "$@: OK"
 
 .PHONY: lint_javascript
 lint_javascript: ## Check Javascript code style compliance
 	@cd dashboard/origin-mlx && npm run lint -- --fix
-    @echo "$@: OK"
+	@echo "$@: OK"

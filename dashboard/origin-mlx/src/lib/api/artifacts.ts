@@ -2,7 +2,7 @@
 // 
 // SPDX-License-Identifier: Apache-2.0
 import { Artifact } from '../stores/artifacts'
-import yaml  # noqa: F401 from 'js-yaml'
+import yaml from 'js-yaml'
 
 const supported = [
   'pipelines',

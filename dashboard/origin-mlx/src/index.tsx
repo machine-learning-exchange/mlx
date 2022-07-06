@@ -1,8 +1,8 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
+*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
