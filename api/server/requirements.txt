@@ -338,7 +338,7 @@ nest-asyncio==1.5.4
     #   notebook
 networkx==2.6.3
     # via elyra-server
-notebook==6.4.10
+notebook==6.4.12
     # via nbclassic
 numpy==1.22.1
     # via
