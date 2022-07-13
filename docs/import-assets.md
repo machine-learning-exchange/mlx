@@ -10,7 +10,7 @@ Then expand the :gear: **Settings** at the bottom of the left-hand side navigati
 the **Bulk Imports** sections. 
 
 Find and select the [JSON file](/bootstrapper/catalog_upload.json) that describes your catalog 
-and the import should begin. A progress bar will indicate the upload progress.
+and the import should begin. A progress bar will indicate the upload progress. To regenerate the file from the YAML files that are found inside the `katalog` repository, use `python tools/python/regenerate_catalog_upload_json.py` command and check if changes are desired.
 
 If an asset from your Catalog did not get imported, make sure that all the metadata provided in the
 Catalog upload file is correct (API Key, Asset URL, etc.). If it is correct, ensure that the 

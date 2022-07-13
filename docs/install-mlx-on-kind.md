@@ -99,6 +99,8 @@ curl -X POST \
     -s "${UPLOAD_API}" | grep -iE "total_|error"
 ```
 
+To regenerate the catalog_upload.json file from the YAML files that are found inside the `katalog` repository, use `python tools/python/regenerate_catalog_upload_json.py` command and check if changes are desired.
+
 Delete the `mlx` cluster when it is no longer needed:
 
 ```Bash
