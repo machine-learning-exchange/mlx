@@ -6,8 +6,10 @@
 
 from __future__ import print_function
 
+import difflib
 import json
 import yaml
+import os
 
 from glob import glob
 from os.path import abspath, dirname, relpath
@@ -22,9 +24,9 @@ asset_types = [
 ]
 
 script_path = abspath(dirname(__file__))
-project_dir = dirname(script_path)
+project_dir = dirname(dirname(script_path))
 
-katalog_dir = f"{project_dir}/../katalog"  # TODO: don't assume user cloned katalog and mlx repos into same parent folder
+katalog_dir = f"{project_dir}/../katalog"
 katalog_url = "https://raw.githubusercontent.com/machine-learning-exchange/katalog/main/"
 
 catalog_upload_json_files = [
@@ -46,6 +48,9 @@ def get_list_of_yaml_files_in_katalog(asset_type: str):
 def generate_katalog_dict() -> dict:
 
     katalog_dict = dict()
+    if not (os.path.isdir(katalog_dir)):
+        os.chdir(f"{project_dir}/..")
+        os.system("git clone https://github.com/machine-learning-exchange/katalog.git")
 
     for asset_type in asset_types:
 
@@ -77,19 +82,29 @@ def rewrite_catalog_upload_json_files(katalog: dict):
 
     for file_path in catalog_upload_json_files:
 
-        with open(file_path, "w") as output_file:
+        print(" - " + relpath(file_path, project_dir))
 
-            print(" - " + relpath(file_path, project_dir))
+        with open(file_path, "r") as target_file:
+
+            json_dict = json.load(target_file)
+            for element in json_dict:
+                if element[0: -1] not in asset_types:
+                    katalog[element] = json_dict[element]
+
+        with open(file_path, "w") as output_file:
 
             output_file.write(json.dumps(katalog, sort_keys=False, indent=2))
             output_file.write("\n")
 
+        print('Please evaluate the changes:')
+
+        for line in difflib.unified_diff(
+            json.dumps(json_dict, sort_keys=True, indent=2).split("\n"), json.dumps(katalog, sort_keys=True, indent=2).split("\n"), lineterm=''):
+            print(line)
 
 def main():
 
     print("Regenerating catalog_upload.json files:")
-
-    # TODO: read current catalog_upload.json file(s) to capture non-katalog assets and restore later
 
     katalog_dict = generate_katalog_dict()
 
