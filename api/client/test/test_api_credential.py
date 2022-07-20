@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_credential import ApiCredential  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_credential import ApiCredential  # noqa: E501
 
 
 class TestApiCredential(unittest.TestCase):
@@ -35,9 +33,8 @@ class TestApiCredential(unittest.TestCase):
     def testApiCredential(self):
         """Test ApiCredential"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_credential.ApiCredential()
-        pass
+        # model = swagger_client.models.api_credential.ApiCredential()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

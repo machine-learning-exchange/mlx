@@ -11,7 +11,7 @@ from typing import List, Dict  # noqa: F401
 from swagger_server.models.api_asset import ApiAsset
 from swagger_server.models.api_metadata import ApiMetadata  # noqa: F401,E501
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiNotebook(ApiAsset):
@@ -20,20 +20,7 @@ class ApiNotebook(ApiAsset):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        id: str = None,
-        created_at: datetime = None,
-        name: str = None,
-        description: str = None,
-        featured: bool = None,
-        publish_approved: bool = None,
-        related_assets: List[str] = None,
-        filter_categories: Dict[str, str] = None,
-        url: str = None,
-        metadata: ApiMetadata = None,
-        parameters: List[ApiParameter] = None,
-    ):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, featured: bool = None, publish_approved: bool = None, related_assets: List[str] = None, filter_categories: Dict[str, str] = None, url: str = None, metadata: ApiMetadata = None, parameters: List[ApiParameter] = None):  # noqa: E501
         """ApiNotebook - a model defined in Swagger
 
         :param id: The id of this ApiNotebook.  # noqa: E501
@@ -60,31 +47,31 @@ class ApiNotebook(ApiAsset):
         :type parameters: List[ApiParameter]
         """
         self.swagger_types = {
-            "id": str,
-            "created_at": datetime,
-            "name": str,
-            "description": str,
-            "featured": bool,
-            "publish_approved": bool,
-            "related_assets": List[str],
-            "filter_categories": Dict[str, str],
-            "url": str,
-            "metadata": ApiMetadata,
-            "parameters": List[ApiParameter],
+            'id': str,
+            'created_at': datetime,
+            'name': str,
+            'description': str,
+            'featured': bool,
+            'publish_approved': bool,
+            'related_assets': List[str],
+            'filter_categories': Dict[str, str],
+            'url': str,
+            'metadata': ApiMetadata,
+            'parameters': List[ApiParameter]
         }
 
         self.attribute_map = {
-            "id": "id",
-            "created_at": "created_at",
-            "name": "name",
-            "description": "description",
-            "featured": "featured",
-            "publish_approved": "publish_approved",
-            "related_assets": "related_assets",
-            "filter_categories": "filter_categories",
-            "url": "url",
-            "metadata": "metadata",
-            "parameters": "parameters",
+            'id': 'id',
+            'created_at': 'created_at',
+            'name': 'name',
+            'description': 'description',
+            'featured': 'featured',
+            'publish_approved': 'publish_approved',
+            'related_assets': 'related_assets',
+            'filter_categories': 'filter_categories',
+            'url': 'url',
+            'metadata': 'metadata',
+            'parameters': 'parameters'
         }
 
         self._id = id
@@ -100,7 +87,7 @@ class ApiNotebook(ApiAsset):
         self._parameters = parameters
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiNotebook":
+    def from_dict(cls, dikt) -> 'ApiNotebook':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -171,9 +158,7 @@ class ApiNotebook(ApiAsset):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
@@ -196,9 +181,7 @@ class ApiNotebook(ApiAsset):
         :type description: str
         """
         if description is None:
-            raise ValueError(
-                "Invalid value for `description`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
 
         self._description = description
 
@@ -307,9 +290,7 @@ class ApiNotebook(ApiAsset):
         :type url: str
         """
         if url is None:
-            raise ValueError(
-                "Invalid value for `url`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
         self._url = url
 

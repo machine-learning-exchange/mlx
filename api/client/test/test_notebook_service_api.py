@@ -18,73 +18,80 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.notebook_service_api import NotebookServiceApi  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.notebook_service_api import NotebookServiceApi  # noqa: E501
 
 
 class TestNotebookServiceApi(unittest.TestCase):
     """NotebookServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            swagger_client.api.notebook_service_api.NotebookServiceApi()
-        )
+        self.api = swagger_client.api.notebook_service_api.NotebookServiceApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
     def test_approve_notebooks_for_publishing(self):
-        """Test case for approve_notebooks_for_publishing"""
-        pass
+        """Test case for approve_notebooks_for_publishing
+
+        """
 
     def test_create_notebook(self):
-        """Test case for create_notebook"""
-        pass
+        """Test case for create_notebook
+
+        """
 
     def test_delete_notebook(self):
-        """Test case for delete_notebook"""
-        pass
+        """Test case for delete_notebook
+
+        """
 
     def test_download_notebook_files(self):
         """Test case for download_notebook_files
 
         Returns the notebook artifacts compressed into a .tgz (.tar.gz) file.  # noqa: E501
         """
-        pass
 
     def test_generate_notebook_code(self):
-        """Test case for generate_notebook_code"""
-        pass
+        """Test case for generate_notebook_code
+
+        """
 
     def test_get_notebook(self):
-        """Test case for get_notebook"""
-        pass
+        """Test case for get_notebook
+
+        """
 
     def test_get_notebook_template(self):
-        """Test case for get_notebook_template"""
-        pass
+        """Test case for get_notebook_template
+
+        """
 
     def test_list_notebooks(self):
-        """Test case for list_notebooks"""
-        pass
+        """Test case for list_notebooks
+
+        """
 
     def test_run_notebook(self):
-        """Test case for run_notebook"""
-        pass
+        """Test case for run_notebook
+
+        """
 
     def test_set_featured_notebooks(self):
-        """Test case for set_featured_notebooks"""
-        pass
+        """Test case for set_featured_notebooks
+
+        """
 
     def test_upload_notebook(self):
-        """Test case for upload_notebook"""
-        pass
+        """Test case for upload_notebook
+
+        """
 
     def test_upload_notebook_file(self):
-        """Test case for upload_notebook_file"""
-        pass
+        """Test case for upload_notebook_file
+
+        """
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

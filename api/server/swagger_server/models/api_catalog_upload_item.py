@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiCatalogUploadItem(Model):
@@ -26,15 +26,21 @@ class ApiCatalogUploadItem(Model):
         :param url: The url of this ApiCatalogUploadItem.  # noqa: E501
         :type url: str
         """
-        self.swagger_types = {"name": str, "url": str}
+        self.swagger_types = {
+            'name': str,
+            'url': str
+        }
 
-        self.attribute_map = {"name": "name", "url": "url"}
+        self.attribute_map = {
+            'name': 'name',
+            'url': 'url'
+        }
 
         self._name = name
         self._url = url
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiCatalogUploadItem":
+    def from_dict(cls, dikt) -> 'ApiCatalogUploadItem':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -86,8 +92,6 @@ class ApiCatalogUploadItem(Model):
         :type url: str
         """
         if url is None:
-            raise ValueError(
-                "Invalid value for `url`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
         self._url = url

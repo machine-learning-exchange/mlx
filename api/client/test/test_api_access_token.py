@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_access_token import ApiAccessToken  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_access_token import ApiAccessToken  # noqa: E501
 
 
 class TestApiAccessToken(unittest.TestCase):
@@ -35,9 +33,8 @@ class TestApiAccessToken(unittest.TestCase):
     def testApiAccessToken(self):
         """Test ApiAccessToken"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_access_token.ApiAccessToken()
-        pass
+        # model = swagger_client.models.api_access_token.ApiAccessToken()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

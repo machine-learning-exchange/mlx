@@ -14,15 +14,13 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 from swagger_client.models.api_pipeline_dag import ApiPipelineDAG  # noqa: F401,E501
-from swagger_client.models.api_pipeline_inputs import (  # noqa: F401
-    ApiPipelineInputs,
-)
+from swagger_client.models.api_pipeline_inputs import ApiPipelineInputs  # noqa: F401,E501
 
 
 class ApiPipelineCustom(object):
@@ -39,22 +37,20 @@ class ApiPipelineCustom(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "dag": "ApiPipelineDAG",
-        "inputs": "ApiPipelineInputs",
-        "name": "str",
-        "description": "str",
+        'dag': 'ApiPipelineDAG',
+        'inputs': 'ApiPipelineInputs',
+        'name': 'str',
+        'description': 'str'
     }
 
     attribute_map = {
-        "dag": "dag",
-        "inputs": "inputs",
-        "name": "name",
-        "description": "description",
+        'dag': 'dag',
+        'inputs': 'inputs',
+        'name': 'name',
+        'description': 'description'
     }
 
-    def __init__(
-        self, dag=None, inputs=None, name=None, description=None
-    ):  # noqa: E501
+    def __init__(self, dag=None, inputs=None, name=None, description=None):  # noqa: E501
         """ApiPipelineCustom - a model defined in Swagger"""  # noqa: E501
 
         self._dag = None
@@ -89,9 +85,7 @@ class ApiPipelineCustom(object):
         :type: ApiPipelineDAG
         """
         if dag is None:
-            raise ValueError(
-                "Invalid value for `dag`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `dag`, must not be `None`")  # noqa: E501
 
         self._dag = dag
 
@@ -137,9 +131,7 @@ class ApiPipelineCustom(object):
         :type: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
@@ -173,20 +165,18 @@ class ApiPipelineCustom(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiPipelineCustom, dict):

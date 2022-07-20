@@ -18,11 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_pipeline_custom_run_payload import (  # noqa: F401
-    ApiPipelineCustomRunPayload,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_pipeline_custom_run_payload import ApiPipelineCustomRunPayload  # noqa: E501
 
 
 class TestApiPipelineCustomRunPayload(unittest.TestCase):
@@ -37,9 +33,8 @@ class TestApiPipelineCustomRunPayload(unittest.TestCase):
     def testApiPipelineCustomRunPayload(self):
         """Test ApiPipelineCustomRunPayload"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_pipeline_custom_run_payload.ApiPipelineCustomRunPayload()
-        pass
+        # model = swagger_client.models.api_pipeline_custom_run_payload.ApiPipelineCustomRunPayload()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

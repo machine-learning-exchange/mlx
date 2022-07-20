@@ -19,7 +19,7 @@ from __future__ import absolute_import
 import re  # noqa: F401
 
 # python 2 and python 3 compatibility library
-import six  # noqa: F401
+import six
 
 from swagger_client.api_client import ApiClient
 
@@ -50,20 +50,14 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.approve_models_for_publishing_with_http_info(
-                model_ids, **kwargs
-            )
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.approve_models_for_publishing_with_http_info(model_ids, **kwargs)  # noqa: E501
         else:
-            (data) = self.approve_models_for_publishing_with_http_info(
-                model_ids, **kwargs
-            )
+            (data) = self.approve_models_for_publishing_with_http_info(model_ids, **kwargs)  # noqa: E501
             return data
 
-    def approve_models_for_publishing_with_http_info(
-        self, model_ids, **kwargs
-    ):  # noqa: E501
+    def approve_models_for_publishing_with_http_info(self, model_ids, **kwargs):  # noqa: E501
         """approve_models_for_publishing  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -78,26 +72,25 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["model_ids"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['model_ids']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method approve_models_for_publishing" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'model_ids' is set
-        if "model_ids" not in params or params["model_ids"] is None:
-            raise ValueError(
-                "Missing the required parameter `model_ids` when calling `approve_models_for_publishing`"
-            )
+        if ('model_ids' not in params or
+                params['model_ids'] is None):
+            raise ValueError("Missing the required parameter `model_ids` when calling `approve_models_for_publishing`")  # noqa: E501
 
         collection_formats = {}
 
@@ -111,14 +104,13 @@ class ModelServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if "model_ids" in params:
-            body_params = params["model_ids"]
+        if 'model_ids' in params:
+            body_params = params['model_ids']
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/publish_approved",
-            "POST",
+            '/models/publish_approved', 'POST',
             path_params,
             query_params,
             header_params,
@@ -127,12 +119,11 @@ class ModelServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def create_model(self, body, **kwargs):  # noqa: E501
         """create_model  # noqa: E501
@@ -148,11 +139,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_model_with_http_info(body, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_model_with_http_info(body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_model_with_http_info(body, **kwargs)
+            (data) = self.create_model_with_http_info(body, **kwargs)  # noqa: E501
             return data
 
     def create_model_with_http_info(self, body, **kwargs):  # noqa: E501
@@ -170,26 +161,25 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_model" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_model`"
-            )
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_model`")  # noqa: E501
 
         collection_formats = {}
 
@@ -203,28 +193,26 @@ class ModelServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models",
-            "POST",
+            '/models', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiModel",  # noqa: E501
+            response_type='ApiModel',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_model(self, id, **kwargs):  # noqa: E501
         """delete_model  # noqa: E501
@@ -240,11 +228,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_model_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_model_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_model_with_http_info(id, **kwargs)
+            (data) = self.delete_model_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def delete_model_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -262,32 +250,31 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_model" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `delete_model`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `delete_model`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -301,8 +288,7 @@ class ModelServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}",
-            "DELETE",
+            '/models/{id}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -311,12 +297,11 @@ class ModelServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def download_model_files(self, id, **kwargs):  # noqa: E501
         """Returns the model artifacts compressed into a .tgz (.tar.gz) file.  # noqa: E501
@@ -333,13 +318,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.download_model_files_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.download_model_files_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.download_model_files_with_http_info(
-                id, **kwargs
-            )
+            (data) = self.download_model_files_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def download_model_files_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -358,38 +341,35 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id", "include_generated_code"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id', 'include_generated_code']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method download_model_files" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `download_model_files`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `download_model_files`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
-        if "include_generated_code" in params:
-            query_params.append(
-                ("include_generated_code", params["include_generated_code"])
-            )
+        if 'include_generated_code' in params:
+            query_params.append(('include_generated_code', params['include_generated_code']))  # noqa: E501
 
         header_params = {}
 
@@ -398,30 +378,27 @@ class ModelServiceApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/gzip"]
-        )
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/gzip'])  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}/download",
-            "GET",
+            '/models/{id}/download', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="file",  # noqa: E501
+            response_type='file',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", False),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', False),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def generate_model_code(self, id, **kwargs):  # noqa: E501
         """generate_model_code  # noqa: E501
@@ -437,11 +414,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.generate_model_code_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.generate_model_code_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.generate_model_code_with_http_info(id, **kwargs)
+            (data) = self.generate_model_code_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def generate_model_code_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -459,32 +436,31 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method generate_model_code" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `generate_model_code`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `generate_model_code`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -498,22 +474,20 @@ class ModelServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}/generate_code",
-            "GET",
+            '/models/{id}/generate_code', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiGenerateModelCodeResponse",  # noqa: E501
+            response_type='ApiGenerateModelCodeResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_model(self, id, **kwargs):  # noqa: E501
         """get_model  # noqa: E501
@@ -529,11 +503,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_model_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_model_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_model_with_http_info(id, **kwargs)
+            (data) = self.get_model_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def get_model_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -551,32 +525,31 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_model" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `get_model`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `get_model`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -590,22 +563,20 @@ class ModelServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}",
-            "GET",
+            '/models/{id}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiModel",  # noqa: E501
+            response_type='ApiModel',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_model_template(self, id, **kwargs):  # noqa: E501
         """get_model_template  # noqa: E501
@@ -621,11 +592,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_model_template_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_model_template_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_model_template_with_http_info(id, **kwargs)
+            (data) = self.get_model_template_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def get_model_template_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -643,32 +614,31 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_model_template" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `get_model_template`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `get_model_template`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -682,22 +652,20 @@ class ModelServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}/templates",
-            "GET",
+            '/models/{id}/templates', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiGetTemplateResponse",  # noqa: E501
+            response_type='ApiGetTemplateResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_models(self, **kwargs):  # noqa: E501
         """list_models  # noqa: E501
@@ -716,11 +684,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.list_models_with_http_info(**kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_models_with_http_info(**kwargs)  # noqa: E501
         else:
-            (data) = self.list_models_with_http_info(**kwargs)
+            (data) = self.list_models_with_http_info(**kwargs)  # noqa: E501
             return data
 
     def list_models_with_http_info(self, **kwargs):  # noqa: E501
@@ -741,35 +709,35 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["page_token", "page_size", "sort_by", "filter"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['page_token', 'page_size', 'sort_by', 'filter']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_models" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if "page_token" in params:
-            query_params.append(("page_token", params["page_token"]))
-        if "page_size" in params:
-            query_params.append(("page_size", params["page_size"]))
-        if "sort_by" in params:
-            query_params.append(("sort_by", params["sort_by"]))
-        if "filter" in params:
-            query_params.append(("filter", params["filter"]))
+        if 'page_token' in params:
+            query_params.append(('page_token', params['page_token']))  # noqa: E501
+        if 'page_size' in params:
+            query_params.append(('page_size', params['page_size']))  # noqa: E501
+        if 'sort_by' in params:
+            query_params.append(('sort_by', params['sort_by']))  # noqa: E501
+        if 'filter' in params:
+            query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
 
@@ -781,22 +749,20 @@ class ModelServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models",
-            "GET",
+            '/models', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiListModelsResponse",  # noqa: E501
+            response_type='ApiListModelsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def run_model(self, id, pipeline_stage, execution_platform, **kwargs):  # noqa: E501
         """run_model  # noqa: E501
@@ -816,20 +782,14 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.run_model_with_http_info(
-                id, pipeline_stage, execution_platform, **kwargs
-            )
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.run_model_with_http_info(id, pipeline_stage, execution_platform, **kwargs)  # noqa: E501
         else:
-            (data) = self.run_model_with_http_info(
-                id, pipeline_stage, execution_platform, **kwargs
-            )
+            (data) = self.run_model_with_http_info(id, pipeline_stage, execution_platform, **kwargs)  # noqa: E501
             return data
 
-    def run_model_with_http_info(
-        self, id, pipeline_stage, execution_platform, **kwargs
-    ):  # noqa: E501
+    def run_model_with_http_info(self, id, pipeline_stage, execution_platform, **kwargs):  # noqa: E501
         """run_model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -848,60 +808,47 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "id",
-            "pipeline_stage",
-            "execution_platform",
-            "run_name",
-            "parameters",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id', 'pipeline_stage', 'execution_platform', 'run_name', 'parameters']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method run_model" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `run_model`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `run_model`")  # noqa: E501
         # verify the required parameter 'pipeline_stage' is set
-        if "pipeline_stage" not in params or params["pipeline_stage"] is None:
-            raise ValueError(
-                "Missing the required parameter `pipeline_stage` when calling `run_model`"
-            )
+        if ('pipeline_stage' not in params or
+                params['pipeline_stage'] is None):
+            raise ValueError("Missing the required parameter `pipeline_stage` when calling `run_model`")  # noqa: E501
         # verify the required parameter 'execution_platform' is set
-        if "execution_platform" not in params or params["execution_platform"] is None:
-            raise ValueError(
-                "Missing the required parameter `execution_platform` when calling `run_model`"
-            )
+        if ('execution_platform' not in params or
+                params['execution_platform'] is None):
+            raise ValueError("Missing the required parameter `execution_platform` when calling `run_model`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
-        if "pipeline_stage" in params:
-            query_params.append(
-                ("pipeline_stage", params["pipeline_stage"])
-            )
-        if "execution_platform" in params:
-            query_params.append(
-                ("execution_platform", params["execution_platform"])
-            )
-        if "run_name" in params:
-            query_params.append(("run_name", params["run_name"]))
+        if 'pipeline_stage' in params:
+            query_params.append(('pipeline_stage', params['pipeline_stage']))  # noqa: E501
+        if 'execution_platform' in params:
+            query_params.append(('execution_platform', params['execution_platform']))  # noqa: E501
+        if 'run_name' in params:
+            query_params.append(('run_name', params['run_name']))  # noqa: E501
 
         header_params = {}
 
@@ -909,28 +856,26 @@ class ModelServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if "parameters" in params:
-            body_params = params["parameters"]
+        if 'parameters' in params:
+            body_params = params['parameters']
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}/run",
-            "POST",
+            '/models/{id}/run', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiRunCodeResponse",  # noqa: E501
+            response_type='ApiRunCodeResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def set_featured_models(self, model_ids, **kwargs):  # noqa: E501
         """set_featured_models  # noqa: E501
@@ -946,15 +891,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.set_featured_models_with_http_info(
-                model_ids, **kwargs
-            )
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.set_featured_models_with_http_info(model_ids, **kwargs)  # noqa: E501
         else:
-            (data) = self.set_featured_models_with_http_info(
-                model_ids, **kwargs
-            )
+            (data) = self.set_featured_models_with_http_info(model_ids, **kwargs)  # noqa: E501
             return data
 
     def set_featured_models_with_http_info(self, model_ids, **kwargs):  # noqa: E501
@@ -972,26 +913,25 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["model_ids"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['model_ids']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method set_featured_models" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'model_ids' is set
-        if "model_ids" not in params or params["model_ids"] is None:
-            raise ValueError(
-                "Missing the required parameter `model_ids` when calling `set_featured_models`"
-            )
+        if ('model_ids' not in params or
+                params['model_ids'] is None):
+            raise ValueError("Missing the required parameter `model_ids` when calling `set_featured_models`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1005,14 +945,13 @@ class ModelServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if "model_ids" in params:
-            body_params = params["model_ids"]
+        if 'model_ids' in params:
+            body_params = params['model_ids']
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/featured",
-            "POST",
+            '/models/featured', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1021,12 +960,11 @@ class ModelServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def upload_model(self, uploadfile, **kwargs):  # noqa: E501
         """upload_model  # noqa: E501
@@ -1043,13 +981,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.upload_model_with_http_info(uploadfile, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.upload_model_with_http_info(uploadfile, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_model_with_http_info(
-                uploadfile, **kwargs
-            )
+            (data) = self.upload_model_with_http_info(uploadfile, **kwargs)  # noqa: E501
             return data
 
     def upload_model_with_http_info(self, uploadfile, **kwargs):  # noqa: E501
@@ -1068,75 +1004,68 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["uploadfile", "name"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['uploadfile', 'name']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_model" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'uploadfile' is set
-        if "uploadfile" not in params or params["uploadfile"] is None:
-            raise ValueError(
-                "Missing the required parameter `uploadfile` when calling `upload_model`"
-            )
+        if ('uploadfile' not in params or
+                params['uploadfile'] is None):
+            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_model`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if "name" in params:
-            query_params.append(("name", params["name"]))
+        if 'name' in params:
+            query_params.append(('name', params['name']))  # noqa: E501
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if "uploadfile" in params:
-            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
+        if 'uploadfile' in params:
+            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["multipart/form-data"]
-        )
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/upload",
-            "POST",
+            '/models/upload', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiModel",  # noqa: E501
+            response_type='ApiModel',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def upload_model_file(self, id, uploadfile, **kwargs):  # noqa: E501
         """upload_model_file  # noqa: E501
@@ -1153,15 +1082,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.upload_model_file_with_http_info(
-                id, uploadfile, **kwargs
-            )
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.upload_model_file_with_http_info(id, uploadfile, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_model_file_with_http_info(
-                id, uploadfile, **kwargs
-            )
+            (data) = self.upload_model_file_with_http_info(id, uploadfile, **kwargs)  # noqa: E501
             return data
 
     def upload_model_file_with_http_info(self, id, uploadfile, **kwargs):  # noqa: E501
@@ -1180,37 +1105,35 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id", "uploadfile"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id', 'uploadfile']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_model_file" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `upload_model_file`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `upload_model_file`")  # noqa: E501
         # verify the required parameter 'uploadfile' is set
-        if "uploadfile" not in params or params["uploadfile"] is None:
-            raise ValueError(
-                "Missing the required parameter `uploadfile` when calling `upload_model_file`"
-            )
+        if ('uploadfile' not in params or
+                params['uploadfile'] is None):
+            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_model_file`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -1218,42 +1141,36 @@ class ModelServiceApi(object):
 
         form_params = []
         local_var_files = {}
-        if "uploadfile" in params:
-            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
+        if 'uploadfile' in params:
+            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["multipart/form-data"]
-        )
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/{id}/upload",
-            "POST",
+            '/models/{id}/upload', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiModel",  # noqa: E501
+            response_type='ApiModel',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def upload_model_from_url(self, url, **kwargs):  # noqa: E501
         """upload_model_from_url  # noqa: E501
@@ -1271,15 +1188,11 @@ class ModelServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.upload_model_from_url_with_http_info(
-                url, **kwargs
-            )
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.upload_model_from_url_with_http_info(url, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_model_from_url_with_http_info(
-                url, **kwargs
-            )
+            (data) = self.upload_model_from_url_with_http_info(url, **kwargs)  # noqa: E501
             return data
 
     def upload_model_from_url_with_http_info(self, url, **kwargs):  # noqa: E501
@@ -1299,74 +1212,67 @@ class ModelServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["url", "name", "access_token"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['url', 'name', 'access_token']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_model_from_url" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'url' is set
-        if "url" not in params or params["url"] is None:
-            raise ValueError(
-                "Missing the required parameter `url` when calling `upload_model_from_url`"
-            )
+        if ('url' not in params or
+                params['url'] is None):
+            raise ValueError("Missing the required parameter `url` when calling `upload_model_from_url`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if "name" in params:
-            query_params.append(("name", params["name"]))
+        if 'name' in params:
+            query_params.append(('name', params['name']))  # noqa: E501
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if "url" in params:
-            form_params.append(("url", params["url"]))
-        if "access_token" in params:
-            form_params.append(("access_token", params["access_token"]))
+        if 'url' in params:
+            form_params.append(('url', params['url']))  # noqa: E501
+        if 'access_token' in params:
+            form_params.append(('access_token', params['access_token']))  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["multipart/form-data"]
-        )
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/models/upload_from_url",
-            "POST",
+            '/models/upload_from_url', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiModel",  # noqa: E501
+            response_type='ApiModel',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)

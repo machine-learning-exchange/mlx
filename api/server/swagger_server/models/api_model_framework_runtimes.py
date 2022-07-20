@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiModelFrameworkRuntimes(Model):
@@ -26,15 +26,21 @@ class ApiModelFrameworkRuntimes(Model):
         :param version: The version of this ApiModelFrameworkRuntimes.  # noqa: E501
         :type version: str
         """
-        self.swagger_types = {"name": str, "version": str}
+        self.swagger_types = {
+            'name': str,
+            'version': str
+        }
 
-        self.attribute_map = {"name": "name", "version": "version"}
+        self.attribute_map = {
+            'name': 'name',
+            'version': 'version'
+        }
 
         self._name = name
         self._version = version
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiModelFrameworkRuntimes":
+    def from_dict(cls, dikt) -> 'ApiModelFrameworkRuntimes':
         """Returns the dict as a model
 
         :param dikt: A dict.

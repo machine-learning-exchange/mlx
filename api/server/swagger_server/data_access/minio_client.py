@@ -10,7 +10,7 @@ import tempfile
 from io import BytesIO
 from minio import Minio
 from minio.error import NoSuchKey, NoSuchBucketPolicy, ResponseError
-from pprint import pprint  # noqa: F401
+from pprint import pprint
 from swagger_server.util import ApiError
 from tarfile import TarFile
 from urllib3 import Timeout
@@ -18,12 +18,10 @@ from werkzeug.datastructures import FileStorage
 
 
 _namespace = os.environ.get("POD_NAMESPACE", "kubeflow")
-_host = os.environ.get(
-    "MINIO_SERVICE_SERVICE_HOST", "minio-service.%s.svc.cluster.local" % _namespace
-)
+_host = os.environ.get("MINIO_SERVICE_SERVICE_HOST", "minio-service.%s.svc.cluster.local" % _namespace)
 _port = os.environ.get("MINIO_SERVICE_SERVICE_PORT", "9000")
-_access_key = "minio"
-_secret_key = "minio123"
+_access_key = 'minio'
+_secret_key = 'minio123'
 
 
 _bucket_policy_sid = "AllowPublicReadAccess"
@@ -32,15 +30,16 @@ _bucket_policy_stmt = {
     "Action": ["s3:GetObject"],
     "Effect": "Allow",
     "Principal": {"AWS": ["*"]},
-    "Resource": [],
+    "Resource": []
 }
-_bucket_policy_template = {"Version": "2012-10-17", "Statement": [_bucket_policy_stmt]}
+_bucket_policy_template = {
+    "Version": "2012-10-17",
+    "Statement": [_bucket_policy_stmt]
+}
 
 
 def _get_minio_client(timeout=None):
-    client = Minio(
-        f"{_host}:{_port}", access_key=_access_key, secret_key=_secret_key, secure=False
-    )
+    client = Minio(f"{_host}:{_port}", access_key=_access_key, secret_key=_secret_key, secure=False)
 
     if timeout != Timeout.DEFAULT_TIMEOUT:
         client._http.connection_pool_kw["timeout"] = timeout
@@ -54,13 +53,7 @@ def health_check():
     return True
 
 
-def store_file(
-    bucket_name,
-    prefix,
-    file_name,
-    file_content,
-    content_type="application/octet-stream",
-) -> str:
+def store_file(bucket_name, prefix, file_name, file_content, content_type="application/octet-stream") -> str:
     client = _get_minio_client()
     f = tempfile.TemporaryFile()
     f.write(file_content)
@@ -83,9 +76,7 @@ def store_tgz(bucket_name, prefix, tgz_file: FileStorage):
         if file_ext in [".yaml", ".yml", ".md", ".py"]:
             object_name = f"{prefix.rstrip('/')}/{member.name}"
             f = tar.extractfile(member)
-            client.put_object(
-                bucket_name, object_name, f, f.raw.size, "text/plain"
-            )  # f.read()
+            client.put_object(bucket_name, object_name, f, f.raw.size, "text/plain")  # f.read()
             f.close()
 
     tar.close()
@@ -94,9 +85,7 @@ def store_tgz(bucket_name, prefix, tgz_file: FileStorage):
     return True
 
 
-def extract_yaml_from_tarfile(
-    uploadfile: FileStorage, filename_filter: str = "", reset_after_read=False
-) -> str:
+def extract_yaml_from_tarfile(uploadfile: FileStorage, filename_filter: str = "", reset_after_read=False) -> str:
     tar = tarfile.open(fileobj=uploadfile.stream, mode="r:gz")
 
     for member in tar.getmembers():
@@ -115,9 +104,7 @@ def extract_yaml_from_tarfile(
             yaml_file_content = f.read()
 
             if reset_after_read:
-                uploadfile.stream.seek(
-                    0
-                )  # reset the upload file stream, we might need to re-read later
+                uploadfile.stream.seek(0)  # reset the upload file stream, we might need to re-read later
 
             f.close()
             tar.close()
@@ -126,9 +113,7 @@ def extract_yaml_from_tarfile(
     return None
 
 
-def create_tarfile(
-    bucket_name: str, prefix: str, file_extensions: [str], keep_open=False
-) -> (TarFile, BytesIO):
+def create_tarfile(bucket_name: str, prefix: str, file_extensions: [str], keep_open=False) -> (TarFile, BytesIO):
     client = _get_minio_client()
     objects = client.list_objects(bucket_name, prefix=prefix, recursive=True)
 
@@ -163,12 +148,10 @@ def get_file_content_and_url(bucket_name, prefix, file_name) -> (str, str):
     object_name = f"{prefix.rstrip('/')}/{file_name}"
     file_content = client.get_object(bucket_name, object_name)
     object_url = f"http://{_host}:{_port}/{bucket_name}/{object_name}"
-    return file_content.data.decode("utf-8"), object_url
+    return file_content.data.decode('utf-8'), object_url
 
 
-def retrieve_file_content_and_url(
-    bucket_name, prefix, file_extensions: [str], file_name_filter=""
-) -> [(str, str)]:
+def retrieve_file_content_and_url(bucket_name, prefix, file_extensions: [str], file_name_filter="") -> [(str, str)]:
     client = _get_minio_client()
     objects = client.list_objects(bucket_name, prefix=prefix, recursive=True)
 
@@ -180,18 +163,14 @@ def retrieve_file_content_and_url(
         if file_ext in file_extensions and file_name_filter in o.object_name:
             file_content = client.get_object(bucket_name, o.object_name)
             object_url = f"http://{_host}:{_port}/{bucket_name}/{o.object_name}"
-            files_w_url.append((file_content.data.decode("utf-8"), object_url))
+            files_w_url.append((file_content.data.decode('utf-8'), object_url))
 
     return files_w_url
 
 
-def retrieve_file_content(
-    bucket_name, prefix, file_extensions: [str], file_name_filter: str = ""
-):
+def retrieve_file_content(bucket_name, prefix, file_extensions: [str], file_name_filter: str = ""):
 
-    files_w_url = retrieve_file_content_and_url(
-        bucket_name, prefix, file_extensions, file_name_filter
-    )
+    files_w_url = retrieve_file_content_and_url(bucket_name, prefix, file_extensions, file_name_filter)
 
     if files_w_url:
         (file_content, url) = files_w_url[0]  # TODO: return first result only?
@@ -200,13 +179,9 @@ def retrieve_file_content(
     return None
 
 
-def get_object_url(
-    bucket_name, prefix, file_extensions: [str], file_name_filter: str = ""
-):
+def get_object_url(bucket_name, prefix, file_extensions: [str], file_name_filter: str = ""):
 
-    files_w_url = retrieve_file_content_and_url(
-        bucket_name, prefix, file_extensions, file_name_filter
-    )
+    files_w_url = retrieve_file_content_and_url(bucket_name, prefix, file_extensions, file_name_filter)
 
     if files_w_url:
         (file_content, url) = files_w_url[0]  # TODO: return first result only?
@@ -235,9 +210,7 @@ def delete_objects(bucket_name, prefix):
         objects = client.list_objects(bucket_name, prefix=prefix, recursive=True)
         object_names = [obj.object_name for obj in objects if not obj.is_dir]
         maybe_errors = client.remove_objects(bucket_name, object_names)
-        actual_errors = [
-            (e.object_name, e.error_code, e.error_message) for e in maybe_errors
-        ]
+        actual_errors = [(e.object_name, e.error_code, e.error_message) for e in maybe_errors]
 
         if actual_errors:
             pprint(actual_errors)
@@ -262,9 +235,8 @@ def _update_bucket_policy(bucket_name: str, prefix: str):
     except NoSuchBucketPolicy:
         bucket_policy = dict(_bucket_policy_template)
 
-    getobject_stmts = [
-        s for s in bucket_policy["Statement"] if s.get("Sid") == _bucket_policy_sid
-    ] or [s for s in bucket_policy["Statement"] if "s3:GetObject" in s["Action"]]
+    getobject_stmts = [s for s in bucket_policy["Statement"] if s.get("Sid") == _bucket_policy_sid] or \
+                      [s for s in bucket_policy["Statement"] if "s3:GetObject" in s["Action"]]
 
     if not getobject_stmts:
         bucket_policy["Statement"].append(_bucket_policy_stmt)
@@ -274,9 +246,7 @@ def _update_bucket_policy(bucket_name: str, prefix: str):
 
     new_resource = f"arn:aws:s3:::{bucket_name}/{prefix}"
 
-    if new_resource not in resources and not any(
-        [r.strip("*") in new_resource for r in resources]
-    ):
+    if new_resource not in resources and not any([r.strip("*") in new_resource for r in resources]):
         resources.append(new_resource)
 
     new_policy_str = json.dumps(bucket_policy)
@@ -286,9 +256,9 @@ def _update_bucket_policy(bucket_name: str, prefix: str):
 
     except ResponseError as e:
 
-        if e.code == "XMinioPolicyNesting":
+        if e.code == 'XMinioPolicyNesting':
             raise ApiError(
                 f"{e.message.split('.')[0]}."
                 f" New policy: '{new_policy_str}'."
-                f" Existing policy: '{client.get_bucket_policy(bucket_name)}'"
-            )
+                f" Existing policy: '{client.get_bucket_policy(bucket_name)}'")
+

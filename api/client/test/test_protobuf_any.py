@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.protobuf_any import ProtobufAny  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.protobuf_any import ProtobufAny  # noqa: E501
 
 
 class TestProtobufAny(unittest.TestCase):
@@ -35,9 +33,8 @@ class TestProtobufAny(unittest.TestCase):
     def testProtobufAny(self):
         """Test ProtobufAny"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.protobuf_any.ProtobufAny()
-        pass
+        # model = swagger_client.models.protobuf_any.ProtobufAny()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

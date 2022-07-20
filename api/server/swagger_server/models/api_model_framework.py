@@ -9,10 +9,8 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.api_model_framework_runtimes import (
-    ApiModelFrameworkRuntimes,
-)
-from swagger_server import util  # noqa: F401
+from swagger_server.models.api_model_framework_runtimes import ApiModelFrameworkRuntimes  # noqa: F401,E501
+from swagger_server import util
 
 
 class ApiModelFramework(Model):
@@ -21,12 +19,7 @@ class ApiModelFramework(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        name: str = None,
-        version: str = None,
-        runtimes: ApiModelFrameworkRuntimes = None,
-    ):  # noqa: E501
+    def __init__(self, name: str = None, version: str = None, runtimes: ApiModelFrameworkRuntimes = None):  # noqa: E501
         """ApiModelFramework - a model defined in Swagger
 
         :param name: The name of this ApiModelFramework.  # noqa: E501
@@ -37,15 +30,15 @@ class ApiModelFramework(Model):
         :type runtimes: ApiModelFrameworkRuntimes
         """
         self.swagger_types = {
-            "name": str,
-            "version": str,
-            "runtimes": ApiModelFrameworkRuntimes,
+            'name': str,
+            'version': str,
+            'runtimes': ApiModelFrameworkRuntimes
         }
 
         self.attribute_map = {
-            "name": "name",
-            "version": "version",
-            "runtimes": "runtimes",
+            'name': 'name',
+            'version': 'version',
+            'runtimes': 'runtimes'
         }
 
         self._name = name
@@ -53,7 +46,7 @@ class ApiModelFramework(Model):
         self._runtimes = runtimes
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiModelFramework":
+    def from_dict(cls, dikt) -> 'ApiModelFramework':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -82,9 +75,7 @@ class ApiModelFramework(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 

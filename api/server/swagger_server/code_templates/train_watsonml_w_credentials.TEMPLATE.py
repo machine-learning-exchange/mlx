@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from kfp import dsl
@@ -81,7 +81,7 @@ TektonCompiler().compile(pipeline_function, pipeline_filename)
 #              Run the pipeline
 ############################################################
 
-client = TektonClient(${pipeline_server})  # noqa: E999
+client = TektonClient(${pipeline_server})
 
 # Get or create an experiment and submit a pipeline run
 experiment = client.create_experiment('MODEL_RUNS')

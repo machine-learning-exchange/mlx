@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_metadata import ApiMetadata  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_metadata import ApiMetadata  # noqa: E501
 
 
 class TestApiMetadata(unittest.TestCase):
@@ -35,9 +33,8 @@ class TestApiMetadata(unittest.TestCase):
     def testApiMetadata(self):
         """Test ApiMetadata"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_metadata.ApiMetadata()
-        pass
+        # model = swagger_client.models.api_metadata.ApiMetadata()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

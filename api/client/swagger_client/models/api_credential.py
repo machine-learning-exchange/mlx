@@ -14,10 +14,10 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 
 class ApiCredential(object):
@@ -34,32 +34,24 @@ class ApiCredential(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "id": "str",
-        "created_at": "datetime",
-        "pipeline_id": "str",
-        "project_id": "str",
-        "api_key": "str",
-        "data_assets": "list[str]",
+        'id': 'str',
+        'created_at': 'datetime',
+        'pipeline_id': 'str',
+        'project_id': 'str',
+        'api_key': 'str',
+        'data_assets': 'list[str]'
     }
 
     attribute_map = {
-        "id": "id",
-        "created_at": "created_at",
-        "pipeline_id": "pipeline_id",
-        "project_id": "project_id",
-        "api_key": "api_key",
-        "data_assets": "data_assets",
+        'id': 'id',
+        'created_at': 'created_at',
+        'pipeline_id': 'pipeline_id',
+        'project_id': 'project_id',
+        'api_key': 'api_key',
+        'data_assets': 'data_assets'
     }
 
-    def __init__(
-        self,
-        id=None,
-        created_at=None,
-        pipeline_id=None,
-        project_id=None,
-        api_key=None,
-        data_assets=None,
-    ):  # noqa: E501
+    def __init__(self, id=None, created_at=None, pipeline_id=None, project_id=None, api_key=None, data_assets=None):  # noqa: E501
         """ApiCredential - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
@@ -142,9 +134,7 @@ class ApiCredential(object):
         :type: str
         """
         if pipeline_id is None:
-            raise ValueError(
-                "Invalid value for `pipeline_id`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `pipeline_id`, must not be `None`")  # noqa: E501
 
         self._pipeline_id = pipeline_id
 
@@ -167,9 +157,7 @@ class ApiCredential(object):
         :type: str
         """
         if project_id is None:
-            raise ValueError(
-                "Invalid value for `project_id`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `project_id`, must not be `None`")  # noqa: E501
 
         self._project_id = project_id
 
@@ -226,20 +214,18 @@ class ApiCredential(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiCredential, dict):

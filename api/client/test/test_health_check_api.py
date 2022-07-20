@@ -18,16 +18,15 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.health_check_api import HealthCheckApi  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.health_check_api import HealthCheckApi  # noqa: E501
 
 
 class TestHealthCheckApi(unittest.TestCase):
     """HealthCheckApi unit test stubs"""
 
     def setUp(self):
-        self.api = swagger_client.api.health_check_api.HealthCheckApi()
+        self.api = swagger_client.api.health_check_api.HealthCheckApi()  # noqa: E501
 
     def tearDown(self):
         pass
@@ -37,8 +36,7 @@ class TestHealthCheckApi(unittest.TestCase):
 
         Checks if the server is running  # noqa: E501
         """
-        pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiUrl(Model):
@@ -24,14 +24,18 @@ class ApiUrl(Model):
         :param pipeline_url: The pipeline_url of this ApiUrl.  # noqa: E501
         :type pipeline_url: str
         """
-        self.swagger_types = {"pipeline_url": str}
+        self.swagger_types = {
+            'pipeline_url': str
+        }
 
-        self.attribute_map = {"pipeline_url": "pipeline_url"}
+        self.attribute_map = {
+            'pipeline_url': 'pipeline_url'
+        }
 
         self._pipeline_url = pipeline_url
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiUrl":
+    def from_dict(cls, dikt) -> 'ApiUrl':
         """Returns the dict as a model
 
         :param dikt: A dict.

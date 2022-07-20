@@ -18,11 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_pipeline_extension import (  # noqa: F401
-    ApiPipelineExtension,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_pipeline_extension import ApiPipelineExtension  # noqa: E501
 
 
 class TestApiPipelineExtension(unittest.TestCase):
@@ -37,9 +33,8 @@ class TestApiPipelineExtension(unittest.TestCase):
     def testApiPipelineExtension(self):
         """Test ApiPipelineExtension"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_pipeline_extension.ApiPipelineExtension()
-        pass
+        # model = swagger_client.models.api_pipeline_extension.ApiPipelineExtension()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

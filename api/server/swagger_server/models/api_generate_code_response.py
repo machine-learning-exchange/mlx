@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiGenerateCodeResponse(Model):
@@ -24,14 +24,18 @@ class ApiGenerateCodeResponse(Model):
         :param script: The script of this ApiGenerateCodeResponse.  # noqa: E501
         :type script: str
         """
-        self.swagger_types = {"script": str}
+        self.swagger_types = {
+            'script': str
+        }
 
-        self.attribute_map = {"script": "script"}
+        self.attribute_map = {
+            'script': 'script'
+        }
 
         self._script = script
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiGenerateCodeResponse":
+    def from_dict(cls, dikt) -> 'ApiGenerateCodeResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

@@ -14,10 +14,10 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 from swagger_client.models.api_component import ApiComponent  # noqa: F401,E501
 
@@ -36,20 +36,18 @@ class ApiListComponentsResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "components": "list[ApiComponent]",
-        "total_size": "int",
-        "next_page_token": "str",
+        'components': 'list[ApiComponent]',
+        'total_size': 'int',
+        'next_page_token': 'str'
     }
 
     attribute_map = {
-        "components": "components",
-        "total_size": "total_size",
-        "next_page_token": "next_page_token",
+        'components': 'components',
+        'total_size': 'total_size',
+        'next_page_token': 'next_page_token'
     }
 
-    def __init__(
-        self, components=None, total_size=None, next_page_token=None
-    ):  # noqa: E501
+    def __init__(self, components=None, total_size=None, next_page_token=None):  # noqa: E501
         """ApiListComponentsResponse - a model defined in Swagger"""  # noqa: E501
 
         self._components = None
@@ -134,20 +132,18 @@ class ApiListComponentsResponse(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiListComponentsResponse, dict):

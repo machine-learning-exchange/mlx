@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiCredential(Model):
@@ -18,15 +18,7 @@ class ApiCredential(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        id: str = None,
-        created_at: datetime = None,
-        pipeline_id: str = None,
-        project_id: str = None,
-        api_key: str = None,
-        data_assets: List[str] = None,
-    ):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, pipeline_id: str = None, project_id: str = None, api_key: str = None, data_assets: List[str] = None):  # noqa: E501
         """ApiCredential - a model defined in Swagger
 
         :param id: The id of this ApiCredential.  # noqa: E501
@@ -43,21 +35,21 @@ class ApiCredential(Model):
         :type data_assets: List[str]
         """
         self.swagger_types = {
-            "id": str,
-            "created_at": datetime,
-            "pipeline_id": str,
-            "project_id": str,
-            "api_key": str,
-            "data_assets": List[str],
+            'id': str,
+            'created_at': datetime,
+            'pipeline_id': str,
+            'project_id': str,
+            'api_key': str,
+            'data_assets': List[str]
         }
 
         self.attribute_map = {
-            "id": "id",
-            "created_at": "created_at",
-            "pipeline_id": "pipeline_id",
-            "project_id": "project_id",
-            "api_key": "api_key",
-            "data_assets": "data_assets",
+            'id': 'id',
+            'created_at': 'created_at',
+            'pipeline_id': 'pipeline_id',
+            'project_id': 'project_id',
+            'api_key': 'api_key',
+            'data_assets': 'data_assets'
         }
 
         self._id = id
@@ -68,7 +60,7 @@ class ApiCredential(Model):
         self._data_assets = data_assets
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiCredential":
+    def from_dict(cls, dikt) -> 'ApiCredential':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -139,9 +131,7 @@ class ApiCredential(Model):
         :type pipeline_id: str
         """
         if pipeline_id is None:
-            raise ValueError(
-                "Invalid value for `pipeline_id`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `pipeline_id`, must not be `None`")  # noqa: E501
 
         self._pipeline_id = pipeline_id
 
@@ -164,9 +154,7 @@ class ApiCredential(Model):
         :type project_id: str
         """
         if project_id is None:
-            raise ValueError(
-                "Invalid value for `project_id`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `project_id`, must not be `None`")  # noqa: E501
 
         self._project_id = project_id
 

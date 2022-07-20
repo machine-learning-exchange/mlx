@@ -14,14 +14,12 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
-from swagger_client.models.api_pipeline_task_arguments import (  # noqa: F401
-    ApiPipelineTaskArguments,
-)
+from swagger_client.models.api_pipeline_task_arguments import ApiPipelineTaskArguments  # noqa: F401,E501
 
 
 class ApiPipelineTask(object):
@@ -38,29 +36,22 @@ class ApiPipelineTask(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "name": "str",
-        "artifact_type": "str",
-        "artifact_id": "str",
-        "arguments": "ApiPipelineTaskArguments",
-        "dependencies": "list[str]",
+        'name': 'str',
+        'artifact_type': 'str',
+        'artifact_id': 'str',
+        'arguments': 'ApiPipelineTaskArguments',
+        'dependencies': 'list[str]'
     }
 
     attribute_map = {
-        "name": "name",
-        "artifact_type": "artifact_type",
-        "artifact_id": "artifact_id",
-        "arguments": "arguments",
-        "dependencies": "dependencies",
+        'name': 'name',
+        'artifact_type': 'artifact_type',
+        'artifact_id': 'artifact_id',
+        'arguments': 'arguments',
+        'dependencies': 'dependencies'
     }
 
-    def __init__(
-        self,
-        name=None,
-        artifact_type=None,
-        artifact_id=None,
-        arguments=None,
-        dependencies=None,
-    ):  # noqa: E501
+    def __init__(self, name=None, artifact_type=None, artifact_id=None, arguments=None, dependencies=None):  # noqa: E501
         """ApiPipelineTask - a model defined in Swagger"""  # noqa: E501
 
         self._name = None
@@ -121,9 +112,7 @@ class ApiPipelineTask(object):
         :type: str
         """
         if artifact_type is None:
-            raise ValueError(
-                "Invalid value for `artifact_type`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `artifact_type`, must not be `None`")  # noqa: E501
 
         self._artifact_type = artifact_type
 
@@ -148,9 +137,7 @@ class ApiPipelineTask(object):
         :type: str
         """
         if artifact_id is None:
-            raise ValueError(
-                "Invalid value for `artifact_id`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `artifact_id`, must not be `None`")  # noqa: E501
 
         self._artifact_id = artifact_id
 
@@ -205,20 +192,18 @@ class ApiPipelineTask(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiPipelineTask, dict):

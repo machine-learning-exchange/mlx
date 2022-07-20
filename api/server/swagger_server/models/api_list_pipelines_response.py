@@ -9,10 +9,8 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.api_pipeline_extended import (  # noqa: F401
-    ApiPipelineExtended,
-)
-from swagger_server import util  # noqa: F401
+from swagger_server.models.api_pipeline_extended import ApiPipelineExtended  # noqa: F401,E501
+from swagger_server import util
 
 
 class ApiListPipelinesResponse(Model):
@@ -21,12 +19,7 @@ class ApiListPipelinesResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        pipelines: List[ApiPipelineExtended] = None,
-        total_size: int = None,
-        next_page_token: str = None,
-    ):  # noqa: E501
+    def __init__(self, pipelines: List[ApiPipelineExtended] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListPipelinesResponse - a model defined in Swagger
 
         :param pipelines: The pipelines of this ApiListPipelinesResponse.  # noqa: E501
@@ -37,15 +30,15 @@ class ApiListPipelinesResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            "pipelines": List[ApiPipelineExtended],
-            "total_size": int,
-            "next_page_token": str,
+            'pipelines': List[ApiPipelineExtended],
+            'total_size': int,
+            'next_page_token': str
         }
 
         self.attribute_map = {
-            "pipelines": "pipelines",
-            "total_size": "total_size",
-            "next_page_token": "next_page_token",
+            'pipelines': 'pipelines',
+            'total_size': 'total_size',
+            'next_page_token': 'next_page_token'
         }
 
         self._pipelines = pipelines
@@ -53,7 +46,7 @@ class ApiListPipelinesResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiListPipelinesResponse":
+    def from_dict(cls, dikt) -> 'ApiListPipelinesResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

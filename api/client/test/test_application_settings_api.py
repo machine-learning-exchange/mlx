@@ -18,36 +18,34 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.application_settings_api import (  # noqa: F401
-    ApplicationSettingsApi,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.application_settings_api import ApplicationSettingsApi  # noqa: E501
 
 
 class TestApplicationSettingsApi(unittest.TestCase):
     """ApplicationSettingsApi unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            swagger_client.api.application_settings_api.ApplicationSettingsApi()
-        )
+        self.api = swagger_client.api.application_settings_api.ApplicationSettingsApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
     def test_get_application_settings(self):
-        """Test case for get_application_settings"""
-        pass
+        """Test case for get_application_settings
+
+        """
 
     def test_modify_application_settings(self):
-        """Test case for modify_application_settings"""
-        pass
+        """Test case for modify_application_settings
+
+        """
 
     def test_set_application_settings(self):
-        """Test case for set_application_settings"""
-        pass
+        """Test case for set_application_settings
+
+        """
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

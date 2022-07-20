@@ -17,7 +17,7 @@ from tempfile import gettempdir
     name='${name}',
     description='${description}'
 )
-def custom_pipeline(${pipeline_method_args}):  # noqa: E999
+def custom_pipeline(${pipeline_method_args}):
 
     ${pipeline_function_body}
 
@@ -38,7 +38,7 @@ TektonCompiler().compile(pipeline_func, pipeline_file)
 # TODO: specify pipeline argument values
 arguments = ${parameter_dict}
 
-client = TektonClient(${pipeline_server})  # noqa: E999
+client = TektonClient(${pipeline_server})
 
 # Get or create an experiment and submit a pipeline run
 experiment = client.create_experiment('PIPELINE_RUNS')

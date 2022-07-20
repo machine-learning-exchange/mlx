@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class AnyValue(Model):
@@ -19,13 +19,17 @@ class AnyValue(Model):
     """
 
     def __init__(self):  # noqa: E501
-        """AnyValue - a model defined in Swagger"""
-        self.swagger_types = {}
+        """AnyValue - a model defined in Swagger
 
-        self.attribute_map = {}
+        """
+        self.swagger_types = {
+        }
+
+        self.attribute_map = {
+        }
 
     @classmethod
-    def from_dict(cls, dikt) -> "AnyValue":
+    def from_dict(cls, dikt) -> 'AnyValue':
         """Returns the dict as a model
 
         :param dikt: A dict.

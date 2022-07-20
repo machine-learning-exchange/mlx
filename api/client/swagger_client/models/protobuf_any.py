@@ -14,10 +14,10 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 
 class ProtobufAny(object):
@@ -33,9 +33,15 @@ class ProtobufAny(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"type_url": "str", "value": "str"}
+    swagger_types = {
+        'type_url': 'str',
+        'value': 'str'
+    }
 
-    attribute_map = {"type_url": "type_url", "value": "value"}
+    attribute_map = {
+        'type_url': 'type_url',
+        'value': 'value'
+    }
 
     def __init__(self, type_url=None, value=None):  # noqa: E501
         """ProtobufAny - a model defined in Swagger"""  # noqa: E501
@@ -92,13 +98,8 @@ class ProtobufAny(object):
         :param value: The value of this ProtobufAny.  # noqa: E501
         :type: str
         """
-        if value is not None and not re.search(
-            r"^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$",
-            value,
-        ):  # noqa: E501
-            raise ValueError(
-                r"Invalid value for `value`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`"  # noqa: E501
-            )
+        if value is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', value):  # noqa: E501
+            raise ValueError(r"Invalid value for `value`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`")  # noqa: E501
 
         self._value = value
 
@@ -109,20 +110,18 @@ class ProtobufAny(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ProtobufAny, dict):

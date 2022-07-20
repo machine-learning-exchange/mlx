@@ -14,10 +14,10 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 from swagger_client.models.api_parameter import ApiParameter  # noqa: F401,E501
 
@@ -36,38 +36,28 @@ class ApiPipeline(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "id": "str",
-        "created_at": "datetime",
-        "name": "str",
-        "description": "str",
-        "parameters": "list[ApiParameter]",
-        "status": "str",
-        "default_version_id": "str",
-        "namespace": "str",
+        'id': 'str',
+        'created_at': 'datetime',
+        'name': 'str',
+        'description': 'str',
+        'parameters': 'list[ApiParameter]',
+        'status': 'str',
+        'default_version_id': 'str',
+        'namespace': 'str'
     }
 
     attribute_map = {
-        "id": "id",
-        "created_at": "created_at",
-        "name": "name",
-        "description": "description",
-        "parameters": "parameters",
-        "status": "status",
-        "default_version_id": "default_version_id",
-        "namespace": "namespace",
+        'id': 'id',
+        'created_at': 'created_at',
+        'name': 'name',
+        'description': 'description',
+        'parameters': 'parameters',
+        'status': 'status',
+        'default_version_id': 'default_version_id',
+        'namespace': 'namespace'
     }
 
-    def __init__(
-        self,
-        id=None,
-        created_at=None,
-        name=None,
-        description=None,
-        parameters=None,
-        status=None,
-        default_version_id=None,
-        namespace=None,
-    ):  # noqa: E501
+    def __init__(self, id=None, created_at=None, name=None, description=None, parameters=None, status=None, default_version_id=None, namespace=None):  # noqa: E501
         """ApiPipeline - a model defined in Swagger"""  # noqa: E501
 
         self._id = None
@@ -229,7 +219,7 @@ class ApiPipeline(object):
     def default_version_id(self):
         """Gets the default_version_id of this ApiPipeline.  # noqa: E501
 
-        The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)
+        The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
 
         :return: The default_version_id of this ApiPipeline.  # noqa: E501
         :rtype: str
@@ -240,7 +230,7 @@ class ApiPipeline(object):
     def default_version_id(self, default_version_id):
         """Sets the default_version_id of this ApiPipeline.
 
-        The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)
+        The default version of the pipeline. As of now, the latest version is used as default. (In the future, if desired by customers, we can allow them to set default version.)  # noqa: E501
 
         :param default_version_id: The default_version_id of this ApiPipeline.  # noqa: E501
         :type: str
@@ -276,20 +266,18 @@ class ApiPipeline(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiPipeline, dict):

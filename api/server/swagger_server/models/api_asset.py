@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiAsset(Model):
@@ -18,17 +18,7 @@ class ApiAsset(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        id: str = None,
-        created_at: datetime = None,
-        name: str = None,
-        description: str = None,
-        featured: bool = None,
-        publish_approved: bool = None,
-        related_assets: List[str] = None,
-        filter_categories: Dict[str, str] = None,
-    ):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, featured: bool = None, publish_approved: bool = None, related_assets: List[str] = None, filter_categories: Dict[str, str] = None):  # noqa: E501
         """ApiAsset - a model defined in Swagger
 
         :param id: The id of this ApiAsset.  # noqa: E501
@@ -49,25 +39,25 @@ class ApiAsset(Model):
         :type filter_categories: Dict[str, str]
         """
         self.swagger_types = {
-            "id": str,
-            "created_at": datetime,
-            "name": str,
-            "description": str,
-            "featured": bool,
-            "publish_approved": bool,
-            "related_assets": List[str],
-            "filter_categories": Dict[str, str],
+            'id': str,
+            'created_at': datetime,
+            'name': str,
+            'description': str,
+            'featured': bool,
+            'publish_approved': bool,
+            'related_assets': List[str],
+            'filter_categories': Dict[str, str]
         }
 
         self.attribute_map = {
-            "id": "id",
-            "created_at": "created_at",
-            "name": "name",
-            "description": "description",
-            "featured": "featured",
-            "publish_approved": "publish_approved",
-            "related_assets": "related_assets",
-            "filter_categories": "filter_categories",
+            'id': 'id',
+            'created_at': 'created_at',
+            'name': 'name',
+            'description': 'description',
+            'featured': 'featured',
+            'publish_approved': 'publish_approved',
+            'related_assets': 'related_assets',
+            'filter_categories': 'filter_categories'
         }
 
         self._id = id
@@ -80,7 +70,7 @@ class ApiAsset(Model):
         self._filter_categories = filter_categories
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiAsset":
+    def from_dict(cls, dikt) -> 'ApiAsset':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -151,9 +141,7 @@ class ApiAsset(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
@@ -176,9 +164,7 @@ class ApiAsset(Model):
         :type description: str
         """
         if description is None:
-            raise ValueError(
-                "Invalid value for `description`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
 
         self._description = description
 

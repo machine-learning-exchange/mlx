@@ -3,28 +3,26 @@
 # SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 
-import swagger_client  # noqa: F401
+import swagger_client
 
-from os import environ as env  # noqa: F401
-from pprint import pprint  # noqa: F401
+from pprint import pprint
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiSettings, ApiSettingsSection, ApiParameter
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.rest import ApiException
 from sys import stderr
-from urllib3.response import HTTPResponse  # noqa: F401
 
 
-host = "127.0.0.1"
-port = "8080"
+host = '127.0.0.1'
+port = '8080'
 # host = env.get("MLX_API_SERVICE_HOST")
 # port = env.get("MLX_API_SERVICE_PORT")
 
-api_base_path = "apis/v1alpha1"
+api_base_path = 'apis/v1alpha1'
 
 
 def get_swagger_client():
     config = Configuration()
-    config.host = f"http://{host}:{port}/{api_base_path}"
+    config.host = f'http://{host}:{port}/{api_base_path}'
     api_client = ApiClient(configuration=config)
     return api_client
 
@@ -35,7 +33,6 @@ def print_function_name_decorator(func):
         print(f"---[ {func.__name__}{args}{kwargs} ]---")
         print()
         return func(*args, **kwargs)
-
     return wrapper
 
 
@@ -51,10 +48,7 @@ def get_app_settings():
         return api_settings
 
     except ApiException as e:
-        print(
-            f"Exception when calling {api_instance.__class__.__name__}: %s\n" % e,
-            file=stderr,
-        )
+        print(f"Exception when calling {api_instance.__class__.__name__}: %s\n" % e, file=stderr)
         raise e
 
     return None
@@ -72,10 +66,7 @@ def modify_app_settings(dictionary: dict):
         return api_settings
 
     except ApiException as e:
-        print(
-            f"Exception when calling {api_instance.__class__.__name__}: %s\n" % e,
-            file=stderr,
-        )
+        print(f"Exception when calling {api_instance.__class__.__name__}: %s\n" % e, file=stderr)
         raise e
 
     return None
@@ -93,10 +84,7 @@ def set_app_settings(api_settings: ApiSettings):
         return api_settings
 
     except ApiException as e:
-        print(
-            f"Exception when calling {api_instance.__class__.__name__}: %s\n" % e,
-            file=stderr,
-        )
+        print(f"Exception when calling {api_instance.__class__.__name__}: %s\n" % e, file=stderr)
         raise e
 
     return None
@@ -105,22 +93,23 @@ def set_app_settings(api_settings: ApiSettings):
 def main():
     settings = get_app_settings()
 
-    modify_app_settings({"Upload enabled": False, "API endpoint": "localhost:8080"})
+    modify_app_settings({
+        "Upload enabled": False,
+        "API endpoint": "localhost:8080"
+    })
 
     settings.sections += [
         ApiSettingsSection(
             name="General",
             description="General settings",
             settings=[
-                ApiParameter(
-                    "Color scheme", "Color scheme [blue, red, yellow]", "blue", "red"
-                )
-            ],
+                ApiParameter("Color scheme", 'Color scheme [blue, red, yellow]', 'blue', 'red')
+            ]
         )
     ]
 
     set_app_settings(settings)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

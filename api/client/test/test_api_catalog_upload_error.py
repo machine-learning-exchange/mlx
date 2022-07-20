@@ -18,11 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_catalog_upload_error import (  # noqa: F401
-    ApiCatalogUploadError,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_catalog_upload_error import ApiCatalogUploadError  # noqa: E501
 
 
 class TestApiCatalogUploadError(unittest.TestCase):
@@ -37,9 +33,8 @@ class TestApiCatalogUploadError(unittest.TestCase):
     def testApiCatalogUploadError(self):
         """Test ApiCatalogUploadError"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_catalog_upload_error.ApiCatalogUploadError()
-        pass
+        # model = swagger_client.models.api_catalog_upload_error.ApiCatalogUploadError()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

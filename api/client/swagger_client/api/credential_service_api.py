@@ -19,7 +19,7 @@ from __future__ import absolute_import
 import re  # noqa: F401
 
 # python 2 and python 3 compatibility library
-import six  # noqa: F401
+import six
 
 from swagger_client.api_client import ApiClient
 
@@ -51,11 +51,11 @@ class CredentialServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_credential_with_http_info(body, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_credential_with_http_info(body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_credential_with_http_info(body, **kwargs)
+            (data) = self.create_credential_with_http_info(body, **kwargs)  # noqa: E501
             return data
 
     def create_credential_with_http_info(self, body, **kwargs):  # noqa: E501
@@ -74,26 +74,25 @@ class CredentialServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_credential" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_credential`"
-            )
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_credential`")  # noqa: E501
 
         collection_formats = {}
 
@@ -107,35 +106,30 @@ class CredentialServiceApi(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/credentials",
-            "POST",
+            '/credentials', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiCredential",  # noqa: E501
+            response_type='ApiCredential',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_credential(self, id, **kwargs):  # noqa: E501
         """delete_credential  # noqa: E501
@@ -151,11 +145,11 @@ class CredentialServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_credential_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_credential_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_credential_with_http_info(id, **kwargs)
+            (data) = self.delete_credential_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def delete_credential_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -173,32 +167,31 @@ class CredentialServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_credential" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `delete_credential`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `delete_credential`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -212,8 +205,7 @@ class CredentialServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/credentials/{id}",
-            "DELETE",
+            '/credentials/{id}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -222,12 +214,11 @@ class CredentialServiceApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_credential(self, id, **kwargs):  # noqa: E501
         """get_credential  # noqa: E501
@@ -243,11 +234,11 @@ class CredentialServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_credential_with_http_info(id, **kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_credential_with_http_info(id, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_credential_with_http_info(id, **kwargs)
+            (data) = self.get_credential_with_http_info(id, **kwargs)  # noqa: E501
             return data
 
     def get_credential_with_http_info(self, id, **kwargs):  # noqa: E501
@@ -265,32 +256,31 @@ class CredentialServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["id"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_credential" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'id' is set
-        if "id" not in params or params["id"] is None:
-            raise ValueError(
-                "Missing the required parameter `id` when calling `get_credential`"
-            )
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `get_credential`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "id" in params:
-            path_params["id"] = params["id"]  # noqa: E501
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
 
@@ -304,22 +294,20 @@ class CredentialServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/credentials/{id}",
-            "GET",
+            '/credentials/{id}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiCredential",  # noqa: E501
+            response_type='ApiCredential',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_credentials(self, **kwargs):  # noqa: E501
         """list_credentials  # noqa: E501
@@ -338,11 +326,11 @@ class CredentialServiceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.list_credentials_with_http_info(**kwargs)
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_credentials_with_http_info(**kwargs)  # noqa: E501
         else:
-            (data) = self.list_credentials_with_http_info(**kwargs)
+            (data) = self.list_credentials_with_http_info(**kwargs)  # noqa: E501
             return data
 
     def list_credentials_with_http_info(self, **kwargs):  # noqa: E501
@@ -363,35 +351,35 @@ class CredentialServiceApi(object):
                  returns the request thread.
         """
 
-        all_params = ["page_token", "page_size", "sort_by", "filter"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['page_token', 'page_size', 'sort_by', 'filter']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_credentials" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if "page_token" in params:
-            query_params.append(("page_token", params["page_token"]))
-        if "page_size" in params:
-            query_params.append(("page_size", params["page_size"]))
-        if "sort_by" in params:
-            query_params.append(("sort_by", params["sort_by"]))
-        if "filter" in params:
-            query_params.append(("filter", params["filter"]))
+        if 'page_token' in params:
+            query_params.append(('page_token', params['page_token']))  # noqa: E501
+        if 'page_size' in params:
+            query_params.append(('page_size', params['page_size']))  # noqa: E501
+        if 'sort_by' in params:
+            query_params.append(('sort_by', params['sort_by']))  # noqa: E501
+        if 'filter' in params:
+            query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
 
@@ -403,19 +391,17 @@ class CredentialServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            "/credentials",
-            "GET",
+            '/credentials', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="ApiListCredentialsResponse",  # noqa: E501
+            response_type='ApiListCredentialsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)

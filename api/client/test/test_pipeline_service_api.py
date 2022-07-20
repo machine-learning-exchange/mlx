@@ -18,61 +18,65 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.pipeline_service_api import PipelineServiceApi  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.pipeline_service_api import PipelineServiceApi  # noqa: E501
 
 
 class TestPipelineServiceApi(unittest.TestCase):
     """PipelineServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            swagger_client.api.pipeline_service_api.PipelineServiceApi()
-        )
+        self.api = swagger_client.api.pipeline_service_api.PipelineServiceApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
     def test_approve_pipelines_for_publishing(self):
-        """Test case for approve_pipelines_for_publishing"""
-        pass
+        """Test case for approve_pipelines_for_publishing
+
+        """
 
     def test_create_pipeline(self):
-        """Test case for create_pipeline"""
-        pass
+        """Test case for create_pipeline
+
+        """
 
     def test_delete_pipeline(self):
-        """Test case for delete_pipeline"""
-        pass
+        """Test case for delete_pipeline
+
+        """
 
     def test_download_pipeline_files(self):
         """Test case for download_pipeline_files
 
         Returns the pipeline YAML compressed into a .tgz (.tar.gz) file.  # noqa: E501
         """
-        pass
 
     def test_get_pipeline(self):
-        """Test case for get_pipeline"""
-        pass
+        """Test case for get_pipeline
+
+        """
 
     def test_get_template(self):
-        """Test case for get_template"""
-        pass
+        """Test case for get_template
+
+        """
 
     def test_list_pipelines(self):
-        """Test case for list_pipelines"""
-        pass
+        """Test case for list_pipelines
+
+        """
 
     def test_set_featured_pipelines(self):
-        """Test case for set_featured_pipelines"""
-        pass
+        """Test case for set_featured_pipelines
+
+        """
 
     def test_upload_pipeline(self):
-        """Test case for upload_pipeline"""
-        pass
+        """Test case for upload_pipeline
+
+        """
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

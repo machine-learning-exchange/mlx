@@ -18,11 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_list_catalog_items_response import (  # noqa: F401
-    ApiListCatalogItemsResponse,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_list_catalog_items_response import ApiListCatalogItemsResponse  # noqa: E501
 
 
 class TestApiListCatalogItemsResponse(unittest.TestCase):
@@ -37,9 +33,8 @@ class TestApiListCatalogItemsResponse(unittest.TestCase):
     def testApiListCatalogItemsResponse(self):
         """Test ApiListCatalogItemsResponse"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_list_catalog_items_response.ApiListCatalogItemsResponse()
-        pass
+        # model = swagger_client.models.api_list_catalog_items_response.ApiListCatalogItemsResponse()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

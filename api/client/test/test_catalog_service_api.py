@@ -18,30 +18,29 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.catalog_service_api import CatalogServiceApi  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.catalog_service_api import CatalogServiceApi  # noqa: E501
 
 
 class TestCatalogServiceApi(unittest.TestCase):
     """CatalogServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            swagger_client.api.catalog_service_api.CatalogServiceApi()
-        )
+        self.api = swagger_client.api.catalog_service_api.CatalogServiceApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
     def test_list_all_assets(self):
-        """Test case for list_all_assets"""
-        pass
+        """Test case for list_all_assets
+
+        """
 
     def test_upload_multiple_assets(self):
-        """Test case for upload_multiple_assets"""
-        pass
+        """Test case for upload_multiple_assets
+
+        """
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

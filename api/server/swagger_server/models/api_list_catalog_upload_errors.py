@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.api_catalog_upload_error import ApiCatalogUploadError
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiListCatalogUploadErrors(Model):
@@ -19,9 +19,7 @@ class ApiListCatalogUploadErrors(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self, errors: List[ApiCatalogUploadError] = None, total_errors: int = None
-    ):  # noqa: E501
+    def __init__(self, errors: List[ApiCatalogUploadError] = None, total_errors: int = None):  # noqa: E501
         """ApiListCatalogUploadErrors - a model defined in Swagger
 
         :param errors: The errors of this ApiListCatalogUploadErrors.  # noqa: E501
@@ -30,17 +28,20 @@ class ApiListCatalogUploadErrors(Model):
         :type total_errors: int
         """
         self.swagger_types = {
-            "errors": List[ApiCatalogUploadError],
-            "total_errors": int,
+            'errors': List[ApiCatalogUploadError],
+            'total_errors': int
         }
 
-        self.attribute_map = {"errors": "errors", "total_errors": "total_errors"}
+        self.attribute_map = {
+            'errors': 'errors',
+            'total_errors': 'total_errors'
+        }
 
         self._errors = errors
         self._total_errors = total_errors
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiListCatalogUploadErrors":
+    def from_dict(cls, dikt) -> 'ApiListCatalogUploadErrors':
         """Returns the dict as a model
 
         :param dikt: A dict.

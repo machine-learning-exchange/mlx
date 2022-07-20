@@ -14,7 +14,7 @@ from swagger_server.models.api_model import ApiModel
 from swagger_server.models.api_notebook import ApiNotebook
 from swagger_server.models.api_pipeline import ApiPipeline
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiListCatalogItemsResponse(Model):
@@ -23,16 +23,7 @@ class ApiListCatalogItemsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        components: List[ApiComponent] = None,
-        datasets: List[ApiDataset] = None,
-        models: List[ApiModel] = None,
-        notebooks: List[ApiNotebook] = None,
-        pipelines: List[ApiPipeline] = None,
-        total_size: int = None,
-        next_page_token: str = None,
-    ):  # noqa: E501
+    def __init__(self, components: List[ApiComponent] = None, datasets: List[ApiDataset] = None, models: List[ApiModel] = None, notebooks: List[ApiNotebook] = None, pipelines: List[ApiPipeline] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListCatalogItemsResponse - a model defined in Swagger
 
         :param components: The components of this ApiListCatalogItemsResponse.  # noqa: E501
@@ -51,23 +42,23 @@ class ApiListCatalogItemsResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            "components": List[ApiComponent],
-            "datasets": List[ApiDataset],
-            "models": List[ApiModel],
-            "notebooks": List[ApiNotebook],
-            "pipelines": List[ApiPipeline],
-            "total_size": int,
-            "next_page_token": str,
+            'components': List[ApiComponent],
+            'datasets': List[ApiDataset],
+            'models': List[ApiModel],
+            'notebooks': List[ApiNotebook],
+            'pipelines': List[ApiPipeline],
+            'total_size': int,
+            'next_page_token': str
         }
 
         self.attribute_map = {
-            "components": "components",
-            "datasets": "datasets",
-            "models": "models",
-            "notebooks": "notebooks",
-            "pipelines": "pipelines",
-            "total_size": "total_size",
-            "next_page_token": "next_page_token",
+            'components': 'components',
+            'datasets': 'datasets',
+            'models': 'models',
+            'notebooks': 'notebooks',
+            'pipelines': 'pipelines',
+            'total_size': 'total_size',
+            'next_page_token': 'next_page_token'
         }
 
         self._components = components
@@ -79,7 +70,7 @@ class ApiListCatalogItemsResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiListCatalogItemsResponse":
+    def from_dict(cls, dikt) -> 'ApiListCatalogItemsResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

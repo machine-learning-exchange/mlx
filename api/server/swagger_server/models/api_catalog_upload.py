@@ -11,7 +11,7 @@ from typing import List, Dict  # noqa: F401
 from swagger_server.models.api_access_token import ApiAccessToken
 from swagger_server.models.api_catalog_upload_item import ApiCatalogUploadItem
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiCatalogUpload(Model):
@@ -20,15 +20,7 @@ class ApiCatalogUpload(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        api_access_tokens: List[ApiAccessToken] = None,
-        components: List[ApiCatalogUploadItem] = None,
-        datasets: List[ApiCatalogUploadItem] = None,
-        models: List[ApiCatalogUploadItem] = None,
-        notebooks: List[ApiCatalogUploadItem] = None,
-        pipelines: List[ApiCatalogUploadItem] = None,
-    ):  # noqa: E501
+    def __init__(self, api_access_tokens: List[ApiAccessToken] = None, components: List[ApiCatalogUploadItem] = None, datasets: List[ApiCatalogUploadItem] = None, models: List[ApiCatalogUploadItem] = None, notebooks: List[ApiCatalogUploadItem] = None, pipelines: List[ApiCatalogUploadItem] = None):  # noqa: E501
         """ApiCatalogUpload - a model defined in Swagger
 
         :param api_access_tokens: The api_access_tokens of this ApiCatalogUpload.  # noqa: E501
@@ -45,21 +37,21 @@ class ApiCatalogUpload(Model):
         :type pipelines: List[ApiCatalogUploadItem]
         """
         self.swagger_types = {
-            "api_access_tokens": List[ApiAccessToken],
-            "components": List[ApiCatalogUploadItem],
-            "datasets": List[ApiCatalogUploadItem],
-            "models": List[ApiCatalogUploadItem],
-            "notebooks": List[ApiCatalogUploadItem],
-            "pipelines": List[ApiCatalogUploadItem],
+            'api_access_tokens': List[ApiAccessToken],
+            'components': List[ApiCatalogUploadItem],
+            'datasets': List[ApiCatalogUploadItem],
+            'models': List[ApiCatalogUploadItem],
+            'notebooks': List[ApiCatalogUploadItem],
+            'pipelines': List[ApiCatalogUploadItem]
         }
 
         self.attribute_map = {
-            "api_access_tokens": "api_access_tokens",
-            "components": "components",
-            "datasets": "datasets",
-            "models": "models",
-            "notebooks": "notebooks",
-            "pipelines": "pipelines",
+            'api_access_tokens': 'api_access_tokens',
+            'components': 'components',
+            'datasets': 'datasets',
+            'models': 'models',
+            'notebooks': 'notebooks',
+            'pipelines': 'pipelines'
         }
 
         self._api_access_tokens = api_access_tokens
@@ -70,7 +62,7 @@ class ApiCatalogUpload(Model):
         self._pipelines = pipelines
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiCatalogUpload":
+    def from_dict(cls, dikt) -> 'ApiCatalogUpload':
         """Returns the dict as a model
 
         :param dikt: A dict.

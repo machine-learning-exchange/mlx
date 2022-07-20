@@ -9,10 +9,9 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-
 # from swagger_server.models.byte_array import ByteArray  # noqa: F401,E501
 import re  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ProtobufAny(Model):
@@ -29,15 +28,21 @@ class ProtobufAny(Model):
         :param value: The value of this ProtobufAny.  # noqa: E501
         :type value: ByteArray
         """
-        self.swagger_types = {"type_url": str, "value": object}
+        self.swagger_types = {
+            'type_url': str,
+            'value': object
+        }
 
-        self.attribute_map = {"type_url": "type_url", "value": "value"}
+        self.attribute_map = {
+            'type_url': 'type_url',
+            'value': 'value'
+        }
 
         self._type_url = type_url
         self._value = value
 
     @classmethod
-    def from_dict(cls, dikt) -> "ProtobufAny":
+    def from_dict(cls, dikt) -> 'ProtobufAny':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -90,12 +95,7 @@ class ProtobufAny(Model):
         :param value: The value of this ProtobufAny.
         :type value: ByteArray
         """
-        if value is not None and not re.search(
-            r"^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$",
-            value,
-        ):  # noqa: E501
-            raise ValueError(
-                "Invalid value for `value`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`"  # noqa: E501
-            )
+        if value is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', value):  # noqa: E501
+            raise ValueError("Invalid value for `value`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`")  # noqa: E501
 
         self._value = value

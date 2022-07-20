@@ -56,6 +56,7 @@ def model_pipeline(model_id='${model_identifier}'):
 #              Compile the pipeline
 ############################################################
 
+
 pipeline_function = model_pipeline
 pipeline_filename = path.join(gettempdir(),
                               pipeline_function.__name__ + '.tar.gz')
@@ -66,7 +67,7 @@ TektonCompiler().compile(pipeline_function, pipeline_filename)
 #              Run the pipeline
 ############################################################
 
-client = TektonClient(${pipeline_server})  # noqa: E999
+client = TektonClient(${pipeline_server})
 
 # Get or create an experiment and submit a pipeline run
 experiment = client.create_experiment('MODEL_RUNS')

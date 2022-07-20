@@ -54,7 +54,7 @@ TektonCompiler().compile(pipeline_function, pipeline_filename)
 #              Run the pipeline
 ############################################################
 
-client = TektonClient(${pipeline_server})  # noqa: E999
+client = TektonClient(${pipeline_server})
 
 # Get or create an experiment and submit a pipeline run
 experiment = client.create_experiment('NOTEBOOK_RUNS')

@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_parameter import ApiParameter  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_parameter import ApiParameter  # noqa: E501
 
 
 class TestApiParameter(unittest.TestCase):
@@ -35,9 +33,8 @@ class TestApiParameter(unittest.TestCase):
     def testApiParameter(self):
         """Test ApiParameter"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_parameter.ApiParameter()
-        pass
+        # model = swagger_client.models.api_parameter.ApiParameter()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

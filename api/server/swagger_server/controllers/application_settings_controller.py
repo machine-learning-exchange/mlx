@@ -2,13 +2,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion  # noqa: F401
-import six  # noqa: F401
+import connexion
 
 from swagger_server.models.api_settings import ApiSettings  # noqa: E501
-from swagger_server.models.api_status import ApiStatus  # noqa: F401, E501
+from swagger_server.models.api_status import ApiStatus  # noqa: E501
 from swagger_server.models.dictionary import Dictionary  # noqa: E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 def get_application_settings():  # noqa: E501
@@ -33,7 +32,7 @@ def modify_application_settings(dictionary):  # noqa: E501
     :rtype: ApiSettings
     """
     if connexion.request.is_json:
-        dictionary = Dictionary.from_dict(connexion.request.get_json())
+        dictionary = Dictionary.from_dict(connexion.request.get_json())  # noqa: E501
     return util.invoke_controller_impl()
 
 
@@ -42,11 +41,11 @@ def set_application_settings(settings):  # noqa: E501
 
     Set and store the application settings. # noqa: E501
 
-    :param settings:
+    :param settings: 
     :type settings: dict | bytes
 
     :rtype: ApiSettings
     """
     if connexion.request.is_json:
-        settings = ApiSettings.from_dict(connexion.request.get_json())
+        settings = ApiSettings.from_dict(connexion.request.get_json())  # noqa: E501
     return util.invoke_controller_impl()

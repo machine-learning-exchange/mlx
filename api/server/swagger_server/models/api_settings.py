@@ -9,10 +9,8 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.api_settings_section import (  # noqa: F401
-    ApiSettingsSection,
-)
-from swagger_server import util  # noqa: F401
+from swagger_server.models.api_settings_section import ApiSettingsSection  # noqa: F401,E501
+from swagger_server import util
 
 
 class ApiSettings(Model):
@@ -27,14 +25,18 @@ class ApiSettings(Model):
         :param sections: The sections of this ApiSettings.  # noqa: E501
         :type sections: List[ApiSettingsSection]
         """
-        self.swagger_types = {"sections": List[ApiSettingsSection]}
+        self.swagger_types = {
+            'sections': List[ApiSettingsSection]
+        }
 
-        self.attribute_map = {"sections": "sections"}
+        self.attribute_map = {
+            'sections': 'sections'
+        }
 
         self._sections = sections
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiSettings":
+    def from_dict(cls, dikt) -> 'ApiSettings':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -65,8 +67,6 @@ class ApiSettings(Model):
         :type sections: List[ApiSettingsSection]
         """
         if sections is None:
-            raise ValueError(
-                "Invalid value for `sections`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `sections`, must not be `None`")  # noqa: E501
 
         self._sections = sections

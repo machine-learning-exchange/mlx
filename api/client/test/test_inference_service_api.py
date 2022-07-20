@@ -18,33 +18,30 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.inference_service_api import InferenceServiceApi  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.inference_service_api import InferenceServiceApi  # noqa: E501
 
 
 class TestInferenceServiceApi(unittest.TestCase):
     """InferenceServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            swagger_client.api.inference_service_api.InferenceServiceApi()
-        )
+        self.api = swagger_client.api.inference_service_api.InferenceServiceApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
     def test_get_service(self):
-        """Test case for get_service"""
-        pass
+        """Test case for get_service
+
+        """
 
     def test_list_services(self):
         """Test case for list_services
 
         Gets all KFServing services  # noqa: E501
         """
-        pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

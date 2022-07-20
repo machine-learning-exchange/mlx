@@ -1,18 +1,18 @@
-/*
+/* 
 * Copyright 2021 The MLX Contributors
-*
+* 
 * SPDX-License-Identifier: Apache-2.0
 */
 import * as React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import StoreContext from '../../lib/stores/context';
-import { getUserInfo, hasRole } from '../../lib/util';
+import StoreContext from '../../lib/stores/context'
+import { getUserInfo, hasRole } from '../../lib/util'
 
 import DataList from '../DataList';
+import Grid from '@material-ui/core/Grid';
 import SourceCodeDisplay from '../SourceCodeDisplay';
-import RunView from '../RunView';
+import RunView from '../RunView'
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
@@ -34,7 +34,7 @@ export interface NotebookDetailState {
 }
 
 export default class NotebookDetail extends React.Component<INotebookDetailProps, any> {
-  static contextType = StoreContext;
+  static contextType = StoreContext
 
   constructor(props: any) {
     super(props);
@@ -42,74 +42,69 @@ export default class NotebookDetail extends React.Component<INotebookDetailProps
       rightTab: 'source',
       leftTab: 'detail',
       notebook: props.asset,
-    };
+    }
   }
 
   public render() {
-    const { store } = this.context;
-    const { execute } = store.settings.capabilities;
-    const canRun = execute.value !== null ? execute.value : execute.default;
-    const { setRunLink } = this.props;
+    const { store } = this.context
+    const { execute } = store.settings.capabilities
+    const canRun = execute.value !== null ? execute.value : execute.default
+    const setRunLink = this.props.setRunLink
 
-    const { notebook } = this.state;
+    const notebook = this.state.notebook;
 
-    const viewerUrl = notebook.url
-      && `${notebook.url.includes('github.com')
+    const viewerUrl = notebook.url &&
+      `${notebook.url.includes('github.com')
         ? 'https://nbviewer.jupyter.org/url/'
-        : `http://${process.env.REACT_APP_NBVIEWER_API}/url/`}${
-        notebook.url.match(/https?:\/\/(.*)/)[1]}`;
+        : 'http://' + process.env.REACT_APP_NBVIEWER_API + '/url/'}`
+      + notebook.url.match(/https?:\/\/(.*)/)[1]
 
     return (
       <Grid
         container
-        spacing={0}
+        spacing={ 0 }
         justify="center"
       >
         <Grid
           className="left-wrapper"
-          item
-          xs={6}
-        >
+          item xs={ 6 }>
           <div className="tab-nav">
             <Tabs
               variant="fullWidth"
               className="comp-tabs"
               value={this.state.leftTab}
-              onChange={(_, leftTab: string) => this.setState({ leftTab })}
-            >
+              onChange={(_, leftTab: string) => this.setState({ leftTab })}>
               <Tab
                 className="comp-tab"
                 value="detail"
                 label="Details"
               />
-              {canRun && isAdmin
-                && (
+              {canRun && isAdmin &&
                 <Tab
                   className="comp-tab"
                   value="runCreation"
                   label="Launch"
                 />
-                )}
+              }
             </Tabs>
           </div>
-          { this.state.leftTab === 'detail'
-            && (
+          { this.state.leftTab === 'detail' &&
             <div className="component-detail-side">
               <span>
                 <DataList
                   title="About:"
                   items={[
                     {
-                      name: 'name',
-                      data: notebook.name,
+                      name: "name",
+                      data: notebook.name
                     },
                     {
-                      name: 'description',
-                      data: notebook.description,
+                      name: "description",
+                      data: notebook.description
                     },
                     {
-                      name: 'platform',
-                      data: notebook.metadata.annotations.platform,
+                      name: "platform",
+                      data: notebook.metadata.annotations.platform
                     },
                   ]}
                 />
@@ -117,54 +112,50 @@ export default class NotebookDetail extends React.Component<INotebookDetailProps
                   title="Implementation:"
                   items={[
                     {
-                      name: 'github',
+                      name: "github",
                       data: notebook.template.implementation.github.source,
-                      itemClass: 'model-link',
+                      itemClass: "model-link"
                     },
                   ]}
                 />
               </span>
             </div>
-            )}
-          { this.state.leftTab === 'runCreation'
-            && <RunView type="notebooks" asset={notebook} setRunLink={setRunLink} />}
+          }
+          { this.state.leftTab === 'runCreation' &&
+            <RunView type="notebooks" asset={notebook} setRunLink={setRunLink}/>}
         </Grid>
         <Grid
           className="right-wrapper"
-          item
-          xs={6}
-        >
+          item xs={ 6 }>
           <div className="tab-nav">
-            <Tabs
-              variant="fullWidth"
-              className="comp-tabs"
-              value={this.state.rightTab}
-              onChange={(_, rightTab: string) => this.setState({ rightTab })}
-            >
-              <Tab
-                className="comp-tab"
-                value="source"
-                label="YAML Definition"
-              />
-              {viewerUrl
-              && (
-              <Tab
-                className="comp-tab"
-                value="notebook"
-                label="NOTEBOOK CODE"
-              />
-              )}
-            </Tabs>
-          </div>
-          {this.state.rightTab === 'source'
-            && (
-            <SourceCodeDisplay
-              isYAML
-              code={notebook.yaml || ''}
+          <Tabs
+            variant="fullWidth"
+            className="comp-tabs"
+            value={this.state.rightTab}
+            onChange={(_, rightTab: string) => this.setState({ rightTab })}
+          >
+            <Tab
+              className="comp-tab"
+              value="source"
+              label="YAML Definition"
             />
-            )}
-          {this.state.rightTab === 'notebook'
-            && <iframe style={{ height: '100%' }} title="Notebook Viewer" src={viewerUrl} />}
+            {viewerUrl &&
+              <Tab
+                  className="comp-tab"
+                  value="notebook"
+                  label="NOTEBOOK CODE"
+              />
+            }
+          </Tabs>
+          </div>
+          {this.state.rightTab === 'source' &&
+            <SourceCodeDisplay
+              isYAML={ true }
+              code={notebook.yaml || ``}
+            />
+          }
+          {this.state.rightTab === 'notebook' &&
+            <iframe style={{height: '100%'}} title="Notebook Viewer" src={viewerUrl}></iframe>}
         </Grid>
       </Grid>
     );

@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiAccessToken(Model):
@@ -26,15 +26,21 @@ class ApiAccessToken(Model):
         :param url_host: The url_host of this ApiAccessToken.  # noqa: E501
         :type url_host: str
         """
-        self.swagger_types = {"api_token": str, "url_host": str}
+        self.swagger_types = {
+            'api_token': str,
+            'url_host': str
+        }
 
-        self.attribute_map = {"api_token": "api_token", "url_host": "url_host"}
+        self.attribute_map = {
+            'api_token': 'api_token',
+            'url_host': 'url_host'
+        }
 
         self._api_token = api_token
         self._url_host = url_host
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiAccessToken":
+    def from_dict(cls, dikt) -> 'ApiAccessToken':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -65,9 +71,7 @@ class ApiAccessToken(Model):
         :type api_token: str
         """
         if api_token is None:
-            raise ValueError(
-                "Invalid value for `api_token`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `api_token`, must not be `None`")  # noqa: E501
 
         self._api_token = api_token
 
@@ -92,8 +96,6 @@ class ApiAccessToken(Model):
         :type url_host: str
         """
         if url_host is None:
-            raise ValueError(
-                "Invalid value for `url_host`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `url_host`, must not be `None`")  # noqa: E501
 
         self._url_host = url_host

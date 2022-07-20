@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_notebook import ApiNotebook  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiListNotebooksResponse(Model):
@@ -19,12 +19,7 @@ class ApiListNotebooksResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        notebooks: List[ApiNotebook] = None,
-        total_size: int = None,
-        next_page_token: str = None,
-    ):  # noqa: E501
+    def __init__(self, notebooks: List[ApiNotebook] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListNotebooksResponse - a model defined in Swagger
 
         :param notebooks: The notebooks of this ApiListNotebooksResponse.  # noqa: E501
@@ -35,15 +30,15 @@ class ApiListNotebooksResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            "notebooks": List[ApiNotebook],
-            "total_size": int,
-            "next_page_token": str,
+            'notebooks': List[ApiNotebook],
+            'total_size': int,
+            'next_page_token': str
         }
 
         self.attribute_map = {
-            "notebooks": "notebooks",
-            "total_size": "total_size",
-            "next_page_token": "next_page_token",
+            'notebooks': 'notebooks',
+            'total_size': 'total_size',
+            'next_page_token': 'next_page_token'
         }
 
         self._notebooks = notebooks
@@ -51,7 +46,7 @@ class ApiListNotebooksResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiListNotebooksResponse":
+    def from_dict(cls, dikt) -> 'ApiListNotebooksResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

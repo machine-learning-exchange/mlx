@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_model import ApiModel  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiListModelsResponse(Model):
@@ -19,12 +19,7 @@ class ApiListModelsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        models: List[ApiModel] = None,
-        total_size: int = None,
-        next_page_token: str = None,
-    ):  # noqa: E501
+    def __init__(self, models: List[ApiModel] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListModelsResponse - a model defined in Swagger
 
         :param models: The models of this ApiListModelsResponse.  # noqa: E501
@@ -35,15 +30,15 @@ class ApiListModelsResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            "models": List[ApiModel],
-            "total_size": int,
-            "next_page_token": str,
+            'models': List[ApiModel],
+            'total_size': int,
+            'next_page_token': str
         }
 
         self.attribute_map = {
-            "models": "models",
-            "total_size": "total_size",
-            "next_page_token": "next_page_token",
+            'models': 'models',
+            'total_size': 'total_size',
+            'next_page_token': 'next_page_token'
         }
 
         self._models = models
@@ -51,7 +46,7 @@ class ApiListModelsResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiListModelsResponse":
+    def from_dict(cls, dikt) -> 'ApiListModelsResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

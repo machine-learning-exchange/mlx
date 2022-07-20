@@ -14,10 +14,10 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 
 class ApiGetTemplateResponse(object):
@@ -33,9 +33,15 @@ class ApiGetTemplateResponse(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"template": "str", "url": "str"}
+    swagger_types = {
+        'template': 'str',
+        'url': 'str'
+    }
 
-    attribute_map = {"template": "template", "url": "url"}
+    attribute_map = {
+        'template': 'template',
+        'url': 'url'
+    }
 
     def __init__(self, template=None, url=None):  # noqa: E501
         """ApiGetTemplateResponse - a model defined in Swagger"""  # noqa: E501
@@ -76,7 +82,7 @@ class ApiGetTemplateResponse(object):
     def url(self):
         """Gets the url of this ApiGetTemplateResponse.  # noqa: E501
 
-        The URL to download the template text from S3 storage (Minio)
+        The URL to download the template text from S3 storage (Minio)  # noqa: E501
 
         :return: The url of this ApiGetTemplateResponse.  # noqa: E501
         :rtype: str
@@ -87,7 +93,7 @@ class ApiGetTemplateResponse(object):
     def url(self, url):
         """Sets the url of this ApiGetTemplateResponse.
 
-        The URL to download the template text from S3 storage (Minio)
+        The URL to download the template text from S3 storage (Minio)  # noqa: E501
 
         :param url: The url of this ApiGetTemplateResponse.  # noqa: E501
         :type: str
@@ -102,20 +108,18 @@ class ApiGetTemplateResponse(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiGetTemplateResponse, dict):

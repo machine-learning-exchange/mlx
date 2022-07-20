@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiModelScript(Model):
@@ -18,12 +18,7 @@ class ApiModelScript(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        pipeline_stage: str = None,
-        execution_platform: str = None,
-        script_code: str = None,
-    ):  # noqa: E501
+    def __init__(self, pipeline_stage: str = None, execution_platform: str = None, script_code: str = None):  # noqa: E501
         """ApiModelScript - a model defined in Swagger
 
         :param pipeline_stage: The pipeline_stage of this ApiModelScript.  # noqa: E501
@@ -34,15 +29,15 @@ class ApiModelScript(Model):
         :type script_code: str
         """
         self.swagger_types = {
-            "pipeline_stage": str,
-            "execution_platform": str,
-            "script_code": str,
+            'pipeline_stage': str,
+            'execution_platform': str,
+            'script_code': str
         }
 
         self.attribute_map = {
-            "pipeline_stage": "pipeline_stage",
-            "execution_platform": "execution_platform",
-            "script_code": "script_code",
+            'pipeline_stage': 'pipeline_stage',
+            'execution_platform': 'execution_platform',
+            'script_code': 'script_code'
         }
 
         self._pipeline_stage = pipeline_stage
@@ -50,7 +45,7 @@ class ApiModelScript(Model):
         self._script_code = script_code
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiModelScript":
+    def from_dict(cls, dikt) -> 'ApiModelScript':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -81,9 +76,7 @@ class ApiModelScript(Model):
         :type pipeline_stage: str
         """
         if pipeline_stage is None:
-            raise ValueError(
-                "Invalid value for `pipeline_stage`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `pipeline_stage`, must not be `None`")  # noqa: E501
 
         self._pipeline_stage = pipeline_stage
 
@@ -108,9 +101,7 @@ class ApiModelScript(Model):
         :type execution_platform: str
         """
         if execution_platform is None:
-            raise ValueError(
-                "Invalid value for `execution_platform`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `execution_platform`, must not be `None`")  # noqa: E501
 
         self._execution_platform = execution_platform
 
@@ -135,8 +126,6 @@ class ApiModelScript(Model):
         :type script_code: str
         """
         if script_code is None:
-            raise ValueError(
-                "Invalid value for `script_code`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `script_code`, must not be `None`")  # noqa: E501
 
         self._script_code = script_code

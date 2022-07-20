@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiPipelineTaskArguments(Model):
@@ -25,14 +25,18 @@ class ApiPipelineTaskArguments(Model):
         :param parameters: The parameters of this ApiPipelineTaskArguments.  # noqa: E501
         :type parameters: List[ApiParameter]
         """
-        self.swagger_types = {"parameters": List[ApiParameter]}
+        self.swagger_types = {
+            'parameters': List[ApiParameter]
+        }
 
-        self.attribute_map = {"parameters": "parameters"}
+        self.attribute_map = {
+            'parameters': 'parameters'
+        }
 
         self._parameters = parameters
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiPipelineTaskArguments":
+    def from_dict(cls, dikt) -> 'ApiPipelineTaskArguments':
         """Returns the dict as a model
 
         :param dikt: A dict.

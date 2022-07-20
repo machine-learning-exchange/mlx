@@ -18,34 +18,34 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.api.credential_service_api import CredentialServiceApi  # noqa: F401, E501
-from swagger_client.rest import ApiException  # noqa: F401
+import swagger_client
+from swagger_client.api.credential_service_api import CredentialServiceApi  # noqa: E501
 
 
 class TestCredentialServiceApi(unittest.TestCase):
     """CredentialServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            swagger_client.api.credential_service_api.CredentialServiceApi()
-        )
+        self.api = swagger_client.api.credential_service_api.CredentialServiceApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
     def test_create_credentials(self):
-        """Test case for create_credentials"""
-        pass
+        """Test case for create_credentials
+
+        """
 
     def test_delete_credential(self):
-        """Test case for delete_credential"""
-        pass
+        """Test case for delete_credential
+
+        """
 
     def test_get_credential(self):
-        """Test case for get_credential"""
-        pass
+        """Test case for get_credential
+
+        """
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

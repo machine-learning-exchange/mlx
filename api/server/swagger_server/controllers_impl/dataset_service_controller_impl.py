@@ -2,55 +2,31 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion  # noqa: F401
+import connexion
 import json
 import tarfile
-import yaml  # noqa: F401
+import yaml
 
 from datetime import datetime
 from io import BytesIO
 from typing import AnyStr
 from werkzeug.datastructures import FileStorage
 
-from swagger_server.controllers_impl import (
-    download_file_content_from_url,
-    get_yaml_file_content_from_uploadfile,
-    validate_id,
-)
-from swagger_server.data_access.minio_client import (
-    store_file,
-    delete_objects,
-    get_file_content_and_url,
-    NoSuchKey,
-    enable_anonymous_read_access,
-    create_tarfile,
-)
-from swagger_server.data_access.mysql_client import (
-    store_data,
-    generate_id,
-    load_data,
-    delete_data,
-    num_rows,
-    update_multiple,
-)
-from swagger_server.gateways.kubeflow_pipeline_service import (
-    generate_dataset_run_script,
-    run_dataset_in_experiment,
-    _host as KFP_HOST,
-)
+from swagger_server.controllers_impl import download_file_content_from_url, \
+    get_yaml_file_content_from_uploadfile, validate_id
+from swagger_server.data_access.minio_client import store_file, delete_objects, \
+    get_file_content_and_url, NoSuchKey, enable_anonymous_read_access, create_tarfile
+from swagger_server.data_access.mysql_client import store_data, generate_id, \
+    load_data, delete_data, num_rows, update_multiple
+from swagger_server.gateways.kubeflow_pipeline_service import generate_dataset_run_script, \
+    run_dataset_in_experiment, _host as KFP_HOST
 from swagger_server.models.api_dataset import ApiDataset  # noqa: E501
-from swagger_server.models.api_generate_code_response import (  # noqa: F401
-    ApiGenerateCodeResponse,
-)
-from swagger_server.models.api_get_template_response import (  # noqa: F401
-    ApiGetTemplateResponse,
-)
-from swagger_server.models.api_list_datasets_response import (  # noqa: F401
-    ApiListDatasetsResponse,
-)
+from swagger_server.models.api_generate_code_response import ApiGenerateCodeResponse  # noqa: E501
+from swagger_server.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
+from swagger_server.models.api_list_datasets_response import ApiListDatasetsResponse  # noqa: E501
 from swagger_server.models.api_metadata import ApiMetadata
-from swagger_server.models.api_parameter import ApiParameter  # noqa: F401, E501
-from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: F401, E501
+from swagger_server.models.api_parameter import ApiParameter  # noqa: E501
+from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: E501
 
 
 def approve_datasets_for_publishing(dataset_ids):  # noqa: E501
@@ -79,7 +55,7 @@ def create_dataset(body):  # noqa: E501
     :rtype: ApiDataset
     """
     if connexion.request.is_json:
-        body = ApiDataset.from_dict(connexion.request.get_json())
+        body = ApiDataset.from_dict(connexion.request.get_json())  # noqa: E501
 
     api_dataset = body
 
@@ -117,12 +93,9 @@ def download_dataset_files(id, include_generated_code=None):  # noqa: E501
 
     :rtype: file | binary
     """
-    tar, bytes_io = create_tarfile(
-        bucket_name="mlpipeline",
-        prefix=f"datasets/{id}/",
-        file_extensions=[".yaml", ".yml", ".py", ".md"],
-        keep_open=include_generated_code,
-    )
+    tar, bytes_io = create_tarfile(bucket_name="mlpipeline", prefix=f"datasets/{id}/",
+                                   file_extensions=[".yaml", ".yml", ".py", ".md"],
+                                   keep_open=include_generated_code)
 
     if len(tar.members) == 0:
         return f"Could not find dataset with id '{id}'", 404
@@ -139,17 +112,13 @@ def download_dataset_files(id, include_generated_code=None):  # noqa: E501
 
             tarinfo = tarfile.TarInfo(name=file_name)
             tarinfo.size = len(file_content)
-            file_obj = BytesIO(file_content.encode("utf-8"))
+            file_obj = BytesIO(file_content.encode('utf-8'))
 
             tar.addfile(tarinfo, file_obj)
 
         tar.close()
 
-    return (
-        bytes_io.getvalue(),
-        200,
-        {"Content-Disposition": f"attachment; filename={id}.tgz"},
-    )
+    return bytes_io.getvalue(), 200, {"Content-Disposition": f"attachment; filename={id}.tgz"}
 
 
 def generate_dataset_code(id):  # noqa: E501
@@ -211,11 +180,9 @@ def get_dataset_template(id):  # noqa: E501
     :rtype: ApiGetTemplateResponse
     """
     try:
-        template_yaml, url = get_file_content_and_url(
-            bucket_name="mlpipeline",
-            prefix=f"datasets/{id}/",
-            file_name="template.yaml",
-        )
+        template_yaml, url = get_file_content_and_url(bucket_name="mlpipeline",
+                                                      prefix=f"datasets/{id}/",
+                                                      file_name="template.yaml")
         template_response = ApiGetTemplateResponse(template=template_yaml, url=url)
 
         return template_response, 200
@@ -229,18 +196,16 @@ def get_dataset_template(id):  # noqa: E501
         return str(e), 500
 
 
-def list_datasets(
-    page_token=None, page_size=None, sort_by=None, filter=None
-):  # noqa: E501
+def list_datasets(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
     """list_datasets
 
     :param page_token:
     :type page_token: str
     :param page_size:
     :type page_size: int
-    :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.  # noqa: E501
+    :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.
     :type sort_by: str
-    :param filter: A string-serialized JSON dictionary containing key-value pairs with name of the object property to apply filter on and the value of the respective property.  # noqa: E501
+    :param filter: A string-serialized JSON dictionary containing key-value pairs with name of the object property to apply filter on and the value of the respective property.
     :type filter: str
 
     :rtype: ApiListDatasetsResponse
@@ -254,13 +219,8 @@ def list_datasets(
 
     filter_dict = json.loads(filter) if filter else None
 
-    api_datasets: [ApiDataset] = load_data(
-        ApiDataset,
-        filter_dict=filter_dict,
-        sort_by=sort_by,
-        count=page_size,
-        offset=offset,
-    )
+    api_datasets: [ApiDataset] = load_data(ApiDataset, filter_dict=filter_dict, sort_by=sort_by,
+                                           count=page_size, offset=offset)
 
     next_page_token = offset + page_size if len(api_datasets) == page_size else None
 
@@ -269,9 +229,8 @@ def list_datasets(
     if total_size == next_page_token:
         next_page_token = None
 
-    comp_list = ApiListDatasetsResponse(
-        datasets=api_datasets, total_size=total_size, next_page_token=next_page_token
-    )
+    comp_list = ApiListDatasetsResponse(datasets=api_datasets, total_size=total_size,
+                                        next_page_token=next_page_token)
     return comp_list, 200
 
 
@@ -291,18 +250,14 @@ def run_dataset(id, parameters, run_name=None):  # noqa: E501
         return f"Kubeflow Pipeline host is 'UNAVAILABLE'", 503
 
     if connexion.request.is_json:
-        parameters = [
-            ApiParameter.from_dict(d) for d in connexion.request.get_json()
-        ]  # noqa: E501
+        parameters = [ApiParameter.from_dict(d) for d in connexion.request.get_json()]  # noqa: E501
 
     api_dataset, status_code = get_dataset(id)
 
     if status_code > 200:
         return f"Component with id '{id}' does not exist", 404
 
-    parameter_dict = {
-        p.name: p.value for p in parameters if p.value and p.value.strip() != ""
-    }
+    parameter_dict = {p.name: p.value for p in parameters if p.value and p.value.strip() != ""}
 
     # parameter_errors, status_code = validate_parameters(api_dataset.parameters, parameter_dict)
 
@@ -314,9 +269,9 @@ def run_dataset(id, parameters, run_name=None):  # noqa: E501
     enable_anonymous_read_access(bucket_name="mlpipeline", prefix="datasets/*")
 
     try:
-        run_id = run_dataset_in_experiment(
-            api_dataset, api_template.url, run_name=run_name, parameters=parameter_dict
-        )
+        run_id = run_dataset_in_experiment(api_dataset, api_template.url,
+                                           run_name=run_name,
+                                           parameters=parameter_dict)
         return ApiRunCodeResponse(run_url=f"/runs/details/{run_id}"), 200
 
     except Exception as e:
@@ -343,7 +298,7 @@ def set_featured_datasets(dataset_ids):  # noqa: E501
 def upload_dataset(uploadfile: FileStorage, name=None, existing_id=None):  # noqa: E501
     """upload_dataset
 
-    :param uploadfile: The dataset YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB.  # noqa: E501
+    :param uploadfile: The dataset YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB.
     :type uploadfile: werkzeug.datastructures.FileStorage
     :param name:
     :type name: str
@@ -362,7 +317,7 @@ def upload_dataset_file(id, uploadfile):  # noqa: E501
 
     :param id: The id of the dataset.
     :type id: str
-    :param uploadfile: The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)  # noqa: E501
+    :param uploadfile: The file to upload, overwriting existing. Can be a GZip-compressed TAR file (.tgz), a YAML file (.yaml), Python script (.py), or Markdown file (.md)
     :type uploadfile: werkzeug.datastructures.FileStorage
 
     :rtype: ApiDataset
@@ -372,19 +327,13 @@ def upload_dataset_file(id, uploadfile):  # noqa: E501
     file_ext = file_name.split(".")[-1]
 
     if file_ext not in ["tgz", "gz", "yaml", "yml", "py", "md"]:
-        return (
-            f"File extension not supported: '{file_ext}', uploadfile: '{file_name}'.",
-            501,
-        )
+        return f"File extension not supported: '{file_ext}', uploadfile: '{file_name}'.", 501
 
     if file_ext in ["tgz", "gz", "yaml", "yml"]:
         delete_dataset(id)
         return upload_dataset(uploadfile, existing_id=id)
     else:
-        return (
-            f"The API method 'upload_dataset_file' is not implemented for file type '{file_ext}'.",
-            501,
-        )
+        return f"The API method 'upload_dataset_file' is not implemented for file type '{file_ext}'.", 501
 
     return "Not implemented (yet).", 501
 
@@ -409,7 +358,6 @@ def upload_dataset_from_url(url, name=None, access_token=None):  # noqa: E501
 ###############################################################################
 #   private helper methods, not swagger-generated
 ###############################################################################
-
 
 def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None):
 
@@ -438,7 +386,7 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
     domain = yaml_dict["domain"]
     format_type = yaml_dict["format"][0]["type"]
     size = yaml_dict["content"][0].get("size")
-    version = yaml_dict["version"]
+    yaml_dict["version"]
     filter_categories = yaml_dict.get("filter_categories") or dict()
 
     # # extract number of records and convert thousand separators based on Locale
@@ -453,19 +401,15 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
     # number_of_records = int(num_records_number_str)
     number_of_records = yaml_dict["content"][0].get("records", 0)
 
-    related_assets = [
-        a["application"].get("asset_id")
-        for a in yaml_dict.get("related_assets", [])
-        if "MLX" in a.get("application", {}).get("name", "")
-        and "asset_id" in a.get("application", {})
-    ]
+    related_assets = [a["application"].get("asset_id")
+                      for a in yaml_dict.get("related_assets", [])
+                      if "MLX" in a.get("application", {}).get("name", "")
+                      and "asset_id" in a.get("application", {})]
 
     template_metadata = yaml_dict.get("metadata") or dict()
-    metadata = ApiMetadata(
-        annotations=template_metadata.get("annotations"),
-        labels=template_metadata.get("labels"),
-        tags=template_metadata.get("tags") or yaml_dict.get("seo_tags"),
-    )
+    metadata = ApiMetadata(annotations=template_metadata.get("annotations"),
+                           labels=template_metadata.get("labels"),
+                           tags=template_metadata.get("tags") or yaml_dict.get("seo_tags"))
 
     # TODO: add "version" to ApiDataset
 
@@ -481,20 +425,16 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
         license=license_name,
         metadata=metadata,
         related_assets=related_assets,
-        filter_categories=filter_categories,
+        filter_categories=filter_categories
     )
 
     uuid = store_data(api_dataset)
 
     api_dataset.id = uuid
 
-    store_file(
-        bucket_name="mlpipeline",
-        prefix=f"datasets/{api_dataset.id}/",
-        file_name="template.yaml",
-        file_content=yaml_file_content,
-        content_type="text/yaml",
-    )
+    store_file(bucket_name="mlpipeline", prefix=f"datasets/{api_dataset.id}/",
+               file_name="template.yaml", file_content=yaml_file_content,
+               content_type="text/yaml")
 
     enable_anonymous_read_access(bucket_name="mlpipeline", prefix="datasets/*")
 

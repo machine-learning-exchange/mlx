@@ -14,10 +14,10 @@
 """
 
 
-import pprint  # noqa: F401
+import pprint
 import re  # noqa: F401
 
-import six  # noqa: F401
+import six
 
 
 class ApiCatalogUpload(object):
@@ -34,32 +34,24 @@ class ApiCatalogUpload(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "api_access_tokens": "list[ApiAccessToken]",
-        "components": "list[ApiCatalogUploadItem]",
-        "datasets": "list[ApiCatalogUploadItem]",
-        "models": "list[ApiCatalogUploadItem]",
-        "notebooks": "list[ApiCatalogUploadItem]",
-        "pipelines": "list[ApiCatalogUploadItem]",
+        'api_access_tokens': 'list[ApiAccessToken]',
+        'components': 'list[ApiCatalogUploadItem]',
+        'datasets': 'list[ApiCatalogUploadItem]',
+        'models': 'list[ApiCatalogUploadItem]',
+        'notebooks': 'list[ApiCatalogUploadItem]',
+        'pipelines': 'list[ApiCatalogUploadItem]'
     }
 
     attribute_map = {
-        "api_access_tokens": "api_access_tokens",
-        "components": "components",
-        "datasets": "datasets",
-        "models": "models",
-        "notebooks": "notebooks",
-        "pipelines": "pipelines",
+        'api_access_tokens': 'api_access_tokens',
+        'components': 'components',
+        'datasets': 'datasets',
+        'models': 'models',
+        'notebooks': 'notebooks',
+        'pipelines': 'pipelines'
     }
 
-    def __init__(
-        self,
-        api_access_tokens=None,
-        components=None,
-        datasets=None,
-        models=None,
-        notebooks=None,
-        pipelines=None,
-    ):  # noqa: E501
+    def __init__(self, api_access_tokens=None, components=None, datasets=None, models=None, notebooks=None, pipelines=None):  # noqa: E501
         """ApiCatalogUpload - a model defined in Swagger"""  # noqa: E501
 
         self._api_access_tokens = None
@@ -218,20 +210,18 @@ class ApiCatalogUpload(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(ApiCatalogUpload, dict):

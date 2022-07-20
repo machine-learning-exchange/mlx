@@ -76,3 +76,15 @@ lint_javascript: ## Check Javascript code style compliance
 .PHONY: lint
 lint: lint_javascript lint_python ## Check for code style violations (JavaScript, Python)
 	@echo "$@: OK"
+
+.PHONY: format_python
+format_python:
+	@which autoflake > /dev/null || pip install autoflake
+	@which autopep8 > /dev/null || pip install autopep8
+	@autoflake api tools/python -i --recursive --remove-all-unused-imports \
+		--ignore-init-module-imports --remove-unused-variables
+	@autopep8 api/ tools/python/ -i --recursive -a -a -a  --experimental \
+		--select=E9,E2,E3,E5,F63,F7,F82,F4,F841,W291 \
+		--exclude .git,__pycache__,docs/source/conf.py,old,build,dist,venv \
+		--max-line-length=140
+	@echo "$@: OK"

@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiSettingsSection(Model):
@@ -19,12 +19,7 @@ class ApiSettingsSection(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        name: str = None,
-        description: str = None,
-        settings: List[ApiParameter] = None,
-    ):  # noqa: E501
+    def __init__(self, name: str = None, description: str = None, settings: List[ApiParameter] = None):  # noqa: E501
         """ApiSettingsSection - a model defined in Swagger
 
         :param name: The name of this ApiSettingsSection.  # noqa: E501
@@ -35,15 +30,15 @@ class ApiSettingsSection(Model):
         :type settings: List[ApiParameter]
         """
         self.swagger_types = {
-            "name": str,
-            "description": str,
-            "settings": List[ApiParameter],
+            'name': str,
+            'description': str,
+            'settings': List[ApiParameter]
         }
 
         self.attribute_map = {
-            "name": "name",
-            "description": "description",
-            "settings": "settings",
+            'name': 'name',
+            'description': 'description',
+            'settings': 'settings'
         }
 
         self._name = name
@@ -51,7 +46,7 @@ class ApiSettingsSection(Model):
         self._settings = settings
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiSettingsSection":
+    def from_dict(cls, dikt) -> 'ApiSettingsSection':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -82,9 +77,7 @@ class ApiSettingsSection(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 

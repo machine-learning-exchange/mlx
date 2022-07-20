@@ -18,11 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_get_template_response import (  # noqa: F401
-    ApiGetTemplateResponse,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_get_template_response import ApiGetTemplateResponse  # noqa: E501
 
 
 class TestApiGetTemplateResponse(unittest.TestCase):
@@ -37,9 +33,8 @@ class TestApiGetTemplateResponse(unittest.TestCase):
     def testApiGetTemplateResponse(self):
         """Test ApiGetTemplateResponse"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_get_template_response.ApiGetTemplateResponse()
-        pass
+        # model = swagger_client.models.api_get_template_response.ApiGetTemplateResponse()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

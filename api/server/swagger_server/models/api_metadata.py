@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiMetadata(Model):
@@ -18,12 +18,7 @@ class ApiMetadata(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        annotations: Dict[str, str] = None,
-        labels: Dict[str, str] = None,
-        tags: List[str] = None,
-    ):  # noqa: E501
+    def __init__(self, annotations: Dict[str, str] = None, labels: Dict[str, str] = None, tags: List[str] = None):  # noqa: E501
         """ApiMetadata - a model defined in Swagger
 
         :param annotations: The annotations of this ApiMetadata.  # noqa: E501
@@ -34,15 +29,15 @@ class ApiMetadata(Model):
         :type tags: List[str]
         """
         self.swagger_types = {
-            "annotations": Dict[str, str],
-            "labels": Dict[str, str],
-            "tags": List[str],
+            'annotations': Dict[str, str],
+            'labels': Dict[str, str],
+            'tags': List[str]
         }
 
         self.attribute_map = {
-            "annotations": "annotations",
-            "labels": "labels",
-            "tags": "tags",
+            'annotations': 'annotations',
+            'labels': 'labels',
+            'tags': 'tags'
         }
 
         self._annotations = annotations
@@ -50,7 +45,7 @@ class ApiMetadata(Model):
         self._tags = tags
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiMetadata":
+    def from_dict(cls, dikt) -> 'ApiMetadata':
         """Returns the dict as a model
 
         :param dikt: A dict.

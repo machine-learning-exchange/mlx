@@ -9,7 +9,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiGetTemplateResponse(Model):
@@ -26,15 +26,21 @@ class ApiGetTemplateResponse(Model):
         :param url: The url of this ApiGetTemplateResponse.  # noqa: E501
         :type url: str
         """
-        self.swagger_types = {"template": str, "url": str}
+        self.swagger_types = {
+            'template': str,
+            'url': str
+        }
 
-        self.attribute_map = {"template": "template", "url": "url"}
+        self.attribute_map = {
+            'template': 'template',
+            'url': 'url'
+        }
 
         self._template = template
         self._url = url
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiGetTemplateResponse":
+    def from_dict(cls, dikt) -> 'ApiGetTemplateResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -71,7 +77,7 @@ class ApiGetTemplateResponse(Model):
     def url(self) -> str:
         """Gets the url of this ApiGetTemplateResponse.
 
-        The URL to download the template text from S3 storage (Minio)
+        The URL to download the template text from S3 storage (Minio)  # noqa: E501
 
         :return: The url of this ApiGetTemplateResponse.
         :rtype: str
@@ -82,7 +88,7 @@ class ApiGetTemplateResponse(Model):
     def url(self, url: str):
         """Sets the url of this ApiGetTemplateResponse.
 
-        The URL to download the template text from S3 storage (Minio)
+        The URL to download the template text from S3 storage (Minio)  # noqa: E501
 
         :param url: The url of this ApiGetTemplateResponse.
         :type url: str

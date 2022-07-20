@@ -10,7 +10,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_component import ApiComponent  # noqa: F401,E501
-from swagger_server import util  # noqa: F401
+from swagger_server import util
 
 
 class ApiListComponentsResponse(Model):
@@ -19,12 +19,7 @@ class ApiListComponentsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self,
-        components: List[ApiComponent] = None,
-        total_size: int = None,
-        next_page_token: str = None,
-    ):  # noqa: E501
+    def __init__(self, components: List[ApiComponent] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListComponentsResponse - a model defined in Swagger
 
         :param components: The components of this ApiListComponentsResponse.  # noqa: E501
@@ -35,15 +30,15 @@ class ApiListComponentsResponse(Model):
         :type next_page_token: str
         """
         self.swagger_types = {
-            "components": List[ApiComponent],
-            "total_size": int,
-            "next_page_token": str,
+            'components': List[ApiComponent],
+            'total_size': int,
+            'next_page_token': str
         }
 
         self.attribute_map = {
-            "components": "components",
-            "total_size": "total_size",
-            "next_page_token": "next_page_token",
+            'components': 'components',
+            'total_size': 'total_size',
+            'next_page_token': 'next_page_token'
         }
 
         self._components = components
@@ -51,7 +46,7 @@ class ApiListComponentsResponse(Model):
         self._next_page_token = next_page_token
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiListComponentsResponse":
+    def from_dict(cls, dikt) -> 'ApiListComponentsResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

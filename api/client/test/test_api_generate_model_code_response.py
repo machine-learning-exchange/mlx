@@ -18,11 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client  # noqa: F401
-from swagger_client.models.api_generate_model_code_response import (  # noqa: F401
-    ApiGenerateModelCodeResponse,
-)
-from swagger_client.rest import ApiException  # noqa: F401
+from swagger_client.models.api_generate_model_code_response import ApiGenerateModelCodeResponse  # noqa: E501
 
 
 class TestApiGenerateModelCodeResponse(unittest.TestCase):
@@ -37,9 +33,8 @@ class TestApiGenerateModelCodeResponse(unittest.TestCase):
     def testApiGenerateModelCodeResponse(self):
         """Test ApiGenerateModelCodeResponse"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.api_generate_model_code_response.ApiGenerateModelCodeResponse()
-        pass
+        # model = swagger_client.models.api_generate_model_code_response.ApiGenerateModelCodeResponse()  # noqa: E501
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
