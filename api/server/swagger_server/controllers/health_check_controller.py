@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-import connexion
-import six
 
 from swagger_server.models.api_status import ApiStatus  # noqa: E501
 from swagger_server import util

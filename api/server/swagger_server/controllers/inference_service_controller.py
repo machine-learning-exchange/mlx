@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
-import six
 
 from swagger_server.models.api_inferenceservice import ApiInferenceservice  # noqa: E501
 from swagger_server.models.api_list_inferenceservices_response import ApiListInferenceservicesResponse  # noqa: E501

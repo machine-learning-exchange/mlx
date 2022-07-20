@@ -19,7 +19,7 @@ class ApiGenerateModelCodeResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, scripts: List[ApiModelScript]=None):  # noqa: E501
+    def __init__(self, scripts: List[ApiModelScript] = None):  # noqa: E501
         """ApiGenerateModelCodeResponse - a model defined in Swagger
 
         :param scripts: The scripts of this ApiGenerateModelCodeResponse.  # noqa: E501

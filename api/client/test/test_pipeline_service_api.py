@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -20,7 +20,6 @@ import unittest
 
 import swagger_client
 from swagger_client.api.pipeline_service_api import PipelineServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestPipelineServiceApi(unittest.TestCase):
@@ -36,56 +35,47 @@ class TestPipelineServiceApi(unittest.TestCase):
         """Test case for approve_pipelines_for_publishing
 
         """
-        pass
 
     def test_create_pipeline(self):
         """Test case for create_pipeline
 
         """
-        pass
 
     def test_delete_pipeline(self):
         """Test case for delete_pipeline
 
         """
-        pass
 
     def test_download_pipeline_files(self):
         """Test case for download_pipeline_files
 
         Returns the pipeline YAML compressed into a .tgz (.tar.gz) file.  # noqa: E501
         """
-        pass
 
     def test_get_pipeline(self):
         """Test case for get_pipeline
 
         """
-        pass
 
     def test_get_template(self):
         """Test case for get_template
 
         """
-        pass
 
     def test_list_pipelines(self):
         """Test case for list_pipelines
 
         """
-        pass
 
     def test_set_featured_pipelines(self):
         """Test case for set_featured_pipelines
 
         """
-        pass
 
     def test_upload_pipeline(self):
         """Test case for upload_pipeline
 
         """
-        pass
 
 
 if __name__ == '__main__':

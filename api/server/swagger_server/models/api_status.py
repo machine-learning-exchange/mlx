@@ -19,7 +19,7 @@ class ApiStatus(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, error: str=None, code: int=None, details: List[ProtobufAny]=None):  # noqa: E501
+    def __init__(self, error: str = None, code: int = None, details: List[ProtobufAny] = None):  # noqa: E501
         """ApiStatus - a model defined in Swagger
 
         :param error: The error of this ApiStatus.  # noqa: E501

@@ -1,8 +1,8 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
+*/
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
-import LinearProgress from '@material-ui/core/LinearProgress'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 export interface IDataListItemProps {
   name?: string;
@@ -32,16 +32,17 @@ export interface IDataListItemProps {
   progress?: number;
 }
 
-export default function DataListItem (props: IDataListItemProps) {
+export default function DataListItem(props: IDataListItemProps) {
   return (
     <div>
       <Grid container>
         <Grid item xs={3}>
           <dt>
-            <Typography 
-              variant="subtitle1" 
-              className="model-meta-heading">
-              { props.name || `` }
+            <Typography
+              variant="subtitle1"
+              className="model-meta-heading"
+            >
+              { props.name || '' }
             </Typography>
           </dt>
         </Grid>
@@ -50,17 +51,20 @@ export default function DataListItem (props: IDataListItemProps) {
             { buildItem(props) }
           </dd>
         </Grid>
-        {props.thirdColData &&
+        {props.thirdColData
+            && (
             <Grid item xs={3}>
               <dd className="param-text">
-                <Typography 
-                    variant="subheading">
+                <Typography
+                  variant="subheading"
+                >
                   { props.thirdColData }
                 </Typography>
               </dd>
             </Grid>
-        }
-        {props.defaultData && 
+            )}
+        {props.defaultData
+          && (
           <Grid container>
             <Grid item xs={3}>
               <dt className="default">
@@ -73,133 +77,140 @@ export default function DataListItem (props: IDataListItemProps) {
               </dd>
             </Grid>
           </Grid>
-        }
+          )}
       </Grid>
-      <hr className="parameter-divider"/>
+      <hr className="parameter-divider" />
     </div>
   );
 }
 
 const buildItem = (props:any) => {
-  const { name, 
-    itemClass, 
-    data, 
-    options, 
-    savedValue, 
-    handleClick, 
-    handleType, 
-    handleSelect, 
+  const {
+    name,
+    itemClass,
+    data,
+    options,
+    savedValue,
+    handleClick,
+    handleType,
+    handleSelect,
     saveValue,
     handleFile,
-    progress
+    progress,
   } = props;
 
   if (itemClass === 'model-link') {
     return (
       <Typography variant="subheading">
         <a
-          className={ itemClass }
+          className={itemClass}
           target="_blank"
           rel="noopener noreferrer"
-          href={data}>   
-          { data || `` }
+          href={data}
+        >
+          { data || '' }
         </a>
       </Typography>
-    )
-  } else if (itemClass === 'drop-down') {
+    );
+  } if (itemClass === 'drop-down') {
     return (
-        <Select
-          native
-          value={ data }
-          onChange={ handleSelect(name) }>
-          { options.map((opt:any, i:number) => <option key={i} value={opt}>{opt}</option>) }
-        </Select>      
-    )
-  } else if (itemClass === 'toggle-switch') {
+      <Select
+        native
+        value={data}
+        onChange={handleSelect(name)}
+      >
+        { options.map((opt:any, i:number) => <option key={i} value={opt}>{opt}</option>) }
+      </Select>
+    );
+  } if (itemClass === 'toggle-switch') {
     return (
       <FormControlLabel
-        className={ `settings-toggle ${ Boolean(data) ? `checked` : `unchecked` }` }
-        control={
-          <Switch 
-            value={ name }
-            checked={ Boolean(data) } 
-            onChange={ handleClick(name) }
+        className={`settings-toggle ${data ? 'checked' : 'unchecked'}`}
+        control={(
+          <Switch
+            value={name}
+            checked={Boolean(data)}
+            onChange={handleClick(name)}
           />
-        }
+        )}
         label={String(data)}
       />
-    )
-  } else if (itemClass === 'text-input') {
+    );
+  } if (itemClass === 'text-input') {
     return (
-      <span className='text-input-settings-wrapper'>
+      <span className="text-input-settings-wrapper">
         <TextField
           autoCorrect="false"
           className=""
-          placeholder={ savedValue }
-          value={ data }
+          placeholder={savedValue}
+          value={data}
           variant="outlined"
           margin="dense"
           InputLabelProps={{
             shrink: true,
           }}
-          onChange={ handleType(name) }
-        />    
-        { data !== savedValue &&
-          <Button 
-            className='text-input-settings-save'
-            onClick={ saveValue(name) } >
+          onChange={handleType(name)}
+        />
+        { data !== savedValue
+          && (
+          <Button
+            className="text-input-settings-save"
+            onClick={saveValue(name)}
+          >
             save
           </Button>
-        }
+          )}
       </span>
-    )
-  } else if (itemClass === 'file-button') {
+    );
+  } if (itemClass === 'file-button') {
     if (!progress && progress !== 0) {
       return (
         <div className="file-button-wrapper">
-          <Button 
-            className="hero-buttons upload-button" 
-            variant="contained" 
-            color="primary">
-            {`Choose Catalog`}
+          <Button
+            className="hero-buttons upload-button"
+            variant="contained"
+            color="primary"
+          >
+            Choose Catalog
           </Button>
-          <input 
+          <input
             type="file"
             name="component-file"
-            onChange={ handleFile }
+            onChange={handleFile}
             accept=".json"
           />
         </div>
-      )
+      );
     }
-    else {
-      return (
-        <>
-          <LinearProgress variant="determinate" value={progress}/>
-          <Typography variant="body2" color="textSecondary">{`${Math.round(
+
+    return (
+      <>
+        <LinearProgress variant="determinate" value={progress} />
+        <Typography variant="body2" color="textSecondary">
+          {`${Math.round(
             progress,
-          )}%`}</Typography>
-        </>
-      )
-    }
-  } else if (itemClass === 'button') {
+          )}%`}
+        </Typography>
+      </>
+    );
+  } if (itemClass === 'button') {
     return (
       <Button
-        className="hero-buttons upload-button" 
-        variant="contained" 
+        className="hero-buttons upload-button"
+        variant="contained"
         color="primary"
         onClick={handleClick}
       >
         {name}
       </Button>
-    )
-  } else {
-    return (
-      <Typography 
-        className={ itemClass }
-        variant="subheading">
-        { data || `` }
-      </Typography>
-    )
+    );
   }
-}
+  return (
+    <Typography
+      className={itemClass}
+      variant="subheading"
+    >
+      { data || '' }
+    </Typography>
+  );
+};

@@ -18,7 +18,7 @@ class ApiCatalogUploadError(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, url: str=None, error_message: str=None, status_code: int=None):  # noqa: E501
+    def __init__(self, name: str = None, url: str = None, error_message: str = None, status_code: int = None):  # noqa: E501
         """ApiCatalogUploadError - a model defined in Swagger
 
         :param name: The name of this ApiCatalogUploadError.  # noqa: E501

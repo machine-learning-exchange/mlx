@@ -1,14 +1,13 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React from 'react'
-import { withStyles, WithStyles } from '@material-ui/core'
+*/
+import React from 'react';
+import { withStyles, WithStyles } from '@material-ui/core';
 
-import MetaCard from './MetaCard'
-
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
+import MetaCard from './MetaCard';
 
 interface MetaFeaturedProps extends WithStyles<typeof styles> {
   assets: any[]
@@ -20,13 +19,13 @@ const styles = {
   wrapper: {
     overflow: 'auto',
     padding: '0.8rem 0.6rem',
-    flex: '1 0 auto'
+    flex: '1 0 auto',
   },
   card: {
     // width: '20%'
     // maxWidth: '275px'
-  }
-}
+  },
+};
 
 const getDetails = (asset: any, type: string) => {
   switch (type) {
@@ -34,56 +33,64 @@ const getDetails = (asset: any, type: string) => {
       return {
         tag: asset.metadata?.annotations?.category
           || 'OpenSource',
-        link: '/pipelines'
-      }
+        link: '/pipelines',
+      };
     case 'datasets':
       return {
         tag: asset.metadata?.annotations?.category
           || 'OpenSource',
-        link: '/datasets'
-      }
+        link: '/datasets',
+      };
     case 'components':
       return {
         tag: asset.metadata?.annotations?.platform
           || 'OpenSource',
-        link: '/components'
-      }
+        link: '/components',
+      };
     case 'models':
       return {
         tag: asset.domain,
         link: '/models',
-        framework: asset.framework.name
-      }
+        framework: asset.framework.name,
+      };
     case 'operators':
       return {
         tag: asset.metadata.annotations.categories,
-        link: '/operators'
-      }
+        link: '/operators',
+      };
     case 'notebooks':
       return {
         tag: asset.metadata.annotations.platform,
         title: asset.name,
-        link: '/notebooks'
-      }
+        link: '/notebooks',
+      };
   }
-}
+};
 
 function MetaFeatured(props: MetaFeaturedProps) {
-  const { assets, assetType, classes } = props
+  const { assets, assetType, classes } = props;
   return (
     <div className={classes.wrapper}>
-      <Grid container
+      <Grid
+        container
         spacing={16}
         alignItems="flex-start"
         justify="flex-start"
         style={{ overflow: 'auto' }}
       >
-        { assets.map(asset => {
-          const { name, description } = asset
+        { assets.map((asset) => {
+          const { name, description } = asset;
           const { tag, link, framework } = getDetails(asset, assetType);
           return (
-            <Grid item key={name} xs md={4}
-             lg={3} xl={2} className={classes.card} >
+            <Grid
+              item
+              key={name}
+              xs
+              md={4}
+              lg={3}
+              xl={2}
+              className={classes.card}
+            >
               <MetaCard
                 name={name}
                 description={description}
@@ -93,11 +100,11 @@ function MetaFeatured(props: MetaFeaturedProps) {
                 asset={asset}
               />
             </Grid>
-          )
+          );
         })}
       </Grid>
     </div>
-  )
+  );
 }
 
-export default withStyles(styles)(MetaFeatured)
+export default withStyles(styles)(MetaFeatured);

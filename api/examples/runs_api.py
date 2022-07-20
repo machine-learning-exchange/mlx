@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 
 import json
@@ -84,7 +84,7 @@ def list_runs(experiment_name: str = None):
     runs = sorted(runs, key=lambda r: r.created_at, reverse=True)
     for i, r in enumerate(runs):
         # pprint(r)
-        print("%2i: %s  %s  %s  (%s)" % (i+1, r.id, r.created_at.strftime("%Y-%m-%d %H:%M:%S"), r.name, r.status))
+        print("%2i: %s  %s  %s  (%s)" % (i + 1, r.id, r.created_at.strftime("%Y-%m-%d %H:%M:%S"), r.name, r.status))
 
     return runs
 

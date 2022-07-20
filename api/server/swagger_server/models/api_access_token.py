@@ -18,7 +18,7 @@ class ApiAccessToken(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, api_token: str=None, url_host: str=None):  # noqa: E501
+    def __init__(self, api_token: str = None, url_host: str = None):  # noqa: E501
         """ApiAccessToken - a model defined in Swagger
 
         :param api_token: The api_token of this ApiAccessToken.  # noqa: E501

@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
@@ -212,7 +212,7 @@ def approve_notebooks_for_publishing(notebook_ids: [str]):
     api_instance = swagger_client.NotebookServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.approve_notebooks_for_publishing(notebook_ids)
+        api_instance.approve_notebooks_for_publishing(notebook_ids)
 
     except ApiException as e:
         print("Exception when calling NotebookServiceApi -> approve_notebooks_for_publishing: %s\n" % e, file=stderr)
@@ -227,7 +227,7 @@ def set_featured_notebooks(notebook_ids: [str]):
     api_instance = swagger_client.NotebookServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.set_featured_notebooks(notebook_ids)
+        api_instance.set_featured_notebooks(notebook_ids)
 
     except ApiException as e:
         print("Exception when calling NotebookServiceApi -> set_featured_notebooks: %s\n" % e, file=stderr)
@@ -400,7 +400,7 @@ def main():
     approve_notebooks_for_publishing(notebook_ids)
 
     # randomly selected a notebook
-    i = random.randint(0, len(notebook_ids)-1)
+    i = random.randint(0, len(notebook_ids) - 1)
     notebook_id = notebook_ids[i]
 
     # show one randomly selected notebook

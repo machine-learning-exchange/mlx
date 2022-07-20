@@ -19,7 +19,7 @@ class ApiPipelineDAG(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, tasks: List[ApiPipelineTask]=None):  # noqa: E501
+    def __init__(self, tasks: List[ApiPipelineTask] = None):  # noqa: E501
         """ApiPipelineDAG - a model defined in Swagger
 
         :param tasks: The tasks of this ApiPipelineDAG.  # noqa: E501

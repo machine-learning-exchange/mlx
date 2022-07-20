@@ -7,12 +7,14 @@
 import * as dagre from 'dagre';
 import * as React from 'react';
 import { classes, stylesheet } from 'typestyle';
-import { fontsize, color, fonts, zIndex } from '../Css';
 import Tooltip from '@material-ui/core/Tooltip';
+import {
+  fontsize, color, fonts, zIndex,
+} from '../Css';
 
 export const Constants = {
-    NODE_HEIGHT: 64,
-    NODE_WIDTH: 172,
+  NODE_HEIGHT: 64,
+  NODE_WIDTH: 172,
 };
 
 interface Segment {
@@ -34,10 +36,10 @@ interface Edge {
 
 const css = stylesheet({
   arrowHead: {
-    borderColor: color.grey + ' transparent transparent transparent',
+    borderColor: `${color.grey} transparent transparent transparent`,
     borderStyle: 'solid',
     borderWidth: '7px 6px 0 6px',
-    content: `''`,
+    content: '\'\'',
     position: 'absolute',
   },
   icon: {
@@ -87,7 +89,7 @@ const css = stylesheet({
   },
   root: {
     backgroundColor: color.graphBg,
-    borderLeft: 'solid 1px ' + color.divider,
+    borderLeft: `solid 1px ${color.divider}`,
     flexGrow: 1,
     overflow: 'auto',
     position: 'relative',
@@ -130,8 +132,11 @@ class GraphErrorBoundary extends React.Component<GraphErrorBoundaryProps> {
 
 export class Graph extends React.Component<GraphProps, GraphState> {
   private LEFT_OFFSET = 100;
+
   private TOP_OFFSET = 44;
+
   private EDGE_THICKNESS = 2;
+
   private EDGE_X_BUFFER = Math.round(Constants.NODE_WIDTH / 6);
 
   constructor(props: any) {
@@ -151,12 +156,12 @@ export class Graph extends React.Component<GraphProps, GraphState> {
     const displayEdges: Edge[] = [];
 
     // Creates the lines that constitute the edges connecting the graph.
-    graph.edges().forEach(edgeInfo => {
+    graph.edges().forEach((edgeInfo) => {
       const edge = graph.edge(edgeInfo);
       const segments: Segment[] = [];
 
       if (edge.points.length > 1) {
-        for (let i = 1; i < edge.points.length; i++) {
+        for (let i = 1; i < edge.points.length; i += 1) {
           let xStart = edge.points[i - 1].x;
           let yStart = edge.points[i - 1].y;
           let xEnd = edge.points[i].x;
@@ -258,7 +263,7 @@ export class Graph extends React.Component<GraphProps, GraphState> {
       <div className={css.root}>
         {graph
           .nodes()
-          .map(id => Object.assign(graph.node(id), { id }))
+          .map((id) => Object.assign(graph.node(id), { id }))
           .map((node, i) => (
             <div
               className={classes(
@@ -277,9 +282,7 @@ export class Graph extends React.Component<GraphProps, GraphState> {
                   this.setState({ hoveredNode: undefined });
                 }
               }}
-              onClick={() =>
-                !node.isPlaceholder && this.props.onClick && this.props.onClick(node.id)
-              }
+              onClick={() => !node.isPlaceholder && this.props.onClick && this.props.onClick(node.id)}
               style={{
                 backgroundColor: node.bgColor,
                 left: node.x,
@@ -349,7 +352,7 @@ export class Graph extends React.Component<GraphProps, GraphState> {
   ): void {
     const xMid = (xStart + xEnd) / 2;
     // The + 0.5 at the end of 'length' helps fill out the elbows of the edges.
-    const length = Math.sqrt(Math.pow(xStart - xEnd, 2) + Math.pow(yStart - yEnd, 2)) + 0.5;
+    const length = Math.sqrt((xStart - xEnd) ** 2 + (yStart - yEnd) ** 2) + 0.5;
     const x1 = xMid - length / 2;
     const y1 = (yStart + yEnd) / 2;
     const angle = (Math.atan2(yStart - yEnd, xStart - xEnd) * 180) / Math.PI;
@@ -403,11 +406,13 @@ export class Graph extends React.Component<GraphProps, GraphState> {
   }
 }
 
-const EnhancedGraph = (props: GraphProps & GraphErrorBoundaryProps) => (
-  <GraphErrorBoundary onError={props.onError}>
-    <Graph {...props} />
-  </GraphErrorBoundary>
-);
+function EnhancedGraph(props: GraphProps & GraphErrorBoundaryProps) {
+  return (
+    <GraphErrorBoundary onError={props.onError}>
+      <Graph {...props} />
+    </GraphErrorBoundary>
+  );
+}
 EnhancedGraph.displayName = 'EnhancedGraph';
 
 export default EnhancedGraph;

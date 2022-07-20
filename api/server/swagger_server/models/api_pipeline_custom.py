@@ -20,7 +20,7 @@ class ApiPipelineCustom(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, dag: ApiPipelineDAG=None, inputs: ApiPipelineInputs=None, name: str=None, description: str=None):  # noqa: E501
+    def __init__(self, dag: ApiPipelineDAG = None, inputs: ApiPipelineInputs = None, name: str = None, description: str = None):  # noqa: E501
         """ApiPipelineCustom - a model defined in Swagger
 
         :param dag: The dag of this ApiPipelineCustom.  # noqa: E501

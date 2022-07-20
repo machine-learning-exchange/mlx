@@ -56,6 +56,7 @@ def model_pipeline(model_id='${model_identifier}'):
 #              Compile the pipeline
 ############################################################
 
+
 pipeline_function = model_pipeline
 pipeline_filename = path.join(gettempdir(),
                               pipeline_function.__name__ + '.tar.gz')

@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 from swagger_server.data_access import minio_client
 from swagger_server.data_access import mysql_client
 from swagger_server.models.api_status import ApiStatus

@@ -23,7 +23,7 @@ class ApiListCatalogItemsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, components: List[ApiComponent]=None, datasets: List[ApiDataset]=None, models: List[ApiModel]=None, notebooks: List[ApiNotebook]=None, pipelines: List[ApiPipeline]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(self, components: List[ApiComponent] = None, datasets: List[ApiDataset] = None, models: List[ApiModel] = None, notebooks: List[ApiNotebook] = None, pipelines: List[ApiPipeline] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListCatalogItemsResponse - a model defined in Swagger
 
         :param components: The components of this ApiListCatalogItemsResponse.  # noqa: E501

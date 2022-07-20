@@ -20,7 +20,7 @@ class ApiModel(ApiAsset):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, featured: bool=None, publish_approved: bool=None, related_assets: List[str]=None, filter_categories: Dict[str, str]=None, domain: str=None, labels: Dict[str, str]=None, framework: ApiModelFramework=None, trainable: bool=None, trainable_tested_platforms: List[str]=None, trainable_credentials_required: bool=None, trainable_parameters: List[ApiParameter]=None, servable: bool=None, servable_tested_platforms: List[str]=None, servable_credentials_required: bool=None, servable_parameters: List[ApiParameter]=None):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, featured: bool = None, publish_approved: bool = None, related_assets: List[str] = None, filter_categories: Dict[str, str] = None, domain: str = None, labels: Dict[str, str] = None, framework: ApiModelFramework = None, trainable: bool = None, trainable_tested_platforms: List[str] = None, trainable_credentials_required: bool = None, trainable_parameters: List[ApiParameter] = None, servable: bool = None, servable_tested_platforms: List[str] = None, servable_credentials_required: bool = None, servable_parameters: List[ApiParameter] = None):  # noqa: E501
         """ApiModel - a model defined in Swagger
 
         :param id: The id of this ApiModel.  # noqa: E501

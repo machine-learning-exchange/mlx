@@ -18,7 +18,7 @@ class ApiMetadata(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, annotations: Dict[str, str]=None, labels: Dict[str, str]=None, tags: List[str]=None):  # noqa: E501
+    def __init__(self, annotations: Dict[str, str] = None, labels: Dict[str, str] = None, tags: List[str] = None):  # noqa: E501
         """ApiMetadata - a model defined in Swagger
 
         :param annotations: The annotations of this ApiMetadata.  # noqa: E501

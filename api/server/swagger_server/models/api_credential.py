@@ -18,7 +18,7 @@ class ApiCredential(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, pipeline_id: str=None, project_id: str=None, api_key: str=None, data_assets: List[str]=None):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, pipeline_id: str = None, project_id: str = None, api_key: str = None, data_assets: List[str] = None):  # noqa: E501
         """ApiCredential - a model defined in Swagger
 
         :param id: The id of this ApiCredential.  # noqa: E501

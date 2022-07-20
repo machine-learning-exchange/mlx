@@ -19,7 +19,7 @@ class ApiInferenceservice(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, api_version: str=None, kind: str=None, metadata: AnyValue=None, spec: AnyValue=None):  # noqa: E501
+    def __init__(self, api_version: str = None, kind: str = None, metadata: AnyValue = None, spec: AnyValue = None):  # noqa: E501
         """ApiInferenceservice - a model defined in Swagger
 
         :param api_version: The api_version of this ApiInferenceservice.  # noqa: E501

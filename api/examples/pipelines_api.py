@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
@@ -13,16 +13,13 @@ import swagger_client
 import tarfile
 import tempfile
 import typing
-import yaml
 
 from io import BytesIO
-from os import environ as env
 from pprint import pprint
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiPipeline, ApiGetTemplateResponse, ApiListPipelinesResponse, \
-    ApiGenerateCodeResponse, ApiRunCodeResponse, ApiPipelineExtended, ApiPipelineCustom, ApiPipelineCustomRunPayload, \
-    ApiPipelineTask, ApiComponent, ApiNotebook, ApiPipelineTaskArguments, ApiPipelineDAG, ApiPipelineInputs, \
-    ApiParameter
+    ApiRunCodeResponse, ApiPipelineExtended, ApiPipelineCustom, ApiPipelineCustomRunPayload, ApiPipelineTask, \
+    ApiComponent, ApiNotebook, ApiPipelineTaskArguments, ApiPipelineDAG, ApiPipelineInputs, ApiParameter
 from swagger_client.rest import ApiException
 from sys import stderr
 from types import SimpleNamespace as custom_obj
@@ -194,7 +191,7 @@ def approve_pipelines_for_publishing(pipeline_ids: [str]):
     api_instance = swagger_client.PipelineServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.approve_pipelines_for_publishing(pipeline_ids)
+        api_instance.approve_pipelines_for_publishing(pipeline_ids)
 
     except ApiException as e:
         print("Exception when calling PipelineServiceApi -> approve_pipelines_for_publishing: %s\n" % e, file=stderr)
@@ -209,7 +206,7 @@ def set_featured_pipelines(pipeline_ids: [str]):
     api_instance = swagger_client.PipelineServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.set_featured_pipelines(pipeline_ids)
+        api_instance.set_featured_pipelines(pipeline_ids)
 
     except ApiException as e:
         print("Exception when calling PipelineServiceApi -> set_featured_pipelines: %s\n" % e, file=stderr)
@@ -326,8 +323,8 @@ def generate_custom_pipeline(sequential_only=False) -> ApiPipelineCustom:
                                 dependencies=[]))
 
         if sequential_only:
-            for i in range(len(tasks)-1):
-                tasks[i+1].dependencies = [tasks[i].name]
+            for i in range(len(tasks) - 1):
+                tasks[i + 1].dependencies = [tasks[i].name]
         else:
             for i in range(len(tasks)):
                 num_deps = random.randint(0, i)
@@ -450,7 +447,7 @@ def main():
     set_featured_pipelines(pipeline_ids[:4])
 
     # randomly selected a pipeline
-    i = random.randint(0, len(pipeline_ids)-1)
+    i = random.randint(0, len(pipeline_ids) - 1)
     pipeline_id = pipeline_ids[i]
 
     # show one randomly selected pipeline

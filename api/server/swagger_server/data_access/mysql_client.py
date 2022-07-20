@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import inflection
@@ -13,7 +13,7 @@ from mysql.connector import connect, errorcode, Error
 from mysql.connector.errors import IntegrityError
 from os import environ as env
 from random import choice
-from string import ascii_letters, digits, hexdigits
+from string import hexdigits
 from swagger_server.models.base_model_ import Model
 from swagger_server.models import *  # required for dynamic Api ...Extension class loading during View-table creation
 from swagger_server.util import _deserialize, ApiError
@@ -276,10 +276,10 @@ def _get_create_view_statement(swagger_class) -> str:
     e_non_id_col_list = ", ".join([f"e.`{cn}`" for cn in e_non_id_col_names])
 
     create_view_stmt = f"""
-        CREATE VIEW `{view_name}` AS 
+        CREATE VIEW `{view_name}` AS
         SELECT b.*, {e_non_id_col_list}
         FROM `{base_table_name}` AS b
-        LEFT OUTER JOIN `{extension_table_name}` AS e 
+        LEFT OUTER JOIN `{extension_table_name}` AS e
         ON b.`{b_id_col_name}`=e.`{e_id_col_name}`
     """
 

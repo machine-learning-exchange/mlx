@@ -20,7 +20,7 @@ class ApiCatalogUpload(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, api_access_tokens: List[ApiAccessToken]=None, components: List[ApiCatalogUploadItem]=None, datasets: List[ApiCatalogUploadItem]=None, models: List[ApiCatalogUploadItem]=None, notebooks: List[ApiCatalogUploadItem]=None, pipelines: List[ApiCatalogUploadItem]=None):  # noqa: E501
+    def __init__(self, api_access_tokens: List[ApiAccessToken] = None, components: List[ApiCatalogUploadItem] = None, datasets: List[ApiCatalogUploadItem] = None, models: List[ApiCatalogUploadItem] = None, notebooks: List[ApiCatalogUploadItem] = None, pipelines: List[ApiCatalogUploadItem] = None):  # noqa: E501
         """ApiCatalogUpload - a model defined in Swagger
 
         :param api_access_tokens: The api_access_tokens of this ApiCatalogUpload.  # noqa: E501

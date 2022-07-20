@@ -229,7 +229,7 @@ def generate_custom_pipeline_function_body(custom_pipeline: ApiPipelineCustom, h
             task_parameters = list(task.arguments.parameters) if task.arguments and task.arguments.parameters else []
 
             missing_parameter_values = [p.name for p in task_parameters
-                                        if not p.value and not p.default and p.description \
+                                        if not p.value and not p.default and p.description
                                         and p.description.title().startswith("Required")]
 
             if missing_parameter_values:
@@ -339,7 +339,8 @@ def generate_dataset_run_script(dataset: ApiDataset, dataset_template_url, run_p
         "namespace": run_parameters.get("namespace", _namespace)
     }
 
-    # see component name at https://github.com/machine-learning-exchange/mlx/blob/main/components/component-samples/dax-to-dlf/component.yaml#L1
+    # see component name at
+    # https://github.com/machine-learning-exchange/mlx/blob/main/components/component-samples/dax-to-dlf/component.yaml#L1
     dax_to_dlf_component_id = generate_id(name="Generate Dataset Metadata")
 
     # see component name at https://github.com/machine-learning-exchange/mlx/blob/main/components/component-samples/dlf/component.yaml#L1
@@ -634,7 +635,7 @@ def run_code_in_experiment(source_code: str, wait_for_status=False) -> str:
 
     except SyntaxError as e:
         print(f"SyntaxError trying to run_code_in_experiment: {e}")
-        print("\n".join(["{}{:3d}: {}".format(">" if n+1 == e.lineno else " ", n+1, l)
+        print("\n".join(["{}{:3d}: {}".format(">" if n + 1 == e.lineno else " ", n + 1, l)
                          for n, l in enumerate(source_code.splitlines())]))
         # raise ApiError(f"SyntaxError trying to run_code_in_experiment: {e.msg}\n"
         #                f"{source_code}", 500)

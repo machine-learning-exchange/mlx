@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 import connexion
 import json
 
@@ -50,7 +50,7 @@ def create_credential(body):  # noqa: E501
 def delete_credential(id):  # noqa: E501
     """delete_credential
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -65,7 +65,7 @@ def delete_credential(id):  # noqa: E501
 def get_credential(id):  # noqa: E501
     """get_credential
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiComponent
@@ -77,7 +77,7 @@ def get_credential(id):  # noqa: E501
 
     api_credential = api_credentials[0]
 
-    secret = get_secret(id)
+    get_secret(id)
 
     return api_credential, 200
 

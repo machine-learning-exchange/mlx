@@ -19,7 +19,7 @@ class ApiListModelsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, models: List[ApiModel]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(self, models: List[ApiModel] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListModelsResponse - a model defined in Swagger
 
         :param models: The models of this ApiListModelsResponse.  # noqa: E501

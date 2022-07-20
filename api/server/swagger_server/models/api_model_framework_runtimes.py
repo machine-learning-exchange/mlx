@@ -18,7 +18,7 @@ class ApiModelFrameworkRuntimes(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, version: str=None):  # noqa: E501
+    def __init__(self, name: str = None, version: str = None):  # noqa: E501
         """ApiModelFrameworkRuntimes - a model defined in Swagger
 
         :param name: The name of this ApiModelFrameworkRuntimes.  # noqa: E501

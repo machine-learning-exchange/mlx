@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from swagger_server.models.api_inferenceservice import ApiInferenceservice  # noqa: E501

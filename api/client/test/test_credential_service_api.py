@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -20,7 +20,6 @@ import unittest
 
 import swagger_client
 from swagger_client.api.credential_service_api import CredentialServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestCredentialServiceApi(unittest.TestCase):
@@ -36,19 +35,16 @@ class TestCredentialServiceApi(unittest.TestCase):
         """Test case for create_credentials
 
         """
-        pass
 
     def test_delete_credential(self):
         """Test case for delete_credential
 
         """
-        pass
 
     def test_get_credential(self):
         """Test case for get_credential
 
         """
-        pass
 
 
 if __name__ == '__main__':

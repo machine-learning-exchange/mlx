@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
@@ -298,7 +298,7 @@ def upload_component(uploadfile: FileStorage, name=None, existing_id=None):  # n
 
     :param uploadfile: The component to upload. Maximum size of 32MB is supported.
     :type uploadfile: werkzeug.datastructures.FileStorage
-    :param name: 
+    :param name:
     :type name: str
     :param existing_id: The ID of a component to be replaced, INTERNAL USE ONLY
     :type existing_id: str

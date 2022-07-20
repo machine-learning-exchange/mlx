@@ -1,19 +1,15 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 
-import json
-import os
 import swagger_client
 
-from os import environ as env
 from pprint import pprint
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiSettings, ApiSettingsSection, ApiParameter
 from swagger_client.rest import ApiException
 from sys import stderr
-from urllib3.response import HTTPResponse
 
 
 host = '127.0.0.1'

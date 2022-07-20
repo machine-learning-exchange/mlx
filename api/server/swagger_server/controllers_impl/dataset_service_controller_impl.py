@@ -300,7 +300,7 @@ def upload_dataset(uploadfile: FileStorage, name=None, existing_id=None):  # noq
 
     :param uploadfile: The dataset YAML file to upload. Can be a GZip-compressed TAR file (.tgz, .tar.gz) or a YAML file (.yaml, .yml). Maximum size is 32MB.
     :type uploadfile: werkzeug.datastructures.FileStorage
-    :param name: 
+    :param name:
     :type name: str
     :param existing_id: The ID of a dataset to be replaced, INTERNAL USE ONLY
     :type existing_id: str
@@ -386,7 +386,7 @@ def _upload_dataset_yaml(yaml_file_content: AnyStr, name=None, existing_id=None)
     domain = yaml_dict["domain"]
     format_type = yaml_dict["format"][0]["type"]
     size = yaml_dict["content"][0].get("size")
-    version = yaml_dict["version"]
+    yaml_dict["version"]
     filter_categories = yaml_dict.get("filter_categories") or dict()
 
     # # extract number of records and convert thousand separators based on Locale

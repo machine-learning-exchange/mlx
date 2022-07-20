@@ -19,9 +19,9 @@ Method | HTTP request | Description
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.InferenceServiceApi()
@@ -66,9 +66,9 @@ No authorization required
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.InferenceServiceApi()
@@ -113,9 +113,9 @@ No authorization required
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.InferenceServiceApi()
@@ -166,9 +166,9 @@ No authorization required
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.InferenceServiceApi()

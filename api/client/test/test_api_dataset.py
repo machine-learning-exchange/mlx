@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
 from swagger_client.models.api_dataset import ApiDataset  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestApiDataset(unittest.TestCase):
@@ -36,7 +34,6 @@ class TestApiDataset(unittest.TestCase):
         """Test ApiDataset"""
         # FIXME: construct object with mandatory attributes with example values
         # model = swagger_client.models.api_dataset.ApiDataset()  # noqa: E501
-        pass
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@ pip install "git+https://github.com/machine-learning-exchange/mlx.git@main#egg=m
 Then import the package:
 
 ```python
-import swagger_client
+import swagger_client  # noqa: F401
 ```
 
 
@@ -43,9 +43,9 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ComponentServiceApi()

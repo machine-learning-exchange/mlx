@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -20,7 +20,6 @@ import unittest
 
 import swagger_client
 from swagger_client.api.health_check_api import HealthCheckApi  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestHealthCheckApi(unittest.TestCase):
@@ -37,7 +36,6 @@ class TestHealthCheckApi(unittest.TestCase):
 
         Checks if the server is running  # noqa: E501
         """
-        pass
 
 
 if __name__ == '__main__':

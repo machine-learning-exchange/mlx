@@ -19,7 +19,7 @@ class ApiCatalogUploadResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, components: List[ApiComponent]=None, datasets: List[ApiDataset]=None, models: List[ApiModel]=None, notebooks: List[ApiNotebook]=None, pipelines: List[ApiPipeline]=None, total_size: int=None, next_page_token: str=None, errors: List[ApiCatalogUploadError]=None, total_errors: int=None, total_created: int=None):  # noqa: E501
+    def __init__(self, components: List[ApiComponent] = None, datasets: List[ApiDataset] = None, models: List[ApiModel] = None, notebooks: List[ApiNotebook] = None, pipelines: List[ApiPipeline] = None, total_size: int = None, next_page_token: str = None, errors: List[ApiCatalogUploadError] = None, total_errors: int = None, total_created: int = None):  # noqa: E501
         """ApiCatalogUploadResponse - a model defined in Swagger
 
         :param components: The components of this ApiCatalogUploadResponse.  # noqa: E501

@@ -19,7 +19,7 @@ class ApiPipeline(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, namespace: str=None):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, parameters: List[ApiParameter] = None, status: str = None, default_version_id: str = None, namespace: str = None):  # noqa: E501
         """ApiPipeline - a model defined in Swagger
 
         :param id: The id of this ApiPipeline.  # noqa: E501

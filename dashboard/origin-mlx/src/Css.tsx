@@ -110,7 +110,7 @@ export const theme = createMuiTheme({
         },
         color: color.theme,
         marginRight: 10,
-        padding: '0 8px'
+        padding: '0 8px',
       },
     },
     MuiDialogActions: {
@@ -150,7 +150,7 @@ export const theme = createMuiTheme({
     },
     MuiInput: {
       input: { padding: 0 },
-      root: { padding: 0 }
+      root: { padding: 0 },
     },
     MuiInputAdornment: {
       positionEnd: {
@@ -163,13 +163,13 @@ export const theme = createMuiTheme({
         backgroundColor: '#666',
         color: '#f1f1f1',
         fontSize: 12,
-      }
+      },
     },
   },
   palette,
   typography: {
     fontFamily: fonts.main,
-    fontSize: fontsize.base + ' !important' as any,
+    fontSize: `${fontsize.base} !important` as any,
     useNextVariants: true,
   },
 });
@@ -227,37 +227,37 @@ export const commonCss = stylesheet({
     paddingTop: 20,
   },
   ibmCard: {
-      backgroundColor: '#525252',
-      borderRadius: '7px',
-      fontFamily: 'Helvetica Neue, Arial, sans-serif',
-      height: '100%',
-      marginBottom: '10px',
-      width: '20%',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23)',
-      $nest: {
-        '&:hover': {
-          boxShadow: '0 6px 12px rgba(0,0,0,0.25), 0 6px 12px rgba(0,0,0,0.43)'
-        }
-      }
+    backgroundColor: '#525252',
+    borderRadius: '7px',
+    fontFamily: 'Helvetica Neue, Arial, sans-serif',
+    height: '100%',
+    marginBottom: '10px',
+    width: '20%',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23)',
+    $nest: {
+      '&:hover': {
+        boxShadow: '0 6px 12px rgba(0,0,0,0.25), 0 6px 12px rgba(0,0,0,0.43)',
+      },
+    },
   },
 
   ibmCardBackGround: {
-      backgroundColor: '#525252',
-      fontFamily: 'Helvetica Neue, Arial, sans-serif',
-      borderRadius: '7px',
-      padding: '10px 10px 0px 10px',
-        // TODO: need to change to adjust to ibmCard's height automatically
-      position: 'relative',
-      verticalAlign: 'top',
-      height: '15vw',
-      width: '15vw',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23)',
-      $nest: {
-        '&:hover': {
-          boxShadow: '0 6px 12px rgba(0,0,0,0.25), 0 6px 12px rgba(0,0,0,0.43)'
-        }
+    backgroundColor: '#525252',
+    fontFamily: 'Helvetica Neue, Arial, sans-serif',
+    borderRadius: '7px',
+    padding: '10px 10px 0px 10px',
+    // TODO: need to change to adjust to ibmCard's height automatically
+    position: 'relative',
+    verticalAlign: 'top',
+    height: '15vw',
+    width: '15vw',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23)',
+    $nest: {
+      '&:hover': {
+        boxShadow: '0 6px 12px rgba(0,0,0,0.25), 0 6px 12px rgba(0,0,0,0.43)',
       },
-      overflow: 'hidden'
+    },
+    overflow: 'hidden',
   },
   ibmCardBottom: {
     bottom: '0px',
@@ -267,12 +267,12 @@ export const commonCss = stylesheet({
     width: '15vw',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
- 
+
   ibmCardDescription: {
     color: '#fff',
-    margin: '10px 0 0 0'
+    margin: '10px 0 0 0',
   },
 
   ibmCardLink: {
@@ -281,25 +281,25 @@ export const commonCss = stylesheet({
 
   ibmTable: {
     padding: '5px',
-    borderSpacing: '30px'
+    borderSpacing: '30px',
   },
 
   ibmTag: {
-   alignItems: 'center',
-   border: '1px solid #b0b0b0',
-   borderRadius: '.93rem',
-   display: 'inline-flex',
-   fontFamily: 'ibm-plex-sans, Helvetica Neue, Arial, sans-serif',
-   padding: '.18rem .4rem',
-   whiteSpace: 'nowrap',
-   maxWidth: '85%',
-   textOverflow: 'ellipsis'
+    alignItems: 'center',
+    border: '1px solid #b0b0b0',
+    borderRadius: '.93rem',
+    display: 'inline-flex',
+    fontFamily: 'ibm-plex-sans, Helvetica Neue, Arial, sans-serif',
+    padding: '.18rem .4rem',
+    whiteSpace: 'nowrap',
+    maxWidth: '85%',
+    textOverflow: 'ellipsis',
   },
 
   infoIcon: {
     color: color.lowContrast,
     height: 16,
-    width: 16
+    width: 16,
   },
   link: {
     $nest: {

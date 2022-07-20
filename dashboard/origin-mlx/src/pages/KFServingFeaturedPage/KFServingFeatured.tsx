@@ -1,16 +1,15 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React from 'react'
-import { withStyles, WithStyles } from '@material-ui/core'
+*/
+import React from 'react';
+import { withStyles, WithStyles } from '@material-ui/core';
 
-import Grid from '@material-ui/core/Grid'
-import MetaCard from './KFServingCard'
-import checkmark from '../../images/checkmark-outline.png'
-import cancel from '../../images/cancel-outline.png'
-
+import Grid from '@material-ui/core/Grid';
+import MetaCard from './KFServingCard';
+import checkmark from '../../images/checkmark-outline.png';
+import cancel from '../../images/cancel-outline.png';
 
 interface MetaFeaturedProps extends WithStyles<typeof styles> {
   assets: any[]
@@ -21,78 +20,81 @@ interface MetaFeaturedProps extends WithStyles<typeof styles> {
 const styles = {
   wrapper: {
     overflow: 'auto',
-    padding: '0.8rem 0.6rem'
+    padding: '0.8rem 0.6rem',
   },
   card: {
     // width: '20%'
     // maxWidth: '275px'
-  }
-}
+  },
+};
 
 function MetaFeatured(props: MetaFeaturedProps) {
-  const { assets, classes } = props
+  const { assets, classes } = props;
 
-  console.log("Asset:")
-  console.log(props.assets)
+  console.log('Asset:');
+  console.log(props.assets);
 
-  //return (<h1> Placeholder </h1>)
+  // return (<h1> Placeholder </h1>)
 
   return (
     <div className={classes.wrapper}>
-      <Grid container
+      <Grid
+        container
         spacing={16}
         alignItems="flex-start"
         justify="flex-start"
         style={{ overflow: 'auto' }}
       >
-        {assets.map(asset => {
-          const name = asset.metadata.name;
-          
-          let runningStatus = ""
-          let statusIcon = ""
+        {assets.map((asset) => {
+          const { name } = asset.metadata;
+
+          let runningStatus = '';
+          let statusIcon = '';
           if (asset.status.conditions) {
-            runningStatus = asset.status?.conditions[0]?.status || ""
+            runningStatus = asset.status?.conditions[0]?.status || '';
 
             if (asset.status) {
-              for (var i=0; i< asset.status.conditions.length; i++) {
-                if (asset.status.conditions[i].type === "Ready") {
-                  const index = asset.status.conditions.indexOf(asset.status.conditions[i])
-                  runningStatus = asset.status.conditions[index].status
+              for (let i = 0; i < asset.status.conditions.length; i += 1) {
+                if (asset.status.conditions[i].type === 'Ready') {
+                  const index = asset.status.conditions.indexOf(asset.status.conditions[i]);
+                  runningStatus = asset.status.conditions[index].status;
                   if (runningStatus === 'True') {
-                    statusIcon = checkmark
-                  }
-                  else {
-                    statusIcon = cancel
+                    statusIcon = checkmark;
+                  } else {
+                    statusIcon = cancel;
                   }
                 }
               }
             }
-          }
-          else {
-            runningStatus = asset.status.available
-            if (runningStatus === 'true')
-              statusIcon = checkmark
-            else
-              statusIcon = cancel
+          } else {
+            runningStatus = asset.status.available;
+            if (runningStatus === 'true') statusIcon = checkmark;
+            else statusIcon = cancel;
           }
           const description = asset.kind;
-          const tag = Object.keys(asset.spec).join(",")
-          const link = "inferenceservices"
-          let predictor = asset.spec.predictor
-          let framework = ""
+          const tag = Object.keys(asset.spec).join(',');
+          const link = 'inferenceservices';
+          const { predictor } = asset.spec;
+          let framework = '';
           if (asset.spec.predictor) {
-            framework = predictor.tensorflow ? "tensorflow" 
-                              : predictor.keras ? "keras"
-                              : predictor.sklearn ? "sklearn"
-                              : predictor["scikit-learn"] ? "sklearn"
-                              : predictor.pytorch ? "pytorch" : "custom"
-          }
-          else {
-            framework = asset.spec.modelType.name
+            framework = predictor.tensorflow ? 'tensorflow'
+              : predictor.keras ? 'keras'
+                : predictor.sklearn ? 'sklearn'
+                  : predictor['scikit-learn'] ? 'sklearn'
+                    : predictor.pytorch ? 'pytorch' : 'custom';
+          } else {
+            framework = asset.spec.modelType.name;
           }
           return (
-            <Grid item key={name} xs md={4}
-             lg={3} xl={2} className={classes.card} >
+            <Grid
+              item
+              key={name}
+              xs
+              md={4}
+              lg={3}
+              xl={2}
+              className={classes.card}
+            >
               <MetaCard
                 name={name}
                 runningStatus={runningStatus}
@@ -104,11 +106,11 @@ function MetaFeatured(props: MetaFeaturedProps) {
                 asset={asset}
               />
             </Grid>
-          )
+          );
         })}
       </Grid>
     </div>
-  )
+  );
 }
 
-export default withStyles(styles)(MetaFeatured)
+export default withStyles(styles)(MetaFeatured);

@@ -18,7 +18,7 @@ class ApiRunCodeResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, run_url: str=None, run_output_location: str=None):  # noqa: E501
+    def __init__(self, run_url: str = None, run_output_location: str = None):  # noqa: E501
         """ApiRunCodeResponse - a model defined in Swagger
 
         :param run_url: The run_url of this ApiRunCodeResponse.  # noqa: E501

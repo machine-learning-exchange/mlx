@@ -1,20 +1,18 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 
 import json
 import random
 import swagger_client
 
-from os import environ as env
 from pprint import pprint
 from pipelines_api import list_pipelines
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiCredential, ApiListCredentialsResponse
 from swagger_client.rest import ApiException
 from sys import stderr
-from urllib3.response import HTTPResponse
 
 
 host = '127.0.0.1'
@@ -118,7 +116,7 @@ def list_credentials(filter_dict: dict = {}, sort_by: str = None) -> [ApiCredent
 def main():
     # select a random pipeline
     pipelines = list_pipelines()
-    i = random.randint(0, len(pipelines)-1)
+    i = random.randint(0, len(pipelines) - 1)
 
     # create a new credential
     credential = create_credential(pipeline_id=pipelines[i].id, project_id="xyz", data_assets=["data1", "data2"])

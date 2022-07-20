@@ -20,7 +20,6 @@ import unittest
 
 import swagger_client
 from swagger_client.api.catalog_service_api import CatalogServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestCatalogServiceApi(unittest.TestCase):
@@ -36,13 +35,11 @@ class TestCatalogServiceApi(unittest.TestCase):
         """Test case for list_all_assets
 
         """
-        pass
 
     def test_upload_multiple_assets(self):
         """Test case for upload_multiple_assets
 
         """
-        pass
 
 
 if __name__ == '__main__':

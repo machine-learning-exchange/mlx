@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, \
-    get_yaml_file_content_from_uploadfile, validate_parameters, validate_id
+    get_yaml_file_content_from_uploadfile, validate_id
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, enable_anonymous_read_access, NoSuchKey, \
     create_tarfile, get_object_url
@@ -57,7 +57,7 @@ def approve_notebooks_for_publishing(notebook_ids):  # noqa: E501
 def create_notebook(body):  # noqa: E501
     """create_notebook
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: ApiNotebook
@@ -78,7 +78,7 @@ def create_notebook(body):  # noqa: E501
 def delete_notebook(id):  # noqa: E501
     """delete_notebook
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -93,7 +93,7 @@ def delete_notebook(id):  # noqa: E501
 def download_notebook_files(id, include_generated_code=None):  # noqa: E501
     """Returns the notebook artifacts compressed into a .tgz (.tar.gz) file.
 
-    :param id: 
+    :param id:
     :type id: str
     :param include_generated_code: Include generated run script in download
     :type include_generated_code: bool
@@ -131,7 +131,7 @@ def download_notebook_files(id, include_generated_code=None):  # noqa: E501
 def generate_notebook_code(id):  # noqa: E501
     """generate_notebook_code
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGenerateCodeResponse
@@ -162,7 +162,7 @@ def generate_notebook_code(id):  # noqa: E501
 def get_notebook(id):
     """get_notebook
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiNotebook
@@ -178,7 +178,7 @@ def get_notebook(id):
 def get_notebook_template(id):  # noqa: E501
     """get_notebook_template
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGetTemplateResponse
@@ -202,9 +202,9 @@ def get_notebook_template(id):  # noqa: E501
 def list_notebooks(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
     """list_notebooks
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
     :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.
     :type sort_by: str
@@ -240,7 +240,7 @@ def list_notebooks(page_token=None, page_size=None, sort_by=None, filter=None): 
 def run_notebook(id, run_name=None, parameters: dict = None):  # noqa: E501
     """run_notebook
 
-    :param id: 
+    :param id:
     :type id: str
     :param run_name: name to identify the run on the Kubeflow Pipelines UI, defaults to notebook name
     :type run_name: str
@@ -287,7 +287,7 @@ def run_notebook(id, run_name=None, parameters: dict = None):  # noqa: E501
         # TODO: create a "sandboxed" notebook in a subfolder since Elyra overwrites
         #   the original notebook instead of creating an "-output.ipynb" file:
         #   https://github.com/elyra-ai/kfp-notebook/blob/c8f1298/etc/docker-scripts/bootstrapper.py#L205
-        notebook_output_url = notebook_url.replace(".ipynb", "-output.ipynb")
+        notebook_url.replace(".ipynb", "-output.ipynb")
 
         # instead return link to the generated output .html for the time being
         notebook_output_html = notebook_url.replace(".ipynb", ".html")
@@ -321,7 +321,7 @@ def upload_notebook(uploadfile: FileStorage, name=None, enterprise_github_token=
 
     :param uploadfile: The notebook to upload. Maximum size of 32MB is supported.
     :type uploadfile: werkzeug.datastructures.FileStorage
-    :param name: 
+    :param name:
     :type name: str
     :param enterprise_github_token: Optional GitHub API token providing read-access to notebooks stored on Enterprise GitHub accounts.
     :type enterprise_github_token: str

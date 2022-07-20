@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
-import six
 
 from swagger_server.models.api_credential import ApiCredential  # noqa: E501
 from swagger_server.models.api_list_credentials_response import ApiListCredentialsResponse  # noqa: E501
