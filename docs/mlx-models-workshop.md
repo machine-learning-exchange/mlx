@@ -58,6 +58,9 @@ A detailed guide on how to create a Flask app to wrap the model along with a Swa
 API user interface can be found in this
 [step-by-step guide](https://github.com/IBM/MAX-skeleton#step-by-step-guide-to-wrapping-a-model)
 
+Once the model is containerized, it has to be pushed to a public container registry
+like [Quay.io](https://quay.io/) or [DockerHub](https://hub.docker.com/) so it can be
+referenced using the `container_image_url` field in the model YAML in the next step.
 
 ## Create the Model Metadata (YAML)
 
