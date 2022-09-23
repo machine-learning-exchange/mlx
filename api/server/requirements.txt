@@ -383,7 +383,7 @@ prometheus-client==0.13.1
     #   notebook
 prompt-toolkit==3.0.26
     # via ipython
-protobuf==3.19.4
+protobuf==3.19.5
     # via
     #   google-api-core
     #   google-cloud-storage
