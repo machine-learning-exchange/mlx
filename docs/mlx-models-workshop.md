@@ -36,13 +36,8 @@ There are only minor differences in how to navigate the Kubernetes resources
 depending on the selected deployment option, with the most notable difference
 being the host and port of the MLX (UI) server.
 
-For this workshop we assume a single-user [MLX deployment on OpenShift (on Fyre)](http://mlx.apps.mlx-test-2.cp.fyre.ibm.com/).
-
-You need to be logged in as an `admin` user in order to register and deploy models.
-
-    http://mlx.apps.mlx-test-2.cp.fyre.ibm.com/login
-
-<!-- TODO: remove the URL above -->
+You do need to be logged in as an `admin` user in order to register and deploy
+models.
 
 
 # Add a New Model to MLX
