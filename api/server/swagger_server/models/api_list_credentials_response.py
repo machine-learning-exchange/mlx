@@ -19,7 +19,7 @@ class ApiListCredentialsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, credentials: List[ApiCredential]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(self, credentials: List[ApiCredential] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListCredentialsResponse - a model defined in Swagger
 
         :param credentials: The credentials of this ApiListCredentialsResponse.  # noqa: E501

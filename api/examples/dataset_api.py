@@ -14,7 +14,6 @@ import tempfile
 
 from glob import glob
 from io import BytesIO
-from os import environ as env
 from pprint import pprint
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiDataset, ApiGetTemplateResponse, ApiListDatasetsResponse, \
@@ -186,7 +185,7 @@ def approve_datasets_for_publishing(dataset_ids: [str]):
     api_instance = swagger_client.DatasetServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.approve_datasets_for_publishing(dataset_ids)
+        api_instance.approve_datasets_for_publishing(dataset_ids)
 
     except ApiException as e:
         print("Exception when calling DatasetServiceApi -> approve_datasets_for_publishing: %s\n" % e, file=stderr)
@@ -200,7 +199,7 @@ def set_featured_datasets(dataset_ids: [str]):
     api_instance = swagger_client.DatasetServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.set_featured_datasets(dataset_ids)
+        api_instance.set_featured_datasets(dataset_ids)
 
     except ApiException as e:
         print("Exception when calling DatasetServiceApi -> set_featured_datasets: %s\n" % e, file=stderr)

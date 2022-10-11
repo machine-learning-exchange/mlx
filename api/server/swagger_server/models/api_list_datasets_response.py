@@ -19,7 +19,7 @@ class ApiListDatasetsResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, datasets: List[ApiDataset]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(self, datasets: List[ApiDataset] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListDatasetsResponse - a model defined in Swagger
 
         :param datasets: The datasets of this ApiListDatasetsResponse.  # noqa: E501

@@ -18,7 +18,7 @@ class ApiModelScript(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, pipeline_stage: str=None, execution_platform: str=None, script_code: str=None):  # noqa: E501
+    def __init__(self, pipeline_stage: str = None, execution_platform: str = None, script_code: str = None):  # noqa: E501
         """ApiModelScript - a model defined in Swagger
 
         :param pipeline_stage: The pipeline_stage of this ApiModelScript.  # noqa: E501

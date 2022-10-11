@@ -18,7 +18,7 @@ class ApiAsset(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, featured: bool=None, publish_approved: bool=None, related_assets: List[str]=None, filter_categories: Dict[str, str]=None):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, featured: bool = None, publish_approved: bool = None, related_assets: List[str] = None, filter_categories: Dict[str, str] = None):  # noqa: E501
         """ApiAsset - a model defined in Swagger
 
         :param id: The id of this ApiAsset.  # noqa: E501

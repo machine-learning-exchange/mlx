@@ -70,13 +70,13 @@ def get_secret(secret_name, decode=False) -> dict:
     except Exception as e:
         if output and output.stderr:
             pprint(output.stderr.decode())
-        raise ApiError( f"Error trying to retrieve secret '{secret_name}': {e}")
+        raise ApiError(f"Error trying to retrieve secret '{secret_name}': {e}")
 
 
 def list_secrets(name_prefix=secret_name_prefix, decode=False) -> [dict]:
     output = None
     try:
-        list_command = ['kubectl', '-n', _namespace,  '-o', 'json', 'get', 'secrets']
+        list_command = ['kubectl', '-n', _namespace, '-o', 'json', 'get', 'secrets']
         output = subprocess.run(list_command, capture_output=True, check=True, timeout=10)
         secrets_data = json.loads(output.stdout.decode()) or {}
         mlx_secrets = [d for d in secrets_data.get("items") or []

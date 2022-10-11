@@ -20,7 +20,7 @@ class ApiDataset(ApiAsset):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, featured: bool=None, publish_approved: bool=None, related_assets: List[str]=None, filter_categories: Dict[str, str]=None, domain: str=None, format: str=None, size: str=None, number_of_records: int=None, license: str=None, metadata: ApiMetadata=None):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, featured: bool = None, publish_approved: bool = None, related_assets: List[str] = None, filter_categories: Dict[str, str] = None, domain: str = None, format: str = None, size: str = None, number_of_records: int = None, license: str = None, metadata: ApiMetadata = None):  # noqa: E501
         """ApiDataset - a model defined in Swagger
 
         :param id: The id of this ApiDataset.  # noqa: E501

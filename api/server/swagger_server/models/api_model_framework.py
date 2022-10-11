@@ -19,7 +19,7 @@ class ApiModelFramework(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, version: str=None, runtimes: ApiModelFrameworkRuntimes=None):  # noqa: E501
+    def __init__(self, name: str = None, version: str = None, runtimes: ApiModelFrameworkRuntimes = None):  # noqa: E501
         """ApiModelFramework - a model defined in Swagger
 
         :param name: The name of this ApiModelFramework.  # noqa: E501

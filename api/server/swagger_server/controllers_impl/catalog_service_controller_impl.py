@@ -26,9 +26,9 @@ from swagger_server.util import ApiError
 def list_all_assets(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
     """list_all_assets
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
     :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name desc\&quot; Ascending by default.
     :type sort_by: str
@@ -42,7 +42,7 @@ def list_all_assets(page_token=None, page_size=None, sort_by=None, filter=None):
         return {}, 204
 
     # TODO: do not mis-use page_token as MySQL result offset
-    offset = int(page_token) if page_token and page_token.isdigit() else 0
+    int(page_token) if page_token and page_token.isdigit() else 0
 
     if page_size or page_token:
         print(f"WARNING: page_size and page_token are not implemented on {__file__}#list_all_assets()")

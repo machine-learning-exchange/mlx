@@ -19,7 +19,7 @@ class ApiParameter(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, description: str=None, default: AnyValue=None, value: AnyValue=None):  # noqa: E501
+    def __init__(self, name: str = None, description: str = None, default: AnyValue = None, value: AnyValue = None):  # noqa: E501
         """ApiParameter - a model defined in Swagger
 
         :param name: The name of this ApiParameter.  # noqa: E501

@@ -1,35 +1,31 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React, { useContext } from 'react'
-import StoreContext from '../lib/stores/context'
+*/
+import React, { useContext } from 'react';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import StoreContext from '../lib/stores/context';
 
+export default function SecretMenu() {
+  const { settings } = useContext(StoreContext).store;
+  const { branding, endpoints } = settings;
 
-export default function SecretMenu () {
-  const { settings } = useContext(StoreContext).store
-  const { branding, endpoints } = settings
-
-  const API = endpoints.api.value || endpoints.api.default
-  const KFP = endpoints.kfp.value || endpoints.kfp.default
+  const API = endpoints.api.value || endpoints.api.default;
+  const KFP = endpoints.kfp.value || endpoints.kfp.default;
 
   const shortenBrand = (brand: string) => {
-    if (brand.length <= 10)
-      return brand;
+    if (brand.length <= 10) return brand;
 
-    const split = brand.split(' ')
-    let brandAbrev = ""
+    const split = brand.split(' ');
+    let brandAbrev = '';
     split.forEach((word: string) => {
-      if (word.toLowerCase() === "exchange")
-        brandAbrev += "X"
-      else
-       brandAbrev += word[0].toUpperCase()
-    })
-    return brandAbrev
-  }
+      if (word.toLowerCase() === 'exchange') brandAbrev += 'X';
+      else brandAbrev += word[0].toUpperCase();
+    });
+    return brandAbrev;
+  };
 
   return (
     <div className="secret-menu visible">

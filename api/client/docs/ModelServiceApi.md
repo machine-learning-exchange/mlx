@@ -28,9 +28,9 @@ Method | HTTP request | Description
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -72,9 +72,9 @@ No authorization required
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -117,9 +117,9 @@ No authorization required
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -160,9 +160,9 @@ Returns the model artifacts compressed into a .tgz (.tar.gz) file.
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from urllib3.response import HTTPResponse
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from urllib3.response import HTTPResponse  # noqa: F401
 
 
 # create an instance of the API class
@@ -213,9 +213,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -257,9 +257,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -301,9 +301,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -345,9 +345,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -395,9 +395,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -447,8 +447,8 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -489,9 +489,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -536,9 +536,9 @@ No authorization required
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()
@@ -582,9 +582,9 @@ No authorization required
 ### Example
 ```python
 from __future__ import print_function
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
+import swagger_client  # noqa: F401
+from swagger_client.rest import ApiException  # noqa: F401
+from pprint import pprint  # noqa: F401
 
 # create an instance of the API class
 api_instance = swagger_client.ModelServiceApi()

@@ -1,33 +1,37 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React, { useState, Dispatch, SetStateAction, useContext, useEffect } from 'react'
-import StoreContext from '../lib/stores/context'
+*/
+import React, {
+  useState, Dispatch, SetStateAction, useContext, useEffect,
+} from 'react';
+import Icon from '@material-ui/core/Icon';
+import {
+  Paper, TableHead, TableRow, TableCell, TableSortLabel,
+  Table, TableBody, Toolbar, Typography, withStyles, WithStyles,
+} from '@material-ui/core';
+import StoreContext from '../lib/stores/context';
 import { fetchArtifact } from '../lib/api/artifacts';
-import { Artifact, FETCH_ARTIFACT_ASSETS } from '../lib/stores/artifacts'
+import { Artifact, FETCH_ARTIFACT_ASSETS } from '../lib/stores/artifacts';
 import { SET_ACTIVE_PAGE } from '../lib/stores/pages';
 import { ADD_COMPONENTS_TO_CART, REMOVE_COMPONENTS_OF_TYPE_FROM_CART } from '../lib/stores/pipeline';
-import { capitalize, getUserInfo, hasRole, canShow } from '../lib/util';
-import Hero from '../components/Hero'
-import Button from '../components/Button'
-import Icon from '@material-ui/core/Icon'
-import Link from '../components/Link'
-import checkmark from '../images/checkmark-outline.png'
-import cancel from '../images/cancel-outline.png'
-import predictorIcon from '../images/predictor-icon.png'
-import explainerIcon from '../images/explainer-icon.png'
-import transformerIcon from '../images/transformer-icon.png'
-import tfLogo from '../images/tf-logo.png'
-import kerasLogo from '../images/keras-logo.png'
-import pytorchLogo from '../images/pytorch-logo.png'
-import sklearnLogo from '../images/scikit-learn-logo.png'
-import kubeflowLogo from '../images/kubeflow-logo.png'
 import {
-   Paper, TableHead, TableRow, TableCell, TableSortLabel,
-  Table, TableBody, Toolbar, Typography, withStyles, WithStyles
-} from '@material-ui/core';
+  capitalize, getUserInfo, hasRole, canShow,
+} from '../lib/util';
+import Hero from '../components/Hero';
+import Button from '../components/Button';
+import Link from '../components/Link';
+import checkmark from '../images/checkmark-outline.png';
+import cancel from '../images/cancel-outline.png';
+import predictorIcon from '../images/predictor-icon.png';
+import explainerIcon from '../images/explainer-icon.png';
+import transformerIcon from '../images/transformer-icon.png';
+import tfLogo from '../images/tf-logo.png';
+import kerasLogo from '../images/keras-logo.png';
+import pytorchLogo from '../images/pytorch-logo.png';
+import sklearnLogo from '../images/scikit-learn-logo.png';
+import kubeflowLogo from '../images/kubeflow-logo.png';
 
 interface MetaAllPageProps extends WithStyles<typeof styles> {
   type: string
@@ -49,136 +53,132 @@ interface MetaAllPageProps extends WithStyles<typeof styles> {
 }
 enum SortOrder {
   ASC = 'asc',
-  DESC = 'desc'
+  DESC = 'desc',
 }
 const styles = {
   checkbox: {
-    color: '#1ccdc7'
-  }
-}
+    color: '#1ccdc7',
+  },
+};
 
 const isAdmin = hasRole(getUserInfo(), 'admin');
 
 function MetaAllPage(props: MetaAllPageProps) {
-  var {
+  const {
     type,
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
     rightAdmin = false, leftAdmin = false,
-  } = props
-  const [ order ] = useState(SortOrder.DESC)
-  const [ orderBy, setOrderBy ] = useState('name')
+  } = props;
+  const [order] = useState(SortOrder.DESC);
+  const [orderBy, setOrderBy] = useState('name');
   const columns = [
-    { id: 'name', label: `Name`, numeric: false },
+    { id: 'name', label: 'Name', numeric: false },
     { id: 'status', label: 'Status', numeric: false },
     { id: 'timestamp', label: 'Date Created', numeric: false },
     { id: 'framework', label: 'Framework', numeric: false },
     { id: 'components', label: 'Components', numeric: false },
     { id: 'cat', label: 'Namespace', numeric: false },
-  ]
-  const { store, dispatch } = useContext(StoreContext)
-  const { artifacts, settings, pipeline } = store
-  const assets: {[key: string]: any} = artifacts[type]
-  const API = settings.endpoints.api.value || settings.endpoints.api.default
-  const namespace = settings.kfserving.namespace.value || settings.kfserving.namespace.default
+  ];
+  const { store, dispatch } = useContext(StoreContext);
+  const { artifacts, settings, pipeline } = store;
+  const assets: { [key: string]: any } = artifacts[type];
+  const API = settings.endpoints.api.value || settings.endpoints.api.default;
+  const namespace = settings.kfserving.namespace.value || settings.kfserving.namespace.default;
   useEffect(() => {
     fetchArtifact(API, type, namespace)
-      .then(assets => dispatch({
+      .then((assets) => dispatch({
         type: FETCH_ARTIFACT_ASSETS,
         assetType: type,
-        assets
-      }))
-      dispatch({
-        type: SET_ACTIVE_PAGE,
-        page: type
-      })
-  }, [API, namespace, dispatch, type])
+        assets,
+      }));
+    dispatch({
+      type: SET_ACTIVE_PAGE,
+      page: type,
+    });
+  }, [API, namespace, dispatch, type]);
 
   const selected: Set<string> = new Set(pipeline.components
     .filter((asset: Artifact) => asset.type === type)
-    .map(({ id }: Artifact) => id))
+    .map(({ id }: Artifact) => id));
 
-  const handleSelectAllForPipeline = (event: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch((event.target.checked)
-      ? { type: ADD_COMPONENTS_TO_CART, assets: Object.values(assets)}
-      : { type: REMOVE_COMPONENTS_OF_TYPE_FROM_CART, artifactType: type})
+  const handleSelectAllForPipeline = (event: React.ChangeEvent<HTMLInputElement>) => dispatch((event.target.checked)
+    ? { type: ADD_COMPONENTS_TO_CART, assets: Object.values(assets) }
+    : { type: REMOVE_COMPONENTS_OF_TYPE_FROM_CART, artifactType: type });
 
   function getStatusIcon(asset: any) {
     let isReady = true;
     asset.status?.conditions.forEach((condition: any) => {
-      if (condition.type === "Ready") {
+      if (condition.type === 'Ready') {
         if (condition.status !== 'True') {
           isReady = false;
         }
       }
-    })
-    const icon = isReady ? checkmark : cancel
-    return <img style={{marginLeft: '10px', marginTop: '10px'}} src={icon} alt={icon} height="15"/>
+    });
+    const icon = isReady ? checkmark : cancel;
+    return <img style={{ marginLeft: '10px', marginTop: '10px' }} src={icon} alt={icon} height="15" />;
   }
 
   function getTags(asset: any) {
-    const predictor = asset.spec.predictor ? predictorIcon : ""
-    const explainer = asset.spec.explainer ? explainerIcon : ""
-    const transformer = asset.spec.transformer ? transformerIcon : ""
+    const predictor = asset.spec.predictor ? predictorIcon : '';
+    const explainer = asset.spec.explainer ? explainerIcon : '';
+    const transformer = asset.spec.transformer ? transformerIcon : '';
     return (
-      <div style={{display: 'flex', flexDirection: 'row'}}>
-        <img style={{marginLeft: '10px', marginTop: '10px'}} src={predictor} alt={predictor} height="18"/>
-        <img style={{marginLeft: '10px', marginTop: '10px'}} src={explainer} alt={explainer} height="18"/>
-        <img style={{marginLeft: '10px', marginTop: '10px'}} src={transformer} alt={transformer} height="18"/>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <img style={{ marginLeft: '10px', marginTop: '10px' }} src={predictor} alt={predictor} height="18" />
+        <img style={{ marginLeft: '10px', marginTop: '10px' }} src={explainer} alt={explainer} height="18" />
+        <img style={{ marginLeft: '10px', marginTop: '10px' }} src={transformer} alt={transformer} height="18" />
       </div>
-    )
-  } 
+    );
+  }
   function getFramework(asset: any) {
-    let framework = ""
-    if (Object.keys(asset.spec.predictor)[0] === "tensorflow") {
-      framework = tfLogo
+    let framework = '';
+    if (Object.keys(asset.spec.predictor)[0] === 'tensorflow') {
+      framework = tfLogo;
+    } else if (Object.keys(asset.spec.predictor)[0] === 'pytorch') {
+      framework = pytorchLogo;
+    } else if (Object.keys(asset.spec.predictor)[0] === 'keras') {
+      framework = kerasLogo;
+    } else if (Object.keys(asset.spec.predictor)[0] === 'sklearn' || Object.keys(asset.spec.predictor)[0] === 'scikit-learn') {
+      framework = sklearnLogo;
+    } else {
+      framework = kubeflowLogo;
     }
-    else if (Object.keys(asset.spec.predictor)[0] === "pytorch") {
-      framework = pytorchLogo
-    }
-    else if (Object.keys(asset.spec.predictor)[0] === "keras") {
-      framework = kerasLogo
-    }
-    else if (Object.keys(asset.spec.predictor)[0] === "sklearn" || Object.keys(asset.spec.predictor)[0] === "scikit-learn") {
-      framework = sklearnLogo
-    }
-    else {
-      framework = kubeflowLogo
-    }
-    
-    return <img style={{marginLeft: '10px', marginTop: '10px'}} src={framework} alt={framework} height="15"/>
+
+    return <img style={{ marginLeft: '10px', marginTop: '10px' }} src={framework} alt={framework} height="15" />;
   }
 
   function getTimestamp(asset: any) {
-    let timestamp = new Date(asset.metadata.creationTimestamp)
+    const timestamp = new Date(asset.metadata.creationTimestamp);
 
     const dateTimeFormat = new Intl.DateTimeFormat('en', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
-    let finalTimestamp = dateTimeFormat.format(timestamp)
-    
-    return <div style={{marginLeft: '10px', marginTop: '10px'}}>{finalTimestamp}</div>
+    const finalTimestamp = dateTimeFormat.format(timestamp);
+
+    return <div style={{ marginLeft: '10px', marginTop: '10px' }}>{finalTimestamp}</div>;
   }
- 
+
   function titleCase(str: String) {
-    var splitStr = str.toLowerCase().split(' ');
-    for (var i = 0; i < splitStr.length; i++) {
-        // You do not need to check if i is larger than splitStr length, as your for does that for you
-        // Assign it back to the array
-        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    const splitStr = str.toLowerCase().split(' ');
+    for (let i = 0; i < splitStr.length; i += 1) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
     // Directly return the joined string
-    return splitStr.join(' '); 
+    return splitStr.join(' ');
   }
   return (
     <>
       <Hero
-        title={`${type}`} 
+        title={`${type}`}
         subtitle={`Deploy an ${type.slice(0, -1)}.`}
       >
-        { canShow(leftAdmin, isAdmin) &&
+        { canShow(leftAdmin, isAdmin)
+        && (
         <Link to={leftLink}>
           <Button
             className="hero-buttons"
@@ -189,7 +189,7 @@ function MetaAllPage(props: MetaAllPageProps) {
             {leftBtn}
           </Button>
         </Link>
-        }
+        )}
         <Link to="https://github.com/machine-learning-exchange/mlx">
           <Button
             className="hero-buttons-outline"
@@ -199,7 +199,8 @@ function MetaAllPage(props: MetaAllPageProps) {
             Github
           </Button>
         </Link>
-        { canShow(rightAdmin, isAdmin) &&
+        { canShow(rightAdmin, isAdmin)
+        && (
         <Link to={rightLink}>
           <Button
             className="hero-buttons"
@@ -210,7 +211,7 @@ function MetaAllPage(props: MetaAllPageProps) {
             {rightBtn}
           </Button>
         </Link>
-        }
+        )}
       </Hero>
       <div style={{ margin: '1rem 0.8rem' }}>
         <Paper>
@@ -221,7 +222,7 @@ function MetaAllPage(props: MetaAllPageProps) {
           />
           <Table>
             <TableHeader
-              type={type} 
+              type={type}
               columns={columns}
               order={order}
               orderBy={orderBy}
@@ -231,7 +232,7 @@ function MetaAllPage(props: MetaAllPageProps) {
               onSelectAllClick={handleSelectAllForPipeline}
             />
             <TableBody>
-              {Object.values(assets).map(asset =>
+              {Object.values(assets).map((asset) => (
                 <TableRow
                   hover
                   tabIndex={-1}
@@ -244,7 +245,7 @@ function MetaAllPage(props: MetaAllPageProps) {
                       className={selected.has(asset.id) ? 'checkbox' : ''}
                     />
                   </TableCell> */}
-                  <TableCell component="th" id={asset.id} scope="row" padding="dense" >
+                  <TableCell component="th" id={asset.id} scope="row" padding="dense">
                     <Link to={asset.metadata.name}>{titleCase(asset.metadata.name.replace(/-/g, ' '))}</Link>
                   </TableCell>
                   <TableCell padding="dense">{getStatusIcon(asset)}</TableCell>
@@ -253,13 +254,13 @@ function MetaAllPage(props: MetaAllPageProps) {
                   <TableCell padding="dense">{getTags(asset)}</TableCell>
                   <TableCell padding="dense">{asset.metadata.namespace}</TableCell>
                 </TableRow>
-              )}
+              ))}
             </TableBody>
           </Table>
         </Paper>
       </div>
     </>
-  )
+  );
 }
 interface TableHeaderProps {
   type: string
@@ -275,24 +276,24 @@ interface TableHeaderProps {
 function TableHeader(props: TableHeaderProps) {
   const {
     columns, order, orderBy,
-    setOrderBy
-  } = props
+    setOrderBy,
+  } = props;
   return (
     <TableHead>
       <TableRow>
-        {columns.map(({ id, label, numeric }) => 
+        {columns.map(({ id, label, numeric }) => (
           <TableCell
-            key={id} 
+            key={id}
             align={numeric ? 'right' : 'left'}
             sortDirection={orderBy === id ? order : false}
             padding="dense"
           >
             <TableSortLabel onClick={() => setOrderBy(id)}>{label}</TableSortLabel>
-          </TableCell> 
-        )}
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
-  )
+  );
 }
 interface EnhancedToolbarProps {
   type: string
@@ -300,13 +301,13 @@ interface EnhancedToolbarProps {
   toggleModal: (e: never) => void
 }
 function EnhancedToolbar(props: EnhancedToolbarProps) {
-  const { type, numSelected } = props
+  const { type, numSelected } = props;
   return (
     <Toolbar
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}
     >
       <div>
@@ -317,6 +318,6 @@ function EnhancedToolbar(props: EnhancedToolbarProps) {
         </Typography>
       </div>
     </Toolbar>
-  )
+  );
 }
-export default withStyles(styles)(MetaAllPage)
+export default withStyles(styles)(MetaAllPage);

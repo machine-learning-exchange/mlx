@@ -1,26 +1,29 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React, { useState, Dispatch, SetStateAction, useContext, useEffect } from 'react'
-import StoreContext from '../lib/stores/context'
-import { fetchArtifact, setFeaturedArtifacts, setPublishApprovedArtifacts } from '../lib/api/artifacts';
-import { Artifact, FETCH_ARTIFACT_ASSETS, UPDATE_ARTIFACT_ASSET } from '../lib/stores/artifacts'
-import { SET_ACTIVE_PAGE } from '../lib/stores/pages';
-import { ADD_COMPONENTS_TO_CART, REMOVE_COMPONENTS_OF_TYPE_FROM_CART, ADD_COMPONENT_TO_CART, REMOVE_COMPONENT_FROM_CART } from '../lib/stores/pipeline';
-import { capitalize, formatTitle } from '../lib/util';
-
-import Hero from '../components/Hero'
-import Button from '../components/Button'
-import Icon from '@material-ui/core/Icon'
-import Link from '../components/Link'
-import PageFooter from '../components/PageFooter';
+*/
+import React, {
+  useState, Dispatch, SetStateAction, useContext, useEffect,
+} from 'react';
+import Icon from '@material-ui/core/Icon';
 import {
   Checkbox, Paper, TableHead, TableRow, TableCell, TableSortLabel,
-  Table, TableBody, Toolbar, Typography, withStyles, WithStyles
+  Table, TableBody, Toolbar, Typography, withStyles, WithStyles,
 } from '@material-ui/core';
+import StoreContext from '../lib/stores/context';
+import { fetchArtifact, setFeaturedArtifacts, setPublishApprovedArtifacts } from '../lib/api/artifacts';
+import { Artifact, FETCH_ARTIFACT_ASSETS, UPDATE_ARTIFACT_ASSET } from '../lib/stores/artifacts';
+import { SET_ACTIVE_PAGE } from '../lib/stores/pages';
+import {
+  ADD_COMPONENTS_TO_CART, REMOVE_COMPONENTS_OF_TYPE_FROM_CART, ADD_COMPONENT_TO_CART, REMOVE_COMPONENT_FROM_CART,
+} from '../lib/stores/pipeline';
+import { capitalize, formatTitle } from '../lib/util';
 
+import Hero from '../components/Hero';
+import Button from '../components/Button';
+import Link from '../components/Link';
+import PageFooter from '../components/PageFooter';
 
 interface MetaAllPageProps extends WithStyles<typeof styles> {
   type: string
@@ -39,14 +42,14 @@ interface MetaAllPageProps extends WithStyles<typeof styles> {
 
 enum SortOrder {
   ASC = 'asc',
-  DESC = 'desc'
+  DESC = 'desc',
 }
 
 const styles = {
   checkbox: {
-    color: '#1ccdc7'
-  }
-}
+    color: '#1ccdc7',
+  },
+};
 
 function MetaAllPage(props: MetaAllPageProps) {
   const {
@@ -55,103 +58,97 @@ function MetaAllPage(props: MetaAllPageProps) {
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
     canEdit,
-  } = props
+  } = props;
 
-  const [ order ] = useState(SortOrder.DESC)
-  const [ orderBy, setOrderBy ] = useState('name')
+  const [order] = useState(SortOrder.DESC);
+  const [orderBy, setOrderBy] = useState('name');
 
   const columns = [
-    { id: 'name', label: `${capitalize(type).substring(0, type.length-1)} Name`, numeric: false },
+    { id: 'name', label: `${capitalize(type).substring(0, type.length - 1)} Name`, numeric: false },
     { id: 'desc', label: 'Description', numeric: false },
     { id: 'feat', label: 'Featured', numeric: false },
     { id: 'pub', label: 'Published', numeric: false },
     { id: 'cat', label: tagName, numeric: false },
     { id: 'del', label: 'Delete', numeric: false },
-  ]
+  ];
 
-  const { store, dispatch } = useContext(StoreContext)
-  const { artifacts, settings, pipeline } = store
-  const assets: {[key: string]: Artifact} = Object.fromEntries((artifacts[type] || [])
-    .map((asset: Artifact) => [asset.name, asset]))
+  const { store, dispatch } = useContext(StoreContext);
+  const { artifacts, settings, pipeline } = store;
+  const assets: { [key: string]: Artifact } = Object.fromEntries((artifacts[type] || [])
+    .map((asset: Artifact) => [asset.name, asset]));
 
-  const API = settings.endpoints.api.value || settings.endpoints.api.default
+  const API = settings.endpoints.api.value || settings.endpoints.api.default;
 
   useEffect(() => {
     fetchArtifact(API, type)
-      .then(assets => dispatch({
+      .then((assets) => dispatch({
         type: FETCH_ARTIFACT_ASSETS,
         assetType: type,
-        assets
-      }))
+        assets,
+      }));
 
-      dispatch({
-        type: SET_ACTIVE_PAGE,
-        page: type
-      })
-  }, [API, type, dispatch])
+    dispatch({
+      type: SET_ACTIVE_PAGE,
+      page: type,
+    });
+  }, [API, type, dispatch]);
 
   const featured = new Set(Object.entries(assets)
     .filter(([_, asset]) => asset.featured)
-    .map(([_, asset]) => asset.id))
+    .map(([_, asset]) => asset.id));
 
   const publishable = new Set(Object.entries(assets)
     .filter(([_, asset]) => asset.publish_approved)
-    .map(([_, asset]) => asset.id))
+    .map(([_, asset]) => asset.id));
 
   const selected: Set<string> = new Set(pipeline.components
     .filter((asset: Artifact) => asset.type === type)
-    .map(({ id }: Artifact) => id))
+    .map(({ id }: Artifact) => id));
 
-  const handleCheckFeatured = async (id: string, change: { featured: boolean } ) => {
-    if (!canEdit)
-      return
+  const handleCheckFeatured = async (id: string, change: { featured: boolean }) => {
+    if (!canEdit) return;
 
-    if (change.featured)
-      featured.add(id)
-    else
-      featured.delete(id)
+    if (change.featured) featured.add(id);
+    else featured.delete(id);
 
     await setFeaturedArtifacts(API, type, Array.from(featured.values()))
       .then(() => dispatch({
-        type: UPDATE_ARTIFACT_ASSET, assetType: type,
-        id, payload: { featured: change.featured }
-      }))
-  }
+        type: UPDATE_ARTIFACT_ASSET,
+        assetType: type,
+        id,
+        payload: { featured: change.featured },
+      }));
+  };
 
-  const handleCheckPublishApproved = async (id: string, change: { approved: boolean } ) => {
-    if (!canEdit)
-      return
-      
-    if (change.approved)
-      publishable.add(id)
-    else
-      publishable.delete(id)
+  const handleCheckPublishApproved = async (id: string, change: { approved: boolean }) => {
+    if (!canEdit) return;
+
+    if (change.approved) publishable.add(id);
+    else publishable.delete(id);
 
     await setPublishApprovedArtifacts(API, type, Array.from(publishable.values()))
       .then(() => dispatch({
-        type: UPDATE_ARTIFACT_ASSET, assetType: type,
-        id, payload: { publish_approved: change.approved }
-      }))
-  }
+        type: UPDATE_ARTIFACT_ASSET,
+        assetType: type,
+        id,
+        payload: { publish_approved: change.approved },
+      }));
+  };
 
-  const handleSelectAllForPipeline = (event: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch((event.target.checked)
-      ? { type: ADD_COMPONENTS_TO_CART, assets: Object.values(assets)}
-      : { type: REMOVE_COMPONENTS_OF_TYPE_FROM_CART, artifactType: type})
+  const handleSelectAllForPipeline = (event: React.ChangeEvent<HTMLInputElement>) => dispatch((event.target.checked)
+    ? { type: ADD_COMPONENTS_TO_CART, assets: Object.values(assets) }
+    : { type: REMOVE_COMPONENTS_OF_TYPE_FROM_CART, artifactType: type });
 
-  const handleSelectAssetForPipeline = (asset: Artifact) =>
-    (event: React.ChangeEvent<HTMLInputElement>) =>
-      dispatch((event.target.checked)
-        ? { type: ADD_COMPONENT_TO_CART, asset}
-        : { type: REMOVE_COMPONENT_FROM_CART, id: asset.id })
+  const handleSelectAssetForPipeline = (asset: Artifact) => (event: React.ChangeEvent<HTMLInputElement>) => dispatch((event.target.checked)
+    ? { type: ADD_COMPONENT_TO_CART, asset }
+    : { type: REMOVE_COMPONENT_FROM_CART, id: asset.id });
 
-  
   // console.log(pipeline.components.map(({ type }: Artifact) => type))
 
   return (
     <>
       <Hero
-        title={`${type}`} 
+        title={`${type}`}
         subtitle={`Upload a ${type}`}
       >
         <Link to={leftLink}>
@@ -193,7 +190,7 @@ function MetaAllPage(props: MetaAllPageProps) {
           />
           <Table>
             <TableHeader
-              type={type} 
+              type={type}
               columns={columns}
               order={order}
               orderBy={orderBy}
@@ -203,7 +200,7 @@ function MetaAllPage(props: MetaAllPageProps) {
               onSelectAllClick={handleSelectAllForPipeline}
             />
             <TableBody>
-              {Object.values(assets).map(asset =>
+              {Object.values(assets).map((asset) => (
                 <TableRow
                   hover
                   tabIndex={-1}
@@ -216,7 +213,7 @@ function MetaAllPage(props: MetaAllPageProps) {
                       className={selected.has(asset.id) ? 'checkbox' : ''}
                     />
                   </TableCell>
-                  <TableCell component="th" id={asset.id} scope="row" padding="dense" >
+                  <TableCell component="th" id={asset.id} scope="row" padding="dense">
                     {formatTitle(asset.name)}
                   </TableCell>
                   <TableCell padding="dense">{asset.description}</TableCell>
@@ -241,27 +238,26 @@ function MetaAllPage(props: MetaAllPageProps) {
                     <Button
                       className="delete-button-assetpage"
                       variant="contained"
-                      onClick={async function() {
+                      onClick={async () => {
                         await fetch(`${API}/apis/v1alpha1/${asset.type}/${asset.id}`, {
-                          method: 'DELETE'
+                          method: 'DELETE',
                         });
                         window.location.reload();
-                       }}
-                      >
+                      }}
+                    >
                       <span className="delete-button-text-assetpage">Delete</span>
                     </Button>
                   </TableCell>
                 </TableRow>
-              )}
+              ))}
             </TableBody>
           </Table>
         </Paper>
       </div>
-      <PageFooter/>
+      <PageFooter />
     </>
-  )
+  );
 }
-
 
 interface TableHeaderProps {
   type: string
@@ -278,8 +274,8 @@ function TableHeader(props: TableHeaderProps) {
   const {
     columns,
     order, orderBy, setOrderBy,
-    numSelected, rowCount, onSelectAllClick
-  } = props
+    numSelected, rowCount, onSelectAllClick,
+  } = props;
 
   return (
     <TableHead>
@@ -292,21 +288,20 @@ function TableHeader(props: TableHeaderProps) {
             className={numSelected === rowCount ? 'checkbox' : ''}
           />
         </TableCell>
-        {columns.map(({ id, label, numeric }) => 
+        {columns.map(({ id, label, numeric }) => (
           <TableCell
-            key={id} 
+            key={id}
             align={numeric ? 'right' : 'left'}
             sortDirection={orderBy === id ? order : false}
             padding="dense"
           >
             <TableSortLabel onClick={() => setOrderBy(id)}>{label}</TableSortLabel>
-          </TableCell> 
-        )}
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
-  )
+  );
 }
-
 
 interface EnhancedToolbarProps {
   type: string
@@ -315,14 +310,14 @@ interface EnhancedToolbarProps {
 }
 
 function EnhancedToolbar(props: EnhancedToolbarProps) {
-  const { type, numSelected } = props
+  const { type, numSelected } = props;
 
   return (
     <Toolbar
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}
     >
       <div>
@@ -333,8 +328,7 @@ function EnhancedToolbar(props: EnhancedToolbarProps) {
         </Typography>
       </div>
     </Toolbar>
-  )
+  );
 }
 
-
-export default withStyles(styles)(MetaAllPage)
+export default withStyles(styles)(MetaAllPage);

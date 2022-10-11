@@ -19,7 +19,7 @@ class ApiListCatalogUploadErrors(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, errors: List[ApiCatalogUploadError]=None, total_errors: int=None):  # noqa: E501
+    def __init__(self, errors: List[ApiCatalogUploadError] = None, total_errors: int = None):  # noqa: E501
         """ApiListCatalogUploadErrors - a model defined in Swagger
 
         :param errors: The errors of this ApiListCatalogUploadErrors.  # noqa: E501

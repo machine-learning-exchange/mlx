@@ -20,7 +20,7 @@ class ApiPipelineCustomRunPayload(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, custom_pipeline: ApiPipelineCustom=None, run_parameters: Dictionary=None):  # noqa: E501
+    def __init__(self, custom_pipeline: ApiPipelineCustom = None, run_parameters: Dictionary = None):  # noqa: E501
         """ApiPipelineCustomRunPayload - a model defined in Swagger
 
         :param custom_pipeline: The custom_pipeline of this ApiPipelineCustomRunPayload.  # noqa: E501

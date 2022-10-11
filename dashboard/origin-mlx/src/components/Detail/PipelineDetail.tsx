@@ -1,19 +1,19 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
+*/
 import * as React from 'react';
-import StoreContext from '../../lib/stores/context'
-import { getUserInfo, hasRole } from '../../lib/util'
-
 import Grid from '@material-ui/core/Grid';
-import LoadingMessage from '../LoadingMessage';
-import RunView from '../RunView'
-import SourceCodeDisplay from '../SourceCodeDisplay';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import yaml from 'js-yaml';
+import StoreContext from '../../lib/stores/context';
+import { getUserInfo, hasRole } from '../../lib/util';
+
+import LoadingMessage from '../LoadingMessage';
+import RunView from '../RunView';
+import SourceCodeDisplay from '../SourceCodeDisplay';
 import MetadataView from '../MetadataView';
 
 import Graph from '../Graph';
@@ -28,7 +28,7 @@ export interface IPipelineDetailProps {
 }
 
 export default class PipelineDetail extends React.Component<IPipelineDetailProps, any> {
-  static contextType = StoreContext
+  static contextType = StoreContext;
 
   constructor(props: any) {
     super(props);
@@ -36,27 +36,24 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
       rightTab: 'source',
       leftTab: 'graph',
       selectedGraphNode: '',
-      pipeline: props.asset
-    }
+      pipeline: props.asset,
+    };
   }
 
   setSelectedGraphNode = (name: string) => {
     this.setState({
       selectedGraphNode: name,
-      rightTab: 'component-code'
+      rightTab: 'component-code',
     });
-  }
+  };
 
-  getGraph = (templates:any) => {
-    return templates.map((t:any) => t.name)
-  }
+  getGraph = (templates:any) => templates.map((t:any) => t.name);
 
   getComponentYAML = (name:string) => {
     const nodeCode = this.state.pipeline.template.spec.templates
-      .find((container:any) => 
-        container.name.includes(name.slice(0, name.length - (name.includes('...') && 3))))
-    return yaml.safeDump(nodeCode)
-  }
+      .find((container:any) => container.name.includes(name.slice(0, name.length - (name.includes('...') && 3))));
+    return yaml.safeDump(nodeCode);
+  };
 
   // getRunButton = () => {
   //   if (this.props.canRun === true) {
@@ -70,126 +67,137 @@ export default class PipelineDetail extends React.Component<IPipelineDetailProps
   //   const pipeLink = `http://${KFP}/pipeline/#/pipelines/details/${pipeline.id}`
   //   window.open(pipeLink, '_blank');
   // }
-  
-  public render() {
-    const { store } = this.context
-    const { execute } = store.settings.capabilities
-    const canRun = execute.value !== null ? execute.value : execute.default
 
-    const pipeline = this.state.pipeline
-    const setRunLink = this.props.setRunLink
+  public render() {
+    const { store } = this.context;
+    const { execute } = store.settings.capabilities;
+    const canRun = execute.value !== null ? execute.value : execute.default;
+
+    const { pipeline } = this.state;
+    const { setRunLink } = this.props;
 
     const template = yaml.safeLoad(this.props.asset.yaml);
     const graph = StaticGraphParser.createGraph(template);
-    
+
     return (
       <Grid
-        container 
-        spacing={ 0 } 
+        container
+        spacing={0}
         justify="center"
       >
-        <Grid 
+        <Grid
           className="left-wrapper"
-          item xs={ 6 }>
+          item
+          xs={6}
+        >
 
           <div className="tab-nav">
-            <Tabs 
+            <Tabs
               variant="fullWidth"
-              className="comp-tabs" 
-              value={ this.state.leftTab }
-              onChange={(_, leftTab: string) => this.setState({ leftTab })}>
-              <Tab 
+              className="comp-tabs"
+              value={this.state.leftTab}
+              onChange={(_, leftTab: string) => this.setState({ leftTab })}
+            >
+              <Tab
                 className="comp-tab"
-                value="graph" 
-                label="Graph" 
-              />                  
-              <Tab 
-                className="comp-tab"
-                value="detail" 
-                label="Details" 
+                value="graph"
+                label="Graph"
               />
-              {canRun && isAdmin &&
+              <Tab
+                className="comp-tab"
+                value="detail"
+                label="Details"
+              />
+              {canRun && isAdmin
+                && (
                 <Tab
                   className="comp-tab"
                   value="runCreation"
                   label="Launch"
                 />
-              }
+                )}
             </Tabs>
           </div>
-          { this.state.leftTab === 'detail' &&
+          { this.state.leftTab === 'detail'
+            && (
             <div className="component-detail-side">
               {!pipeline.yaml
-                  ? <LoadingMessage message="Loading Pipeline details..." />
-                  : <MetadataView content={{
-                      about: [
-                        { name: "Entrypoint", data: "" },
-                        { name: "Created at", data: pipeline.created_at },
-                        { name: "Description", data: pipeline.description },
-                        { 
-                          name: "Nodes",
-                          data: `${pipeline.template.spec.pipelineSpec.tasks.filter((t:any) => !t.dag)
-                              .map((node:any) => node.name).join(', ')}` 
-                        }
-                      ]
-                    }}
+                ? <LoadingMessage message="Loading Pipeline details..." />
+                : (
+                  <MetadataView content={{
+                    about: [
+                      { name: 'Entrypoint', data: '' },
+                      { name: 'Created at', data: pipeline.created_at },
+                      { name: 'Description', data: pipeline.description },
+                      {
+                        name: 'Nodes',
+                        data: `${pipeline.template.spec.pipelineSpec.tasks.filter((t:any) => !t.dag)
+                          .map((node:any) => node.name).join(', ')}`,
+                      },
+                    ],
+                  }}
                   />
-              }
+                )}
             </div>
-          }
-          { this.state.leftTab === 'graph' &&
+            )}
+          { this.state.leftTab === 'graph'
+            && (
             <Graph
               graph={graph}
               selectedNodeId={undefined}
               onClick={() => {}}
               onError={() => {}}
             />
-          }
-          {this.state.leftTab === 'runCreation' &&
-            <RunView type="pipelines" asset={pipeline} setRunLink={setRunLink}/>}
+            )}
+          {this.state.leftTab === 'runCreation'
+            && <RunView type="pipelines" asset={pipeline} setRunLink={setRunLink} />}
         </Grid>
-        <Grid 
+        <Grid
           className="right-wrapper"
-          item xs={ 6 }>
+          item
+          xs={6}
+        >
           <div className="tab-nav">
-            <Tabs 
+            <Tabs
               variant="fullWidth"
-              className="comp-tabs" 
-              value={ this.state.rightTab }
-              onChange={(_, rightTab: string) => this.setState({ rightTab })}>
-              <Tab 
+              className="comp-tabs"
+              value={this.state.rightTab}
+              onChange={(_, rightTab: string) => this.setState({ rightTab })}
+            >
+              <Tab
                 className="comp-tab"
-                value="source" 
+                value="source"
                 label="Pipeline YAML"
               />
-              { this.state.selectedGraphNode &&
-                <Tab 
+              { this.state.selectedGraphNode
+                && (
+                <Tab
                   className="comp-tab"
-                  value="component-code" 
-                  label={ `${ this.state.selectedGraphNode } Component` }
+                  value="component-code"
+                  label={`${this.state.selectedGraphNode} Component`}
                 />
-              }
+                )}
             </Tabs>
           </div>
 
-          { this.state.rightTab === "source" &&
-            <SourceCodeDisplay 
-              scrollMe={true}
-              isYAML={true}
-              code={pipeline.yaml || ``}
+          { this.state.rightTab === 'source' && (
+            <SourceCodeDisplay
+              scrollMe
+              isYAML
+              code={pipeline.yaml || ''}
             />
-          }
+          )}
 
-          { this.state.rightTab === "component-code" &&
-            <SourceCodeDisplay 
-              scrollMe={true}
-              isYAML={true}
-              code={this.getComponentYAML(this.state.selectedGraphNode) || ``}
+          { this.state.rightTab === 'component-code' && (
+            <SourceCodeDisplay
+              scrollMe
+              isYAML
+              code={this.getComponentYAML(this.state.selectedGraphNode) || ''}
             />
-          }
+          )}
 
         </Grid>
       </Grid>
-    )
+    );
   }
 }

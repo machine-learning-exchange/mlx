@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
@@ -59,7 +59,7 @@ def approve_pipelines_for_publishing(pipeline_ids):  # noqa: E501
 def create_pipeline(body):  # noqa: E501
     """create_pipeline
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: ApiPipeline
@@ -73,7 +73,7 @@ def create_pipeline(body):  # noqa: E501
 def delete_pipeline(id):  # noqa: E501
     """delete_pipeline
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -139,7 +139,7 @@ def get_pipeline(id):  # noqa: E501
 def get_template(id):  # noqa: E501
     """get_template
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGetTemplateResponse
@@ -162,9 +162,9 @@ def get_template(id):  # noqa: E501
 def list_pipelines(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
     """list_pipelines
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
     :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.
     :type sort_by: str

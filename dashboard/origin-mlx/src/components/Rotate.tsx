@@ -1,9 +1,9 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import styled, { keyframes } from 'styled-components'
+*/
+import styled, { keyframes } from 'styled-components';
 
 const rotate = keyframes`
   from {
@@ -21,10 +21,10 @@ interface RotateProps {
 
 const Rotate = styled.div<RotateProps>`
   display: inline-block;
-  animation: ${rotate} ${props => props.period} linear infinite;
+  animation: ${rotate} ${(props) => props.period} linear infinite;
   vertical-align: middle;
   flex-shrink: 0;
   clip-path: circle(40px at center);
 `;
 
-export default Rotate
+export default Rotate;

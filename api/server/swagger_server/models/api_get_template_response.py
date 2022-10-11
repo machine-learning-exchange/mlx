@@ -18,7 +18,7 @@ class ApiGetTemplateResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, template: str=None, url: str=None):  # noqa: E501
+    def __init__(self, template: str = None, url: str = None):  # noqa: E501
         """ApiGetTemplateResponse - a model defined in Swagger
 
         :param template: The template of this ApiGetTemplateResponse.  # noqa: E501

@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -18,9 +18,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
 from swagger_client.models.api_list_credentials_response import ApiListCredentialsResponse  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestApiListCredentialsResponse(unittest.TestCase):
@@ -36,7 +34,6 @@ class TestApiListCredentialsResponse(unittest.TestCase):
         """Test ApiListCredentialsResponse"""
         # FIXME: construct object with mandatory attributes with example values
         # model = swagger_client.models.api_list_credentials_response.ApiListCredentialsResponse()  # noqa: E501
-        pass
 
 
 if __name__ == '__main__':

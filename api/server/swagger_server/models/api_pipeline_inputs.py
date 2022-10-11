@@ -19,7 +19,7 @@ class ApiPipelineInputs(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, parameters: List[ApiParameter]=None):  # noqa: E501
+    def __init__(self, parameters: List[ApiParameter] = None):  # noqa: E501
         """ApiPipelineInputs - a model defined in Swagger
 
         :param parameters: The parameters of this ApiPipelineInputs.  # noqa: E501

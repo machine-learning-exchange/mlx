@@ -8,7 +8,6 @@ from datetime import date, datetime  # noqa: F401
 
 from typing import List, Dict  # noqa: F401
 
-from swagger_server.models.base_model_ import Model
 from swagger_server.models.api_parameter import ApiParameter  # noqa: F401,E501
 from swagger_server.models.api_pipeline import ApiPipeline  # noqa: F401,E501
 from swagger_server.models.api_pipeline_extension import ApiPipelineExtension  # noqa: F401,E501
@@ -21,7 +20,7 @@ class ApiPipelineExtended(ApiPipeline, ApiPipelineExtension):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, created_at: datetime=None, name: str=None, description: str=None, parameters: List[ApiParameter]=None, status: str=None, default_version_id: str=None, namespace: str=None, annotations: Dict[str, str]=None, featured: bool=None, publish_approved: bool=None):  # noqa: E501
+    def __init__(self, id: str = None, created_at: datetime = None, name: str = None, description: str = None, parameters: List[ApiParameter] = None, status: str = None, default_version_id: str = None, namespace: str = None, annotations: Dict[str, str] = None, featured: bool = None, publish_approved: bool = None):  # noqa: E501
         """ApiPipelineExtended - a model defined in Swagger
 
         :param id: The id of this ApiPipelineExtended.  # noqa: E501

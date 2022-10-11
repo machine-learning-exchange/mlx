@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import yaml
@@ -35,7 +35,7 @@ def get_all_services(name=None, namespace=None, group=None, version=None, plural
 def post_service(inferenceservice=None, namespace=None, group=None, version=None, plural=None):
 
     config.load_incluster_config()
-    api = client.CustomObjectsApi() 
+    api = client.CustomObjectsApi()
 
     service_dict = inferenceservice.to_dict()
     # Get resource information from the dict
@@ -64,7 +64,7 @@ def from_client_upload_service(upload_file=None, namespace=None, group=None, ver
 
     yaml_object = yaml.safe_load(upload_file)
     # Get resource information from the yaml
-    name = yaml_object['metadata']['name']
+    yaml_object['metadata']['name']
     version_split = yaml_object['apiVersion'].split("/")
     group = version_split[0]
     version = version_split[1]

@@ -19,7 +19,7 @@ class ApiPipelineTask(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, artifact_type: str=None, artifact_id: str=None, arguments: ApiPipelineTaskArguments=None, dependencies: List[str]=None):  # noqa: E501
+    def __init__(self, name: str = None, artifact_type: str = None, artifact_id: str = None, arguments: ApiPipelineTaskArguments = None, dependencies: List[str] = None):  # noqa: E501
         """ApiPipelineTask - a model defined in Swagger
 
         :param name: The name of this ApiPipelineTask.  # noqa: E501

@@ -19,7 +19,7 @@ class ApiListNotebooksResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, notebooks: List[ApiNotebook]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(self, notebooks: List[ApiNotebook] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListNotebooksResponse - a model defined in Swagger
 
         :param notebooks: The notebooks of this ApiListNotebooksResponse.  # noqa: E501

@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
@@ -14,7 +14,6 @@ import tempfile
 
 from glob import glob
 from io import BytesIO
-from os import environ as env
 from pprint import pprint
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiModel, ApiGetTemplateResponse, ApiListModelsResponse, \
@@ -190,7 +189,7 @@ def approve_models_for_publishing(model_ids: [str]):
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.approve_models_for_publishing(model_ids)
+        api_instance.approve_models_for_publishing(model_ids)
 
     except ApiException as e:
         print("Exception when calling ModelServiceApi -> approve_models_for_publishing: %s\n" % e, file=stderr)
@@ -205,7 +204,7 @@ def set_featured_models(model_ids: [str]):
     api_instance = swagger_client.ModelServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.set_featured_models(model_ids)
+        api_instance.set_featured_models(model_ids)
 
     except ApiException as e:
         print("Exception when calling ModelServiceApi -> set_featured_models: %s\n" % e, file=stderr)
@@ -346,7 +345,7 @@ def main():
     approve_models_for_publishing(model_ids)
 
     # randomly selected a model
-    i = random.randint(0, len(model_ids)-1)
+    i = random.randint(0, len(model_ids) - 1)
     model_id = model_ids[i]
 
     # show one randomly selected model, gen code, download, update

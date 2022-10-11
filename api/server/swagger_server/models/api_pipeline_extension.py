@@ -18,7 +18,7 @@ class ApiPipelineExtension(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, annotations: Dict[str, str]=None, featured: bool=None, publish_approved: bool=None):  # noqa: E501
+    def __init__(self, id: str = None, annotations: Dict[str, str] = None, featured: bool = None, publish_approved: bool = None):  # noqa: E501
         """ApiPipelineExtension - a model defined in Swagger
 
         :param id: The id of this ApiPipelineExtension.  # noqa: E501

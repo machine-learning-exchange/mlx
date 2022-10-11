@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -20,7 +20,6 @@ import unittest
 
 import swagger_client
 from swagger_client.api.model_service_api import ModelServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestModelServiceApi(unittest.TestCase):
@@ -36,74 +35,62 @@ class TestModelServiceApi(unittest.TestCase):
         """Test case for approve_models_for_publishing
 
         """
-        pass
 
     def test_create_model(self):
         """Test case for create_model
 
         """
-        pass
 
     def test_delete_model(self):
         """Test case for delete_model
 
         """
-        pass
 
     def test_download_model_files(self):
         """Test case for download_model_files
 
         Returns the model artifacts compressed into a .tgz (.tar.gz) file.  # noqa: E501
         """
-        pass
 
     def test_generate_model_code(self):
         """Test case for generate_model_code
 
         """
-        pass
 
     def test_get_model(self):
         """Test case for get_model
 
         """
-        pass
 
     def test_get_model_template(self):
         """Test case for get_model_template
 
         """
-        pass
 
     def test_list_models(self):
         """Test case for list_models
 
         """
-        pass
 
     def test_run_model(self):
         """Test case for run_model
 
         """
-        pass
 
     def test_set_featured_models(self):
         """Test case for set_featured_models
 
         """
-        pass
 
     def test_upload_model(self):
         """Test case for upload_model
 
         """
-        pass
 
     def test_upload_model_file(self):
         """Test case for upload_model_file
 
         """
-        pass
 
 
 if __name__ == '__main__':

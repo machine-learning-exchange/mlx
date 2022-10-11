@@ -1,31 +1,32 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React, { useContext, useState, ComponentProps, useEffect } from 'react'
-import StoreContext from '../../lib/stores/context'
+*/
+import React, {
+  useContext, useState, ComponentProps, useEffect,
+} from 'react';
+import fuzzysort from 'fuzzysort';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import { withStyles } from '@material-ui/core/styles';
+import StoreContext from '../../lib/stores/context';
 import { fetchArtifact } from '../../lib/api/artifacts';
-import { Artifact, FETCH_ARTIFACT_ASSETS } from '../../lib/stores/artifacts'
+import { Artifact, FETCH_ARTIFACT_ASSETS } from '../../lib/stores/artifacts';
 import { SET_ACTIVE_PAGE } from '../../lib/stores/pages';
-import { getUserInfo, hasRole, canShow } from '../../lib/util'
-import fuzzysort from 'fuzzysort'
+import { getUserInfo, hasRole, canShow } from '../../lib/util';
 
-import Button from '../../components/Button'
+import Button from '../../components/Button';
 import Hero from '../../components/Hero';
-import Icon from '@material-ui/core/Icon'
-import Link from '../../components/Link'
+import Link from '../../components/Link';
 import MetaFeatured from './MetaFeatured';
 import PageFooter from '../../components/PageFooter';
 
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-
 import '../../styles/Models.css';
-import { withStyles } from '@material-ui/core/styles';
 
 const CssInput = withStyles({
   root: {
@@ -48,7 +49,6 @@ const CssInput = withStyles({
     },
   },
 })(Input);
-
 
 export interface MetaFeaturedPageProps extends ComponentProps<any> {
   assetType: string;
@@ -73,52 +73,52 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
     leftBtn, leftLink, leftIcon,
     rightBtn, rightLink, rightIcon,
     leftAdmin = false, rightAdmin = false,
-  } = props
+  } = props;
 
-  const { store, dispatch } = useContext(StoreContext)
-  const { artifacts, settings } = store
-  const assets: Artifact[] = artifacts[assetType]
-  const [search, setSearch] = useState('')
+  const { store, dispatch } = useContext(StoreContext);
+  const { artifacts, settings } = store;
+  const assets: Artifact[] = artifacts[assetType];
+  const [search, setSearch] = useState('');
 
-  let filteredAssets = assets.filter(asset => asset.featured && asset.publish_approved)
-  const assetNames = filteredAssets.map((asset: any) => asset.name)
+  let filteredAssets = assets.filter((asset) => asset.featured && asset.publish_approved);
+  const assetNames = filteredAssets.map((asset: any) => asset.name);
   if (search !== '') {
-    const searchResults = fuzzysort.go(search, assetNames)
-    filteredAssets = searchResults.reduce(function(result, searchResult) {
-      const index = assets.findIndex((asset: any) => asset.name === searchResult.target)
-      if (index !== -1)
-        result.push(assets[index])
+    const searchResults = fuzzysort.go(search, assetNames);
+    filteredAssets = searchResults.reduce((result, searchResult) => {
+      const index = assets.findIndex((asset: any) => asset.name === searchResult.target);
+      if (index !== -1) result.push(assets[index]);
       return result;
     }, []);
   }
 
-  const API = settings.endpoints.api.value || settings.endpoints.api.default
-  const upload = settings.capabilities.upload
-  const canUpload = upload.value !== undefined ? upload.value : upload.default
+  const API = settings.endpoints.api.value || settings.endpoints.api.default;
+  const { upload } = settings.capabilities;
+  const canUpload = upload.value !== undefined ? upload.value : upload.default;
 
   useEffect(() => {
     fetchArtifact(API, assetType)
-      .then(assets => dispatch({
+      .then((assets) => dispatch({
         type: FETCH_ARTIFACT_ASSETS,
         assetType,
-        assets
-      }))
+        assets,
+      }));
 
     dispatch({
       type: SET_ACTIVE_PAGE,
-      page: assetType
-    })
-  }, [API, assetType, dispatch])
+      page: assetType,
+    });
+  }, [API, assetType, dispatch]);
 
   return (
     <div className="page-wrapper">
       <Hero
-        title={assetType} 
+        title={assetType}
         subtitle={description}
         alternate={alternate}
       >
-        { assetType === "pipelines" && isAdmin &&
-          <Link to='/experiments'>
+        { assetType === 'pipelines' && isAdmin
+          && (
+          <Link to="/experiments">
             <Button
               className="hero-buttons-outline"
               variant="outlined"
@@ -127,8 +127,9 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
               View Experiments
             </Button>
           </Link>
-        }
-        {leftBtn && leftLink && canShow(leftAdmin, isAdmin) &&
+          )}
+        {leftBtn && leftLink && canShow(leftAdmin, isAdmin)
+          && (
           <Link to={leftLink}>
             <Button
               className="hero-buttons"
@@ -139,7 +140,7 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
               {leftBtn}
             </Button>
           </Link>
-        }
+          )}
         <Link to="https://github.com/machine-learning-exchange/mlx">
           <Button
             className="hero-buttons"
@@ -149,7 +150,8 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
             Github
           </Button>
         </Link>
-        {rightBtn && rightLink && canUpload && canShow(rightAdmin, isAdmin) &&
+        {rightBtn && rightLink && canUpload && canShow(rightAdmin, isAdmin)
+          && (
           <Link to={rightLink}>
             <Button
               className="hero-buttons"
@@ -160,20 +162,20 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
               {rightBtn}
             </Button>
           </Link>
-        }
+          )}
         <FormControl className="search-box">
           <CssInput
             id="standard-adornment-weight"
             value={search}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>)=>setSearch(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)}
             placeholder="Search"
-            endAdornment={
+            endAdornment={(
               <InputAdornment position="end">
                 <IconButton>
-                  <SearchIcon style={{fill: "#fff"}} />
+                  <SearchIcon style={{ fill: '#fff' }} />
                 </IconButton>
               </InputAdornment>
-            }
+            )}
             inputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -181,22 +183,23 @@ function MetaFeaturedPage(props: MetaFeaturedPageProps) {
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
           />
         </FormControl>
       </Hero>
-        {children}
-        {assets && 
-          <MetaFeatured 
+      {children}
+      {assets
+          && (
+          <MetaFeatured
             numFeatured={numFeatured}
             assetType={assetType}
-            assets={filteredAssets} 
-          /> 
-        }
-      <PageFooter/>
+            assets={filteredAssets}
+          />
+          )}
+      <PageFooter />
     </div>
   );
 }
 
-export default MetaFeaturedPage
+export default MetaFeaturedPage;

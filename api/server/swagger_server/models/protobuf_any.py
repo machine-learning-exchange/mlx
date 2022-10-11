@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 from __future__ import absolute_import
@@ -20,7 +20,7 @@ class ProtobufAny(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, type_url: str=None, value:object=None):  # noqa: E501
+    def __init__(self, type_url: str = None, value: object = None):  # noqa: E501
         """ProtobufAny - a model defined in Swagger
 
         :param type_url: The type_url of this ProtobufAny.  # noqa: E501

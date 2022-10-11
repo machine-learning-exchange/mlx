@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 import connexion
 import yaml
 
@@ -9,7 +9,6 @@ from swagger_server.models.api_parameter import ApiParameter  # noqa: E501
 from swagger_server.models.api_settings import ApiSettings  # noqa: E501
 from swagger_server.models.api_settings_section import ApiSettingsSection  # noqa: E501
 from swagger_server.models.api_status import ApiStatus  # noqa: E501
-from swagger_server import util
 
 
 SETTINGS_FILE = abspath(join(dirname(__file__), "..", "..", "application_settings.yaml"))

@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
@@ -195,7 +195,7 @@ def approve_components_for_publishing(component_ids: [str]):
     api_instance = swagger_client.ComponentServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.approve_components_for_publishing(component_ids)
+        api_instance.approve_components_for_publishing(component_ids)
 
     except ApiException as e:
         print("Exception when calling ComponentServiceApi -> approve_components_for_publishing: %s\n" % e, file=stderr)
@@ -210,7 +210,7 @@ def set_featured_components(component_ids: [str]):
     api_instance = swagger_client.ComponentServiceApi(api_client=api_client)
 
     try:
-        api_response = api_instance.set_featured_components(component_ids)
+        api_instance.set_featured_components(component_ids)
 
     except ApiException as e:
         print("Exception when calling ComponentServiceApi -> set_featured_components: %s\n" % e, file=stderr)
@@ -349,7 +349,7 @@ def main():
     approve_components_for_publishing(component_ids)
 
     # randomly selected a component
-    i = random.randint(0, len(component_ids)-1)
+    i = random.randint(0, len(component_ids) - 1)
     component_id = component_ids[i]
 
     # show one randomly selected component

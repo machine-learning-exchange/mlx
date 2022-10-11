@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 import connexion
@@ -48,7 +48,7 @@ def approve_models_for_publishing(model_ids):  # noqa: E501
 def create_model(body):  # noqa: E501
     """create_model
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: ApiModel
@@ -69,7 +69,7 @@ def create_model(body):  # noqa: E501
 def delete_model(id):  # noqa: E501
     """delete_model
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: None
@@ -171,7 +171,7 @@ def generate_model_code(id):  # noqa: E501
 def get_model(id):  # noqa: E501
     """get_model
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiModel
@@ -187,7 +187,7 @@ def get_model(id):  # noqa: E501
 def get_model_template(id):  # noqa: E501
     """get_model_template
 
-    :param id: 
+    :param id:
     :type id: str
 
     :rtype: ApiGetTemplateResponse
@@ -213,9 +213,9 @@ def get_model_template(id):  # noqa: E501
 def list_models(page_token=None, page_size=None, sort_by=None, filter=None):  # noqa: E501
     """list_models
 
-    :param page_token: 
+    :param page_token:
     :type page_token: str
-    :param page_size: 
+    :param page_size:
     :type page_size: int
     :param sort_by: Can be format of \&quot;field_name\&quot;, \&quot;field_name asc\&quot; or \&quot;field_name des\&quot; Ascending by default.
     :type sort_by: str
@@ -254,7 +254,7 @@ def list_models(page_token=None, page_size=None, sort_by=None, filter=None):  # 
 def run_model(id, pipeline_stage, execution_platform, run_name=None, parameters: dict = None):  # noqa: E501
     """run_model
 
-    :param id: 
+    :param id:
     :type id: str
     :param pipeline_stage: pipeline stage, either 'train' or 'serve'
     :type pipeline_stage: str
@@ -310,7 +310,7 @@ def upload_model(uploadfile: FileStorage, name=None, existing_id=None):  # noqa:
 
     :param uploadfile: The model to upload. Maximum size of 32MB is supported.
     :type uploadfile: werkzeug.datastructures.FileStorage
-    :param name: 
+    :param name:
     :type name: str
     :param existing_id: The model identifier of the model to be replaced, INTERNAL USE ONLY
     :type existing_id: str

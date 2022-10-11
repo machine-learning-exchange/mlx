@@ -18,7 +18,7 @@ class ApiUrl(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, pipeline_url: str=None):  # noqa: E501
+    def __init__(self, pipeline_url: str = None):  # noqa: E501
         """ApiUrl - a model defined in Swagger
 
         :param pipeline_url: The pipeline_url of this ApiUrl.  # noqa: E501

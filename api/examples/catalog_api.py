@@ -1,5 +1,5 @@
 # Copyright 2021 The MLX Contributors
-# 
+#
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
@@ -8,10 +8,9 @@ import json
 import swagger_client
 
 from os import environ as env
-from pprint import pprint
 from swagger_client.api_client import ApiClient, Configuration
 from swagger_client.models import ApiListCatalogItemsResponse, ApiCatalogUpload,\
-    ApiCatalogUploadItem, ApiCatalogUploadResponse, ApiAccessToken
+    ApiCatalogUploadResponse, ApiAccessToken
 from swagger_client.rest import ApiException
 from sys import stderr
 
@@ -164,7 +163,7 @@ def main():
     delete_assets()
 
     # upload the assets configured in the bootstrapper
-    upload_response = upload_catalog_assets()
+    upload_catalog_assets()
 
     # delete (only) the assets we just uploaded
     # delete_assets(upload_response)

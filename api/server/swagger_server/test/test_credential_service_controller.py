@@ -1,12 +1,11 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 from __future__ import absolute_import
 
 from flask import json
-from six import BytesIO
 
 from swagger_server.models.api_component import ApiComponent  # noqa: E501
 from swagger_server.models.api_credential import ApiCredential  # noqa: E501

@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 # coding: utf-8
 
 """
@@ -20,7 +20,6 @@ import unittest
 
 import swagger_client
 from swagger_client.api.inference_service_api import InferenceServiceApi  # noqa: E501
-from swagger_client.rest import ApiException
 
 
 class TestInferenceServiceApi(unittest.TestCase):
@@ -36,14 +35,12 @@ class TestInferenceServiceApi(unittest.TestCase):
         """Test case for get_service
 
         """
-        pass
 
     def test_list_services(self):
         """Test case for list_services
 
         Gets all KFServing services  # noqa: E501
         """
-        pass
 
 
 if __name__ == '__main__':

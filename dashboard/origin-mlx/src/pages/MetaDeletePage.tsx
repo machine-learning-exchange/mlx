@@ -1,11 +1,10 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Hero from '../components/Hero';
+*/
+import React from 'react';
+import { Link } from 'react-router-dom';
 import yaml from 'js-yaml';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,9 +13,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import Hero from '../components/Hero';
 
-import { capitalize } from '../lib/util'
-
+import { capitalize } from '../lib/util';
 
 export interface IMetaDeleteProps {
   match: any;
@@ -28,14 +27,14 @@ export interface IMetaDeleteProps {
 
 export default class MetaDelete extends React.Component<IMetaDeleteProps, any> {
   constructor(props:IMetaDeleteProps) {
-    super(props)
+    super(props);
     this.state = {
       assetType: this.props.match.params.type,
       assets: [],
       checked: [],
     };
   }
-  
+
   componentDidMount() {
     this.getAssetList();
     // this.props.setActive(capitalize(this.state.assetType));
@@ -44,39 +43,37 @@ export default class MetaDelete extends React.Component<IMetaDeleteProps, any> {
   getThirdColName = (assetType:string) => {
     if (assetType === 'operators') {
       return 'Kind';
-    } else if (assetType === 'components') {
+    } if (assetType === 'components') {
       return 'Platform';
-    } else if (assetType === 'pipelines') {
+    } if (assetType === 'pipelines') {
       return 'Category';
-    } else if (assetType === 'models') {
+    } if (assetType === 'models') {
       return 'Domain';
     }
-  }
+  };
 
   getAssetList = async () => {
     const rawYAML = await fetch(`${this.props.API}/apis/v1alpha1/${this.state.assetType}`);
     const assets : any = yaml.safeLoad(await rawYAML.text());
     this.setState({ assets: assets[this.state.assetType] });
-  }
+  };
 
-  isChecked = (key:any) => {
-    return this.state.checked.includes(key);
-  }
+  isChecked = (key:any) => this.state.checked.includes(key);
 
   handleRowClick = (i:number) => () => {
     if (this.state.assetType === 'pipelines') {
       this.setState({
-        selectedAsset: this.state.assets[i]
+        selectedAsset: this.state.assets[i],
       });
     } else if (this.state.assetType === 'operators') {
-      
+      // pass
     } else {
-      this.toggleCheck(i)
+      this.toggleCheck(i);
       this.setState({
-        selectedAsset: this.state.assets[i]
+        selectedAsset: this.state.assets[i],
       });
     }
-  }
+  };
 
   toggleCheck = (value:any) => {
     const { checked } = this.state;
@@ -91,18 +88,18 @@ export default class MetaDelete extends React.Component<IMetaDeleteProps, any> {
     this.setState({
       checked: newChecked,
     });
-  }
+  };
 
   deleteAsset = async (asset:any) => {
     try {
       this.setState({
-        assets: this.state.assets.filter((target:any) => target.id !== asset.id)
-      })
+        assets: this.state.assets.filter((target:any) => target.id !== asset.id),
+      });
     } catch (e) {
       console.log(e);
     }
-  }
-  
+  };
+
   public render() {
     const { assetType } = this.state;
 
@@ -119,70 +116,82 @@ export default class MetaDelete extends React.Component<IMetaDeleteProps, any> {
               variant="outlined"
               color="primary"
             >
-              {<Icon>arrow_back</Icon>}
+              <Icon>arrow_back</Icon>
               {assetType}
             </Button>
           </Link>
         </Hero>
         <div className="list-wrapper">
-        <Table>
-        <TableHead>
-          <TableRow className='list-head-row'>
-            <TableCell>{ capitalize(assetType.slice(0, assetType.length-1)) } Name</TableCell>
-            <TableCell align="right">Description</TableCell>
-            <TableCell align="right">{ this.getThirdColName(assetType) }</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          { this.state.assets && this.state.assets.map((row:any, i:number) => {
-            let thirdColData;
-            if (assetType === "models") {
-              thirdColData = row.domain;
-            } else if (assetType === "components") { 
-              thirdColData = row.metadata?.annotation?.platform || 'OpenSource'
-            } else if (assetType === "pipelines") { 
-              thirdColData = row.category;
-            } else if (assetType === "operators") { 
-              thirdColData = row.kind;
-            }
-            return (
-              !this.state.checked.includes(i) ?
-              <TableRow 
-                className="list-row"
-                key={i}
-                onClick={this.handleRowClick(i)}>
+          <Table>
+            <TableHead>
+              <TableRow className="list-head-row">
                 <TableCell>
-                  {row.name}
+                  { capitalize(assetType.slice(0, assetType.length - 1)) }
+                  {' '}
+                  Name
                 </TableCell>
-                <TableCell align="right">{row.description}</TableCell>
-                <TableCell className="third-table-column" align="right">{thirdColData}</TableCell>
+                <TableCell align="right">Description</TableCell>
+                <TableCell align="right">{ this.getThirdColName(assetType) }</TableCell>
               </TableRow>
-            :
-              <TableRow 
-                className="list-row confirm-delete"
-                key={i}
-                onClick={this.handleRowClick(i)}>
-                <TableCell className="">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{`CLICK BUTTON TO DELETE `}<Icon>arrow_forward</Icon></TableCell> 
-                <TableCell className="third-table-column" align="right">
-                  <Button 
-                    className="delete-button" 
-                    variant="contained" 
-                    onClick={() => this.deleteAsset(row)}
-                    >
-                    <span className="delete-button-text">DELETE</span>
-                  </Button>
-                </TableCell> 
-              </TableRow>
+            </TableHead>
+            <TableBody>
+              { this.state.assets && this.state.assets.map((row:any, i:number) => {
+                let thirdColData;
+                if (assetType === 'models') {
+                  thirdColData = row.domain;
+                } else if (assetType === 'components') {
+                  thirdColData = row.metadata?.annotation?.platform || 'OpenSource';
+                } else if (assetType === 'pipelines') {
+                  thirdColData = row.category;
+                } else if (assetType === 'operators') {
+                  thirdColData = row.kind;
+                }
+                return (
+                  !this.state.checked.includes(i)
+                    ? (
+                      <TableRow
+                        className="list-row"
+                        key={i}
+                        onClick={this.handleRowClick(i)}
+                      >
+                        <TableCell>
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.description}</TableCell>
+                        <TableCell className="third-table-column" align="right">{thirdColData}</TableCell>
+                      </TableRow>
+                    )
+                    : (
+                      <TableRow
+                        className="list-row confirm-delete"
+                        key={i}
+                        onClick={this.handleRowClick(i)}
+                      >
+                        <TableCell className="">
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">
+                          {'CLICK BUTTON TO DELETE '}
+                          <Icon>arrow_forward</Icon>
+                        </TableCell>
+                        <TableCell className="third-table-column" align="right">
+                          <Button
+                            className="delete-button"
+                            variant="contained"
+                            onClick={() => this.deleteAsset(row)}
+                          >
+                            <span className="delete-button-text">DELETE</span>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )
 
-            )
-          })}
-        </TableBody>
-        </Table>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
     );
   }
 }

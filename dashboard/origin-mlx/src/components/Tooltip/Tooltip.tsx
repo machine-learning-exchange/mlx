@@ -1,14 +1,14 @@
-/* 
+/*
 * Copyright 2021 The MLX Contributors
-* 
+*
 * SPDX-License-Identifier: Apache-2.0
-*/ 
-import React, { useState } from 'react'
-import styled from 'styled-components'
+*/
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 function ToolTip(props: any) {
   const { content, children } = props;
-  const [ isShown, setIsShown ] = useState(false)
+  const [isShown, setIsShown] = useState(false);
 
   return (
     <Wrapper
@@ -18,13 +18,12 @@ function ToolTip(props: any) {
       {children}
       <Display enabled={isShown}>{content}</Display>
     </Wrapper>
-  )
+  );
 }
 
-
 const Display = styled.div<{ enabled?: boolean }>`
-  visibility: ${ ({ enabled }) => enabled ? 'visible' : 'hidden' };
-  opacity: ${ ({ enabled }) => enabled ? 1 : 0 };
+  visibility: ${({ enabled }) => (enabled ? 'visible' : 'hidden')};
+  opacity: ${({ enabled }) => (enabled ? 1 : 0)};
 
   position: absolute;
   left: calc(100% + 10px);
@@ -37,10 +36,10 @@ const Display = styled.div<{ enabled?: boolean }>`
   border: 1px solid #fff;
   z-index: 3;
 
-  background-color: ${ ({ theme }) => theme.bg };
+  background-color: ${({ theme }) => theme.bg};
   transition: visibility 250ms linear, opacity 250ms linear;
-  color: ${ ({ theme }) => theme.fgActive };
-`
+  color: ${({ theme }) => theme.fgActive};
+`;
 
 Display.defaultProps = {
   theme: {
@@ -50,12 +49,11 @@ Display.defaultProps = {
     fgDefault: '#666',
     hover: '#3f3f3f',
     separator: '#666',
-  }
-}
+  },
+};
 
 const Wrapper = styled.div`
   position: relative;
-`
+`;
 
-
-export default ToolTip
+export default ToolTip;

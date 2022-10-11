@@ -19,7 +19,7 @@ class ApiSettingsSection(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, description: str=None, settings: List[ApiParameter]=None):  # noqa: E501
+    def __init__(self, name: str = None, description: str = None, settings: List[ApiParameter] = None):  # noqa: E501
         """ApiSettingsSection - a model defined in Swagger
 
         :param name: The name of this ApiSettingsSection.  # noqa: E501

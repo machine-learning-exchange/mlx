@@ -18,7 +18,7 @@ class ApiCatalogUploadItem(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, url: str=None):  # noqa: E501
+    def __init__(self, name: str = None, url: str = None):  # noqa: E501
         """ApiCatalogUploadItem - a model defined in Swagger
 
         :param name: The name of this ApiCatalogUploadItem.  # noqa: E501

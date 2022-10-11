@@ -19,7 +19,7 @@ class ApiListPipelinesResponse(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, pipelines: List[ApiPipelineExtended]=None, total_size: int=None, next_page_token: str=None):  # noqa: E501
+    def __init__(self, pipelines: List[ApiPipelineExtended] = None, total_size: int = None, next_page_token: str = None):  # noqa: E501
         """ApiListPipelinesResponse - a model defined in Swagger
 
         :param pipelines: The pipelines of this ApiListPipelinesResponse.  # noqa: E501
