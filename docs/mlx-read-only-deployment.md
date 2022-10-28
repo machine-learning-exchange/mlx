@@ -1,4 +1,3 @@
-
 ## Deploy the MLX Read-Only mode on an Existing Kubernetes Cluster
 
 To deploy MLX in read-only mode on an existing Kubernetes cluster without Kubeflow, clone the MLX repo and apply the manifest using Kustomize:

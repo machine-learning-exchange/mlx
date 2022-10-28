@@ -1,10 +1,17 @@
 # Machine Learning Exchange - Web UI
 
-## Setup
+This README contains information about the front end of the Machine Learning Exchange project.
 
-This repo contains the code for the front end UI of the Machine Learning Exchange project.
+## Prerequisites
 
-To run this app, you'll need a current version of Node.js installed.
+- [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+  to build and run the MLX UI code locally
+- [Docker](https://docs.docker.com/get-docker/) to rebuild the MLX UI image
+- [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) to redeploy 
+  the `mlx-ui` service to Kubernetes
+
+
+## Starting the MLX UI locally
 
 1. First, clone this repo:
 ```Bash
@@ -43,44 +50,68 @@ npm start
 http://localhost:3000/settings
 ```
 
-## Deploy MLX UI to Kubernetes
-
-First deploy the MLX UI.
-```Bash
-kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
-```
-
-Find the UI Host and Port. It may take some time before the MLX UI becomes available.
-```Bash
-export UI_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')
-export UI_PORT=$(kubectl get service mlx-ui -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')
-```
-Open the webpage in a browser:
-
-```Bash
-open "http://${UI_HOST}:${UI_PORT}"
-```
-
 # Development Setup
 
 ## Build a Docker Image for MLX UI
 
 ```Bash
 cd dashboard/origin-mlx
-docker build -t <your docker user-id>/<repo name>:<tag name> -f Dockerfile .
+docker build -t <your docker user-id>/mlx-ui:<tag name> -f Dockerfile .
 docker push <your docker user-id>/<repo name>:<tag name>
 ```
 
 ## (Re-)Deploy to Kubernetes Cluster
 
-Change the Docker image tag in the deployment spec server/mlx-ui.yml from image: ibmandrewbutler/open-ui:add-homepage to image: <your_docker_user_id>/<repo name>:<tag name> and then run:
+For information on how to deploy MLX on a Kubernetes Cluster or OpenShift on IBM
+Cloud, check out the guide [here](/docs/mlx-setup.md).
+Once the cluster has been deployed, the new `mlx-ui` container image will need to
+be redeployed after changes to the UI code have been made.
+
+Change the container image in the deployment spec
+[/manifests/base/mlx-deployments/mlx-ui.yaml](/manifests/base/mlx-deployments/mlx-ui.yaml)
+under `spec.template.spec.containers` with `name: mlx-ui`
+from `image: mlexchange/mlx-ui:nightly`
+to `image: <your_docker_user_id>/<repo_name>:<tag_name>`
+and then run:
 
 ```Bash
-kubectl delete -f ./dashboard/origin-mlx/mlx-ui.yml
-kubectl apply -f ./dashboard/origin-mlx/mlx-ui.yml
+# navigate to the MLX root directory
+# cd ../..
+kubectl delete -f manifests/base/mlx-deployments/mlx-ui.yaml
+kubectl apply -f manifests/base/mlx-deployments/mlx-ui.yaml
+```
+
+Find the UI Host and Port. It may take some time before the MLX UI becomes available.
+
+```Bash
+export UI_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')
+export UI_PORT=$(kubectl get service mlx-ui -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')
+```
+
+Open the webpage in a browser:
+
+```Bash
+open "http://${UI_HOST}:${UI_PORT}"
 ```
 
 ## UI Development with Docker Compose
+
+For information on how to get started with Docker Compose before making any changes
+to the UI code, check out the [Quick Start Guide](/quickstart/README.md) and
+take a look at the [docker-compose.yaml](/quickstart/docker-compose.yaml) file
+to understand how the individual services like `mysql`, `minio`, `mlx-api`, `mlx-ui`,
+etc. are working together.
+
+The Docker Compose stack can be brought up and taken down by running the following
+commands. The `--project-name` tag keeps the docker compose network and the volumes
+(stored assets) separate from the quickstart for development. Each docker compose
+project has separate network and volumes which can be viewed using
+[Docker Desktop](https://www.docker.com/products/docker-desktop/):
+
+```Bash
+docker compose --project-name  mlx  up
+docker compose --project-name  mlx  down
+```
 
 You can test most code changes without a Kubernetes cluster. A K8s cluster is only
 required to `run` the generated sample pipeline code. Running the Quickstart with
@@ -88,10 +119,11 @@ Docker Compose is sufficient to test any `katalog` related API endpoints.
 
 A development setup that works very well requires to 2 shell terminals:
 
-### Terminal 1 - Quickstart without `mlx-ui` service
+### Terminal 1 - Quickstart without the `mlx-ui` service
 
 Bring up the Quickstart without the `mlx-ui` service, since we will run the MLX UI
-from our local source code, instead of using the pre-built Docker image `mlexchange/mlx-ui:nightly-origin-main`.
+from our local source code, instead of using the pre-built Docker image
+`mlexchange/mlx-ui:nightly-origin-main`.
 
 ```Bash
 # cd <mlx_root_directory>
@@ -116,7 +148,7 @@ docker compose rm -v -f
 docker volume prune -f
 ```
 
-### Terminal 2 - Start the UI server
+### Terminal 2 - Start the MLX UI locally
 
 Navigate to the UI source folder:
 
@@ -184,6 +216,10 @@ The cache stores each request and response pair made from the UI to the API in l
 which matches a previous request and the difference of the time between the two requests is less than `REACT_APP_TTL` then the previously recorded response is returned. Every `REACT_APP_CACHE_INTERVAL` seconds a new check on the validity of the cache can be run. Whenever the UI is refreshed a check will be made if enough time has passed since the last cache validity check, if so then a cache validity check is started. Any item in the cache which has lasted longer than `REACT_APP_TTL` seconds is removed from the cache.
 
 To invalidate or hard reset the cache, navigate to the settings page (clicking the three dots at the bottom of the sidebar) and click on the `Reset Cache` button.
+
+# Development Guidelines:
+
+For information on UI code structure, design principles, etc. check out the [MLX UI Developer Guide](developer-guide.md).
 
 # Project Overview:
 

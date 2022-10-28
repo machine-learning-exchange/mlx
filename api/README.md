@@ -1,29 +1,59 @@
-# Machine Learning Exchange API - Python Client and Python-Flask Server
+# MLX API - Python Client and Python-Flask Server
 
-An extension to the Kubeflow Pipeline API for Components and Models
+The MLX API is an extension to the Kubeflow Pipeline API with additional API
+endpoints for Dataset, Models, Notebooks and Pipeline Components.
+We use [OpenAPI v2 (fka Swagger)](https://swagger.io/specification/v2/) for the
+[API specification](swagger/swagger.yaml).
 
----
 
-# Quickstart    
+# Deploy to Kubernetes
 
-## Deploy to Kubernetes
+If you already have a Kubeflow Pipelines deployment on a Kubernetes cluster, you
+can use the following steps to deploy the MLX API on top of it. However, for a full
+deployment of MLX we recommend following on of these [guides](../README.md#1-deployment) 
 
-    kubectl apply -f ./server/mlx-api.yml
+1) Run kubectl command to apply the manifest
 
-## Find API Server Host and Port
+    `kubectl apply -f ./server/mlx-api.yml`
 
-    export API_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')
-    export API_PORT=$(kubectl get service mlx-api -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')
+2) Find API Server Host and Port
 
-## Open the Swagger UI in a Web Browser
+    `export API_HOST=$(kubectl get nodes -o jsonpath='{.items[].status.addresses[?(@.type=="ExternalIP")].address}')`
+    `export API_PORT=$(kubectl get service mlx-api -n kubeflow -o jsonpath='{.spec.ports[0].nodePort}')`
 
-    open "http://${API_HOST}:${API_PORT}/apis/v1alpha1/ui/"
+3) Open the Swagger UI in a Web Browser
+
+    `open "http://${API_HOST}:${API_PORT}/apis/v1alpha1/ui/" `
     
+
 ---
 
-# Development Setup
+# API Development
 
-## Swagger Codegen 2.4
+## Code Generation Overview
+
+![API Codegeneration Workflow](codegen_workflow.png)
+
+- Changes/additions to the API are done in the API [spec](swagger/swagger.yaml)
+- The [`generate_code.sh`](generate_code.sh) script validates the API [spec](swagger/swagger.yaml)
+  and generates [`client`](client) and [`server`](server) Python packages.
+  The [examples](examples) package is hand-written based on the usage examples
+  inside the `client` package 
+- Instead of a static HTML documentation for the API endpoints, a Swagger UI web
+  interface will be generated on the fly when the Python server is started
+- The API endpoints and the JSON data model is documented under [`client/docs`](client/docs)
+  in Markdown format which works well when browsing through the GitHub repo
+- After the code generation, we need to copy any new API method stubs (if any new)
+  from the [`server/swagger_server/controllers`](server/swagger_server/controllers) folder
+  to the [`server/swagger_server/controllers_impl`](server/swagger_server/controllers_impl)
+  folder and implement the actual business logic
+- If existing API method signatures got updated, we need to update the existing
+  `controller_impl` methods respectively
+
+
+## Development Setup
+
+### Swagger Codegen 2.4
 
 To generate our API we are using [`swagger-codegen`](https://github.com/swagger-api/swagger-codegen/tree/v2.4.8#prerequisites)
 version [`2.4`](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.8/swagger-codegen-cli-2.4.8.jar)
@@ -48,19 +78,28 @@ will automatically download the _"correct"_ version of the `swagger-codegen-cli.
     # brew install swagger-codegen@2
     # brew link --force swagger-codegen@2
 
-## Create a Python Virtual Environment for Development
+### Create a Python Virtual Environment for Development
 
     python3 -m venv .venv
     source .venv/bin/activate
 
-## Install the Python Package Dependencies
+### Install the Python Package Dependencies
 
     # cd <mlx_root_dir>
     # cd api
 
     pip install -r ./requirements.txt
 
+
+
 ## (Re-)Generate Swagger Client and Server Code
+
+If there are changes to the [API spec](swagger/swagger.yaml) then we need to re-
+generate the API client and server code. Do not run the script `codegen.sh`
+on its own, since Swagger generates a lot of unwanted and some breaking changes.
+Instead use the [generate_code.sh](generate_code.sh) script which runs the Swagger
+codegen and tries to undo some of the code and documentation changes that are not
+desired. 
 
     ./generate_code.sh
 
@@ -86,7 +125,8 @@ or:
     kubectl delete -f ./server/mlx-api.yml
     kubectl apply -f ./server/mlx-api.yml
 
-## Testing API Code Changes with Docker Compose
+
+## Testing API Code Changes Locally with Docker Compose
 
 You can test most code changes without a Kubernetes cluster. A K8s cluster is only
 required to `run` the generated sample pipeline code. Running the Quickstart with
@@ -188,4 +228,8 @@ Docker Compose stack with the `-v` option (`docker compose --project-name no_api
         -H 'Accept: application/json' \
         -d @catalog_upload.json \
         http://localhost:8080/apis/v1alpha1/catalog
+
+# Troubleshooting
+
+Report any issues with at https://github.com/machine-learning-exchange/mlx/issues
 

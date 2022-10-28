@@ -7,18 +7,15 @@
 # set interactive mode to enable defining a gsed alias
 shopt -s expand_aliases
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then  # Linux
-    alias gsed="sed -i"
-elif [[ "$OSTYPE" == "darwin"* ]]; then  # macOS
-    alias gsed="sed -i ''"
-elif [[ "$OSTYPE" == "cygwin" ]]; then  # POSIX compatible emulation for Windows
-    alias gsed="sed -i"
-elif [[ "$OSTYPE" == "msys"* ]]; then  # Git Bash (Windows)
-    alias gsed="sed -i"
+# we use sed to make in-file text replacements, but sed works differently depending on the version
+if ! sed -i '1s/^/test/' $(mktemp) 2> /dev/null; then
+    # macOS (BSD) version of sed
+    alias gsed="sed -i ''" 
 else
-    echo "FAILED. OS not compatible with script '${BASH_SOURCE[0]}'"
-    exit 1
+    # POSIX compliant version of sed 
+    alias gsed="sed -i"
 fi
+
 export gsed
 
 hash_comment () {

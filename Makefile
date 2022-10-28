@@ -26,6 +26,11 @@ check_doc_links: ## Check markdown files for invalid links
 	@python3 tools/python/verify_doc_links.py
 	@echo "$@: OK"
 
+.PHONY: update_doc_table
+update_doc_table: ## Regenerate the /docs/README.md file
+	@python3 tools/python/update_doc_table.py
+	@echo "$@: OK"
+
 .PHONY: check_license
 check_license: ## Make sure source files have license header
 	@git grep -L "SPDX-License-Identifier: Apache-2.0" -- *.py *.yml *.yaml *.sh *.html *.js *.css *.ts *.tsx ':!*.bundle.js' | \

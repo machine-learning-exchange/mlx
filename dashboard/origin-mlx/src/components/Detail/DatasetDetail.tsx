@@ -14,7 +14,6 @@ import { getUserInfo, hasRole } from '../../lib/util';
 import RunView from '../RunView'
 import RelatedAssetView from '../RelatedAssetView';
 import MarkdownViewer from '../MarkdownViewer';
-import LoadingMessage from '../LoadingMessage';
 import MetadataView from '../MetadataView';
 
 const isAdmin = hasRole(getUserInfo(), 'admin');

@@ -13,11 +13,6 @@ Allows upload, registration, execution, and deployment of:
  - Datasets
  - Notebooks
 
-For more details about the project please follow this [announcement blog post](https://lfaidata.foundation/blog/2021/09/28/machine-learning-exchange-mlx/). 
-
-
-<img src="docs/images/mlx.png" height="90%" width="90%">
-
 Additionally it provides:
 
  - Automated sample pipeline code generation to execute registered models, datasets and notebooks
@@ -27,6 +22,12 @@ Additionally it provides:
  - Preregistered Datasets from [Data Asset Exchange (DAX)](https://developer.ibm.com/exchanges/data/) and Models from [Model Asset Exchange (MAX)](https://developer.ibm.com/exchanges/models/)
  - Serving engine by [KFServing](https://github.com/kubeflow/kfserving)
  - Model Metadata schemas
+
+For more details about the project check out this [announcement blog post](https://lfaidata.foundation/blog/2021/09/28/machine-learning-exchange-mlx/). 
+
+
+<img src="docs/images/mlx.png" height="90%" width="90%">
+
 
 ## 1. Deployment
 <img src="docs/images/mlx-architecture-4.png" height="40%" width="40%">
@@ -48,30 +49,28 @@ For a full deployment, we use [Kubeflow Kfctl](https://github.com/kubeflow/kfctl
 * #### [MLX on an existing Kubeflow Cluster](./docs/install-mlx-on-kubeflow.md)
 
 
-## 2. Access the MLX UI
+## 2. Access the MLX UI and import Assets to the Catalog
 
 By default, the MLX UI is available at http://<cluster_node_ip>:30380/mlx/
 
-If you deployed on a **Kubernetes** cluster, run the following and look for the External-IP column to find the public IP of a node.
+If you deployed on a **Kubernetes** cluster or using **OpenShift**, run the following and look for the External-IP column to find the public IP of a node.
 
 ```bash
 kubectl get node -o wide
 ```
 
-If you deployed using **OpenShift**, you can use IstioIngresGateway Route. You can find it in the OpenShift Console or using the CLI.
+For information on how to import data and AI assets using MLX's catalog importer, use this [guide](/docs/import-assets.md).
 
-```bash
-oc get route -n istio-system
-```
+## 3. Use MLX
 
-## 3. Import Data and AI Assets in MLX Catalog
+For information on how to use MLX and create assets check out this [guide](/docs/usage-steps.md).
 
-[Import data and AI assets using MLX's catalog importer](/docs/import-assets.md)
+## 4. How to Contribute
 
-## 4. Use MLX
+For information about adding new features, bug fixing, communication
+or UI and API setup, refer to this [document](CONTRIBUTING.md).
 
-[MLX Usage Instructions](/docs/usage-steps.md)
-	
+
 ## 5. Troubleshooting
 
 [MLX Troubleshooting Instructions](/docs/troubleshooting.md)

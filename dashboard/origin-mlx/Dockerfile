@@ -1,5 +1,5 @@
 # base image
-FROM node:14-slim
+FROM node:16-slim
 
 # create app directory
 RUN mkdir -p /workspace
@@ -12,11 +12,27 @@ ENV PORT=3000
 
 # install and cache app dependencies
 COPY . /workspace
+
 RUN npm install --silent --only=prod
 
 # install and build UI backend
 RUN cd server && npm install && npm run build
 
-# start app
+# make sure non-root user can modify workspace folder
+#RUN chgrp -R 0 /workspace && chmod -R g=u /workspace
+RUN chown -R node /workspace
+
+# change user
+USER node
+
+# mark as production build
 ENV NODE_ENV=production
-CMD ["sh", "-c", "npm run build && mv build/ proc/ && node server/dist/server.js proc/ $PORT"]
+
+# run build on container startup in order to build in environment variables
+#  - https://create-react-app.dev/docs/adding-custom-environment-variables/
+# TODO: find a better solution, i.e.
+#  - https://www.tutorialworks.com/openshift-deploy-react-app/
+#  - https://javaadpatel.com/building-and-deploying-react-containers/
+CMD ["sh", "-c", "npm run build && node server/dist/server.js build/ $PORT"]
+
+

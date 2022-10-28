@@ -188,7 +188,7 @@ function MetaAllPage(props: MetaAllPageProps) {
         <Paper>
           <EnhancedToolbar
             type={type}
-            numSelected={pipeline.components.length}
+            numSelected={selected.size}
             toggleModal={(e: never) => {}}
           />
           <Table>
