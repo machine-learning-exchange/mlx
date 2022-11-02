@@ -27,7 +27,7 @@ def model_pipeline(model_id='${model_identifier}'):
 
     model_config = dsl.ContainerOp(
         name='model_config',
-        image='tomcli/model-config',
+        image='mlexchange/model-config:v0.2.0',
         command=['python'],
         arguments=[
             '-u', 'model-config.py',
@@ -43,7 +43,7 @@ def model_pipeline(model_id='${model_identifier}'):
 
     model_deployment = dsl.ContainerOp(
         name='knative_model_deployment',
-        image='aipipeline/knative-model-deploy',
+        image='mlexchange/knative-model-deploy:v0.2.0',
         command=['python'],
         arguments=[
             '-u', 'knative_deployment.py',
