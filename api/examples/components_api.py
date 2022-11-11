@@ -364,7 +364,7 @@ def main():
     component = list_components(filter_dict={"name": 'Create Secret - Kubernetes Cluster'})[0]
     generate_code(component.id)
     args = {
-        'token': env.get("IBM_GHE_API_TOKEN"),
+        'token': env.get("GHE_API_TOKEN"),
         'url': 'https://raw.github.ibm.com/user/repo/master/secret.yml',
         'name': 'my-test-credential'
     }

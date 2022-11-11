@@ -35,7 +35,9 @@ api_base_path = 'apis/v1alpha1'
 
 yaml_files = sorted(filter(lambda f: "template" not in f, glob("./../../../katalog/notebook-samples/*.yaml", recursive=True)))
 
-IBM_GHE_API_TOKEN = env.get("IBM_GHE_API_TOKEN")
+GHE_API_TOKEN = env.get("GHE_API_TOKEN")
+GHE_WEB_URL = env.get("GHE_WEB_URL", "github.ibm.com")
+GHE_RAW_URL = env.get("GHE_RAW_URL", "raw.github.ibm.com")
 
 
 def get_swagger_client():
@@ -103,8 +105,8 @@ def upload_notebook_templates(yaml_files: [str] = yaml_files) -> [str]:
         with open(yaml_file, "rb") as f:
             yaml_dict = yaml.load(f, Loader=yaml.SafeLoader)
 
-        if "github.ibm.com" in yaml_dict["implementation"]["github"]["source"]:
-            api_token = IBM_GHE_API_TOKEN
+        if GHE_WEB_URL in yaml_dict["implementation"]["github"]["source"]:
+            api_token = GHE_API_TOKEN
         else:
             api_token = None
 
@@ -365,9 +367,9 @@ def download_notebooks_from_github():
 
         download_url = url.replace("/blob", "")\
             .replace("github.com", "raw.githubusercontent.com")\
-            .replace("github.ibm.com", "raw.github.ibm.com")
+            .replace(GHE_WEB_URL, GHE_RAW_URL)
 
-        if "github.ibm.com" in url:
+        if GHE_WEB_URL in url:
             headers = {'Authorization': 'token %s' % env.get("IBM_GHE_API_TOKEN")}
         else:
             headers = {}

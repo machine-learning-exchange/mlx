@@ -15,6 +15,8 @@ import * as proxy from 'http-proxy-middleware';
 import * as path from 'path';
 import * as process from 'process';
 import { ClientRequest } from 'http';
+import assert = require("assert");
+import fetch from 'node-fetch';
 
 const {
   MLX_API_ENDPOINT        = 'mlx-api',
@@ -23,6 +25,9 @@ const {
   KUBEFLOW_USERID_HEADER  = 'kubeflow-userid',
   REACT_APP_DISABLE_LOGIN = 'false',
   REACT_APP_RATE_LIMIT    = 100,
+  GHE_WEB_URL             = 'github.ibm.com',
+  GHE_RAW_URL             = 'raw.github.ibm.com',
+  GHE_API_TOKEN           = '',
 } = process.env;
 
 const app = express() as Application;
@@ -50,6 +55,39 @@ if (!disableLogin) {
   proxyCheckingMiddleware.push(checkPermissionMiddleware);
 }
 
+app.get('/readme', (req, res) => {
+  let url: string = req.query.url.toString();
+
+  let headers: {[index: string]: any} = {}
+
+  if (url.includes('github') && !url.includes('raw')) {
+    // convert plain GitHub url to "raw" url
+    url = url.replace('/blob/', '/')
+      .replace(GHE_WEB_URL, GHE_RAW_URL)
+      .replace('/github.com/', '/raw.githubusercontent.com/')
+  }
+
+  if (url.includes(GHE_WEB_URL)) {
+    // for Enterprise GitHub we use a (read-only) API token, with the minimal
+    // set of permission required: 'repo' and 'admin:org/read:org'
+    if (!GHE_API_TOKEN) {
+      console.log('Enterprise GitHub API Token must be provided via env var GHE_API_TOKEN.')
+    }
+    headers['Authorization'] = `token ${GHE_API_TOKEN}`
+  }
+
+  const options = {
+    method: 'GET',
+    headers: headers
+  };
+
+  res.setHeader('Content-Type', 'text/plain; charset=UTF-8');
+  fetch(url, options)
+    .then(response => response.text())
+    .then(text => res.send(text))
+    .catch(error => res.send(error));
+});
+
 if (REACT_APP_BASE_PATH.length !== 0) {
   app.all('/' + apiPrefix + '/*',
       [...proxyCheckingMiddleware, getForwardProxyMiddleware(!disableLogin)]);
@@ -73,9 +111,9 @@ app.use(REACT_APP_BASE_PATH, (req, res, next) => {
   StaticHandler(staticDir)(req, res, next);
 });
 
-// TODO: This may or may not be needed anymore. Originally there were routing issues that 
-// caused routes to incorrectly fail when refreshing the react page.
-// These should be fixed now, but should be tested to ensure they are.
+// TODO: This may or may not be needed anymore. Originally there were routing
+//  issues that caused routes to incorrectly fail when refreshing the react page.
+//  These should be fixed now, but should be tested to ensure they are.
 if (REACT_APP_BASE_PATH.length !== 0) {
   app.use('/', staticHandler);
   app.use('/pipelines/', staticHandler);
@@ -97,12 +135,13 @@ var limiter = new ratelimit({
 });
 
 app.get('*', limiter, (req, res) => {
+  console.log('app.get("*")');
   // TODO: look into caching this file to speed up multiple requests.
   res.sendFile(path.resolve(staticDir, 'index.html'));
 });
 
 app.listen(port, () => {
-  console.log('Server listening at http://localhost:' + port);
+  console.log('Server is listening at http://localhost:' + port);
 });
 
 function initLogin(app: express.Application) {

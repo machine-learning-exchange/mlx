@@ -86,7 +86,7 @@ function UploadPage(props: RouteComponentProps<MatchProps>) {
 
         // Makes the newly uploaded file publishable and featured
         const path = response_json.id
-        setUploadStatus({fullStatus: ("Upload Suceeded. Click to view "), link: path})
+        setUploadStatus({fullStatus: ("Upload Succeeded. Click to view "), link: path})
 
         publishable.add(path)
         featured.add(path)
