@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-VERSION = "0.1.30-upload-catalog-from-url"
+VERSION = "0.2.0-ghe-readme"

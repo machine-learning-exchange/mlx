@@ -105,16 +105,19 @@ desired.
 
 ## Build the Docker Image
 
+    DOCKER_USER=<your_docker_user_id>
+    IMAGE_TAG=<tag_or_version>
+
     cd server
-    docker build -t <your_docker_user_id>/mlx-api-server:0.1 .
-    docker login
-    docker push <your_docker_user_id>/mlx-api-server:0.1
+    docker build -t ${DOCKER_USER}/mlx-api:${IMAGE_TAG} .
+    docker push ${DOCKER_USER}/mlx-api:${IMAGE_TAG}
     cd ..
+
 
 ## (Re-)Deploy to Kubernetes Cluster
 
 Change the Docker image tag in the deployment spec `server/mlx-api.yml` 
-from `image: docker.io/aipipeline/mlx-api:nightly-master` 
+from `image: docker.io/mlexchange/mlx-api:nightly-main` 
 to `image: docker.io/<your_docker_user_id>/mlx-api-server:0.1`
 and then run:
 
@@ -122,8 +125,13 @@ and then run:
 
 or:
 
-    kubectl delete -f ./server/mlx-api.yml
-    kubectl apply -f ./server/mlx-api.yml
+    kubectl -n kubeflow delete -f ./server/mlx-api.yml
+    kubectl -n kubeflow apply -f ./server/mlx-api.yml
+
+or:
+
+    IMG="${DOCKER_USER}/mlx-api:${IMAGE_TAG}"
+    kubectl -n kubeflow set image deployment/mlx-api mlx-api-server=${IMG}
 
 
 ## Testing API Code Changes Locally with Docker Compose

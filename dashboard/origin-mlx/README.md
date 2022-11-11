@@ -55,9 +55,12 @@ http://localhost:3000/settings
 ## Build a Docker Image for MLX UI
 
 ```Bash
+export DOCKER_USER=<your-docker-user-id>
+export IMAGE_TAG=<tag-or-version>
+
 cd dashboard/origin-mlx
-docker build -t <your docker user-id>/mlx-ui:<tag name> -f Dockerfile .
-docker push <your docker user-id>/<repo name>:<tag name>
+docker build -t ${DOCKER_USER}/mlx-ui:${IMAGE_TAG} -f Dockerfile .
+docker push ${DOCKER_USER}/mlx-ui:${IMAGE_TAG}
 ```
 
 ## (Re-)Deploy to Kubernetes Cluster
@@ -208,7 +211,12 @@ There are a few environment variables that can be defined that dictate how MLX i
 * `REACT_APP_DISABLE_LOGIN` - A switch to turn off login mechanism
 * `REACT_APP_KFP_STANDALONE` - The KFP is standalone deployment or not
 * `REACT_APP_TTL` - The amount of seconds a cached entry remains valid for (24 hours by default)
-* `REACT_APP_CACHE_INTERVAL` - The minimum amount of time in seconds between two checks on the validity of the cache's contents (24 hours by default)
+* `REACT_APP_CACHE_INTERVAL` - The minimum amount of time in seconds between two checks on the validity of the cache's 
+  contents (24 hours by default)
+* `REACT_APP_GHE_API_TOKEN` - Enterprise GitHub API Token to "read" Markdown files from GitHub Enterprise. Only use when
+  MLX deployment is behind corporate firewall. The minimal set of permission required for the token are `repo` and 
+  `admin:org/read:org` (on a private repository).
+  
 
 # Caching Details
 

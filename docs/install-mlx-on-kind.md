@@ -71,8 +71,8 @@ while ! kustomize build mlx-single-kind | \
   kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 
 # wait while the MLX deployment is starting up, may take 10 to 20 minutes
-while $( kubectl get pods --all-namespaces | grep -q -v "STATUS\|Running" ); do \
-  echo "Hold tight, still waiting for $( kubectl get pods --all-namespaces | grep -v "STATUS\|Running" | wc -l ) pods ..."; \
+while $( kubectl get pods -n kubeflow | grep -q -v "STATUS\|Running" ); do \
+  echo "Hold tight, still waiting for $( kubectl get pods -n kubeflow | grep -v "STATUS\|Running" | wc -l ) pods ..."; \
   sleep 10; \
 done
 

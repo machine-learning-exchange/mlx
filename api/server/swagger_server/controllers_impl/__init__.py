@@ -4,9 +4,10 @@
 
 import requests
 
+from os import environ as env
 from werkzeug.datastructures import FileStorage
 
-from kfp_tekton.compiler._k8s_helper import sanitize_k8s_name;
+from kfp_tekton.compiler._k8s_helper import sanitize_k8s_name
 from swagger_server.data_access.minio_client import extract_yaml_from_tarfile
 from swagger_server.models.api_parameter import ApiParameter
 from swagger_server.util import ApiError
@@ -16,6 +17,9 @@ from swagger_server.util import ApiError
 #   private helper methods, not swagger-generated
 # TODO: move into controllers_impl/util.py
 ###############################################################################
+
+ghe_api_token = env.get("GHE_API_TOKEN")
+
 
 def get_yaml_file_content_from_uploadfile(uploadfile: FileStorage):
 
@@ -68,6 +72,12 @@ def download_file_content_from_url(url: str, bearer_token: str = None) -> bytes:
 
     if bearer_token and "?token=" not in url:
         request_headers.update({"Authorization": f"Bearer {bearer_token}"})
+
+    if "github.ibm.com" in url and "?token=" not in url:
+        if not bearer_token and not ghe_api_token:
+            raise ApiError(f"Must provide API token to access files on GitHub Enterprise: {url}", 422)
+        else:
+            request_headers.update({'Authorization': f'token {bearer_token or ghe_api_token}'})
 
     try:
         raw_url = url.replace("/blob/", "/") \
