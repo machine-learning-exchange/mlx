@@ -1,5 +1,5 @@
 # base image
-FROM node:16-slim
+FROM node:16.13-slim
 
 # create app directory
 RUN mkdir -p /workspace
