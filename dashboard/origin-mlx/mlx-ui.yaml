@@ -28,7 +28,7 @@ spec:
       containers:
       - name: mlx-ui
         # You can use your own webapp image below
-        image: mlexchange/mlx-ui:nightly-origin-main
+        image: mlexchange/mlx-ui:v0.2.0
         imagePullPolicy: Always
         env:
         - name: REACT_APP_BRAND
@@ -38,7 +38,7 @@ spec:
         - name: REACT_APP_UPLOAD
           value: "true"
         - name: REACT_APP_BASE_PATH
-          value: /mlx
+          value: ""
         ports:
         - containerPort: 3000
       serviceAccountName: mlx-ui

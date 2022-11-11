@@ -48,12 +48,12 @@ spec:
       labels:
         service: mlx-api
         environment: dev
-        version: v0.1.29
+        version: v0.2.0
     spec:
       serviceAccountName: mlx-api
       containers:
       - name: mlx-api-server
-        image: docker.io/mlexchange/mlx-api:nightly-main
+        image: docker.io/mlexchange/mlx-api:v0.2.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

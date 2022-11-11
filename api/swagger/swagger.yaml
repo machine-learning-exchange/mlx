@@ -5,7 +5,7 @@
 swagger: "2.0"
 
 info:
-  version: "0.1.30-upload-catalog-from-url"
+  version: "0.2.0-ghe-readme"
   title: "MLX API"
   description: "MLX API Extension for Kubeflow Pipelines"
 

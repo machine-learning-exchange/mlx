@@ -26,5 +26,5 @@ sed -n '/Table of Contents/,$p' "${1}" | tail -n +2 | \
 sed '/^```/,/^```/d' | \
 grep -E "^#{1,4}" | \
 sed -E "s/(#+) (.+)/\1${SEP}\2${SEP}\2/g" | \
-awk -F "${SEP}" '{ gsub(/#/,"  ",$1); gsub(/[ ]/,"-",$3); gsub(/[`.():,&]/,"",$3); print $1 "- [" $2 "](#" tolower($3) ")" }' | \
+awk -F "${SEP}" '{ gsub(/#/,"  ",$1); gsub(/[ ]/,"-",$3); gsub(/[`\’.():,&]/,"",$3); print $1 "- [" $2 "](#" tolower($3) ")" }' | \
 sed -e 's/^  //g'

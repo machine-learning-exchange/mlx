@@ -10,13 +10,12 @@ import yaml
 
 from datetime import datetime
 from io import BytesIO
-from os import environ as env
 from typing import AnyStr
 from urllib.parse import urlparse
 from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, \
-    get_yaml_file_content_from_uploadfile, validate_parameters, validate_id
+    get_yaml_file_content_from_uploadfile, validate_id, ghe_api_token
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, enable_anonymous_read_access, NoSuchKey, \
     create_tarfile, get_object_url
@@ -32,9 +31,6 @@ from swagger_server.models.api_notebook import ApiNotebook  # noqa: E501
 from swagger_server.models.api_parameter import ApiParameter  # noqa: E501
 from swagger_server.models.api_run_code_response import ApiRunCodeResponse  # noqa: E501
 from swagger_server.util import ApiError
-
-
-ghe_api_token = env.get("IBM_GHE_API_TOKEN")
 
 
 def approve_notebooks_for_publishing(notebook_ids):  # noqa: E501
@@ -470,7 +466,8 @@ def _download_notebook(url: str, enterprise_github_api_token: str) -> dict:
 
     request_headers = dict()
 
-    if "ibm.com" in url and "?token=" not in url:
+    # TODO: re-use ./init.py#download_file_content_from_url
+    if "github.ibm.com" in url and "?token=" not in url:
         if not enterprise_github_api_token and not ghe_api_token:
             raise ApiError(f"Must provide API token to access notebooks on Enterprise GitHub: {url}", 422)
         else:

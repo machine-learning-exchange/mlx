@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 
 NAME = "mlx-api"
-VERSION = "0.1.30-upload-catalog-from-url"
+VERSION = "0.2.0-ghe-readme"
 
 # To install the library, run the following
 #

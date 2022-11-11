@@ -3,8 +3,8 @@
 ## Prerequisites
 
 * An existing Kubernetes cluster:
-   - **Min version: 1.21**
-   - **Max version: 1.21** 
+   - **Min version: 1.21 (OpenShift 4.8)**
+   - **Max version: 1.21** (DataShim)
 * The recommended minimum capacity requirement for MLX are: 
    - **CPUs**: 8 Cores
    - **Memory**: 16 GB RAM
@@ -53,14 +53,29 @@ repository and apply the manifests to your cluster:
 
 ```shell
 # clone the manifest repo
-git clone https://github.com/IBM/manifests -b v1.5-branch && cd manifests
+git clone https://github.com/IBM/manifests -b v1.6-branch && cd manifests
 
 # run the following command twice if the CRDs take too long to provision
 while ! kustomize build ${MLX_DEPLOYMENT_TYPE} | \
   kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 ```
 
-Then access the MLX web page on http://<cluster_node_ip>:30380/mlx/
+Then access the MLX web UI on http://<cluster_node_ip>:30380/
+
+For OpenShift clusters that don't expose a public IP, you can create a route to
+the MLX UI via the `istio-ingressgateway` service:
+
+```shell
+oc expose svc istio-ingressgateway -n istio-system --port http2 --name mlx
+```
+
+Then find the `mlx` service URL: 
+
+```shell
+oc get route mlx -n istio-system -o jsonpath='{.spec.host}'
+```
+
+Continue to [upload an asset catalog](import-assets.md).
 
 This MLX deployment doesn't include or support:
 - KFServing for model deployment
@@ -78,6 +93,35 @@ To delete this MLX deployment, run the following commands in the same manifests 
 ```Shell
 kustomize build ${MLX_DEPLOYMENT_TYPE} | kubectl delete -f -
 ```
+
+## Configuring Access to Private GitHub Repositories or GitHub Enterprise
+
+In order to enable uploading assets from a private GitHub repository or from
+Enterprise GitHub (usually behind a corporate firewall), the MLX API server can
+be configured with a "read-only" GitHub API access token. Similarly, the MLX UI
+server can be configured with a "read-only" GitHub API access token to enable
+the MLX UI to display Markdown files (`README.md`) from a private GitHub
+repository or from Enterprise GitHub.
+
+The minimal set of permission required for the [access token](https://docs.github.com/en/enterprise-server@3.1/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token)
+are `repo` and `admin:org/read:org`. The bot or user account for which the token
+is created needs to have access to the repositories from which the assets will be
+uploaded.
+
+**Note:** The following configuration changes are only recommended when MLX is
+deployed behind the same corporate firewall as the Enterprise GitHub instance to
+be accessed.
+
+```Bash
+GHE_API_TOKEN=<your GitHub API token>
+
+kubectl -n kubeflow set env deployment mlx-api GHE_API_TOKEN=${GHE_API_TOKEN}
+kubectl -n kubeflow set env deployment mlx-ui REACT_APP_GHE_API_TOKEN=${GHE_API_TOKEN}
+```
+
+You can also use a [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables)
+to set these environment variables.
+
 
 ## Troubleshooting
 

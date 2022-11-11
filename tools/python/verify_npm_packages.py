@@ -36,7 +36,7 @@ def audit_npm(continue_to_audit: bool):
         print(
             f"\n\n{colorText.RED}Vulnerabilites still present:\n{format_vulnerablility_output}{colorText.END}"
         )
-        print("\nMaual investigation necessary to prevent breaking changes\n\n")
+        print("\nManual investigation necessary to prevent breaking changes\n\n")
         print(
             f"Run:\n\t{colorText.GREEN}npm audit{colorText.END}\nand scroll up to manually manage breaking changes\n\n"
         )
