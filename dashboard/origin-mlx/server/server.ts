@@ -67,7 +67,7 @@ app.get('/readme', (req, res) => {
       .replace('/github.com/', '/raw.githubusercontent.com/')
   }
 
-  if (url.includes(GHE_WEB_URL)) {
+  if (url.includes(GHE_RAW_URL)) {
     // for Enterprise GitHub we use a (read-only) API token, with the minimal
     // set of permission required: 'repo' and 'admin:org/read:org'
     if (!GHE_API_TOKEN) {
