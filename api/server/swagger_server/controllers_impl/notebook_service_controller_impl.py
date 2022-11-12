@@ -15,7 +15,8 @@ from urllib.parse import urlparse
 from werkzeug.datastructures import FileStorage
 
 from swagger_server.controllers_impl import download_file_content_from_url, \
-    get_yaml_file_content_from_uploadfile, validate_id, ghe_api_token
+    get_yaml_file_content_from_uploadfile, validate_id, GHE_API_TOKEN, \
+    GHE_WEB_URL, GHE_RAW_URL
 from swagger_server.data_access.minio_client import store_file, delete_objects, \
     get_file_content_and_url, enable_anonymous_read_access, NoSuchKey, \
     create_tarfile, get_object_url
@@ -454,7 +455,7 @@ def _upload_notebook_yaml(yaml_file_content: AnyStr, name=None, access_token=Non
                    file_name="requirements.txt", file_content=requirements_all.encode())
 
     # if the url included an access token, replace the original url with the s3 url
-    if "?token=" in url or "github.ibm.com" in url:
+    if "?token=" in url or GHE_WEB_URL in url:
         api_notebook.url = s3_url
         update_multiple(ApiNotebook, [notebook_id], "url", s3_url)
         enable_anonymous_read_access(bucket_name="mlpipeline", prefix="notebooks/*")
@@ -467,14 +468,14 @@ def _download_notebook(url: str, enterprise_github_api_token: str) -> dict:
     request_headers = dict()
 
     # TODO: re-use ./init.py#download_file_content_from_url
-    if "github.ibm.com" in url and "?token=" not in url:
-        if not enterprise_github_api_token and not ghe_api_token:
+    if GHE_WEB_URL in url and "?token=" not in url:
+        if not enterprise_github_api_token and not GHE_API_TOKEN:
             raise ApiError(f"Must provide API token to access notebooks on Enterprise GitHub: {url}", 422)
         else:
-            request_headers.update({'Authorization': f'token {enterprise_github_api_token or ghe_api_token}'})
+            request_headers.update({'Authorization': f'token {enterprise_github_api_token or GHE_API_TOKEN}'})
 
     try:
-        raw_url = url.replace("/github.ibm.com/", "/raw.github.ibm.com/")\
+        raw_url = url.replace(GHE_WEB_URL, GHE_RAW_URL)\
                      .replace("/github.com/", "/raw.githubusercontent.com/")\
                      .replace("/blob/", "/")
         response = requests.get(raw_url, allow_redirects=True, headers=request_headers)

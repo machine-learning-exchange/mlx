@@ -18,7 +18,9 @@ from swagger_server.util import ApiError
 # TODO: move into controllers_impl/util.py
 ###############################################################################
 
-ghe_api_token = env.get("GHE_API_TOKEN")
+GHE_API_TOKEN = env.get("GHE_API_TOKEN")
+GHE_WEB_URL = env.get("GHE_WEB_URL", "github.ibm.com")
+GHE_RAW_URL = env.get("GHE_RAW_URL", "raw.github.ibm.com")
 
 
 def get_yaml_file_content_from_uploadfile(uploadfile: FileStorage):
@@ -73,15 +75,15 @@ def download_file_content_from_url(url: str, bearer_token: str = None) -> bytes:
     if bearer_token and "?token=" not in url:
         request_headers.update({"Authorization": f"Bearer {bearer_token}"})
 
-    if "github.ibm.com" in url and "?token=" not in url:
-        if not bearer_token and not ghe_api_token:
+    if GHE_WEB_URL in url and "?token=" not in url:
+        if not bearer_token and not GHE_API_TOKEN:
             raise ApiError(f"Must provide API token to access files on GitHub Enterprise: {url}", 422)
         else:
-            request_headers.update({'Authorization': f'token {bearer_token or ghe_api_token}'})
+            request_headers.update({'Authorization': f'token {bearer_token or GHE_API_TOKEN}'})
 
     try:
         raw_url = url.replace("/blob/", "/") \
-            .replace("/github.ibm.com/", "/raw.github.ibm.com/") \
+            .replace(GHE_WEB_URL, GHE_RAW_URL) \
             .replace("/github.com/", "/raw.githubusercontent.com/")
 
         response = requests.get(raw_url, allow_redirects=True, headers=request_headers)

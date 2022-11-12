@@ -105,7 +105,7 @@ export default class KFServingDetail extends React.Component<KFServingDetailProp
         uploadStatus = "Upload of " + file.name + " failed"
       }
       else{
-        uploadStatus = "Upload Suceeded."
+        uploadStatus = "Upload Succeeded."
       }
 
       this.setState({...this.state, uploadStatus, file: null})

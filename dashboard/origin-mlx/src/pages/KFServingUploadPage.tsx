@@ -54,7 +54,7 @@ function UploadPage() {
       else{
         // Makes the newly uploaded file publishable and featured
         const path = `${serviceName}`
-        setUploadStatus({fullStatus: ("Deployment Suceeded: predictor starting now."), link: path})
+        setUploadStatus({fullStatus: ("Deployment Succeeded: predictor starting now."), link: path})
       }
       setFile(null)
     }

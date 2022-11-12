@@ -25,7 +25,8 @@ api_base_path = 'apis/v1alpha1'
 
 catalog_upload_file = "./../../bootstrapper/catalog_upload.json"
 
-IBM_GHE_API_TOKEN = env.get("IBM_GHE_API_TOKEN")
+GHE_API_TOKEN = env.get("GHE_API_TOKEN")
+GHE_WEB_URL = env.get("GHE_WEB_URL", "github.ibm.com")
 
 
 def get_swagger_client():
@@ -59,7 +60,7 @@ def upload_catalog_assets(upload_file=catalog_upload_file) -> ApiCatalogUploadRe
             upload_items = json.load(f)
 
         upload_body = ApiCatalogUpload(
-            api_access_tokens=[ApiAccessToken(api_token=IBM_GHE_API_TOKEN, url_host="github.ibm.com")],
+            api_access_tokens=[ApiAccessToken(api_token=GHE_API_TOKEN, url_host=GHE_WEB_URL)],
             components=upload_items.get("components"),
             datasets=upload_items.get("datasets"),
             models=upload_items.get("models"),

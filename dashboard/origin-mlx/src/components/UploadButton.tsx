@@ -73,7 +73,7 @@ function UploadButton(props: RouteComponentProps<MatchProps>) {
         const path = `${serviceName}`
         console.log("path")
         console.log(path)
-        setUploadStatus({fullStatus: ("Deployment Suceeded: predictor starting now."), link: path})
+        setUploadStatus({fullStatus: ("Deployment Succeeded: predictor starting now."), link: path})
         // TODO: Publishable and featured properties deprecated for kfservices - will revisit this
         // publishable.add(path)
         // featured.add(path)

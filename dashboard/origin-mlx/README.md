@@ -213,7 +213,7 @@ There are a few environment variables that can be defined that dictate how MLX i
 * `REACT_APP_TTL` - The amount of seconds a cached entry remains valid for (24 hours by default)
 * `REACT_APP_CACHE_INTERVAL` - The minimum amount of time in seconds between two checks on the validity of the cache's 
   contents (24 hours by default)
-* `REACT_APP_GHE_API_TOKEN` - Enterprise GitHub API Token to "read" Markdown files from GitHub Enterprise. Only use when
+* `GHE_API_TOKEN` - Enterprise GitHub API Token to "read" Markdown files from GitHub Enterprise. Only use when
   MLX deployment is behind corporate firewall. The minimal set of permission required for the token are `repo` and 
   `admin:org/read:org` (on a private repository).
   

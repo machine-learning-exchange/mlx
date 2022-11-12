@@ -116,7 +116,7 @@ be accessed.
 GHE_API_TOKEN=<your GitHub API token>
 
 kubectl -n kubeflow set env deployment mlx-api GHE_API_TOKEN=${GHE_API_TOKEN}
-kubectl -n kubeflow set env deployment mlx-ui REACT_APP_GHE_API_TOKEN=${GHE_API_TOKEN}
+kubectl -n kubeflow set env deployment mlx-ui GHE_API_TOKEN=${GHE_API_TOKEN}
 ```
 
 You can also use a [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables)
