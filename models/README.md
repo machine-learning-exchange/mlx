@@ -22,7 +22,7 @@ The [template](template.yaml) describes the metadata spec:
 
 - **(Required)**: Fields that are Always required in all condition.
 - **(Required for xxx)**: Fields that are required when trainable/servable or certain storage type is specified.
-- **(optional)**: Fields that can be omit, but do not put empty strings since it will overwrite the default values.
+- **(optional)**: Fields that can be omitted, but do not put empty strings since it will overwrite the default values.
 
 Or take a look at the 
 [samples](https://github.com/machine-learning-exchange/katalog/tree/main/model-samples) 
@@ -109,6 +109,7 @@ serve:
     - knative
   serving_container_image:
     container_image_url: <model_docker_image>
+    container_port: 5000
 ```
 
 ## Register a Model
