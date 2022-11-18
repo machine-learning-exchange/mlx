@@ -152,6 +152,7 @@ train:
 #       path: (Optional) Servable model path in the user local machine
 #   serving_container_image: (Required for container type)
 #     container_image_url: (Required for container type) Container image to serve the model.
+#     container_port: (Optional) Container port serving inferencing request. Default: 5000
 #     container_store: (Optional) container_store name
 
 serve:
@@ -170,6 +171,7 @@ serve:
       path: /local/1.0/assets/
   serving_container_image:
     container_image_url: "codait/max-facial-age-estimator:latest"
+    container_port: "5000"
     container_store: container_store
 
 # data (Optional) metadata for model training data

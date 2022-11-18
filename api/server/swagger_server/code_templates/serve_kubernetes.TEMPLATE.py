@@ -1,6 +1,6 @@
 # Copyright 2021 The MLX Contributors
-# 
-# SPDX-License-Identifier: Apache-2.0 
+#
+# SPDX-License-Identifier: Apache-2.0
 
 from kfp import dsl
 from kfp_tekton.compiler import TektonCompiler
@@ -36,7 +36,8 @@ def model_pipeline(model_id='${model_identifier}'):
         ],
         file_outputs={
             'model-serving-image': '/tmp/model_serving_image',
-            'deployment-name': '/tmp/deployment_name'
+            'deployment-name': '/tmp/deployment_name',
+            'container-port': '/tmp/container_port'
         }
     )
 
@@ -47,7 +48,8 @@ def model_pipeline(model_id='${model_identifier}'):
         arguments=[
             '-u', 'kube_deployment.py',
             '--model_serving_image', model_config.outputs['model-serving-image'],
-            '--deployment_name', model_config.outputs['deployment-name']
+            '--deployment_name', model_config.outputs['deployment-name'],
+            '--container_port', model_config.outputs['container-port'],
         ],
         file_outputs={
             'output': '/tmp/log.txt'
