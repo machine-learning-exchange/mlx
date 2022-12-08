@@ -56,7 +56,7 @@ bleach==4.1.0
     # via nbconvert
 cachetools==4.2.4
     # via google-auth
-certifi==2021.10.8
+certifi==2022.12.7
     # via
     #   kfp-server-api
     #   kfserving
