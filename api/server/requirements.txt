@@ -623,7 +623,7 @@ werkzeug==1.0.1
     #   -r requirements.in
     #   connexion
     #   flask
-wheel==0.37.1
+wheel==0.38.1
     # via strip-hints
 wrapt==1.12.1
     # via
