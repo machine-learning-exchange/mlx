@@ -51,7 +51,6 @@ black==21.12b0
     # via
     #   -r requirements.in
     #   elyra-server
-    #   ipython
 bleach==4.1.0
     # via nbconvert
 cachetools==4.2.4
@@ -179,7 +178,7 @@ inflection==0.5.1
     # via connexion
 ipykernel==6.7.0
     # via notebook
-ipython==8.0.1
+ipython==8.10.0
     # via
     #   ipykernel
     #   jupyterlab
@@ -381,7 +380,7 @@ prometheus-client==0.13.1
     #   jupyter-resource-usage
     #   jupyter-server
     #   notebook
-prompt-toolkit==3.0.26
+prompt-toolkit==3.0.36
     # via ipython
 protobuf==3.19.4
     # via
