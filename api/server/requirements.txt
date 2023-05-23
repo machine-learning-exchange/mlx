@@ -477,7 +477,7 @@ pyzmq==22.3.0
     #   jupyter-client
     #   jupyter-server
     #   notebook
-requests==2.27.1
+requests==2.31.0
     # via
     #   -r requirements.in
     #   adal
