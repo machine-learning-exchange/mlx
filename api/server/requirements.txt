@@ -563,7 +563,7 @@ toml==0.10.2
     #   pylint
 tomli==1.2.3
     # via black
-tornado==6.1
+tornado==6.3.2
     # via
     #   elyra-server
     #   ipykernel
