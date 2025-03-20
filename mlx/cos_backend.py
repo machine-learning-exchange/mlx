@@ -2,7 +2,7 @@ import json
 import boto3
 import jsonschema
 from jsonschema import validate
-
+import os
 
 class COSKVStore:
     def __init__(self, bucket_name, schema, cos_client=None):
@@ -26,7 +26,6 @@ class COSKVStore:
             validate(instance=value, schema=self.schema)
         except jsonschema.exceptions.ValidationError as e:
             raise ValueError(f"Validation error: {e.message}")
-
         self.cos_client.put_object(
             Bucket=self.bucket_name,
             Key=key,
@@ -60,19 +59,53 @@ class COSKVStore:
         response = self.cos_client.list_objects_v2(Bucket=self.bucket_name)
         return [obj['Key'] for obj in response.get('Contents', [])]
 
+def load_schemas(schema_folder):
+    """
+    Loads all JSON schemas from the given folder.
+    :param schema_folder: Path to the folder containing JSON schema files.
+    :return: A dictionary of schema names and their corresponding JSON objects.
+    """
+    schemas = {}
+    for filename in os.listdir(schema_folder):
+        if filename.endswith(".json"):
+            filepath = os.path.join(schema_folder, filename)
+            with open(filepath, 'r') as f:
+                schemas[filename[:-5]] = json.load(f)
+    return schemas
 
 # Example Usage
 if __name__ == "__main__":
-    example_schema = {
-        "type": "object",
-        "properties": {
-            "name": {"type": "string"},
-            "age": {"type": "integer"}
-        },
-        "required": ["name", "age"]
-    }
+    schema_folder = "../schemas"  
+    schemas = load_schemas(schema_folder)
 
-    cos_store = COSKVStore("my-cos-bucket", example_schema)
-    test_data = {"name": "John Doe", "age": 30}
-    cos_store.put("user_123", test_data)
-    print(cos_store.get("user_123"))
+    if "example_schema" in schemas:
+        example_schema = schemas["example_schema"]
+        cos_store = COSKVStore("my-cos-bucket", example_schema)
+
+        test_data = {
+            "id": "model_123",
+            "name": "MyModel",
+            "framework": "TensorFlow",
+            "version": "2.10",
+            "description": "A simple neural network model.",
+            "metrics": {
+                "accuracy": 0.95,
+                "loss": 0.1
+            }
+        }
+        cos_store.put("model_123", test_data)
+        print(cos_store.get("model_123"))
+
+        #Example data without the metric key, which is not required
+        test_data_no_metrics = {
+            "id": "model_456",
+            "name": "MyOtherModel",
+            "framework": "PyTorch",
+            "version": "1.12",
+            "description": "Another neural network model.",
+        }
+        cos_store.put("model_456", test_data_no_metrics)
+        print(cos_store.get("model_456"))
+
+    else:
+        print("Schema 'example_schema' not found.")
