@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/job-queue.schema.json",
+  "title": "JobQueueItem",
+  "description": "Schema for a job queue item",
+  "type": "object",
+  "required": ["id", "status", "created_at", "payload"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique job identifier (UUID or similar)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "running", "completed", "failed", "cancelled"],
+      "description": "Current status of the job"
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Optional priority (higher = more important)",
+      "default": 0
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the job was created"
+    },
+    "started_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp when the job started"
+    },
+    "finished_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp when the job finished"
+    },
+    "retries": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "How many times the job has been retried",
+      "default": 0
+    },
+    "max_retries": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum number of retries allowed",
+      "default": 3
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "description": "Error message if the job failed"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Job-specific input data (opaque to queue)",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata for tracking, tags, etc.",
+      "additionalProperties": true
+    }
+  }
+}
