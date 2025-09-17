@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ml-exchange"
-version = "0.1"                # setuptools_scm will override when building from git tags
+version = "0.3.7"
 description = "Machine Learning Exchange (MLX) library"
 readme = "README.md"
 requires-python = ">=3.8"
