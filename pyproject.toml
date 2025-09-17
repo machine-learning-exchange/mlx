@@ -18,14 +18,13 @@ classifiers = [
   "License :: OSI Approved :: Apache Software License",
   "Operating System :: OS Independent"
 ]
+dependencies = [
+    "claimed",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/machine-learning-exchange/mlx"
 "Source" = "https://github.com/machine-learning-exchange/mlx"
-
-[project.dependencies]
-# put runtime deps here, for example:
-claimed
 
 [tool.setuptools.packages.find]
 where = ["mlx"]
