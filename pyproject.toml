@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlx"                      # <--- change to your package name on PyPI
+version = "0.1"                # setuptools_scm will override when building from git tags
+description = "Machine Learning Exchange (MLX) library"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "The Machine Learning Exchange Authors", email = "terratorch@ibm.com" }
+]
+keywords = ["ml", "registry", "package"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/machine-learning-exchange/mlx"
+"Source" = "https://github.com/machine-learning-exchange/mlx"
+
+[project.dependencies]
+# put runtime deps here, for example:
+claimed
+
+[tool.setuptools.packages.find]
+where = ["mlx"]
+exclude = ["tests*"]
+
+[tool.setuptools]
+package-dir = { "" = "mlx" }
+# If you use package-data, configure here or use MANIFEST.in if needed
+
+[tool.setuptools_scm]
+# use git tags like v1.2.3 to generate versions
+version_scheme = "post-release"
+local_scheme = "no-local-version"
