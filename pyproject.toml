@@ -27,11 +27,11 @@ dependencies = [
 "Source" = "https://github.com/machine-learning-exchange/mlx"
 
 [tool.setuptools.packages.find]
-where = ["mlx"]
+where = ["src"]
 exclude = ["tests*"]
 
 [tool.setuptools]
-package-dir = { "" = "mlx" }
+package-dir = { "" = "src" }
 # If you use package-data, configure here or use MANIFEST.in if needed
 
 [tool.setuptools_scm]
